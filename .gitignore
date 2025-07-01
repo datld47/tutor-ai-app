@@ -1,0 +1,8 @@
+# Virtual environments
+venv/
+compiler/
+cache/
+build/
+dist/
+data/token.json
+data/credentials.json
