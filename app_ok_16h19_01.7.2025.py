@@ -92,8 +92,6 @@ queue_log=Queue()
 ID_EXERCISE=None
 MAX_RETRY=2
 
-COURSE_FILE_MAP = {} # Biến mới để lưu ánh xạ từ tên môn học -> đường dẫn file JSON
-
 ###################################################################################################################
 ######## Khai báo lớp ##########
 class ExerciseStatus(Enum):
@@ -227,145 +225,6 @@ def is_connected():
     except requests.ConnectionError as err:
         return False
     
-# def load_app_data():
-    
-#     global STUDENT_LIST
-#     global API_KEY_LIST
-#     global API_KEY
-#     global MODEL
-#     global DICT_USER_INFO
-#     global json_course
-#     global main_rule
-#     global CACHE_STATUS
-#     global APP_VERSION
-#     global COURSE_FILE_MAP # THÊM COURSE_FILE_MAP
-   
-#     with open(PATH_STUDENT_LIST, "r", encoding="utf-8") as file:
-#         try:
-#             STUDENT_LIST=json.load(file)
-#         except:
-#             STUDENT_LIST=[]
-
-#     with open(PATH_JSON_CONFIG, "r", encoding="utf-8") as file:
-#         try:
-#             config=json.load(file)
-#             if not config['api'][0]['gemini_key']:
-#                 API_KEY_LIST= [
-#                                     "AIzaSyDvCMr_GJMvGxFynOvLedw04rqJ6_iElF0",
-#                                     "AIzaSyAF5-pKkd-y_EJYRoOQbYgw7fAmNWtvsq4",
-#                                     "AIzaSyAxVA26qSbc3Hvg6Hdqti4HvxtU0wN1sqo",
-#                                     "AIzaSyDrCxX9U0zNXPVkU2SE9wpGeN0sSYwNJ2I",
-#                                     "AIzaSyAK4nsb74n2I51jt3sH9bqpuHMRlJntV6Q",
-#                                     "AIzaSyAeB3zypsW9cgqENXPt1QfwkSBL7Bm2BAM",
-#                                     "AIzaSyD5j90VdXoQCRiVWD0bMzhpSXiOIcWx_Mg",
-#                                     "AIzaSyAhl5OP4FG7m048BHjjiKhZSC4pFrMBpVo",
-#                                     "AIzaSyDy5z-BHwmPL8ItNJJ6IdNaWjw-l2bNR4E",
-#                                     "AIzaSyAi2miv5ixUjrMTrFehhPH62Efo6wMIMMA",
-#                                     "AIzaSyBEpoVLETjcehxmd7faIkU7lablGAm7k9k",
-#                                     "AIzaSyBP39bWjuKeCDYqzLlY1FBueSQH2wtGfDg",
-#                                     "AIzaSyBrLVKtuwIs11WjYVS-1VyYICpkxpcRLys",
-#                                     "AIzaSyAT7ghjymT6klV-uN_8zqaGapnxnHJO7FI",
-#                                     "AIzaSyDhUZ9TOsGH5oIj4xHVg7wTootfe0eJCjY",
-#                                     "AIzaSyAg85SyVh8bwmoAHD5ClMYPSZDYcUKZge8",
-#                                     "AIzaSyBgXlzFpaQJbAaj-_6DYeE4m-Q-fYq21GM",
-#                                     "AIzaSyDLBPmqFncpruW52U5jQvWsLbkeMsf6c0g",
-#                                     "AIzaSyB64OSSTmfiaAKokNhYIeG1xHAv1Vq4jEw",
-#                                     "AIzaSyB2rtw9IJH8U_T064-Egx-iq0l16vq9Bj0",
-#                                     "AIzaSyCcQ0B0xrMTrxfo_4FVvgVX059dHHu0WKA",
-#                                     "AIzaSyCMdYZUu20OuhGvg4GlkF9Tg1E-aCWuXgw",
-#                                     "AIzaSyDkI2K-mytvzdWm7isbcSATa0sELEtzuRU",
-#                                     "AIzaSyB0tadJbKusAxTbYQBkvTqulK2UkMU82sQ",
-#                                     "AIzaSyALNGPa7ub-cvNTBNz1oKKjU631yKHP3Hw",
-#                                     "AIzaSyApCym0pQaZFHKVZIABBrZdxpKV-mzCuZg",
-#                                     "AIzaSyBqmgmNPF76Ex5u7S0IWIP-tZyMVv_Bcxk",
-#                                     "AIzaSyBrx2NP9XH2wkimt9XItNe6g9lbIDg8A2c",
-#                                     "AIzaSyCZiYQ9rofcm3ndFDIPcpEXk3y0b2LbKLA",
-#                                     "AIzaSyCss_cuhhDcA2ScTtTJ9VttU7Zq35e3MOE",
-#                                     "AIzaSyBQM1j6IMi08CfToV96aS96XFCpcKUYyPE"                                    
-#                                 ]
-#             else:
-#                 API_KEY_LIST=config['api'][0]['gemini_key']
-            
-#             API_KEY=API_KEY_LIST[0]
-#             MODEL=config['api'][1]['model']
-#             DICT_USER_INFO=config['user']
-#             CACHE_STATUS=config['system'][0]['cache_status']
-#             print(f'cache_status={CACHE_STATUS}')
-#             APP_VERSION=config['system'][1]['version']
-#             print(f'APP_VERSION={APP_VERSION}')
-#         except:
-#             API_KEY=''
-#             MODEL=''
-#             DICT_USER_INFO=None
-    
-#     with open(PATH_JSON_COURSE, "r", encoding="utf-8") as file:
-#         try:
-#             json_course = json.load(file)
-#         except:
-#             json_course=None
-
-#     with open(PATH_JSON_RULE, "r", encoding="utf-8") as file:
-#         try:
-#             main_rule = file.read()
-#         except:
-#             main_rule=''
-            
-#      # --- PHẦN MỚI: QUÉT CÁC FILE COURSE VÀ TẠO ÁNH XẠ ---
-#     COURSE_FILE_MAP.clear() # Xóa map cũ nếu có
-#     course_files = glob.glob(os.path.join(get_path('data'), 'course_*.json')) # Tìm các file course_*.json
-
-#     if not course_files:
-#         # Fallback nếu không tìm thấy file nào theo mẫu mới. Thử tải course.json cũ.
-#         try:
-#             with open(PATH_JSON_COURSE, "r", encoding="utf-8") as file:
-#                 json_course = json.load(file)
-#                 if "course_name" not in json_course:
-#                     json_course["course_name"] = "Môn học mặc định (Course.json)" # Gán tên mặc định
-#                 COURSE_FILE_MAP[json_course["course_name"]] = PATH_JSON_COURSE
-#                 print(f"DEBUG: Loaded default course.json: {json_course['course_name']}")
-#         except Exception as e:
-#             print(f"Lỗi tải course.json mặc định: {e}")
-#             json_course = None
-#             messagebox.showwarning("Cảnh báo", "Không tìm thấy file course.json nào.")
-#         return # Thoát nếu không có file để xử lý
-
-#     # Duyệt qua các file course_*.json tìm được
-#     for file_path in course_files:
-#         try:
-#             with open(file_path, "r", encoding="utf-8") as file:
-#                 temp_course_data = json.load(file)
-#                 course_name = temp_course_data.get("course_name") # Lấy tên môn học từ file
-#                 if course_name:
-#                     COURSE_FILE_MAP[course_name] = file_path
-#                     print(f"DEBUG: Found course file: {course_name} -> {file_path}")
-#                 else:
-#                     print(f"Cảnh báo: File {file_path} thiếu trường 'course_name'. Bỏ qua.")
-#         except Exception as e:
-#             print(f"Lỗi khi đọc file course JSON {file_path}: {e}")
-
-#     # Tải course mặc định khi khởi động (ví dụ: Kỹ thuật lập trình (C))
-#     default_course_name = "Kỹ thuật lập trình (C)"
-#     if default_course_name in COURSE_FILE_MAP:
-#         try:
-#             with open(COURSE_FILE_MAP[default_course_name], "r", encoding="utf-8") as file:
-#                 json_course = json.load(file)
-#             print(f"DEBUG: Loaded initial course: {default_course_name}")
-#         except Exception as e:
-#             print(f"Lỗi tải course ban đầu '{default_course_name}': {e}")
-#             json_course = None
-#     elif COURSE_FILE_MAP: # Nếu không tìm thấy mặc định, chọn cái đầu tiên tìm được
-#         first_course_name = list(COURSE_FILE_MAP.keys())[0]
-#         try:
-#             with open(COURSE_FILE_MAP[first_course_name], "r", encoding="utf-8") as file:
-#                 json_course = json.load(file)
-#             print(f"DEBUG: Loaded initial course: {first_course_name} (fallback)")
-#         except Exception as e:
-#             print(f"Lỗi tải course ban đầu '{first_course_name}': {e}")
-#             json_course = None
-#     else: # Không có file course nào hợp lệ
-#         json_course = None
-#         messagebox.showerror("Lỗi", "Không tìm thấy file course JSON hợp lệ nào trong thư mục data/.")
-
 def load_app_data():
     
     global STUDENT_LIST
@@ -377,23 +236,18 @@ def load_app_data():
     global main_rule
     global CACHE_STATUS
     global APP_VERSION
-    global COURSE_FILE_MAP # THÊM COURSE_FILE_MAP
    
-    # Tải STUDENT_LIST (giữ nguyên)
     with open(PATH_STUDENT_LIST, "r", encoding="utf-8") as file:
         try:
             STUDENT_LIST=json.load(file)
-        except Exception as e: # Catch specific exception
-            print(f"Lỗi tải student.json: {e}")
+        except:
             STUDENT_LIST=[]
 
-    # Tải CONFIG (giữ nguyên)
     with open(PATH_JSON_CONFIG, "r", encoding="utf-8") as file:
         try:
             config=json.load(file)
-            if not config['api'][0].get('gemini_key') or not config['api'][0]['gemini_key']: # Use .get()
-                # ... (API Keys mặc định) ...
-                API_KEY_LIST= [ # Các API key mặc định
+            if not config['api'][0]['gemini_key']:
+                API_KEY_LIST= [
                                     "AIzaSyDvCMr_GJMvGxFynOvLedw04rqJ6_iElF0",
                                     "AIzaSyAF5-pKkd-y_EJYRoOQbYgw7fAmNWtvsq4",
                                     "AIzaSyAxVA26qSbc3Hvg6Hdqti4HvxtU0wN1sqo",
@@ -429,94 +283,29 @@ def load_app_data():
             else:
                 API_KEY_LIST=config['api'][0]['gemini_key']
             
-            API_KEY=API_KEY_LIST[0] if API_KEY_LIST else '' # Handle empty API_KEY_LIST
+            API_KEY=API_KEY_LIST[0]
             MODEL=config['api'][1]['model']
             DICT_USER_INFO=config['user']
             CACHE_STATUS=config['system'][0]['cache_status']
             print(f'cache_status={CACHE_STATUS}')
             APP_VERSION=config['system'][1]['version']
             print(f'APP_VERSION={APP_VERSION}')
-        except Exception as e: # Catch specific exception
-            print(f"Lỗi khi tải config.json: {e}")
+        except:
             API_KEY=''
             MODEL=''
             DICT_USER_INFO=None
     
-    # --- XÓA KHỐI CODE NÀY: Nó đang cố gắng đọc course.json cũ ---
-    # with open(PATH_JSON_COURSE, "r", encoding="utf-8") as file:
-    #     try:
-    #         json_course = json.load(file)
-    #     except:
-    #         json_course=None
+    with open(PATH_JSON_COURSE, "r", encoding="utf-8") as file:
+        try:
+            json_course = json.load(file)
+        except:
+            json_course=None
 
-    # Tải RULE (giữ nguyên)
     with open(PATH_JSON_RULE, "r", encoding="utf-8") as file:
         try:
             main_rule = file.read()
-        except Exception as e: # Catch specific exception
-            print(f"Lỗi tải rule.md: {e}")
+        except:
             main_rule=''
-            
-    # --- PHẦN MỚI: QUÉT CÁC FILE COURSE VÀ TẠO ÁNH XẠ (Đã có, giữ nguyên) ---
-    COURSE_FILE_MAP.clear() # Xóa map cũ nếu có
-    course_files = glob.glob(os.path.join(get_path('data'), 'course_*.json')) # Tìm các file course_*.json
-
-    if not course_files:
-        # Fallback: Nếu không tìm thấy file course_*.json, cố gắng tải course.json cũ nếu tồn tại
-        if os.path.exists(PATH_JSON_COURSE): # KIỂM TRA SỰ TỒN TẠI CỦA FILE
-            try:
-                with open(PATH_JSON_COURSE, "r", encoding="utf-8") as file:
-                    json_course = json.load(file)
-                    if "course_name" not in json_course:
-                        json_course["course_name"] = "Môn học mặc định (Course.json)" # Gán tên mặc định
-                    COURSE_FILE_MAP[json_course["course_name"]] = PATH_JSON_COURSE
-                    print(f"DEBUG: Loaded default course.json: {json_course['course_name']}")
-            except Exception as e:
-                print(f"Lỗi tải course.json mặc định: {e}")
-                json_course = None
-                messagebox.showwarning("Cảnh báo", "Không tìm thấy file course.json nào.")
-            return # Thoát nếu không có file để xử lý
-        else: # Nếu cả course_*.json và course.json đều không có
-            json_course = None
-            messagebox.showerror("Lỗi", "Không tìm thấy file course JSON hợp lệ nào trong thư mục data/. Vui lòng kiểm tra dữ liệu.")
-            return
-
-    # Duyệt qua các file course_*.json tìm được
-    for file_path in course_files:
-        try:
-            with open(file_path, "r", encoding="utf-8") as file:
-                temp_course_data = json.load(file)
-                course_name = temp_course_data.get("course_name") # Lấy tên môn học từ file
-                if course_name:
-                    COURSE_FILE_MAP[course_name] = file_path
-                    print(f"DEBUG: Found course file: {course_name} -> {file_path}")
-                else:
-                    print(f"Cảnh báo: File {file_path} thiếu trường 'course_name'. Bỏ qua.")
-        except Exception as e: # Catch specific exception
-            print(f"Lỗi khi đọc file course JSON {file_path}: {e}")
-
-    # Tải course mặc định khi khởi động (ví dụ: Kỹ thuật lập trình (C))
-    default_course_name = "Kỹ thuật lập trình (C)"
-    if default_course_name in COURSE_FILE_MAP:
-        try:
-            with open(COURSE_FILE_MAP[default_course_name], "r", encoding="utf-8") as file:
-                json_course = json.load(file)
-            print(f"DEBUG: Loaded initial course: {default_course_name}")
-        except Exception as e: # Catch specific exception
-            print(f"Lỗi tải course ban đầu '{default_course_name}': {e}")
-            json_course = None
-    elif COURSE_FILE_MAP: # Nếu không tìm thấy mặc định, chọn cái đầu tiên tìm được
-        first_course_name = list(COURSE_FILE_MAP.keys())[0]
-        try:
-            with open(COURSE_FILE_MAP[first_course_name], "r", encoding="utf-8") as file:
-                json_course = json.load(file)
-            print(f"DEBUG: Loaded initial course: {first_course_name} (fallback)")
-        except Exception as e: # Catch specific exception
-            print(f"Lỗi tải course ban đầu '{first_course_name}': {e}")
-            json_course = None
-    else: # Không có file course nào hợp lệ
-        json_course = None
-        messagebox.showerror("Lỗi", "Không tìm thấy file course JSON hợp lệ nào trong thư mục data/. Vui lòng kiểm tra dữ liệu.")
 
 def update_course_from_course_update(path_course_update):
     global json_course
@@ -1118,75 +907,43 @@ def btn_refesh_offline_click(args):
 #     messagebox.showinfo("Thông báo", f"Bạn đã chọn môn: {selected_course_title}. "
 #                                    "Danh sách bài tập sẽ hiển thị khi chọn khóa học cụ thể.")
 
-# # Định nghĩa hàm on_course_select ở cấp độ toàn cục (trước hàm main())
-# def on_course_select(event, tree_widget, json_course_data, course_var_obj):
-#     selected_course_title = course_var_obj.get()
-#     print(f"Môn học được chọn: {selected_course_title}")
-
-#     # Xóa tất cả các node hiện tại trong treeview
-#     for item in tree_widget.get_children():
-#         tree_widget.delete(item)
-
-#     if json_course_data and "sessions" in json_course_data:
-#         # Nếu chọn "Kỹ thuật lập trình (C)", tải toàn bộ nội dung từ json_course
-#         if selected_course_title == "Kỹ thuật lập trình (C)":
-#             # Gọi hàm tải toàn bộ dữ liệu vào treeview
-#             tree_load(tree_widget, json_course_data)
-#             #messagebox.showinfo("Thông báo", f"Đã tải danh sách bài tập cho môn: {selected_course_title}")
-#         elif selected_course_title == "Kỹ thuật lập trình (Java)":
-#             # Xử lý cho môn Java (ví dụ: tải file JSON khác hoặc hiển thị thông báo)
-#             messagebox.showinfo("Thông báo", f"Bạn đã chọn môn: {selected_course_title}. "
-#                                            "Chức năng tải bài tập cho Java chưa được triển khai.")
-#             # Sau này, bạn có thể thêm logic để load một file JSON khác (ví dụ: course_java.json)
-#             # global json_course # Nếu bạn thay đổi json_course toàn cục
-#             # try:
-#             #     with open("data/course_java.json", "r", encoding="utf-8") as f:
-#             #         json_course_java = json.load(f)
-#             #     tree_load(tree_widget, json_course_java)
-#             #     messagebox.showinfo("Thông báo", f"Đã tải bài tập cho {selected_course_title}.")
-#             # except FileNotFoundError:
-#             #     messagebox.showwarning("Cảnh báo", f"File course_java.json không tìm thấy.")
-#             # except Exception as e:
-#             #     messagebox.showerror("Lỗi", f"Lỗi khi tải file Java: {e}")
-#         else:
-#             # Các môn học khác
-#             messagebox.showinfo("Thông báo", f"Bạn đã chọn môn: {selected_course_title}. "
-#                                            "Hiện tại chỉ hỗ trợ tải bài tập cho 'Kỹ thuật lập trình (C)'.")
-#     else:
-#         messagebox.showwarning("Dữ liệu lỗi", "Không có dữ liệu khóa học để hiển thị (json_course rỗng).")
-        
 # Định nghĩa hàm on_course_select ở cấp độ toàn cục (trước hàm main())
-def on_course_select(event, tree_widget, json_course_data_current, course_var_obj): # đổi tên json_course_data thành json_course_data_current
-    global json_course # Khai báo để có thể thay đổi biến global json_course
-
-    selected_course_name = course_var_obj.get()
-    print(f"Môn học được chọn: {selected_course_name}")
+def on_course_select(event, tree_widget, json_course_data, course_var_obj):
+    selected_course_title = course_var_obj.get()
+    print(f"Môn học được chọn: {selected_course_title}")
 
     # Xóa tất cả các node hiện tại trong treeview
     for item in tree_widget.get_children():
         tree_widget.delete(item)
 
-    if selected_course_name in COURSE_FILE_MAP: # Kiểm tra xem môn học có trong bản đồ file không
-        file_path_to_load = COURSE_FILE_MAP[selected_course_name]
-        try:
-            with open(file_path_to_load, "r", encoding="utf-8") as file:
-                json_course_new = json.load(file) # Tải dữ liệu từ file mới
-            
-            json_course = json_course_new # Cập nhật biến global json_course
-            
-            tree_load(tree_widget, json_course) # Tải dữ liệu mới vào treeview
-            #messagebox.showinfo("Thông báo", f"Đã tải danh sách bài tập cho môn: {selected_course_name}.")
-            print(f"DEBUG: Loaded course: {selected_course_name} from {file_path_to_load}")
-
-        except FileNotFoundError:
-            messagebox.showerror("Lỗi", f"Không tìm thấy file: {file_path_to_load}")
-            print(f"ERROR: File not found: {file_path_to_load}")
-        except Exception as e:
-            messagebox.showerror("Lỗi", f"Lỗi khi tải dữ liệu cho môn {selected_course_name}: {e}")
-            print(f"ERROR: Failed to load course {selected_course_name}: {e}")
+    if json_course_data and "sessions" in json_course_data:
+        # Nếu chọn "Kỹ thuật lập trình (C)", tải toàn bộ nội dung từ json_course
+        if selected_course_title == "Kỹ thuật lập trình (C)":
+            # Gọi hàm tải toàn bộ dữ liệu vào treeview
+            tree_load(tree_widget, json_course_data)
+            #messagebox.showinfo("Thông báo", f"Đã tải danh sách bài tập cho môn: {selected_course_title}")
+        elif selected_course_title == "Kỹ thuật lập trình (Java)":
+            # Xử lý cho môn Java (ví dụ: tải file JSON khác hoặc hiển thị thông báo)
+            messagebox.showinfo("Thông báo", f"Bạn đã chọn môn: {selected_course_title}. "
+                                           "Chức năng tải bài tập cho Java chưa được triển khai.")
+            # Sau này, bạn có thể thêm logic để load một file JSON khác (ví dụ: course_java.json)
+            # global json_course # Nếu bạn thay đổi json_course toàn cục
+            # try:
+            #     with open("data/course_java.json", "r", encoding="utf-8") as f:
+            #         json_course_java = json.load(f)
+            #     tree_load(tree_widget, json_course_java)
+            #     messagebox.showinfo("Thông báo", f"Đã tải bài tập cho {selected_course_title}.")
+            # except FileNotFoundError:
+            #     messagebox.showwarning("Cảnh báo", f"File course_java.json không tìm thấy.")
+            # except Exception as e:
+            #     messagebox.showerror("Lỗi", f"Lỗi khi tải file Java: {e}")
+        else:
+            # Các môn học khác
+            messagebox.showinfo("Thông báo", f"Bạn đã chọn môn: {selected_course_title}. "
+                                           "Hiện tại chỉ hỗ trợ tải bài tập cho 'Kỹ thuật lập trình (C)'.")
     else:
-        messagebox.showwarning("Cảnh báo", f"Không tìm thấy file dữ liệu cho môn: {selected_course_name}.")
-
+        messagebox.showwarning("Dữ liệu lỗi", "Không có dữ liệu khóa học để hiển thị (json_course rỗng).")
+        
 def on_select(event,args):
     #{"tree":tree,"fr_tree":fr_lesson_tree,"queue":queue,"output":txt_output}
     global json_course
@@ -1493,104 +1250,13 @@ def main():
         
         tk.Label(fr_footer, text=f'Version:{APP_VERSION}', font=("Arial", 14), fg="white", bg="green").grid(row=0, column=2, sticky='e')
 
-        # # ------------------- Bắt đầu phần tạo các frame và widget con (CHỈ MỘT LẦN DUY NHẤT) ---------------------
-        # fr_left.rowconfigure(0, weight=1)
-        # fr_left.columnconfigure(0, weight=1)
-        
-        # fr_nav = tk.Frame(fr_left, bg='gray')
-        # fr_nav.grid(row=0, column=0, sticky='nswe')
-        
-        # fr_nav.rowconfigure(0, weight=0) # Label
-        # fr_nav.rowconfigure(1, weight=0) # Combobox
-        # fr_nav.rowconfigure(2, weight=1) # Treeview (phần này sẽ co giãn)
-        # fr_nav.columnconfigure(0, weight=1)
-
-        # tk.Label(fr_nav, text="Danh sách bài tập", font=("Arial", 12),
-        #         fg="white", bg="black").grid(row=0, column=0, sticky='nswe')
-    
-        # course_var = tk.StringVar()
-        # course_combobox = ttk.Combobox(fr_nav, textvariable=course_var, font=("Arial", 11), state="readonly")
-        # course_combobox.grid(row=1, column=0, sticky='ew', padx=5, pady=2) 
-        
-        # simple_course_titles = [
-        #     "Kỹ thuật lập trình (C)",
-        #     "Kỹ thuật lập trình (Java)",
-        #     "Cấu trúc dữ liệu và giải thuật",
-        #     "Mạng máy tính cơ bản"
-        # ]
-        # course_combobox['values'] = simple_course_titles
-        
-        # fr_lesson_tree = tk.Frame(fr_nav, bg='yellow')
-        # fr_lesson_tree.grid(row=2, column=0, sticky='nswe') 
-        
-        # fr_lesson_tree.rowconfigure(0, weight=1)
-        # fr_lesson_tree.columnconfigure(0, weight=1)
-
-        # # tree = ttk.Treeview(fr_lesson_tree, columns=("status", "score"), show="tree headings") 
-        # # tree.heading("status", text="Trạng thái", anchor='w')
-        # # tree.heading("score", text="Điểm", anchor='w')
-        # # tree.column("status", width=75, stretch=False)
-        # # tree.column("score", width=75, stretch=False)
-        # # tree.grid(row=0, column=0, sticky='nswe')
-        
-        # tree = ttk.Treeview(fr_lesson_tree, columns=("status", "score"), show="tree headings") 
-        
-        # # Đặt tiêu đề cho cột cây (cột đầu tiên)
-        # tree.heading("#0", text="Buổi và tên bài", anchor='w') # [cite: 1]
-        
-        # tree.heading("status", text="Trạng thái", anchor='w')
-        # tree.heading("score", text="Điểm", anchor='w')
-        # tree.column("status", width=75, stretch=False)
-        # tree.column("score", width=75, stretch=False)
-        # tree.grid(row=0, column=0, sticky='nswe')
-        
-        # # if simple_course_titles:
-        # #     course_combobox.set(simple_course_titles[0]) # Chọn mục đầu tiên mặc định
-        # #     # Liên kết sự kiện chọn của combobox.
-        # #     course_combobox.bind("<<ComboboxSelected>>", 
-        # #                         lambda event: on_course_select(event, tree, json_course, course_var)) 
-            
-        # #     # Tải toàn bộ json_course vào treeview khi khởi động
-        # #     # Sử dụng window.after để đảm bảo treeview đã sẵn sàng
-        # #     if json_course is not None:
-        # #         window.after(100, lambda: tree_load(tree, json_course)) # Đây là lời gọi tải dữ liệu ban đầu
-        # #     else:
-        # #         messagebox.showerror("Error", "lỗi load file data (course.json).")
-        # #         for item in tree.get_children():
-        # #             tree.delete(item)
-        # # else:
-        # #     messagebox.showerror("Error", "Không có dữ liệu môn học hoặc khóa học để hiển thị.")
-        # #     for item in tree.get_children():
-        # #         tree.delete(item)       
-        
-        # if simple_course_titles:
-        #     course_combobox.set("Kỹ thuật lập trình (C)") # Chọn mặc định "Kỹ thuật lập trình (C)"
-            
-        #     # Liên kết sự kiện chọn của combobox.
-        #     course_combobox.bind("<<ComboboxSelected>>", 
-        #                         lambda event: on_course_select(event, tree, json_course, course_var)) 
-            
-        #     # *** TẢI TOÀN BỘ JSON_COURSE VÀO TREEVIEW KHI KHỞI ĐỘNG (CHỈ MỘT LẦN) ***
-        #     # Loại bỏ lời gọi window.after(100, lambda: tree_load(tree, json_course))
-        #     # Thay vào đó, gọi trực tiếp tree_load SAU KHI tree đã được tạo.
-        #     if json_course is not None:
-        #         tree_load(tree, json_course) # Gọi tree_load ngay khi khởi tạo
-        #     else:
-        #         messagebox.showerror("Error", "lỗi load file data (course.json).")
-        #         for item in tree.get_children():
-        #             tree.delete(item)
-        # else:
-        #     messagebox.showerror("Error", "Không có dữ liệu môn học hoặc khóa học để hiển thị.")
-        #     for item in tree.get_children():
-        #         tree.delete(item)    
-
-        # ------------------- BẮT ĐẦU KHỐI TẠO FR_NAV VÀ CÁC WIDGET CON ---------------------
+        # ------------------- Bắt đầu phần tạo các frame và widget con (CHỈ MỘT LẦN DUY NHẤT) ---------------------
         fr_left.rowconfigure(0, weight=1)
         fr_left.columnconfigure(0, weight=1)
-
+        
         fr_nav = tk.Frame(fr_left, bg='gray')
         fr_nav.grid(row=0, column=0, sticky='nswe')
-
+        
         fr_nav.rowconfigure(0, weight=0) # Label
         fr_nav.rowconfigure(1, weight=0) # Combobox
         fr_nav.rowconfigure(2, weight=1) # Treeview (phần này sẽ co giãn)
@@ -1598,55 +1264,83 @@ def main():
 
         tk.Label(fr_nav, text="Danh sách bài tập", font=("Arial", 12),
                 fg="white", bg="black").grid(row=0, column=0, sticky='nswe')
-
+    
         course_var = tk.StringVar()
         course_combobox = ttk.Combobox(fr_nav, textvariable=course_var, font=("Arial", 11), state="readonly")
         course_combobox.grid(row=1, column=0, sticky='ew', padx=5, pady=2) 
-
-        # Lấy danh sách các tên môn học từ bản đồ
-        available_course_names = list(COURSE_FILE_MAP.keys()) # Lấy các khóa (tên môn học)
-        course_combobox['values'] = available_course_names # Gán cho combobox
-
+        
+        simple_course_titles = [
+            "Kỹ thuật lập trình (C)",
+            "Kỹ thuật lập trình (Java)",
+            "Cấu trúc dữ liệu và giải thuật",
+            "Mạng máy tính cơ bản"
+        ]
+        course_combobox['values'] = simple_course_titles
+        
         fr_lesson_tree = tk.Frame(fr_nav, bg='yellow')
         fr_lesson_tree.grid(row=2, column=0, sticky='nswe') 
-
+        
         fr_lesson_tree.rowconfigure(0, weight=1)
         fr_lesson_tree.columnconfigure(0, weight=1)
 
+        # tree = ttk.Treeview(fr_lesson_tree, columns=("status", "score"), show="tree headings") 
+        # tree.heading("status", text="Trạng thái", anchor='w')
+        # tree.heading("score", text="Điểm", anchor='w')
+        # tree.column("status", width=75, stretch=False)
+        # tree.column("score", width=75, stretch=False)
+        # tree.grid(row=0, column=0, sticky='nswe')
+        
         tree = ttk.Treeview(fr_lesson_tree, columns=("status", "score"), show="tree headings") 
-        tree.heading("#0", text="Buổi và tên bài", anchor='w') 
+        
+        # Đặt tiêu đề cho cột cây (cột đầu tiên)
+        tree.heading("#0", text="Buổi và tên bài", anchor='w') # [cite: 1]
+        
         tree.heading("status", text="Trạng thái", anchor='w')
         tree.heading("score", text="Điểm", anchor='w')
         tree.column("status", width=75, stretch=False)
         tree.column("score", width=75, stretch=False)
         tree.grid(row=0, column=0, sticky='nswe')
-
-        if available_course_names: # Kiểm tra nếu có môn học khả dụng
-            # Chọn môn mặc định (ví dụ: "Kỹ thuật lập trình (C)") hoặc môn đầu tiên
-            default_selection = "Kỹ thuật lập trình (C)" 
-            if default_selection in available_course_names:
-                course_combobox.set(default_selection)
-            else:
-                course_combobox.set(available_course_names[0]) # Chọn cái đầu tiên nếu mặc định không có
-
+        
+        # if simple_course_titles:
+        #     course_combobox.set(simple_course_titles[0]) # Chọn mục đầu tiên mặc định
+        #     # Liên kết sự kiện chọn của combobox.
+        #     course_combobox.bind("<<ComboboxSelected>>", 
+        #                         lambda event: on_course_select(event, tree, json_course, course_var)) 
+            
+        #     # Tải toàn bộ json_course vào treeview khi khởi động
+        #     # Sử dụng window.after để đảm bảo treeview đã sẵn sàng
+        #     if json_course is not None:
+        #         window.after(100, lambda: tree_load(tree, json_course)) # Đây là lời gọi tải dữ liệu ban đầu
+        #     else:
+        #         messagebox.showerror("Error", "lỗi load file data (course.json).")
+        #         for item in tree.get_children():
+        #             tree.delete(item)
+        # else:
+        #     messagebox.showerror("Error", "Không có dữ liệu môn học hoặc khóa học để hiển thị.")
+        #     for item in tree.get_children():
+        #         tree.delete(item)       
+        
+        if simple_course_titles:
+            course_combobox.set("Kỹ thuật lập trình (C)") # Chọn mặc định "Kỹ thuật lập trình (C)"
+            
             # Liên kết sự kiện chọn của combobox.
             course_combobox.bind("<<ComboboxSelected>>", 
                                 lambda event: on_course_select(event, tree, json_course, course_var)) 
-
-            # *** Tải dữ liệu ban đầu cho treeview từ json_course đã được tải trong load_app_data() ***
+            
+            # *** TẢI TOÀN BỘ JSON_COURSE VÀO TREEVIEW KHI KHỞI ĐỘNG (CHỈ MỘT LẦN) ***
+            # Loại bỏ lời gọi window.after(100, lambda: tree_load(tree, json_course))
+            # Thay vào đó, gọi trực tiếp tree_load SAU KHI tree đã được tạo.
             if json_course is not None:
-                # Lời gọi này sẽ tải dữ liệu của môn mặc định đã được set trong load_app_data
-                tree_load(tree, json_course) 
+                tree_load(tree, json_course) # Gọi tree_load ngay khi khởi tạo
             else:
-                messagebox.showerror("Error", "Lỗi tải dữ liệu khóa học ban đầu.")
+                messagebox.showerror("Error", "lỗi load file data (course.json).")
                 for item in tree.get_children():
                     tree.delete(item)
         else:
-            messagebox.showerror("Error", "Không tìm thấy file khóa học hợp lệ nào trong thư mục data/.")
+            messagebox.showerror("Error", "Không có dữ liệu môn học hoặc khóa học để hiển thị.")
             for item in tree.get_children():
-                tree.delete(item) 
-                
-        # ------------------- KẾT THÚC KHỐI TẠO FR_NAV VÀ CÁC WIDGET CON ---------------------
+                tree.delete(item)    
+
         #fr_input (bên trong fr_center)
         fr_center.rowconfigure(0, weight=3)
         fr_center.columnconfigure(0, weight=1)

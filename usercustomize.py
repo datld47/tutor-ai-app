@@ -19,16 +19,9 @@ def get_path(path):
 def get_path_join(abspath,path):
     return os.path.abspath(os.path.join(abspath,f'./{path}'))
 
-
-
-
-
 sys.path.append(get_path('user_library'))
 sys.path.append(get_path('user_control'))
 sys.path.append(get_path('project'))
-
-
-
 
 #thao tac folder
 def create_folder(folder_path):

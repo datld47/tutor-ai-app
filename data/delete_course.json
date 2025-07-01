@@ -1,13 +1,13 @@
 {
-  "course_name": "Kỹ thuật lập trình (C)",
+  "course_name": "Kỹ thuật lập trình (Java)",
   "task_list_title": "Chi tiết danh sách bài tập của từng buổi",
   "sessions": [
     {
-      "title": "Buổi 1: Hàm printf",
+      "title": "Buổi 1: Hàm printf java",
       "exercises": [
         {
           "id": 1,
-          "title": "Bài 1.1: In helloworld",
+          "title": "Bài 1.1: In helloworld java",
           "description": "Viết chương trình tính in chữ  helloworld ra màn hình. Kết quả gióng như `Hình 1`",
           "status": "✗",
           "score": 0,

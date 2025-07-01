@@ -92,8 +92,6 @@ queue_log=Queue()
 ID_EXERCISE=None
 MAX_RETRY=2
 
-COURSE_FILE_MAP = {} # Biến mới để lưu ánh xạ từ tên môn học -> đường dẫn file JSON
-
 ###################################################################################################################
 ######## Khai báo lớp ##########
 class ExerciseStatus(Enum):
@@ -168,6 +166,77 @@ class us_gemini_image_description(tk.Frame):
         self.image_label.configure(image=img_tk)
         self.image_label.image = img_tk  # giữ ảnh trong bộ nhớ
 
+# class us_login(tk.Toplevel):
+    
+#         def __init__(self,parent, args, width=300,height=150):
+#             super().__init__(parent)
+#             self.title('Đăng nhập')
+#             self.result='nok'
+            
+#             self.dict_user =args['dict_user']
+#             self.student_list=args['student_list']
+            
+#             screen_width = self.winfo_screenwidth()
+#             screen_height = self.winfo_screenheight()
+#             # Tính vị trí giữa màn hình
+#             x = (screen_width // 2) - (width // 2)
+#             y = (screen_height // 2) - (height // 2)
+
+#             # Đặt kích thước và vị trí cửa sổ
+#             self.geometry(f"{width}x{height}+{x}+{y}")
+      
+#             #new_window.geometry()
+#             self.transient(parent)  # Gắn cửa sổ mới vào cửa sổ chính
+#             self.grab_set()       # Vô hiệu hóa tương tác với cửa sổ chính
+            
+#             self.columnconfigure(0,weight=1)
+#             self.columnconfigure(1,weight=1)
+#             self.rowconfigure(2,weight=1)
+            
+#             self.lbl_name=tk.Label(self,text='Đăng Nhập hệ thống',font=("Arial", 14),bg='green',fg='white')
+#             self.lbl_name.grid(row=0,column=0,columnspan=2,sticky='nswe',pady=5)
+            
+#             self.lbl_mssv=tk.Label(self,text='ID sinh viên',font=("Arial", 12))
+#             self.lbl_mssv.grid(row=1,column=0,sticky='ns')
+            
+#             self.txt_mssv=tk.Entry(self,font=("Arial", 12))
+#             self.txt_mssv.grid(row=1,column=1,sticky='we',padx=5,pady=10)
+            
+#             if self.dict_user is not None:
+#                 mssv=self.dict_user[0]['mssv']
+#                 self.txt_mssv.delete(0, tk.END)
+#                 self.txt_mssv.insert(0,mssv)
+            
+#             btn_submit=tk.Button(self,text='Đăng nhập',command=self.btn_submit_click,font=("Arial", 12))
+#             btn_submit.grid(row=2,column=0,columnspan=2,sticky='n',pady=5)
+                
+#             self.protocol("WM_DELETE_WINDOW", self.on_close)
+#             self.wait_window()
+            
+#         def on_close(self):
+#             print('đóng cửa sổ')
+#             self.result='nok'
+#             self.destroy()
+                    
+#         def btn_submit_click(self):
+#             mssv_=self.txt_mssv.get()
+#             if mssv_=='':
+#                 messagebox.showerror("Lỗi","Thông tin cần nhập đầy đủ")
+#             else:
+#                 print(mssv_)
+#                 for student in self.student_list:
+#                     if student['idsv']==mssv_:
+#                         name_=student['name']
+#                         id_=int(student['id'])
+#                         self.dict_user[0]['mssv']=mssv_
+#                         self.dict_user[0]['username']=name_
+#                         update_user_info(name_,mssv_)
+#                         update_api_key(id_)
+#                         messagebox.showinfo('info',f'Đăng nhập thành công: Xin chào {name_}')
+#                         self.result='ok'
+#                         self.destroy()
+#                         return
+#                 messagebox.showerror('error',f'Đăng nhập không thành công')
 
 class us_upload_file_to_google_driver(tk.Frame):
     def __init__(self, parent):
@@ -227,145 +296,6 @@ def is_connected():
     except requests.ConnectionError as err:
         return False
     
-# def load_app_data():
-    
-#     global STUDENT_LIST
-#     global API_KEY_LIST
-#     global API_KEY
-#     global MODEL
-#     global DICT_USER_INFO
-#     global json_course
-#     global main_rule
-#     global CACHE_STATUS
-#     global APP_VERSION
-#     global COURSE_FILE_MAP # THÊM COURSE_FILE_MAP
-   
-#     with open(PATH_STUDENT_LIST, "r", encoding="utf-8") as file:
-#         try:
-#             STUDENT_LIST=json.load(file)
-#         except:
-#             STUDENT_LIST=[]
-
-#     with open(PATH_JSON_CONFIG, "r", encoding="utf-8") as file:
-#         try:
-#             config=json.load(file)
-#             if not config['api'][0]['gemini_key']:
-#                 API_KEY_LIST= [
-#                                     "AIzaSyDvCMr_GJMvGxFynOvLedw04rqJ6_iElF0",
-#                                     "AIzaSyAF5-pKkd-y_EJYRoOQbYgw7fAmNWtvsq4",
-#                                     "AIzaSyAxVA26qSbc3Hvg6Hdqti4HvxtU0wN1sqo",
-#                                     "AIzaSyDrCxX9U0zNXPVkU2SE9wpGeN0sSYwNJ2I",
-#                                     "AIzaSyAK4nsb74n2I51jt3sH9bqpuHMRlJntV6Q",
-#                                     "AIzaSyAeB3zypsW9cgqENXPt1QfwkSBL7Bm2BAM",
-#                                     "AIzaSyD5j90VdXoQCRiVWD0bMzhpSXiOIcWx_Mg",
-#                                     "AIzaSyAhl5OP4FG7m048BHjjiKhZSC4pFrMBpVo",
-#                                     "AIzaSyDy5z-BHwmPL8ItNJJ6IdNaWjw-l2bNR4E",
-#                                     "AIzaSyAi2miv5ixUjrMTrFehhPH62Efo6wMIMMA",
-#                                     "AIzaSyBEpoVLETjcehxmd7faIkU7lablGAm7k9k",
-#                                     "AIzaSyBP39bWjuKeCDYqzLlY1FBueSQH2wtGfDg",
-#                                     "AIzaSyBrLVKtuwIs11WjYVS-1VyYICpkxpcRLys",
-#                                     "AIzaSyAT7ghjymT6klV-uN_8zqaGapnxnHJO7FI",
-#                                     "AIzaSyDhUZ9TOsGH5oIj4xHVg7wTootfe0eJCjY",
-#                                     "AIzaSyAg85SyVh8bwmoAHD5ClMYPSZDYcUKZge8",
-#                                     "AIzaSyBgXlzFpaQJbAaj-_6DYeE4m-Q-fYq21GM",
-#                                     "AIzaSyDLBPmqFncpruW52U5jQvWsLbkeMsf6c0g",
-#                                     "AIzaSyB64OSSTmfiaAKokNhYIeG1xHAv1Vq4jEw",
-#                                     "AIzaSyB2rtw9IJH8U_T064-Egx-iq0l16vq9Bj0",
-#                                     "AIzaSyCcQ0B0xrMTrxfo_4FVvgVX059dHHu0WKA",
-#                                     "AIzaSyCMdYZUu20OuhGvg4GlkF9Tg1E-aCWuXgw",
-#                                     "AIzaSyDkI2K-mytvzdWm7isbcSATa0sELEtzuRU",
-#                                     "AIzaSyB0tadJbKusAxTbYQBkvTqulK2UkMU82sQ",
-#                                     "AIzaSyALNGPa7ub-cvNTBNz1oKKjU631yKHP3Hw",
-#                                     "AIzaSyApCym0pQaZFHKVZIABBrZdxpKV-mzCuZg",
-#                                     "AIzaSyBqmgmNPF76Ex5u7S0IWIP-tZyMVv_Bcxk",
-#                                     "AIzaSyBrx2NP9XH2wkimt9XItNe6g9lbIDg8A2c",
-#                                     "AIzaSyCZiYQ9rofcm3ndFDIPcpEXk3y0b2LbKLA",
-#                                     "AIzaSyCss_cuhhDcA2ScTtTJ9VttU7Zq35e3MOE",
-#                                     "AIzaSyBQM1j6IMi08CfToV96aS96XFCpcKUYyPE"                                    
-#                                 ]
-#             else:
-#                 API_KEY_LIST=config['api'][0]['gemini_key']
-            
-#             API_KEY=API_KEY_LIST[0]
-#             MODEL=config['api'][1]['model']
-#             DICT_USER_INFO=config['user']
-#             CACHE_STATUS=config['system'][0]['cache_status']
-#             print(f'cache_status={CACHE_STATUS}')
-#             APP_VERSION=config['system'][1]['version']
-#             print(f'APP_VERSION={APP_VERSION}')
-#         except:
-#             API_KEY=''
-#             MODEL=''
-#             DICT_USER_INFO=None
-    
-#     with open(PATH_JSON_COURSE, "r", encoding="utf-8") as file:
-#         try:
-#             json_course = json.load(file)
-#         except:
-#             json_course=None
-
-#     with open(PATH_JSON_RULE, "r", encoding="utf-8") as file:
-#         try:
-#             main_rule = file.read()
-#         except:
-#             main_rule=''
-            
-#      # --- PHẦN MỚI: QUÉT CÁC FILE COURSE VÀ TẠO ÁNH XẠ ---
-#     COURSE_FILE_MAP.clear() # Xóa map cũ nếu có
-#     course_files = glob.glob(os.path.join(get_path('data'), 'course_*.json')) # Tìm các file course_*.json
-
-#     if not course_files:
-#         # Fallback nếu không tìm thấy file nào theo mẫu mới. Thử tải course.json cũ.
-#         try:
-#             with open(PATH_JSON_COURSE, "r", encoding="utf-8") as file:
-#                 json_course = json.load(file)
-#                 if "course_name" not in json_course:
-#                     json_course["course_name"] = "Môn học mặc định (Course.json)" # Gán tên mặc định
-#                 COURSE_FILE_MAP[json_course["course_name"]] = PATH_JSON_COURSE
-#                 print(f"DEBUG: Loaded default course.json: {json_course['course_name']}")
-#         except Exception as e:
-#             print(f"Lỗi tải course.json mặc định: {e}")
-#             json_course = None
-#             messagebox.showwarning("Cảnh báo", "Không tìm thấy file course.json nào.")
-#         return # Thoát nếu không có file để xử lý
-
-#     # Duyệt qua các file course_*.json tìm được
-#     for file_path in course_files:
-#         try:
-#             with open(file_path, "r", encoding="utf-8") as file:
-#                 temp_course_data = json.load(file)
-#                 course_name = temp_course_data.get("course_name") # Lấy tên môn học từ file
-#                 if course_name:
-#                     COURSE_FILE_MAP[course_name] = file_path
-#                     print(f"DEBUG: Found course file: {course_name} -> {file_path}")
-#                 else:
-#                     print(f"Cảnh báo: File {file_path} thiếu trường 'course_name'. Bỏ qua.")
-#         except Exception as e:
-#             print(f"Lỗi khi đọc file course JSON {file_path}: {e}")
-
-#     # Tải course mặc định khi khởi động (ví dụ: Kỹ thuật lập trình (C))
-#     default_course_name = "Kỹ thuật lập trình (C)"
-#     if default_course_name in COURSE_FILE_MAP:
-#         try:
-#             with open(COURSE_FILE_MAP[default_course_name], "r", encoding="utf-8") as file:
-#                 json_course = json.load(file)
-#             print(f"DEBUG: Loaded initial course: {default_course_name}")
-#         except Exception as e:
-#             print(f"Lỗi tải course ban đầu '{default_course_name}': {e}")
-#             json_course = None
-#     elif COURSE_FILE_MAP: # Nếu không tìm thấy mặc định, chọn cái đầu tiên tìm được
-#         first_course_name = list(COURSE_FILE_MAP.keys())[0]
-#         try:
-#             with open(COURSE_FILE_MAP[first_course_name], "r", encoding="utf-8") as file:
-#                 json_course = json.load(file)
-#             print(f"DEBUG: Loaded initial course: {first_course_name} (fallback)")
-#         except Exception as e:
-#             print(f"Lỗi tải course ban đầu '{first_course_name}': {e}")
-#             json_course = None
-#     else: # Không có file course nào hợp lệ
-#         json_course = None
-#         messagebox.showerror("Lỗi", "Không tìm thấy file course JSON hợp lệ nào trong thư mục data/.")
-
 def load_app_data():
     
     global STUDENT_LIST
@@ -377,23 +307,18 @@ def load_app_data():
     global main_rule
     global CACHE_STATUS
     global APP_VERSION
-    global COURSE_FILE_MAP # THÊM COURSE_FILE_MAP
    
-    # Tải STUDENT_LIST (giữ nguyên)
     with open(PATH_STUDENT_LIST, "r", encoding="utf-8") as file:
         try:
             STUDENT_LIST=json.load(file)
-        except Exception as e: # Catch specific exception
-            print(f"Lỗi tải student.json: {e}")
+        except:
             STUDENT_LIST=[]
 
-    # Tải CONFIG (giữ nguyên)
     with open(PATH_JSON_CONFIG, "r", encoding="utf-8") as file:
         try:
             config=json.load(file)
-            if not config['api'][0].get('gemini_key') or not config['api'][0]['gemini_key']: # Use .get()
-                # ... (API Keys mặc định) ...
-                API_KEY_LIST= [ # Các API key mặc định
+            if not config['api'][0]['gemini_key']:
+                API_KEY_LIST= [
                                     "AIzaSyDvCMr_GJMvGxFynOvLedw04rqJ6_iElF0",
                                     "AIzaSyAF5-pKkd-y_EJYRoOQbYgw7fAmNWtvsq4",
                                     "AIzaSyAxVA26qSbc3Hvg6Hdqti4HvxtU0wN1sqo",
@@ -429,94 +354,29 @@ def load_app_data():
             else:
                 API_KEY_LIST=config['api'][0]['gemini_key']
             
-            API_KEY=API_KEY_LIST[0] if API_KEY_LIST else '' # Handle empty API_KEY_LIST
+            API_KEY=API_KEY_LIST[0]
             MODEL=config['api'][1]['model']
             DICT_USER_INFO=config['user']
             CACHE_STATUS=config['system'][0]['cache_status']
             print(f'cache_status={CACHE_STATUS}')
             APP_VERSION=config['system'][1]['version']
             print(f'APP_VERSION={APP_VERSION}')
-        except Exception as e: # Catch specific exception
-            print(f"Lỗi khi tải config.json: {e}")
+        except:
             API_KEY=''
             MODEL=''
             DICT_USER_INFO=None
     
-    # --- XÓA KHỐI CODE NÀY: Nó đang cố gắng đọc course.json cũ ---
-    # with open(PATH_JSON_COURSE, "r", encoding="utf-8") as file:
-    #     try:
-    #         json_course = json.load(file)
-    #     except:
-    #         json_course=None
+    with open(PATH_JSON_COURSE, "r", encoding="utf-8") as file:
+        try:
+            json_course = json.load(file)
+        except:
+            json_course=None
 
-    # Tải RULE (giữ nguyên)
     with open(PATH_JSON_RULE, "r", encoding="utf-8") as file:
         try:
             main_rule = file.read()
-        except Exception as e: # Catch specific exception
-            print(f"Lỗi tải rule.md: {e}")
+        except:
             main_rule=''
-            
-    # --- PHẦN MỚI: QUÉT CÁC FILE COURSE VÀ TẠO ÁNH XẠ (Đã có, giữ nguyên) ---
-    COURSE_FILE_MAP.clear() # Xóa map cũ nếu có
-    course_files = glob.glob(os.path.join(get_path('data'), 'course_*.json')) # Tìm các file course_*.json
-
-    if not course_files:
-        # Fallback: Nếu không tìm thấy file course_*.json, cố gắng tải course.json cũ nếu tồn tại
-        if os.path.exists(PATH_JSON_COURSE): # KIỂM TRA SỰ TỒN TẠI CỦA FILE
-            try:
-                with open(PATH_JSON_COURSE, "r", encoding="utf-8") as file:
-                    json_course = json.load(file)
-                    if "course_name" not in json_course:
-                        json_course["course_name"] = "Môn học mặc định (Course.json)" # Gán tên mặc định
-                    COURSE_FILE_MAP[json_course["course_name"]] = PATH_JSON_COURSE
-                    print(f"DEBUG: Loaded default course.json: {json_course['course_name']}")
-            except Exception as e:
-                print(f"Lỗi tải course.json mặc định: {e}")
-                json_course = None
-                messagebox.showwarning("Cảnh báo", "Không tìm thấy file course.json nào.")
-            return # Thoát nếu không có file để xử lý
-        else: # Nếu cả course_*.json và course.json đều không có
-            json_course = None
-            messagebox.showerror("Lỗi", "Không tìm thấy file course JSON hợp lệ nào trong thư mục data/. Vui lòng kiểm tra dữ liệu.")
-            return
-
-    # Duyệt qua các file course_*.json tìm được
-    for file_path in course_files:
-        try:
-            with open(file_path, "r", encoding="utf-8") as file:
-                temp_course_data = json.load(file)
-                course_name = temp_course_data.get("course_name") # Lấy tên môn học từ file
-                if course_name:
-                    COURSE_FILE_MAP[course_name] = file_path
-                    print(f"DEBUG: Found course file: {course_name} -> {file_path}")
-                else:
-                    print(f"Cảnh báo: File {file_path} thiếu trường 'course_name'. Bỏ qua.")
-        except Exception as e: # Catch specific exception
-            print(f"Lỗi khi đọc file course JSON {file_path}: {e}")
-
-    # Tải course mặc định khi khởi động (ví dụ: Kỹ thuật lập trình (C))
-    default_course_name = "Kỹ thuật lập trình (C)"
-    if default_course_name in COURSE_FILE_MAP:
-        try:
-            with open(COURSE_FILE_MAP[default_course_name], "r", encoding="utf-8") as file:
-                json_course = json.load(file)
-            print(f"DEBUG: Loaded initial course: {default_course_name}")
-        except Exception as e: # Catch specific exception
-            print(f"Lỗi tải course ban đầu '{default_course_name}': {e}")
-            json_course = None
-    elif COURSE_FILE_MAP: # Nếu không tìm thấy mặc định, chọn cái đầu tiên tìm được
-        first_course_name = list(COURSE_FILE_MAP.keys())[0]
-        try:
-            with open(COURSE_FILE_MAP[first_course_name], "r", encoding="utf-8") as file:
-                json_course = json.load(file)
-            print(f"DEBUG: Loaded initial course: {first_course_name} (fallback)")
-        except Exception as e: # Catch specific exception
-            print(f"Lỗi tải course ban đầu '{first_course_name}': {e}")
-            json_course = None
-    else: # Không có file course nào hợp lệ
-        json_course = None
-        messagebox.showerror("Lỗi", "Không tìm thấy file course JSON hợp lệ nào trong thư mục data/. Vui lòng kiểm tra dữ liệu.")
 
 def update_course_from_course_update(path_course_update):
     global json_course
@@ -1097,95 +957,173 @@ def btn_refesh_offline_click(args):
             messagebox.showerror('Error','Lỗi load file course.json')
             return
     
+# def on_select(event,args):
+        
+#     #{"tree":tree,"fr_tree":fr_lesson_tree,"queue":queue,"output":txt_output}
+#     global json_course
+#     global history 
+#     global main_rule
+#     global ID_EXERCISE   
 
-# # Trong hàm on_course_select:
-# def on_course_select(event, tree_widget, json_course_data, course_var_obj):
-#     selected_course_title = course_var_obj.get()
-#     print(f"Môn học được chọn (không ảnh hưởng trực tiếp đến treeview): {selected_course_title}")
+#     tree=args['tree']
+#     fr_lesson_tree=args['fr_tree']
+#     queue=args['queue']
+#     output=args['output']
+#     fr_info=args['fr_info']
+#     selected_item = tree.focus()
+#     data = tree.item(selected_item)
+#     values = data.get("values")
+    
+#     ID_EXERCISE=None
+#     if values:
+#         session_index=values[-2]
+#         exercise_index = values[-1]
+#         print(session_index,exercise_index)
+#         exercise = json_course["sessions"][session_index]["exercises"][exercise_index]
+#         ID_EXERCISE=exercise['id']
+    
+#         tree.grid_forget()
 
-#     # Xóa tất cả các node hiện tại trong treeview (nếu bạn muốn treeview trống khi chọn môn)
-#     for item in tree_widget.get_children():
-#         tree_widget.delete(item)
+#         frame_content=tk.Frame(fr_lesson_tree)
+#         frame_content.grid(row=0,column=0,sticky='nswe')
+#         frame_content.columnconfigure(0,weight=1)
+#         frame_content.rowconfigure(1,weight=1)
+#         frame_content.rowconfigure(2,weight=1)
+#         frame_content.rowconfigure(4,weight=1)
+        
+#         tk.Label(frame_content, text=exercise["title"],font=("Arial", 12)).grid(row=0,column=0,sticky='nswe')
+#         txt=tk.Text(frame_content,font=("Arial", 12),height=10,width=40,wrap='word',bg='black',fg='white')
+#         txt.grid(row=1,column=0,sticky='nswe')
+#         txt.insert(tk.END, exercise["description"])
+        
+#         fr_pic=tk.Frame(frame_content,bg='gray')
+#         fr_pic.grid(row=2,column=0,sticky='nswe')
+        
+#         #fr_pic.columnconfigure(0,weight=1)
+#         fr_pic.rowconfigure(0,weight=0)
+        
+#         def btn_img_click(args):
 
-#     # *** LOẠI BỎ LOGIC LỌC JSON_COURSE DỰA TRÊN simple_course_titles ***
-#     # if json_course_data and "sessions" in json_course_data:
-#     #     # ... logic lọc cũ ...
-#     # else:
-#     #     messagebox.showwarning("Dữ liệu lỗi", "Không có dữ liệu khóa học để hiển thị (json_course rỗng).")
+#             new_window = tk.Toplevel(frame_content)
+#             new_window.title(args['img_tittle'])
+#             #new_window.geometry("500x400")  # Kích thước cửa sổ mới
+#             new_window.transient(frame_content)  # Gắn cửa sổ mới vào cửa sổ chính
+#             new_window.grab_set()       # Vô hiệu hóa tương tác với cửa sổ chính
 
-#     # Giả sử treeview sẽ chỉ được điền khi có một hành động khác (ví dụ: chọn khóa học chính)
-#     # Bạn có thể hiển thị một thông báo hoặc để trống.
-#     messagebox.showinfo("Thông báo", f"Bạn đã chọn môn: {selected_course_title}. "
-#                                    "Danh sách bài tập sẽ hiển thị khi chọn khóa học cụ thể.")
+#             new_window.rowconfigure(0,weight=1)
+#             new_window.columnconfigure(0,weight=1)
+            
+#             tk_label_image=label_image(new_window,args['img_path'],args['img_tittle'])
+#             tk_label_image.grid(row=0,column=0,sticky='nswe')
+            
+#             def on_close():
+#                 print('đóng cửa sổ')
+#                 new_window.destroy()
+            
+#             new_window.protocol("WM_DELETE_WINDOW", on_close)
+#             new_window.wait_window()
 
-# # Định nghĩa hàm on_course_select ở cấp độ toàn cục (trước hàm main())
+        
+#         btn_img=[]
+#         for i,img in enumerate(exercise["image"]):
+#             if(img['link']!=''):
+#                 img_path_=  get_path_join(PATH_IMG,img['link'])
+#                 img_title_= img['image_title']
+#                 btn_img.append({'id':i,'img_tittle':img_title_,'img_path':img_path_ ,'btn':tk.Button(fr_pic,text=img_title_)})
+
+#         for btn in btn_img:
+#             id = btn['id']
+#             btn['btn'].grid(row=0,column=id,sticky='w',padx='2')
+#             btn['btn'].config(command=lambda: btn_img_click({'img_tittle':img_title_,'img_path':img_path_}))
+            
+            
+#         tk.Label(frame_content, text="Hướng dẫn:",font=("Arial", 12), fg="white",bg="black").grid(row=3,column=0,sticky='nswe')
+#         txt_guidance=tk.Text(frame_content,font=("Arial", 11),height=10,width=40,wrap='word')
+#         txt_guidance.grid(row=4,column=0,sticky='nswe')
+                
+#         for g in exercise["guidance"]:
+#             txt_guidance.insert(tk.END, "• " + g+"\n")
+            
+#         def back_to_tree():
+#             frame_content.destroy()
+#             tree.grid(row=0, column=0, sticky='nswe')
+#             reload_tree(tree,json_course)
+            
+#         def help_from_AI(args):
+#             lbl_note=args['label']
+#             lbl_note.config(text="Đã upload bài tập lên AI", fg="blue")  # Thay đổi nội dung và màu chữ
+#             history.clear()
+#             print('clear cache ok')
+#             print(f'sesion_index={session_index};exercise_index={exercise_index}')
+#             prompt=create_main_rule(main_rule,json_sessions_to_markdown(json_course,session_index,exercise_index))
+#             #print(prompt)
+#             call_gemini_api_thread(prompt,queue,output,fr_info)
+        
+#         fr_button=tk.Frame(frame_content,bg='black')
+#         fr_button.grid(row=5,column=0,sticky='nswe')
+#         fr_button.columnconfigure(0,weight=1)
+#         fr_button.columnconfigure(1,weight=1)
+        
+#         lbl_note=tk.Label(fr_button,text='Nhấn nút tải bài tập lên AI để bắt đầu bài mới',font=("Arial", 11),fg='red')
+#         lbl_note.grid(row=1,column=0,columnspan=2,sticky='nswe')
+        
+#         tk.Button(fr_button, text="Quay lại",font=("Arial", 11), command=back_to_tree).grid(row=0, column=0, sticky='w', pady=10,padx=10)
+#         tk.Button(fr_button, text="Tải bài tập lên AI",font=("Arial", 11), command=lambda:help_from_AI({'label':lbl_note})).grid(row=0, column=1, sticky='w', pady=10,padx=10)
+
+# Định nghĩa hàm on_course_select ở cấp độ toàn cục
 # def on_course_select(event, tree_widget, json_course_data, course_var_obj):
 #     selected_course_title = course_var_obj.get()
 #     print(f"Môn học được chọn: {selected_course_title}")
 
-#     # Xóa tất cả các node hiện tại trong treeview
 #     for item in tree_widget.get_children():
 #         tree_widget.delete(item)
 
-#     if json_course_data and "sessions" in json_course_data:
-#         # Nếu chọn "Kỹ thuật lập trình (C)", tải toàn bộ nội dung từ json_course
-#         if selected_course_title == "Kỹ thuật lập trình (C)":
-#             # Gọi hàm tải toàn bộ dữ liệu vào treeview
-#             tree_load(tree_widget, json_course_data)
-#             #messagebox.showinfo("Thông báo", f"Đã tải danh sách bài tập cho môn: {selected_course_title}")
-#         elif selected_course_title == "Kỹ thuật lập trình (Java)":
-#             # Xử lý cho môn Java (ví dụ: tải file JSON khác hoặc hiển thị thông báo)
-#             messagebox.showinfo("Thông báo", f"Bạn đã chọn môn: {selected_course_title}. "
-#                                            "Chức năng tải bài tập cho Java chưa được triển khai.")
-#             # Sau này, bạn có thể thêm logic để load một file JSON khác (ví dụ: course_java.json)
-#             # global json_course # Nếu bạn thay đổi json_course toàn cục
-#             # try:
-#             #     with open("data/course_java.json", "r", encoding="utf-8") as f:
-#             #         json_course_java = json.load(f)
-#             #     tree_load(tree_widget, json_course_java)
-#             #     messagebox.showinfo("Thông báo", f"Đã tải bài tập cho {selected_course_title}.")
-#             # except FileNotFoundError:
-#             #     messagebox.showwarning("Cảnh báo", f"File course_java.json không tìm thấy.")
-#             # except Exception as e:
-#             #     messagebox.showerror("Lỗi", f"Lỗi khi tải file Java: {e}")
-#         else:
-#             # Các môn học khác
-#             messagebox.showinfo("Thông báo", f"Bạn đã chọn môn: {selected_course_title}. "
-#                                            "Hiện tại chỉ hỗ trợ tải bài tập cho 'Kỹ thuật lập trình (C)'.")
-#     else:
-#         messagebox.showwarning("Dữ liệu lỗi", "Không có dữ liệu khóa học để hiển thị (json_course rỗng).")
+#     if json_course_data:
+#         filtered_sessions = []
         
-# Định nghĩa hàm on_course_select ở cấp độ toàn cục (trước hàm main())
-def on_course_select(event, tree_widget, json_course_data_current, course_var_obj): # đổi tên json_course_data thành json_course_data_current
-    global json_course # Khai báo để có thể thay đổi biến global json_course
+#         # Logic lọc môn học, bạn có thể điều chỉnh thêm để khớp với dữ liệu thực tế
+#         if selected_course_title == "Kỹ thuật lập trình (C)":
+#             for i, session in enumerate(json_course_data["sessions"]):
+#                 if "C" in session["title"] or "Kỹ thuật lập trình (C)" == session["title"]:
+#                     filtered_sessions.append((i, session))
+#         elif selected_course_title == "Kỹ thuật lập trình (Java)":
+#             for i, session in enumerate(json_course_data["sessions"]):
+#                 if "Java" in session["title"] or "Kỹ thuật lập trình (Java)" == session["title"]:
+#                     filtered_sessions.append((i, session))
+#         # Thêm các điều kiện elif cho các môn học khác nếu cần
+#         else:
+#             messagebox.showinfo("Thông báo", f"Không tìm thấy bài tập cho môn: {selected_course_title}")
+#             return
+        
+#         if filtered_sessions:
+#             for original_session_index, session_data in filtered_sessions:
+#                 session_id_in_tree = tree_widget.insert("", "end", text=session_data["title"], open=True)
+#                 for j, ex in enumerate(session_data["exercises"]):
+#                     tree_widget.insert(session_id_in_tree, "end", text=ex["title"], values=(ex.get('status', '✗'), ex.get('score', 0), original_session_index, j))
+#         else:
+#             messagebox.showinfo("Thông báo", f"Không có bài tập cụ thể nào cho: {selected_course_title}")
+#     else:
+#         messagebox.showwarning("Dữ liệu lỗi", "Không có dữ liệu khóa học để hiển thị.")
 
-    selected_course_name = course_var_obj.get()
-    print(f"Môn học được chọn: {selected_course_name}")
+# Trong hàm on_course_select:
+def on_course_select(event, tree_widget, json_course_data, course_var_obj):
+    selected_course_title = course_var_obj.get()
+    print(f"Môn học được chọn (không ảnh hưởng trực tiếp đến treeview): {selected_course_title}")
 
-    # Xóa tất cả các node hiện tại trong treeview
+    # Xóa tất cả các node hiện tại trong treeview (nếu bạn muốn treeview trống khi chọn môn)
     for item in tree_widget.get_children():
         tree_widget.delete(item)
 
-    if selected_course_name in COURSE_FILE_MAP: # Kiểm tra xem môn học có trong bản đồ file không
-        file_path_to_load = COURSE_FILE_MAP[selected_course_name]
-        try:
-            with open(file_path_to_load, "r", encoding="utf-8") as file:
-                json_course_new = json.load(file) # Tải dữ liệu từ file mới
-            
-            json_course = json_course_new # Cập nhật biến global json_course
-            
-            tree_load(tree_widget, json_course) # Tải dữ liệu mới vào treeview
-            #messagebox.showinfo("Thông báo", f"Đã tải danh sách bài tập cho môn: {selected_course_name}.")
-            print(f"DEBUG: Loaded course: {selected_course_name} from {file_path_to_load}")
+    # *** LOẠI BỎ LOGIC LỌC JSON_COURSE DỰA TRÊN simple_course_titles ***
+    # if json_course_data and "sessions" in json_course_data:
+    #     # ... logic lọc cũ ...
+    # else:
+    #     messagebox.showwarning("Dữ liệu lỗi", "Không có dữ liệu khóa học để hiển thị (json_course rỗng).")
 
-        except FileNotFoundError:
-            messagebox.showerror("Lỗi", f"Không tìm thấy file: {file_path_to_load}")
-            print(f"ERROR: File not found: {file_path_to_load}")
-        except Exception as e:
-            messagebox.showerror("Lỗi", f"Lỗi khi tải dữ liệu cho môn {selected_course_name}: {e}")
-            print(f"ERROR: Failed to load course {selected_course_name}: {e}")
-    else:
-        messagebox.showwarning("Cảnh báo", f"Không tìm thấy file dữ liệu cho môn: {selected_course_name}.")
+    # Giả sử treeview sẽ chỉ được điền khi có một hành động khác (ví dụ: chọn khóa học chính)
+    # Bạn có thể hiển thị một thông báo hoặc để trống.
+    messagebox.showinfo("Thông báo", f"Bạn đã chọn môn: {selected_course_title}. "
+                                   "Danh sách bài tập sẽ hiển thị khi chọn khóa học cụ thể.")
 
 def on_select(event,args):
     #{"tree":tree,"fr_tree":fr_lesson_tree,"queue":queue,"output":txt_output}
@@ -1380,6 +1318,7 @@ def main():
     ##################################GUI###############################################################
     window = tk.Tk()
     window.title('app')
+    # Đặt minsize của cửa sổ chính đủ lớn để chứa bố cục ban đầu
     window.minsize(1200, 700) 
     
     #yêu cầu đăng nhập (bỏ comment nếu muốn sử dụng login)
@@ -1389,41 +1328,51 @@ def main():
     if (1): # Tạm thời bỏ qua login để test GUI
         window.state('zoomed') # Phóng to cửa sổ, giữ thanh tiêu đề
         
+        # Đảm bảo DICT_USER_INFO không None trước khi truy cập
         if DICT_USER_INFO and isinstance(DICT_USER_INFO, list) and len(DICT_USER_INFO) > 0:
             mssv = DICT_USER_INFO[0].get('mssv', '0')
             if mssv == '0' or mssv == '1':
                 ACCOUNT_ROLE = 'ADMIN'
         else:
             print("DICT_USER_INFO không hợp lệ hoặc rỗng.")
-            ACCOUNT_ROLE = 'GUEST'
+            ACCOUNT_ROLE = 'GUEST' # Gán một vai trò mặc định
 
         update_model()
 
+        # Cấu hình grid cho cửa sổ chính (window)
         window.grid_rowconfigure(1, weight=1) 
         window.grid_columnconfigure(0, weight=1) 
         
+        # fr_header: header hiển thị nút điều khiển #############################################
         fr_header = tk.Frame(window)
         fr_header.grid(row=0, column=0, columnspan=3, sticky='nswe', pady=5)
 
+        # fr_footer hiển thị thông tin footer #################################################
         fr_footer = tk.Frame(window)
         fr_footer.grid(row=2, column=0, columnspan=3, sticky='nswe')
         
         fr_header.columnconfigure(0, weight=1) 
         
+        # Tạo PanedWindow
         paned_window = ttk.PanedWindow(window, orient=tk.HORIZONTAL)
         paned_window.grid(row=1, column=0, columnspan=3, sticky='nswe', padx=5, pady=5) 
 
+        # fr_left: vùng trái trong PanedWindow #############################################
         fr_left = tk.Frame(paned_window, bg='lightgray') 
         paned_window.add(fr_left, weight=1) 
 
+        # fr_center: vùng giữa trong PanedWindow ##########################################
         fr_center = tk.Frame(paned_window, bg='darkgray') 
         paned_window.add(fr_center, weight=2) 
 
+        # fr_right: vùng phải trong PanedWindow #########################################
         fr_right = tk.Frame(paned_window, bg='gray') 
         paned_window.add(fr_right, weight=1) 
 
+        # Định nghĩa hàm đặt sashpos
         def set_initial_sashes_after_zoom():
-            window.update_idletasks() 
+            window.update_idletasks() # Đảm bảo cửa sổ đã được cập nhật và phóng to
+            
             current_paned_width = paned_window.winfo_width()
             
             min_width_left = 400
@@ -1443,18 +1392,21 @@ def main():
             paned_window.sashpos(1, sash_pos_1)
             print(f"DEBUG: PanedWidth: {current_paned_width}, Sash0: {paned_window.sashpos(0)}, Sash1: {paned_window.sashpos(1)}")
 
+        # Gọi hàm này sau một khoảng thời gian ngắn để đảm bảo cửa sổ đã hoàn toàn phóng to
         window.after(200, set_initial_sashes_after_zoom) 
         
+        # ------------------- Cấu hình các widget bên trong fr_header ---------------------
         fr_title = tk.Frame(fr_header, bg='green')
         fr_title.grid(row=0, column=0, sticky='nswe')
         fr_title.columnconfigure(0, weight=1) 
         
-        # tk.Label(fr_title, text='Kỹ thuật lập trình', font=("Arial", 14), 
-        #             fg="white", bg="green").grid(row=0, column=0, sticky='nswe')
+        tk.Label(fr_title, text='Kỹ thuật lập trình', font=("Arial", 14), 
+                    fg="white", bg="green").grid(row=0, column=0, sticky='nswe')
         
         fr_control = tk.Frame(fr_header, bg='gray')
         fr_control.grid(row=1, column=0, sticky='nswe')
         
+        # Các nút điều khiển trong fr_control (Đảm bảo chúng được tạo và gán biến)
         btn_exit = tk.Button(fr_control, text='Thoát', font=("Arial", 11), command=lambda: window_on_closing(window))
         btn_exit.grid(row=0, column=5, padx=5) 
         
@@ -1476,12 +1428,14 @@ def main():
         if ACCOUNT_ROLE == 'ADMIN':
             btn_refesh_offline.grid(row=0, column=4, padx=5)
 
+        # Các nút đã gây lỗi NameError trước đó, cần đảm bảo được định nghĩa và grid:
         btn_clear_cache = tk.Button(fr_control, text='Xóa Cache')
-        btn_clear_cache.grid(row=0, column=6, padx=5) 
+        btn_clear_cache.grid(row=0, column=6, padx=5) # Thay đổi column để không chồng chéo
 
         btn_load_rule = tk.Button(fr_control, text='load rule')
-        btn_load_rule.grid(row=0, column=7, padx=5) 
+        btn_load_rule.grid(row=0, column=7, padx=5) # Đặt ở vị trí khác
 
+        # Cấu hình footer
         fr_footer.columnconfigure(0, weight=1)
         
         fr_footer_tittle = tk.Frame(fr_footer)
@@ -1493,25 +1447,33 @@ def main():
         
         tk.Label(fr_footer, text=f'Version:{APP_VERSION}', font=("Arial", 14), fg="white", bg="green").grid(row=0, column=2, sticky='e')
 
-        # # ------------------- Bắt đầu phần tạo các frame và widget con (CHỈ MỘT LẦN DUY NHẤT) ---------------------
-        # fr_left.rowconfigure(0, weight=1)
-        # fr_left.columnconfigure(0, weight=1)
+        # ------------------- Bắt đầu phần tạo các frame và widget con ---------------------
+        #fr_nav (bên trong fr_left)
+        fr_left.rowconfigure(0, weight=1)
+        fr_left.columnconfigure(0, weight=1)
         
-        # fr_nav = tk.Frame(fr_left, bg='gray')
-        # fr_nav.grid(row=0, column=0, sticky='nswe')
+        fr_nav = tk.Frame(fr_left, bg='gray')
+        fr_nav.grid(row=0, column=0, sticky='nswe')
         
-        # fr_nav.rowconfigure(0, weight=0) # Label
-        # fr_nav.rowconfigure(1, weight=0) # Combobox
-        # fr_nav.rowconfigure(2, weight=1) # Treeview (phần này sẽ co giãn)
-        # fr_nav.columnconfigure(0, weight=1)
+        # Cấu hình grid cho fr_nav: 3 hàng (Label "Danh sách bài tập", Combobox, Treeview)
+        # Hàng 0: Label "Danh sách bài tập"
+        # Hàng 1: Combobox
+        # Hàng 2: Treeview
+        fr_nav.rowconfigure(0, weight=0) # Hàng cho Label (row 0) không co giãn
+        fr_nav.rowconfigure(1, weight=0) # Hàng cho Combobox (row 1) KHÔNG co giãn
+        fr_nav.rowconfigure(2, weight=1) # Hàng cho Treeview (row 2) sẽ co giãn
+        fr_nav.columnconfigure(0, weight=1)
 
+        # Dòng này là đúng, KHÔNG SỬA ĐỔI
         # tk.Label(fr_nav, text="Danh sách bài tập", font=("Arial", 12),
-        #         fg="white", bg="black").grid(row=0, column=0, sticky='nswe')
-    
+        #             fg="white", bg="black").grid(row=0, column=0, sticky='nswe')
+        
+        # # ---------- Bắt đầu phần thêm Combobox ĐƠN GIẢN (không dùng self) -----------
         # course_var = tk.StringVar()
         # course_combobox = ttk.Combobox(fr_nav, textvariable=course_var, font=("Arial", 11), state="readonly")
         # course_combobox.grid(row=1, column=0, sticky='ew', padx=5, pady=2) 
         
+        # # Danh sách các môn học cụ thể
         # simple_course_titles = [
         #     "Kỹ thuật lập trình (C)",
         #     "Kỹ thuật lập trình (Java)",
@@ -1520,133 +1482,89 @@ def main():
         # ]
         # course_combobox['values'] = simple_course_titles
         
-        # fr_lesson_tree = tk.Frame(fr_nav, bg='yellow')
-        # fr_lesson_tree.grid(row=2, column=0, sticky='nswe') 
-        
-        # fr_lesson_tree.rowconfigure(0, weight=1)
-        # fr_lesson_tree.columnconfigure(0, weight=1)
-
-        # # tree = ttk.Treeview(fr_lesson_tree, columns=("status", "score"), show="tree headings") 
-        # # tree.heading("status", text="Trạng thái", anchor='w')
-        # # tree.heading("score", text="Điểm", anchor='w')
-        # # tree.column("status", width=75, stretch=False)
-        # # tree.column("score", width=75, stretch=False)
-        # # tree.grid(row=0, column=0, sticky='nswe')
-        
-        # tree = ttk.Treeview(fr_lesson_tree, columns=("status", "score"), show="tree headings") 
-        
-        # # Đặt tiêu đề cho cột cây (cột đầu tiên)
-        # tree.heading("#0", text="Buổi và tên bài", anchor='w') # [cite: 1]
-        
-        # tree.heading("status", text="Trạng thái", anchor='w')
-        # tree.heading("score", text="Điểm", anchor='w')
-        # tree.column("status", width=75, stretch=False)
-        # tree.column("score", width=75, stretch=False)
-        # tree.grid(row=0, column=0, sticky='nswe')
-        
-        # # if simple_course_titles:
-        # #     course_combobox.set(simple_course_titles[0]) # Chọn mục đầu tiên mặc định
-        # #     # Liên kết sự kiện chọn của combobox.
-        # #     course_combobox.bind("<<ComboboxSelected>>", 
-        # #                         lambda event: on_course_select(event, tree, json_course, course_var)) 
-            
-        # #     # Tải toàn bộ json_course vào treeview khi khởi động
-        # #     # Sử dụng window.after để đảm bảo treeview đã sẵn sàng
-        # #     if json_course is not None:
-        # #         window.after(100, lambda: tree_load(tree, json_course)) # Đây là lời gọi tải dữ liệu ban đầu
-        # #     else:
-        # #         messagebox.showerror("Error", "lỗi load file data (course.json).")
-        # #         for item in tree.get_children():
-        # #             tree.delete(item)
-        # # else:
-        # #     messagebox.showerror("Error", "Không có dữ liệu môn học hoặc khóa học để hiển thị.")
-        # #     for item in tree.get_children():
-        # #         tree.delete(item)       
-        
         # if simple_course_titles:
-        #     course_combobox.set("Kỹ thuật lập trình (C)") # Chọn mặc định "Kỹ thuật lập trình (C)"
-            
-        #     # Liên kết sự kiện chọn của combobox.
+        #     course_combobox.set(simple_course_titles[0]) # Chọn mục đầu tiên mặc định
+        #     # Liên kết sự kiện chọn của combobox với hàm on_course_select
+        #     # Truyền các biến cần thiết làm đối số
         #     course_combobox.bind("<<ComboboxSelected>>", 
-        #                         lambda event: on_course_select(event, tree, json_course, course_var)) 
+        #                          lambda event: on_course_select(event, tree, json_course, course_var)) 
             
-        #     # *** TẢI TOÀN BỘ JSON_COURSE VÀO TREEVIEW KHI KHỞI ĐỘNG (CHỈ MỘT LẦN) ***
-        #     # Loại bỏ lời gọi window.after(100, lambda: tree_load(tree, json_course))
-        #     # Thay vào đó, gọi trực tiếp tree_load SAU KHI tree đã được tạo.
-        #     if json_course is not None:
-        #         tree_load(tree, json_course) # Gọi tree_load ngay khi khởi tạo
-        #     else:
-        #         messagebox.showerror("Error", "lỗi load file data (course.json).")
-        #         for item in tree.get_children():
-        #             tree.delete(item)
-        # else:
-        #     messagebox.showerror("Error", "Không có dữ liệu môn học hoặc khóa học để hiển thị.")
-        #     for item in tree.get_children():
-        #         tree.delete(item)    
-
-        # ------------------- BẮT ĐẦU KHỐI TẠO FR_NAV VÀ CÁC WIDGET CON ---------------------
-        fr_left.rowconfigure(0, weight=1)
-        fr_left.columnconfigure(0, weight=1)
-
-        fr_nav = tk.Frame(fr_left, bg='gray')
-        fr_nav.grid(row=0, column=0, sticky='nswe')
-
-        fr_nav.rowconfigure(0, weight=0) # Label
-        fr_nav.rowconfigure(1, weight=0) # Combobox
-        fr_nav.rowconfigure(2, weight=1) # Treeview (phần này sẽ co giãn)
-        fr_nav.columnconfigure(0, weight=1)
-
+        #     # Gọi hàm cập nhật treeview ngay sau khi chọn mặc định
+        #     # Truyền None cho event và các biến cần thiết
+        #     on_course_select(None, tree, json_course, course_var)
+        # ---------- Kết thúc phần thêm Combobox -----------
         tk.Label(fr_nav, text="Danh sách bài tập", font=("Arial", 12),
                 fg="white", bg="black").grid(row=0, column=0, sticky='nswe')
-
+    
         course_var = tk.StringVar()
         course_combobox = ttk.Combobox(fr_nav, textvariable=course_var, font=("Arial", 11), state="readonly")
         course_combobox.grid(row=1, column=0, sticky='ew', padx=5, pady=2) 
-
-        # Lấy danh sách các tên môn học từ bản đồ
-        available_course_names = list(COURSE_FILE_MAP.keys()) # Lấy các khóa (tên môn học)
-        course_combobox['values'] = available_course_names # Gán cho combobox
-
+        
+        simple_course_titles = [
+            "Kỹ thuật lập trình (C)",
+            "Kỹ thuật lập trình (Java)",
+            "Cấu trúc dữ liệu và giải thuật",
+            "Mạng máy tính cơ bản"
+        ]
+        course_combobox['values'] = simple_course_titles
+        
+        # fr_lesson_tree (chứa Treeview)
         fr_lesson_tree = tk.Frame(fr_nav, bg='yellow')
         fr_lesson_tree.grid(row=2, column=0, sticky='nswe') 
-
+        
         fr_lesson_tree.rowconfigure(0, weight=1)
         fr_lesson_tree.columnconfigure(0, weight=1)
 
         tree = ttk.Treeview(fr_lesson_tree, columns=("status", "score"), show="tree headings") 
-        tree.heading("#0", text="Buổi và tên bài", anchor='w') 
         tree.heading("status", text="Trạng thái", anchor='w')
         tree.heading("score", text="Điểm", anchor='w')
         tree.column("status", width=75, stretch=False)
         tree.column("score", width=75, stretch=False)
         tree.grid(row=0, column=0, sticky='nswe')
-
-        if available_course_names: # Kiểm tra nếu có môn học khả dụng
-            # Chọn môn mặc định (ví dụ: "Kỹ thuật lập trình (C)") hoặc môn đầu tiên
-            default_selection = "Kỹ thuật lập trình (C)" 
-            if default_selection in available_course_names:
-                course_combobox.set(default_selection)
-            else:
-                course_combobox.set(available_course_names[0]) # Chọn cái đầu tiên nếu mặc định không có
-
-            # Liên kết sự kiện chọn của combobox.
+        
+        if simple_course_titles:
+            course_combobox.set(simple_course_titles[0]) # Chọn mục đầu tiên mặc định
+            # Liên kết sự kiện chọn của combobox. Lời gọi này sẽ không lọc treeview ngay lập tức.
             course_combobox.bind("<<ComboboxSelected>>", 
                                 lambda event: on_course_select(event, tree, json_course, course_var)) 
-
-            # *** Tải dữ liệu ban đầu cho treeview từ json_course đã được tải trong load_app_data() ***
+            
+            # *** KHÔNG GỌI on_course_select LẦN ĐẦU TẠI ĐÂY NỮA ***
+            # Thay vào đó, hãy tải toàn bộ json_course vào treeview khi khởi động
             if json_course is not None:
-                # Lời gọi này sẽ tải dữ liệu của môn mặc định đã được set trong load_app_data
-                tree_load(tree, json_course) 
+                # Sử dụng window.after để đảm bảo treeview đã sẵn sàng
+                window.after(100, lambda: tree_load(tree, json_course)) #
             else:
-                messagebox.showerror("Error", "Lỗi tải dữ liệu khóa học ban đầu.")
+                messagebox.showerror("Error", "lỗi load file data (course.json).")
                 for item in tree.get_children():
                     tree.delete(item)
         else:
-            messagebox.showerror("Error", "Không tìm thấy file khóa học hợp lệ nào trong thư mục data/.")
+            messagebox.showerror("Error", "Không có dữ liệu môn học hoặc khóa học để hiển thị.")
             for item in tree.get_children():
-                tree.delete(item) 
-                
-        # ------------------- KẾT THÚC KHỐI TẠO FR_NAV VÀ CÁC WIDGET CON ---------------------
+                tree.delete(item)
+        
+        # fr_lesson_tree (chứa Treeview) sẽ ở hàng 2
+        # fr_lesson_tree = tk.Frame(fr_nav, bg='yellow')
+        # fr_lesson_tree.grid(row=2, column=0, sticky='nswe') # Treeview ở hàng 2
+        
+        # fr_lesson_tree.rowconfigure(0, weight=1)
+        # fr_lesson_tree.columnconfigure(0, weight=1)
+
+        # DÒNG NÀY ĐANG BỊ TRÙNG LẶP VÀ GÂY RA LỖI XÁO TRỘN, HÃY XÓA HOẶC COMMENT NÓ
+        # tk.Label(fr_nav, text="Danh sách bài tập", font=("Arial", 12),
+        #             fg="white", bg="black").grid(row=0, column=0, sticky='nswe')
+
+        # tree = ttk.Treeview(fr_lesson_tree, columns=("status", "score"), show="tree headings") # Biến cục bộ
+        # tree.heading("status", text="Trạng thái", anchor='w')
+        # tree.heading("score", text="Điểm", anchor='w')
+        # tree.column("status", width=75, stretch=False)
+        # tree.column("score", width=75, stretch=False)
+        
+        # tree.grid(row=0, column=0, sticky='nswe')
+        # Định nghĩa hàm on_course_select (bây giờ là một hàm cục bộ trong main()
+        # hoặc hàm global bên ngoài main() và truyền đối số)
+        # Để đơn giản, tôi sẽ giả định nó được định nghĩa bên ngoài main()
+        # và cập nhật cách bạn liên kết nó.        
+
         #fr_input (bên trong fr_center)
         fr_center.rowconfigure(0, weight=3)
         fr_center.columnconfigure(0, weight=1)
@@ -1665,7 +1583,7 @@ def main():
                 fr_input,
                 language="c",               
                 font=("Consolas", 14),
-                highlighter="monokai",      
+                highlighter="monokai",      # Sử dụng monokai nếu default gây lỗi
                 blockcursor=True,
                 cursor="xterm",             
                 wrap="word")
@@ -1687,6 +1605,7 @@ def main():
         btn_help = tk.Button(fr_input_btn, text='AI Giúp đỡ', font=("Arial", 11))
         btn_help.grid(row=0, column=2, sticky='n')
         
+        #fr_response (bên trong fr_right)
         fr_right.rowconfigure(0, weight=1)
         fr_right.columnconfigure(0, weight=1)
         
@@ -1723,11 +1642,12 @@ def main():
         # ------------------- Kết thúc phần tạo các frame và widget con ---------------------
 
         ############################# Logic : event ####################
+        # fr_control (các nút đã được tạo ở trên, bây giờ chỉ config command)
         btn_send.config(command=lambda: btn_send_click({'input': txt_input, 'queue': queue, 'output': txt_output}))
         btn_help.config(command=lambda: btn_help_click({'queue': queue, 'output': txt_output, 'fr_info': {'level': lbl_level, 'score': lbl_socre}}))
         btn_run_code.config(command=lambda: btn_run_code_click({'input': txt_input}))
         btn_clear_cache.config(command=lambda: btn_clear_cache_click({'input': txt_input, 'output': txt_output}))
-        btn_load_rule.config(command=lambda: btn_load_rule_click({'queue': queue, 'output': txt_output}))
+        btn_load_rule.config(command=lambda: btn_load_rule_click({'queue': queue, 'output': txt_output})) # Đảm bảo nút này đã được tạo
         btn_refesh.config(command=lambda: btn_refesh_click({"tree": tree}))
         btn_create_img_description.config(command=lambda: btn_create_img_description_click({'model': model, 'frame': fr_center}))
         btn_submit_exercise.config(command=lambda: btn_submit_exercise_click({'frame': fr_center}))
@@ -1735,10 +1655,15 @@ def main():
         btn_refesh_offline.config(command=lambda: btn_refesh_offline_click({"tree": tree}))
         
         tree.bind("<<TreeviewSelect>>", lambda event: on_select(event, {"tree": tree, "fr_tree": fr_lesson_tree, "queue": queue, "output": txt_output, "fr_info": {'level': lbl_level, 'score': lbl_socre}}))
-        
+        if json_course is not None:
+            tree_load(tree, json_course)
+        else:
+            messagebox.showerror("Error", "lỗi load file data")   
+            
         #sự kiện
         window.protocol("WM_DELETE_WINDOW", lambda: window_on_closing(window))
         
+        #load conversation
         if(CACHE_STATUS == 1):
             continue_conversation(txt_output, {'level': lbl_level, 'score': lbl_socre})
             

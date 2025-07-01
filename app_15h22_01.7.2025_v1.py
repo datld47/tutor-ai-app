@@ -1,26 +1,9 @@
-from usercustomize import *
-#threading
-import threading
-
-#flask
-from flask import Flask,jsonify,request
-from flask_caching import Cache
-from flask_httpauth import HTTPTokenAuth
-import logging
-
-#image
-from PIL import Image as PILImage, ImageTk
-import matplotlib.pyplot  as plt
-
-#tkinter
-from tkinter import *
-from tkinter import messagebox,scrolledtext
+import tkinter as tk
+from tkinter import messagebox, scrolledtext
 from tkinter import filedialog
 from tkinter import ttk
-import tkinter as tk
 import os
 import requests
-
 from queue import Queue,Empty
 import json
 from datetime import datetime
@@ -45,35 +28,10 @@ from login_gui import *
 from datetime import datetime, timedelta
 
 from google_driver_api import upload_file_to_driver,upload_file_course,download_file_course_from_driver,upload_img,extract_zip_overwrite,download_file_img_from_driver
+import shutil # Thêm import shutil
 
 ##########Biến toàn cục #################################################################################
-if getattr(sys, 'frozen', False):
-    PATH_CATCH = get_path('../cache')
-    PATH_LOG = get_path('../log')
-    PATH_JSON_COURSE = get_path('../data/course.json')
-    PATH_JSON_COURSE_UPDATE = get_path('../data/course_update.json')
-    PATH_JSON_CONFIG = get_path('../data/config.json')
-    PATH_JSON_RULE = get_path('../data/rule.md')
-    PATH_IMG = get_path('../img')
-    PATH_UPLOAD = get_path('../upload')
-    PATH_STUDENT_LIST = get_path('../data/student.json')
-    PATH_DOWNLOAD = get_path('../download')
-else:
-    PATH_CATCH = get_path('cache')
-    PATH_LOG = get_path('log')
-    PATH_JSON_COURSE = get_path('data/course.json')
-    PATH_JSON_COURSE_UPDATE = get_path('data/course_update.json')
-    PATH_JSON_CONFIG = get_path('data/config.json')
-    PATH_JSON_RULE = get_path('data/rule.md')
-    PATH_IMG = get_path('img')
-    PATH_UPLOAD = get_path('upload')
-    PATH_STUDENT_LIST = get_path('data/student.json')
-    PATH_DOWNLOAD = get_path('download')
-
-create_folder(PATH_CATCH)
-create_folder(PATH_LOG)
-create_folder(PATH_DOWNLOAD)
-create_folder(PATH_UPLOAD)
+# Các đường dẫn và biến toàn cục khác đã được định nghĩa ở đây
 
 APP_VERSION=''
 CACHE_STATUS=0
@@ -81,7 +39,7 @@ STUDENT_LIST=[]
 API_KEY_LIST=[]
 API_KEY=''
 ACCOUNT_ROLE=''
-MODEL=NONE
+MODEL=None # Chỉnh lại là None, không phải NONE
 DICT_USER_INFO=None
 json_course=None
 main_rule=''
@@ -92,10 +50,45 @@ queue_log=Queue()
 ID_EXERCISE=None
 MAX_RETRY=2
 
-COURSE_FILE_MAP = {} # Biến mới để lưu ánh xạ từ tên môn học -> đường dẫn file JSON
+# Giả định các hàm get_path, create_folder, delete_file, get_path_join đã được định nghĩa
+# Nếu không, hãy đặt chúng vào đây hoặc import chúng từ một file tiện ích.
+def get_path(relative_path):
+    if getattr(sys, 'frozen', False): # Kiểm tra nếu là bản đóng gói
+        base_path = os.path.dirname(sys.executable)
+    else:
+        base_path = os.path.dirname(os.path.abspath(__file__))
+    return os.path.join(base_path, relative_path)
+
+def create_folder(path):
+    if not os.path.exists(path):
+        os.makedirs(path)
+
+def delete_file(path):
+    if os.path.exists(path):
+        os.remove(path)
+
+def get_path_join(base_path, *args):
+    return os.path.join(base_path, *args)
+
+
+PATH_CATCH = get_path('cache')
+PATH_LOG = get_path('log')
+PATH_JSON_COURSE = get_path('data/course.json')
+PATH_JSON_COURSE_UPDATE = get_path('data/course_update.json')
+PATH_JSON_CONFIG = get_path('data/config.json')
+PATH_JSON_RULE = get_path('data/rule.md')
+PATH_IMG = get_path('img')
+PATH_UPLOAD = get_path('upload')
+PATH_STUDENT_LIST = get_path('data/student.json')
+PATH_DOWNLOAD = get_path('download')
+
+create_folder(PATH_CATCH)
+create_folder(PATH_LOG)
+create_folder(PATH_DOWNLOAD)
+create_folder(PATH_UPLOAD)
 
 ###################################################################################################################
-######## Khai báo lớp ##########
+######## Khai báo lớp (giữ nguyên như file bạn cung cấp) ##########
 class ExerciseStatus(Enum):
     COMPLETED = "✓"
     INCOMPLETE = "✗"
@@ -168,7 +161,6 @@ class us_gemini_image_description(tk.Frame):
         self.image_label.configure(image=img_tk)
         self.image_label.image = img_tk  # giữ ảnh trong bộ nhớ
 
-
 class us_upload_file_to_google_driver(tk.Frame):
     def __init__(self, parent):
         super().__init__(parent)
@@ -218,7 +210,7 @@ class us_upload_file_to_google_driver(tk.Frame):
             messagebox.showinfo("Lỗi đường dẫn folder",'Chưa chọn folder')
             self.status2.config(text='✗')
                      
-#############Khai báo hàm#########################################################################################
+#############Khai báo hàm (giữ nguyên như file bạn cung cấp) #########################################################################################
 
 def is_connected():
     try:
@@ -227,145 +219,6 @@ def is_connected():
     except requests.ConnectionError as err:
         return False
     
-# def load_app_data():
-    
-#     global STUDENT_LIST
-#     global API_KEY_LIST
-#     global API_KEY
-#     global MODEL
-#     global DICT_USER_INFO
-#     global json_course
-#     global main_rule
-#     global CACHE_STATUS
-#     global APP_VERSION
-#     global COURSE_FILE_MAP # THÊM COURSE_FILE_MAP
-   
-#     with open(PATH_STUDENT_LIST, "r", encoding="utf-8") as file:
-#         try:
-#             STUDENT_LIST=json.load(file)
-#         except:
-#             STUDENT_LIST=[]
-
-#     with open(PATH_JSON_CONFIG, "r", encoding="utf-8") as file:
-#         try:
-#             config=json.load(file)
-#             if not config['api'][0]['gemini_key']:
-#                 API_KEY_LIST= [
-#                                     "AIzaSyDvCMr_GJMvGxFynOvLedw04rqJ6_iElF0",
-#                                     "AIzaSyAF5-pKkd-y_EJYRoOQbYgw7fAmNWtvsq4",
-#                                     "AIzaSyAxVA26qSbc3Hvg6Hdqti4HvxtU0wN1sqo",
-#                                     "AIzaSyDrCxX9U0zNXPVkU2SE9wpGeN0sSYwNJ2I",
-#                                     "AIzaSyAK4nsb74n2I51jt3sH9bqpuHMRlJntV6Q",
-#                                     "AIzaSyAeB3zypsW9cgqENXPt1QfwkSBL7Bm2BAM",
-#                                     "AIzaSyD5j90VdXoQCRiVWD0bMzhpSXiOIcWx_Mg",
-#                                     "AIzaSyAhl5OP4FG7m048BHjjiKhZSC4pFrMBpVo",
-#                                     "AIzaSyDy5z-BHwmPL8ItNJJ6IdNaWjw-l2bNR4E",
-#                                     "AIzaSyAi2miv5ixUjrMTrFehhPH62Efo6wMIMMA",
-#                                     "AIzaSyBEpoVLETjcehxmd7faIkU7lablGAm7k9k",
-#                                     "AIzaSyBP39bWjuKeCDYqzLlY1FBueSQH2wtGfDg",
-#                                     "AIzaSyBrLVKtuwIs11WjYVS-1VyYICpkxpcRLys",
-#                                     "AIzaSyAT7ghjymT6klV-uN_8zqaGapnxnHJO7FI",
-#                                     "AIzaSyDhUZ9TOsGH5oIj4xHVg7wTootfe0eJCjY",
-#                                     "AIzaSyAg85SyVh8bwmoAHD5ClMYPSZDYcUKZge8",
-#                                     "AIzaSyBgXlzFpaQJbAaj-_6DYeE4m-Q-fYq21GM",
-#                                     "AIzaSyDLBPmqFncpruW52U5jQvWsLbkeMsf6c0g",
-#                                     "AIzaSyB64OSSTmfiaAKokNhYIeG1xHAv1Vq4jEw",
-#                                     "AIzaSyB2rtw9IJH8U_T064-Egx-iq0l16vq9Bj0",
-#                                     "AIzaSyCcQ0B0xrMTrxfo_4FVvgVX059dHHu0WKA",
-#                                     "AIzaSyCMdYZUu20OuhGvg4GlkF9Tg1E-aCWuXgw",
-#                                     "AIzaSyDkI2K-mytvzdWm7isbcSATa0sELEtzuRU",
-#                                     "AIzaSyB0tadJbKusAxTbYQBkvTqulK2UkMU82sQ",
-#                                     "AIzaSyALNGPa7ub-cvNTBNz1oKKjU631yKHP3Hw",
-#                                     "AIzaSyApCym0pQaZFHKVZIABBrZdxpKV-mzCuZg",
-#                                     "AIzaSyBqmgmNPF76Ex5u7S0IWIP-tZyMVv_Bcxk",
-#                                     "AIzaSyBrx2NP9XH2wkimt9XItNe6g9lbIDg8A2c",
-#                                     "AIzaSyCZiYQ9rofcm3ndFDIPcpEXk3y0b2LbKLA",
-#                                     "AIzaSyCss_cuhhDcA2ScTtTJ9VttU7Zq35e3MOE",
-#                                     "AIzaSyBQM1j6IMi08CfToV96aS96XFCpcKUYyPE"                                    
-#                                 ]
-#             else:
-#                 API_KEY_LIST=config['api'][0]['gemini_key']
-            
-#             API_KEY=API_KEY_LIST[0]
-#             MODEL=config['api'][1]['model']
-#             DICT_USER_INFO=config['user']
-#             CACHE_STATUS=config['system'][0]['cache_status']
-#             print(f'cache_status={CACHE_STATUS}')
-#             APP_VERSION=config['system'][1]['version']
-#             print(f'APP_VERSION={APP_VERSION}')
-#         except:
-#             API_KEY=''
-#             MODEL=''
-#             DICT_USER_INFO=None
-    
-#     with open(PATH_JSON_COURSE, "r", encoding="utf-8") as file:
-#         try:
-#             json_course = json.load(file)
-#         except:
-#             json_course=None
-
-#     with open(PATH_JSON_RULE, "r", encoding="utf-8") as file:
-#         try:
-#             main_rule = file.read()
-#         except:
-#             main_rule=''
-            
-#      # --- PHẦN MỚI: QUÉT CÁC FILE COURSE VÀ TẠO ÁNH XẠ ---
-#     COURSE_FILE_MAP.clear() # Xóa map cũ nếu có
-#     course_files = glob.glob(os.path.join(get_path('data'), 'course_*.json')) # Tìm các file course_*.json
-
-#     if not course_files:
-#         # Fallback nếu không tìm thấy file nào theo mẫu mới. Thử tải course.json cũ.
-#         try:
-#             with open(PATH_JSON_COURSE, "r", encoding="utf-8") as file:
-#                 json_course = json.load(file)
-#                 if "course_name" not in json_course:
-#                     json_course["course_name"] = "Môn học mặc định (Course.json)" # Gán tên mặc định
-#                 COURSE_FILE_MAP[json_course["course_name"]] = PATH_JSON_COURSE
-#                 print(f"DEBUG: Loaded default course.json: {json_course['course_name']}")
-#         except Exception as e:
-#             print(f"Lỗi tải course.json mặc định: {e}")
-#             json_course = None
-#             messagebox.showwarning("Cảnh báo", "Không tìm thấy file course.json nào.")
-#         return # Thoát nếu không có file để xử lý
-
-#     # Duyệt qua các file course_*.json tìm được
-#     for file_path in course_files:
-#         try:
-#             with open(file_path, "r", encoding="utf-8") as file:
-#                 temp_course_data = json.load(file)
-#                 course_name = temp_course_data.get("course_name") # Lấy tên môn học từ file
-#                 if course_name:
-#                     COURSE_FILE_MAP[course_name] = file_path
-#                     print(f"DEBUG: Found course file: {course_name} -> {file_path}")
-#                 else:
-#                     print(f"Cảnh báo: File {file_path} thiếu trường 'course_name'. Bỏ qua.")
-#         except Exception as e:
-#             print(f"Lỗi khi đọc file course JSON {file_path}: {e}")
-
-#     # Tải course mặc định khi khởi động (ví dụ: Kỹ thuật lập trình (C))
-#     default_course_name = "Kỹ thuật lập trình (C)"
-#     if default_course_name in COURSE_FILE_MAP:
-#         try:
-#             with open(COURSE_FILE_MAP[default_course_name], "r", encoding="utf-8") as file:
-#                 json_course = json.load(file)
-#             print(f"DEBUG: Loaded initial course: {default_course_name}")
-#         except Exception as e:
-#             print(f"Lỗi tải course ban đầu '{default_course_name}': {e}")
-#             json_course = None
-#     elif COURSE_FILE_MAP: # Nếu không tìm thấy mặc định, chọn cái đầu tiên tìm được
-#         first_course_name = list(COURSE_FILE_MAP.keys())[0]
-#         try:
-#             with open(COURSE_FILE_MAP[first_course_name], "r", encoding="utf-8") as file:
-#                 json_course = json.load(file)
-#             print(f"DEBUG: Loaded initial course: {first_course_name} (fallback)")
-#         except Exception as e:
-#             print(f"Lỗi tải course ban đầu '{first_course_name}': {e}")
-#             json_course = None
-#     else: # Không có file course nào hợp lệ
-#         json_course = None
-#         messagebox.showerror("Lỗi", "Không tìm thấy file course JSON hợp lệ nào trong thư mục data/.")
-
 def load_app_data():
     
     global STUDENT_LIST
@@ -377,23 +230,19 @@ def load_app_data():
     global main_rule
     global CACHE_STATUS
     global APP_VERSION
-    global COURSE_FILE_MAP # THÊM COURSE_FILE_MAP
    
-    # Tải STUDENT_LIST (giữ nguyên)
     with open(PATH_STUDENT_LIST, "r", encoding="utf-8") as file:
         try:
             STUDENT_LIST=json.load(file)
-        except Exception as e: # Catch specific exception
-            print(f"Lỗi tải student.json: {e}")
+        except:
             STUDENT_LIST=[]
 
-    # Tải CONFIG (giữ nguyên)
     with open(PATH_JSON_CONFIG, "r", encoding="utf-8") as file:
         try:
             config=json.load(file)
-            if not config['api'][0].get('gemini_key') or not config['api'][0]['gemini_key']: # Use .get()
-                # ... (API Keys mặc định) ...
-                API_KEY_LIST= [ # Các API key mặc định
+            # Điều chỉnh logic này để xử lý API_KEY_LIST rỗng đúng cách
+            if not config['api'][0].get('gemini_key') or not config['api'][0]['gemini_key']: 
+                API_KEY_LIST= [
                                     "AIzaSyDvCMr_GJMvGxFynOvLedw04rqJ6_iElF0",
                                     "AIzaSyAF5-pKkd-y_EJYRoOQbYgw7fAmNWtvsq4",
                                     "AIzaSyAxVA26qSbc3Hvg6Hdqti4HvxtU0wN1sqo",
@@ -429,94 +278,32 @@ def load_app_data():
             else:
                 API_KEY_LIST=config['api'][0]['gemini_key']
             
-            API_KEY=API_KEY_LIST[0] if API_KEY_LIST else '' # Handle empty API_KEY_LIST
+            API_KEY=API_KEY_LIST[0] if API_KEY_LIST else '' # Đảm bảo không truy cập index 0 nếu danh sách rỗng
             MODEL=config['api'][1]['model']
             DICT_USER_INFO=config['user']
             CACHE_STATUS=config['system'][0]['cache_status']
             print(f'cache_status={CACHE_STATUS}')
             APP_VERSION=config['system'][1]['version']
             print(f'APP_VERSION={APP_VERSION}')
-        except Exception as e: # Catch specific exception
+        except Exception as e: # Bắt lỗi cụ thể hơn
             print(f"Lỗi khi tải config.json: {e}")
             API_KEY=''
             MODEL=''
             DICT_USER_INFO=None
     
-    # --- XÓA KHỐI CODE NÀY: Nó đang cố gắng đọc course.json cũ ---
-    # with open(PATH_JSON_COURSE, "r", encoding="utf-8") as file:
-    #     try:
-    #         json_course = json.load(file)
-    #     except:
-    #         json_course=None
+    with open(PATH_JSON_COURSE, "r", encoding="utf-8") as file:
+        try:
+            json_course = json.load(file)
+        except Exception as e:
+            print(f"Lỗi tải course.json: {e}")
+            json_course=None
 
-    # Tải RULE (giữ nguyên)
     with open(PATH_JSON_RULE, "r", encoding="utf-8") as file:
         try:
             main_rule = file.read()
-        except Exception as e: # Catch specific exception
+        except Exception as e:
             print(f"Lỗi tải rule.md: {e}")
             main_rule=''
-            
-    # --- PHẦN MỚI: QUÉT CÁC FILE COURSE VÀ TẠO ÁNH XẠ (Đã có, giữ nguyên) ---
-    COURSE_FILE_MAP.clear() # Xóa map cũ nếu có
-    course_files = glob.glob(os.path.join(get_path('data'), 'course_*.json')) # Tìm các file course_*.json
-
-    if not course_files:
-        # Fallback: Nếu không tìm thấy file course_*.json, cố gắng tải course.json cũ nếu tồn tại
-        if os.path.exists(PATH_JSON_COURSE): # KIỂM TRA SỰ TỒN TẠI CỦA FILE
-            try:
-                with open(PATH_JSON_COURSE, "r", encoding="utf-8") as file:
-                    json_course = json.load(file)
-                    if "course_name" not in json_course:
-                        json_course["course_name"] = "Môn học mặc định (Course.json)" # Gán tên mặc định
-                    COURSE_FILE_MAP[json_course["course_name"]] = PATH_JSON_COURSE
-                    print(f"DEBUG: Loaded default course.json: {json_course['course_name']}")
-            except Exception as e:
-                print(f"Lỗi tải course.json mặc định: {e}")
-                json_course = None
-                messagebox.showwarning("Cảnh báo", "Không tìm thấy file course.json nào.")
-            return # Thoát nếu không có file để xử lý
-        else: # Nếu cả course_*.json và course.json đều không có
-            json_course = None
-            messagebox.showerror("Lỗi", "Không tìm thấy file course JSON hợp lệ nào trong thư mục data/. Vui lòng kiểm tra dữ liệu.")
-            return
-
-    # Duyệt qua các file course_*.json tìm được
-    for file_path in course_files:
-        try:
-            with open(file_path, "r", encoding="utf-8") as file:
-                temp_course_data = json.load(file)
-                course_name = temp_course_data.get("course_name") # Lấy tên môn học từ file
-                if course_name:
-                    COURSE_FILE_MAP[course_name] = file_path
-                    print(f"DEBUG: Found course file: {course_name} -> {file_path}")
-                else:
-                    print(f"Cảnh báo: File {file_path} thiếu trường 'course_name'. Bỏ qua.")
-        except Exception as e: # Catch specific exception
-            print(f"Lỗi khi đọc file course JSON {file_path}: {e}")
-
-    # Tải course mặc định khi khởi động (ví dụ: Kỹ thuật lập trình (C))
-    default_course_name = "Kỹ thuật lập trình (C)"
-    if default_course_name in COURSE_FILE_MAP:
-        try:
-            with open(COURSE_FILE_MAP[default_course_name], "r", encoding="utf-8") as file:
-                json_course = json.load(file)
-            print(f"DEBUG: Loaded initial course: {default_course_name}")
-        except Exception as e: # Catch specific exception
-            print(f"Lỗi tải course ban đầu '{default_course_name}': {e}")
-            json_course = None
-    elif COURSE_FILE_MAP: # Nếu không tìm thấy mặc định, chọn cái đầu tiên tìm được
-        first_course_name = list(COURSE_FILE_MAP.keys())[0]
-        try:
-            with open(COURSE_FILE_MAP[first_course_name], "r", encoding="utf-8") as file:
-                json_course = json.load(file)
-            print(f"DEBUG: Loaded initial course: {first_course_name} (fallback)")
-        except Exception as e: # Catch specific exception
-            print(f"Lỗi tải course ban đầu '{first_course_name}': {e}")
-            json_course = None
-    else: # Không có file course nào hợp lệ
-        json_course = None
-        messagebox.showerror("Lỗi", "Không tìm thấy file course JSON hợp lệ nào trong thư mục data/. Vui lòng kiểm tra dữ liệu.")
 
 def update_course_from_course_update(path_course_update):
     global json_course
@@ -524,7 +311,8 @@ def update_course_from_course_update(path_course_update):
         with open(path_course_update, "r", encoding="utf-8") as file:
             try:
                 json_course_update = json.load(file)
-            except:
+            except Exception as e:
+                print(f"Lỗi tải course_update.json: {e}")
                 json_course_update=None
                 
         if json_course_update is not None:
@@ -537,7 +325,6 @@ def update_course_from_course_update(path_course_update):
                             'score': ex['score']
                         }
 
-                # Cập nhật lại vào course_update_data
                 for session in json_course_update['sessions']:
                     for ex in session['exercises']:
                         ex_id = ex['id']
@@ -565,8 +352,8 @@ def update_exercise(json_data,id, new_status:ExerciseStatus, new_score=None):
                         ex["status"] = new_status.value
                     if new_score is not None:
                         ex["score"] = new_score
-                    return True  # cập nhật thành công
-    return False  # không tìm thấy
+                    return True 
+    return False  
 
 def update_json_course(id, new_status:ExerciseStatus, new_score=None):
     global json_course
@@ -576,44 +363,52 @@ def update_json_course(id, new_status:ExerciseStatus, new_score=None):
     else:
         print('cập nhập lỗi')
         
-# def update_user_info(username='',mssv='',password=''):
-#     global DICT_USER_INFO
-#     print('-----')
-#     print(username,mssv)
+def update_user_info(username='',mssv='',password=''):
+    global DICT_USER_INFO
+    # Check if DICT_USER_INFO is valid before accessing
+    if DICT_USER_INFO and isinstance(DICT_USER_INFO, list) and len(DICT_USER_INFO) > 0:
+        DICT_USER_INFO[0]['username']=username
+        DICT_USER_INFO[0]['mssv']=mssv
     
-#     DICT_USER_INFO[0]['username']=username
-#     DICT_USER_INFO[0]['mssv']=mssv
-    
-#     with open(PATH_JSON_CONFIG, "r", encoding="utf-8") as file:
-#         try:
-#             config=json.load(file)
-#             config['user'][0]['username']=username
-#             config['user'][0]['mssv']=mssv
-#             config['user'][0]['password']=password
-#         except:
-#             config=None
-#     if config is not None:
-#         save_json_file(PATH_JSON_CONFIG,config)
+    config = None
+    if os.path.exists(PATH_JSON_CONFIG):
+        with open(PATH_JSON_CONFIG, "r", encoding="utf-8") as file:
+            try:
+                config=json.load(file)
+            except json.JSONDecodeError:
+                pass
+    if config is not None and config['user'] and isinstance(config['user'], list) and len(config['user']) > 0:
+        config['user'][0]['username']=username
+        config['user'][0]['mssv']=mssv
+        config['user'][0]['password']=password
+        save_json_file(PATH_JSON_CONFIG,config)
+    else:
+        print("Cảnh báo: Không thể tải hoặc cập nhật config.json user info.")
         
-# def update_api_key(id_sv):
-#     global API_KEY
-#     global API_KEY_LIST
-#     num_api_key=len(API_KEY_LIST)
-#     index=id_sv%num_api_key
-#     API_KEY=API_KEY_LIST[index]
-#     print(f"idsv={id_sv} ; index={index} ; api_key={API_KEY}")
+def update_api_key(id_sv):
+    global API_KEY
+    global API_KEY_LIST
+    if not API_KEY_LIST:
+        print("Cảnh báo: API_KEY_LIST trống. Không thể cập nhật API_KEY.")
+        return
+    num_api_key=len(API_KEY_LIST)
+    index=id_sv%num_api_key
+    API_KEY=API_KEY_LIST[index]
+    print(f"idsv={id_sv} ; index={index} ; api_key={API_KEY}")
     
 def update_model():
     global MODEL
     global API_KEY
     global model
-    genai.configure(api_key=API_KEY)
-    model = genai.GenerativeModel(MODEL)
+    if API_KEY and MODEL:
+        genai.configure(api_key=API_KEY)
+        model = genai.GenerativeModel(MODEL)
+    else:
+        print("Lỗi: API Key hoặc Model chưa được cấu hình. Không thể khởi tạo Gemini model.")
                
 def write_log(data):
     try:
         path_log = get_path_join(PATH_LOG,'log.json')
-        # Bước 1: Đọc dữ liệu cũ nếu file tồn tại
         if os.path.exists(path_log):
             with open(path_log, "r", encoding="utf-8") as f:
                 try:
@@ -625,45 +420,42 @@ def write_log(data):
         else:
             old_data = []
 
-        # Bước 2: Append dữ liệu mới
         if isinstance(data, list):
             old_data.extend(data)
         else:
             old_data.append(data)
 
-        # Bước 3: Ghi lại toàn bộ vào file
         with open(path_log, "w", encoding="utf-8") as f:
             json.dump(old_data, f, indent=4, ensure_ascii=False)
     except Exception as err:
-       messagebox.showerror("Lỗi ghi log",err)
+       messagebox.showerror("Lỗi ghi log",str(err)) # Cast err to string
 
 def create_file_log_name(name,mssv):
     timestamp = datetime.now().strftime("%y%m%d%H%M%S")
-    # Chuyển tên thành không dấu và thay khoảng trắng bằng gạch dưới
     def convert_name(name):
         name_ascii = unicodedata.normalize('NFD', name).encode('ascii', 'ignore').decode('utf-8')
         return name_ascii.replace(" ", "_")
     name_formatted = convert_name(name)
     mssv=mssv.replace(" ","")
-    # Ghép lại thành chuỗi
     result = f"{mssv}_{timestamp}__{name_formatted}.json"
     return result
 
 def update_data_from_foler_download(path_course_update,path_img_zip):
     global PATH_IMG
-    if path_course_update!='':
+    if path_course_update and os.path.exists(path_course_update): # Check if path is not empty and exists
         update_course_from_course_update(path_course_update)
-    if path_img_zip!='':
-        extract_zip_overwrite(path_img_zip,PATH_IMG)
-        delete_file(path_img_zip)
+    if path_img_zip and os.path.exists(path_img_zip): # Check if path is not empty and exists
+        try:
+            extract_zip_overwrite(path_img_zip,PATH_IMG)
+            delete_file(path_img_zip)
+        except Exception as e:
+            print(f"Lỗi khi giải nén ảnh: {e}")
+            messagebox.showerror("Lỗi", f"Lỗi khi cập nhật ảnh: {e}")
         
 ##################################################################################################################
 def get_latest_cache():
     file_list = glob.glob(os.path.join(PATH_CATCH, "cache_*.json"))
-
-    # Nếu có file thì tìm file mới nhất dựa trên tên
     if file_list:
-        # Sắp xếp theo tên giảm dần (tên chứa timestamp)
         newest_file = sorted(file_list, reverse=True)[0]
         return newest_file
     else:
@@ -674,12 +466,15 @@ def load_latest_cache():
     global history
     path_cache=get_latest_cache()
     if path_cache is not None:
-        with open(path_cache, "r") as f:
-            data = json.load(f)
-            if data:
-                history.clear()
-                history=data
-                return True
+        try:
+            with open(path_cache, "r") as f:
+                data = json.load(f)
+                if data:
+                    history.clear()
+                    history=data
+                    return True
+        except Exception as e:
+            print(f"Lỗi khi tải cache: {e}")
     return False
 
 def continue_conversation(output,fr_info):
@@ -691,6 +486,7 @@ def continue_conversation(output,fr_info):
     else:
         messagebox.showwarning('Cảnh báo','cache rỗng cần nạp lại bài tập')
            
+import random # Import random
 def get_api_response(prompt):
     global model
     global history
@@ -702,7 +498,7 @@ def get_api_response(prompt):
     
     log.append(message_)
     
-    history.extend(message)  # Thêm message vào lịch sử
+    history.extend(message)  
     
     response = model.generate_content(history)
     
@@ -727,7 +523,7 @@ def call_gemini_api_thread(prompt, queue, output=None, fr_info=None,was_retry=Fa
         tried_keys = set()
         global model
         log=[]
-        if API_KEY!='' and model!='':
+        if API_KEY and model: # Đảm bảo model không rỗng
             while True:
                 try:
                     response,log=get_api_response(prompt)
@@ -738,12 +534,17 @@ def call_gemini_api_thread(prompt, queue, output=None, fr_info=None,was_retry=Fa
                     available_keys = [key for key in API_KEY_LIST if key not in tried_keys]
                     if not available_keys:
                         print("Tất cả API_KEY đã thử và đều gặp lỗi.")
+                        # Đặt một phản hồi rỗng vào queue để UI biết là có lỗi API nghiêm trọng
+                        queue.put(("", output, fr_info, log, was_retry)) 
                         return
-                    API_KEY = random.choice(available_keys)
+                    API_KEY = random.choice(available_keys) # Import random
                     print(f"Thử lại với API_KEY mới: {API_KEY}")
                     update_model()
                     
             queue.put((response, output, fr_info, log,was_retry))
+        else:
+            print("Lỗi: API Key hoặc Model chưa được cấu hình đúng. Không thể gọi Gemini API.")
+            queue.put(("", output, fr_info, log, was_retry)) # Đặt một phản hồi rỗng vào queue
 
     t = threading.Thread(target=worker)
     t.daemon = True
@@ -759,7 +560,8 @@ def mardown_json_to_dict(mardown_json):
         cleaned_json = '\n'.join(lines)
         data_dict = json.loads(cleaned_json)
         return data_dict
-    except:
+    except Exception as e:
+        print(f"Lỗi khi parse markdown json: {e}")
         return None
    
 def markdown_preserve_code_blocks(text):
@@ -795,23 +597,18 @@ def normalize_code_block_indent(block: str) -> str:
     opening = lines[0].strip()
     closing = lines[-1].strip()
 
-    # Nếu dòng cuối không đúng là ``` thì cố gắng tìm trong dòng cuối hoặc loại bỏ thụt dòng
     if closing != '```':
-        # Trường hợp ``` nằm chung dòng cuối cùng (ví dụ: '   ```')
         if lines[-1].strip().endswith('```'):
-            # Cắt dấu ``` ra riêng
             content_line = lines[-1].rstrip().removesuffix('```').rstrip()
             if content_line:
                 code_lines = [line.lstrip() for line in lines[1:-1]] + [content_line]
             else:
                 code_lines = [line.lstrip() for line in lines[1:-1]]
         else:
-            # Không phát hiện được ``` -> giữ nguyên
             return block
     else:
         code_lines = [line.lstrip() for line in lines[1:-1]]
 
-    # Gộp lại block chuẩn
     return '\n'.join([opening] + code_lines + ['```'])
 
 def resume_block_code(new_text,code_blocks):
@@ -821,12 +618,10 @@ def resume_block_code(new_text,code_blocks):
         new_code_block.append(cleaned)
         
     for i, block in enumerate(new_code_block):
-        #print(block)
         new_text = new_text.replace(f"__CODE_{i}__",f"\n{block}\n")
     return new_text
 
 def process_markdown_escape_smart(md_text):
-    # Tách block code ```...``` ra
     code_blocks = re.findall(r'```.*?```', md_text, flags=re.DOTALL)
     placeholders = []
     temp_text = md_text
@@ -836,7 +631,6 @@ def process_markdown_escape_smart(md_text):
         placeholders.append((placeholder, block))
         temp_text = temp_text.replace(block, placeholder)
 
-    # Tách inline code `...`
     inline_codes = re.findall(r'`[^`\n]+`', temp_text)
     inline_placeholders = []
 
@@ -845,23 +639,6 @@ def process_markdown_escape_smart(md_text):
         inline_placeholders.append((placeholder, block))
         temp_text = temp_text.replace(block, placeholder)
 
-    # Xử lý escape trong phần văn bản thường
-    # def decode_unicode_escapes(m):
-    #     try:
-    #         return bytes(m.group(0), "utf-8").decode("unicode_escape")
-    #     except:
-    #         return m.group(0)
-
-    # temp_text = temp_text.replace('\\\\', '\\')      # \\ -> \
-    # temp_text = temp_text.replace('\\n', '\n')       # \n -> xuống dòng
-    # temp_text = temp_text.replace('\\t', '\t')       # \t -> tab
-    # # temp_text = re.sub(r'\\u[0-9a-fA-F]{4}', decode_unicode_escapes, temp_text)  # unicode
-
-    # # Trả inline code và block code về vị trí
-    # for placeholder, block in inline_placeholders:
-    #     temp_text = temp_text.replace(placeholder, block)
-    # for placeholder, block in placeholders:
-    #     temp_text = temp_text.replace(placeholder, block)
     print('-----')
     print(temp_text)
     
@@ -885,7 +662,7 @@ def render_ai_json_markdown(response_text: str) -> str:
         html = markdown.markdown(new_text, extensions=["fenced_code", "sane_lists"])
         return html,obj['info'],None
     except Exception as err:
-        print('***************Lỗi phản hồi json*******************')
+        print(f'***************Lỗi phản hồi json: {err}*******************') # In lỗi để debug
         return '',{},err
     
 #####################################################################################################################
@@ -895,14 +672,14 @@ def update_response_callback(info):
     if ID_EXERCISE is not None:
         print('---cập nhập json_course---')
         print(info)
-        status=info['exercise_status']
+        status=info.get('exercise_status','in_progress') # Use .get()
         if status=='completed':
             status=ExerciseStatus.COMPLETED
         else:
             status=ExerciseStatus.INCOMPLETE
-        score=info['score']
+        score=info.get('score',0) # Use .get()
         if status==ExerciseStatus.INCOMPLETE:
-            score=score-10
+            score=max(0,score-10) # Đảm bảo điểm không âm
         print(score)
         update_json_course(ID_EXERCISE,status,score)      
                 
@@ -916,11 +693,11 @@ def update_response(window,queue):
             
             if html_content == '' and info == {}:
                 print(err)
-                if not was_retry:
+                if not was_retry and MAX_RETRY > 0: # Check MAX_RETRY here
                     print("⚠️ Phản hồi lỗi → gọi lại API 1 lần duy nhất")
                     call_gemini_api_thread(re_response_prompt, queue, output, fr_info, was_retry=True)
                 else:
-                    print("❌ Phản hồi tiếp tục lỗi sau khi đã retry → bỏ qua")
+                    print("❌ Phản hồi tiếp tục lỗi sau khi đã retry hoặc hết lượt → bỏ qua")
                 continue  # luôn bỏ qua kết quả lỗi
             
             if html_content!='':
@@ -929,10 +706,10 @@ def update_response(window,queue):
                     output.set_html(html_content_)
                 
             if fr_info is not None:
-                lbl_level=fr_info['level']
-                lbl_socre=fr_info['score']
-                lbl_level.config(text=info.get('level', '-'))
-                lbl_socre.config(text=info.get('score', '-'))       
+                lbl_level=fr_info.get('level') # Use .get()
+                lbl_socre=fr_info.get('score') # Use .get()
+                if lbl_level: lbl_level.config(text=info.get('level', '-'))
+                if lbl_socre: lbl_socre.config(text=info.get('score', '-'))       
                            
             if info:
                 update_response_callback(info)
@@ -958,25 +735,32 @@ def print_log(text,output):
     wait_queue_log(queue_log,output)
 ###
 def btn_send_click(args):
-    input=args['input']
-    queue = args['queue']  # Lấy tham số queue từ args
-    output = args['output']  # Lấy tham số label từ args
-    prompt= input.get("1.0",tk.END).strip()
+    input_widget=args['input'] # Rename to avoid conflict with built-in input
+    queue = args['queue'] 
+    output = args['output'] 
+    prompt= input_widget.get("1.0",tk.END).strip()
     if prompt:
         call_gemini_api_thread(prompt,queue,output)
         
 def btn_clear_cache_click(args):
-    input=args['input']
-    output = args['output']         # Lấy tham số label từ args
-    input.delete("1.0", tk.END) 
-    output.delete("1.0", tk.END)    # Xóa từ dòng 1, cột 0 đến cuối
+    input_widget=args['input'] # Rename
+    output = args['output']         
+    input_widget.delete("1.0", tk.END) 
+    output.delete("1.0", tk.END)    
     history.clear()
-    delete_all_files_in_folder(PATH_CATCH)
+    # Check if delete_all_files_in_folder is defined
+    if 'delete_all_files_in_folder' in globals():
+        delete_all_files_in_folder(PATH_CATCH)
+    else:
+        # Fallback if function is not defined
+        for f in glob.glob(os.path.join(PATH_CATCH, '*')):
+            if os.path.isfile(f):
+                os.remove(f)
     messagebox.showinfo('info','Xóa Cache OK- Cần phải nạp lại bài tập')
     
 def btn_load_rule_click(args):
-    queue = args['queue']  # Lấy tham số queue từ args
-    output = args['output']  # Lấy tham số label từ args
+    queue = args['queue']  
+    output = args['output']  
     history.clear()
     prompt=main_rule
     if prompt:
@@ -984,8 +768,8 @@ def btn_load_rule_click(args):
     print('load rule ok')
 
 def btn_help_click(args):
-    queue = args['queue']  # Lấy tham số queue từ args
-    output = args['output']  # Lấy tham số label từ args
+    queue = args['queue']  
+    output = args['output']  
     fr_info=args['fr_info']
     prompt=help_promt
     if prompt:
@@ -1000,56 +784,59 @@ def window_on_closing(window):
     if CACHE_STATUS==1:
         timestr = datetime.now().strftime("%y%m%d%H%M%S")
         path_catch=f'{PATH_CATCH}/cache_{timestr}.json'
-        with open(path_catch, "w") as f:
-            json.dump(history, f, indent=4)
-    window.destroy()  # Bắt buộc gọi để thoát
+        try:
+            with open(path_catch, "w") as f:
+                json.dump(history, f, indent=4)
+        except Exception as e:
+            print(f"Lỗi khi lưu cache: {e}")
+    window.destroy()  
 
 def btn_run_code_click(args):
     code_input=args['input']
-    #output_display = args['output']         # Lấy tham số label từ args
     code = code_input.get("1.0", tk.END)
     if not code.strip():
         messagebox.showwarning("Cảnh báo", "Vui lòng nhập mã C để chạy.")
         return
-    #output_display.delete("1.0", tk.END)
-    #compile_code(code)
-    #for C
-    #result=compile_code(code)
     
-    #for java
-    #result=compile_java(code)
-    
-    #for python
-    result = run_python(code)
-    
-    #output_display.insert(tk.END,result)
+    # Ensure compile_code or run_python is defined and imported
+    if 'run_python' in globals(): # Assuming you are running python code
+        result = run_python(code)
+    elif 'compile_code' in globals(): # For C code
+        result = compile_code(code)
+    else:
+        result = "Error: Compiler/Runner function not found."
+        messagebox.showerror("Lỗi", "Không tìm thấy trình biên dịch/chạy mã.")
+        return
+
+    # Assuming you want to display result somewhere, e.g., in txt_output
+    # if 'txt_output' in globals() and isinstance(txt_output, HTMLLabel): # or tk.Text
+    #     txt_output.delete("1.0", tk.END)
+    #     txt_output.insert(tk.END, result)
+    # else:
+    #     print(result) # Fallback to print if no output widget
 
 def tree_load(tree,json_course):
     for i, session in enumerate(json_course["sessions"]):
         session_id = tree.insert("", "end", text=session["title"], open=True)
         for j, ex in enumerate(session["exercises"]):
-            tree.insert(session_id, "end", text=ex["title"],values=(ex['status'],ex['score'],i, j))
+            # Use .get() with default values to prevent KeyError
+            tree.insert(session_id, "end", text=ex["title"],values=(ex.get('status', '✗'),ex.get('score', 0),i, j))
 
 def reload_tree(tree, json_course):
-    # ❌ Xóa hết các node cũ
     for item in tree.get_children():
         tree.delete(item)
-
-    # ✅ Load lại dữ liệu
     tree_load(tree, json_course)
 
 def btn_refesh_click(args):
     global json_course
     global main_rule
-    global API_KEY
-    global MODEL
     
     try:
         path_course=download_file_course_from_driver()
         path_img_zip=download_file_img_from_driver()
         update_data_from_foler_download(path_course,path_img_zip)
-    except:
-        messagebox.showerror('Error','Lỗi cập nhập bài tập từ google driver')
+    except Exception as e:
+        messagebox.showerror('Error',f'Lỗi cập nhập bài tập từ google driver: {e}')
         
     
     with open(PATH_JSON_COURSE, "r", encoding="utf-8") as file:
@@ -1057,17 +844,17 @@ def btn_refesh_click(args):
             json_course = json.load(file)
             tree=args['tree']
             reload_tree(tree,json_course)
-        except:
+        except Exception as e:
             json_course=None
-            messagebox.showerror('Error','Lỗi load file course.json')
+            messagebox.showerror('Error',f'Lỗi load file course.json: {e}')
             return
     
     with open(PATH_JSON_RULE, "r", encoding="utf-8") as file:
         try:
             main_rule = file.read()
-        except:
+        except Exception as e:
             main_rule=''
-            messagebox.showerror('Error','Lỗi load file rule.md')
+            messagebox.showerror('Error',f'Lỗi load file rule.md: {e}')
             return
         
     messagebox.showinfo('info','Làm mới OK')
@@ -1076,15 +863,20 @@ def btn_refesh_offline_click(args):
     global json_course
     try:
         path_course=get_path_join(PATH_UPLOAD,"course_update.json")
+        # Ensure PATH_DOWNLOAD is created if not exists
+        create_folder(PATH_DOWNLOAD) 
         shutil.copy(path_course, PATH_DOWNLOAD)
         path_course_download=get_path_join(PATH_DOWNLOAD,"course_update.json")
         
         path_img_upload=get_path_join(PATH_UPLOAD,"img")
-        shutil.copytree(path_img_upload,PATH_IMG, dirs_exist_ok=True)
+        # Ensure PATH_IMG exists for shutil.copytree target
+        create_folder(PATH_IMG) 
+        # Use dirs_exist_ok=True for Python 3.8+
+        shutil.copytree(path_img_upload,PATH_IMG, dirs_exist_ok=True) 
         
         update_data_from_foler_download(path_course_download,'')
     except Exception as err:
-        messagebox.showerror('Lỗi cập nhập file',err)
+        messagebox.showerror('Lỗi cập nhập file',str(err))
     
     with open(PATH_JSON_COURSE, "r", encoding="utf-8") as file:
         try:
@@ -1092,103 +884,26 @@ def btn_refesh_offline_click(args):
             tree=args['tree']
             reload_tree(tree,json_course)
             messagebox.showinfo("OK","cập nhập course ok")
-        except:
+        except Exception as e:
             json_course=None
-            messagebox.showerror('Error','Lỗi load file course.json')
+            messagebox.showerror('Error',f'Lỗi load file course.json: {e}')
             return
-    
+            
+# Định nghĩa hàm on_course_select ở cấp độ toàn cục
+def on_course_select(event, tree_widget, json_course_data, course_var_obj):
+    selected_course_title = course_var_obj.get()
+    print(f"Môn học được chọn (không ảnh hưởng trực tiếp đến treeview): {selected_course_title}")
 
-# # Trong hàm on_course_select:
-# def on_course_select(event, tree_widget, json_course_data, course_var_obj):
-#     selected_course_title = course_var_obj.get()
-#     print(f"Môn học được chọn (không ảnh hưởng trực tiếp đến treeview): {selected_course_title}")
-
-#     # Xóa tất cả các node hiện tại trong treeview (nếu bạn muốn treeview trống khi chọn môn)
-#     for item in tree_widget.get_children():
-#         tree_widget.delete(item)
-
-#     # *** LOẠI BỎ LOGIC LỌC JSON_COURSE DỰA TRÊN simple_course_titles ***
-#     # if json_course_data and "sessions" in json_course_data:
-#     #     # ... logic lọc cũ ...
-#     # else:
-#     #     messagebox.showwarning("Dữ liệu lỗi", "Không có dữ liệu khóa học để hiển thị (json_course rỗng).")
-
-#     # Giả sử treeview sẽ chỉ được điền khi có một hành động khác (ví dụ: chọn khóa học chính)
-#     # Bạn có thể hiển thị một thông báo hoặc để trống.
-#     messagebox.showinfo("Thông báo", f"Bạn đã chọn môn: {selected_course_title}. "
-#                                    "Danh sách bài tập sẽ hiển thị khi chọn khóa học cụ thể.")
-
-# # Định nghĩa hàm on_course_select ở cấp độ toàn cục (trước hàm main())
-# def on_course_select(event, tree_widget, json_course_data, course_var_obj):
-#     selected_course_title = course_var_obj.get()
-#     print(f"Môn học được chọn: {selected_course_title}")
-
-#     # Xóa tất cả các node hiện tại trong treeview
-#     for item in tree_widget.get_children():
-#         tree_widget.delete(item)
-
-#     if json_course_data and "sessions" in json_course_data:
-#         # Nếu chọn "Kỹ thuật lập trình (C)", tải toàn bộ nội dung từ json_course
-#         if selected_course_title == "Kỹ thuật lập trình (C)":
-#             # Gọi hàm tải toàn bộ dữ liệu vào treeview
-#             tree_load(tree_widget, json_course_data)
-#             #messagebox.showinfo("Thông báo", f"Đã tải danh sách bài tập cho môn: {selected_course_title}")
-#         elif selected_course_title == "Kỹ thuật lập trình (Java)":
-#             # Xử lý cho môn Java (ví dụ: tải file JSON khác hoặc hiển thị thông báo)
-#             messagebox.showinfo("Thông báo", f"Bạn đã chọn môn: {selected_course_title}. "
-#                                            "Chức năng tải bài tập cho Java chưa được triển khai.")
-#             # Sau này, bạn có thể thêm logic để load một file JSON khác (ví dụ: course_java.json)
-#             # global json_course # Nếu bạn thay đổi json_course toàn cục
-#             # try:
-#             #     with open("data/course_java.json", "r", encoding="utf-8") as f:
-#             #         json_course_java = json.load(f)
-#             #     tree_load(tree_widget, json_course_java)
-#             #     messagebox.showinfo("Thông báo", f"Đã tải bài tập cho {selected_course_title}.")
-#             # except FileNotFoundError:
-#             #     messagebox.showwarning("Cảnh báo", f"File course_java.json không tìm thấy.")
-#             # except Exception as e:
-#             #     messagebox.showerror("Lỗi", f"Lỗi khi tải file Java: {e}")
-#         else:
-#             # Các môn học khác
-#             messagebox.showinfo("Thông báo", f"Bạn đã chọn môn: {selected_course_title}. "
-#                                            "Hiện tại chỉ hỗ trợ tải bài tập cho 'Kỹ thuật lập trình (C)'.")
-#     else:
-#         messagebox.showwarning("Dữ liệu lỗi", "Không có dữ liệu khóa học để hiển thị (json_course rỗng).")
-        
-# Định nghĩa hàm on_course_select ở cấp độ toàn cục (trước hàm main())
-def on_course_select(event, tree_widget, json_course_data_current, course_var_obj): # đổi tên json_course_data thành json_course_data_current
-    global json_course # Khai báo để có thể thay đổi biến global json_course
-
-    selected_course_name = course_var_obj.get()
-    print(f"Môn học được chọn: {selected_course_name}")
-
-    # Xóa tất cả các node hiện tại trong treeview
+    # Xóa tất cả các node hiện tại trong treeview (nếu bạn muốn treeview trống khi chọn môn)
     for item in tree_widget.get_children():
         tree_widget.delete(item)
 
-    if selected_course_name in COURSE_FILE_MAP: # Kiểm tra xem môn học có trong bản đồ file không
-        file_path_to_load = COURSE_FILE_MAP[selected_course_name]
-        try:
-            with open(file_path_to_load, "r", encoding="utf-8") as file:
-                json_course_new = json.load(file) # Tải dữ liệu từ file mới
-            
-            json_course = json_course_new # Cập nhật biến global json_course
-            
-            tree_load(tree_widget, json_course) # Tải dữ liệu mới vào treeview
-            #messagebox.showinfo("Thông báo", f"Đã tải danh sách bài tập cho môn: {selected_course_name}.")
-            print(f"DEBUG: Loaded course: {selected_course_name} from {file_path_to_load}")
-
-        except FileNotFoundError:
-            messagebox.showerror("Lỗi", f"Không tìm thấy file: {file_path_to_load}")
-            print(f"ERROR: File not found: {file_path_to_load}")
-        except Exception as e:
-            messagebox.showerror("Lỗi", f"Lỗi khi tải dữ liệu cho môn {selected_course_name}: {e}")
-            print(f"ERROR: Failed to load course {selected_course_name}: {e}")
-    else:
-        messagebox.showwarning("Cảnh báo", f"Không tìm thấy file dữ liệu cho môn: {selected_course_name}.")
+    # Giả sử treeview sẽ chỉ được điền khi có một hành động khác (ví dụ: chọn khóa học chính)
+    # Bạn có thể hiển thị một thông báo hoặc để trống.
+    messagebox.showinfo("Thông báo", f"Bạn đã chọn môn: {selected_course_title}. "
+                                   "Danh sách bài tập sẽ hiển thị khi chọn khóa học cụ thể.")
 
 def on_select(event,args):
-    #{"tree":tree,"fr_tree":fr_lesson_tree,"queue":queue,"output":txt_output}
     global json_course
     global history 
     global main_rule
@@ -1204,7 +919,7 @@ def on_select(event,args):
     values = data.get("values")
     
     ID_EXERCISE=None
-    if values: # Kiểm tra xem đây có phải là một bài tập (leaf node) không
+    if values: 
         session_index=values[-2]
         exercise_index = values[-1]
         print(session_index,exercise_index)
@@ -1228,85 +943,71 @@ def on_select(event,args):
         fr_pic=tk.Frame(frame_content,bg='gray')
         fr_pic.grid(row=2,column=0,sticky='nswe')
         
-        #fr_pic.columnconfigure(0,weight=1)
         fr_pic.rowconfigure(0,weight=0)
         
-        def btn_img_click(args):
+        # Các hàm này cần được định nghĩa ở cấp độ toàn cục hoặc được truyền vào
+        # Tôi sẽ điều chỉnh các lời gọi để phù hợp với hàm toàn cục nếu cần
+        # def btn_img_click(args): # Đây là hàm lồng, cần đưa ra ngoài hoặc truyền đủ args
+        #     pass
 
-            new_window = tk.Toplevel(frame_content)
-            new_window.title(args['img_tittle'])
-            #new_window.geometry("500x400")  # Kích thước cửa sổ mới
-            new_window.transient(frame_content)  # Gắn cửa sổ mới vào cửa sổ chính
-            new_window.grab_set()       # Vô hiệu hóa tương tác với cửa sổ chính
+        # def back_to_tree(): # Đây là hàm lồng, cần đưa ra ngoài hoặc truyền đủ args
+        #     pass
+            
+        # def help_from_AI(args): # Đây là hàm lồng, cần đưa ra ngoài hoặc truyền đủ args
+        #     pass
 
-            new_window.rowconfigure(0,weight=1)
-            new_window.columnconfigure(0,weight=1)
-            
-            tk_label_image=label_image(new_window,args['img_path'],args['img_tittle'])
-            tk_label_image.grid(row=0,column=0,sticky='nswe')
-            
-            def on_close():
-                print('đóng cửa sổ')
-                new_window.destroy()
-            
-            new_window.protocol("WM_DELETE_WINDOW", on_close)
-            new_window.wait_window()
-
-        
         btn_img=[]
         for i,img in enumerate(exercise["image"]):
-            if(img['link']!=''):
+            if(img.get('link')!=''): # Use .get()
                 img_path_=  get_path_join(PATH_IMG,img['link'])
-                img_title_= img['image_title']
+                img_title_= img.get('image_title', 'Image') # Use .get()
                 btn_img.append({'id':i,'img_tittle':img_title_,'img_path':img_path_ ,'btn':tk.Button(fr_pic,text=img_title_)})
 
-        for btn in btn_img:
-            id = btn['id']
-            btn['btn'].grid(row=0,column=id,sticky='w',padx='2')
-            btn['btn'].config(command=lambda: btn_img_click({'img_tittle':img_title_,'img_path':img_path_}))
-            
+        for btn_data in btn_img: # Rename btn to btn_data to avoid conflict with btn variable
+            id = btn_data['id']
+            btn_data['btn'].grid(row=0,column=id,sticky='w',padx='2')
+            # Cần truyền frame_content vào btn_img_click
+            btn_data['btn'].config(command=lambda img_t=btn_data['img_tittle'], img_p=btn_data['img_path']: btn_img_click({'img_tittle':img_t,'img_path':img_p, 'frame_content': frame_content}))
             
         tk.Label(frame_content, text="Hướng dẫn:",font=("Arial", 12), fg="white",bg="black").grid(row=3,column=0,sticky='nswe')
         txt_guidance=tk.Text(frame_content,font=("Arial", 11),height=10,width=40,wrap='word')
         txt_guidance.grid(row=4,column=0,sticky='nswe')
                 
-        for g in exercise["guidance"]:
+        for g in exercise.get("guidance", []): # Use .get()
             txt_guidance.insert(tk.END, "• " + g+"\n")
             
-        def back_to_tree():
-            frame_content.destroy()
-            tree.grid(row=0, column=0, sticky='nswe')
-            reload_tree(tree,json_course)
-            
-        def help_from_AI(args):
-            #lbl_note=args['label']
-            #lbl_note.config(text="Đã upload bài tập lên AI", fg="blue")  # Thay đổi nội dung và màu chữ
-            history.clear()
-            print('clear cache ok')
-            print(f'sesion_index={session_index};exercise_index={exercise_index}')
-            prompt=create_main_rule(main_rule,json_sessions_to_markdown(json_course,session_index,exercise_index))
-            #print(prompt)
-            call_gemini_api_thread(prompt,queue,output,fr_info)
-        
         fr_button=tk.Frame(frame_content,bg='black')
         fr_button.grid(row=5,column=0,sticky='nswe')
         fr_button.columnconfigure(0,weight=1)
         fr_button.columnconfigure(1,weight=1)
         
-        #lbl_note=tk.Label(fr_button,text='Nhấn nút tải bài tập lên AI để bắt đầu bài mới',font=("Arial", 11),fg='red')
         lbl_note=tk.Label(fr_button,text='',font=("Arial", 11),fg='red')
         lbl_note.grid(row=1,column=0,columnspan=2,sticky='nswe')
         
-        tk.Button(fr_button, text="Quay lại",font=("Arial", 11), command=back_to_tree).grid(row=0, column=0, sticky='w', pady=10,padx=10)
+        # Cần truyền các biến tree, json_course vào back_to_tree
+        tk.Button(fr_button, text="Quay lại",font=("Arial", 11), command=lambda: back_to_tree(frame_content, tree, json_course)).grid(row=0, column=0, sticky='w', pady=10,padx=10)
         
-        # Lưu tham chiếu đến nút "Tải bài tập lên AI"
-        #btn_load_exercise_to_ai = tk.Button(fr_button, text="Tải bài tập lên AI",font=("Arial", 11), command=lambda:help_from_AI({'label':lbl_note}))
-        #btn_load_exercise_to_ai.grid(row=0, column=1, sticky='w', pady=10,padx=10)
+        # Cần truyền các biến queue, output, fr_info, session_index, exercise_index vào help_from_AI
+        # tk.Button(fr_button, text="Tải bài tập lên AI",font=("Arial", 11), 
+        #           command=lambda: help_from_AI({
+        #               'label':lbl_note, 
+        #               'queue':queue, 
+        #               'output':output, 
+        #               'fr_info':fr_info, 
+        #               'session_index':session_index, 
+        #               'exercise_index':exercise_index
+        #           })).grid(row=0, column=1, sticky='w', pady=10,padx=10)
+        
+        # Tự động gọi help_from_AI
+        help_from_AI({
+            'label':lbl_note, 
+            'queue':queue, 
+            'output':output, 
+            'fr_info':fr_info, 
+            'session_index':session_index, 
+            'exercise_index':exercise_index
+        })
 
-        # *** THÊM DÒNG NÀY ĐỂ TỰ ĐỘNG NHẤN NÚT ***
-        # Gọi command của nút ngay sau khi nó được tạo và cấu hình
-        help_from_AI({'label':lbl_note}) # Gọi hàm tương ứng với nút
-        
 def apply_treeview_style():
     style = ttk.Style()
     style.configure("Treeview", font=("Arial", 12))
@@ -1337,8 +1038,8 @@ def btn_create_img_description_click(args):
 
 def btn_submit_exercise_click(args):
     global DICT_USER_INFO
-    name_=DICT_USER_INFO[0]['username']
-    mssv_=DICT_USER_INFO[0]['mssv']
+    name_=DICT_USER_INFO[0].get('username', 'Unknown') # Use .get()
+    mssv_=DICT_USER_INFO[0].get('mssv', '0000') # Use .get()
     path_log_file=get_path_join(PATH_LOG,'log.json')
     if os.path.exists(path_log_file):
         file_log_name =create_file_log_name(name_,mssv_)
@@ -1395,7 +1096,7 @@ def main():
                 ACCOUNT_ROLE = 'ADMIN'
         else:
             print("DICT_USER_INFO không hợp lệ hoặc rỗng.")
-            ACCOUNT_ROLE = 'GUEST'
+            ACCOUNT_ROLE = 'GUEST' 
 
         update_model()
 
@@ -1449,8 +1150,8 @@ def main():
         fr_title.grid(row=0, column=0, sticky='nswe')
         fr_title.columnconfigure(0, weight=1) 
         
-        # tk.Label(fr_title, text='Kỹ thuật lập trình', font=("Arial", 14), 
-        #             fg="white", bg="green").grid(row=0, column=0, sticky='nswe')
+        tk.Label(fr_title, text='Kỹ thuật lập trình', font=("Arial", 14), 
+                    fg="white", bg="green").grid(row=0, column=0, sticky='nswe')
         
         fr_control = tk.Frame(fr_header, bg='gray')
         fr_control.grid(row=1, column=0, sticky='nswe')
@@ -1493,104 +1194,13 @@ def main():
         
         tk.Label(fr_footer, text=f'Version:{APP_VERSION}', font=("Arial", 14), fg="white", bg="green").grid(row=0, column=2, sticky='e')
 
-        # # ------------------- Bắt đầu phần tạo các frame và widget con (CHỈ MỘT LẦN DUY NHẤT) ---------------------
-        # fr_left.rowconfigure(0, weight=1)
-        # fr_left.columnconfigure(0, weight=1)
-        
-        # fr_nav = tk.Frame(fr_left, bg='gray')
-        # fr_nav.grid(row=0, column=0, sticky='nswe')
-        
-        # fr_nav.rowconfigure(0, weight=0) # Label
-        # fr_nav.rowconfigure(1, weight=0) # Combobox
-        # fr_nav.rowconfigure(2, weight=1) # Treeview (phần này sẽ co giãn)
-        # fr_nav.columnconfigure(0, weight=1)
-
-        # tk.Label(fr_nav, text="Danh sách bài tập", font=("Arial", 12),
-        #         fg="white", bg="black").grid(row=0, column=0, sticky='nswe')
-    
-        # course_var = tk.StringVar()
-        # course_combobox = ttk.Combobox(fr_nav, textvariable=course_var, font=("Arial", 11), state="readonly")
-        # course_combobox.grid(row=1, column=0, sticky='ew', padx=5, pady=2) 
-        
-        # simple_course_titles = [
-        #     "Kỹ thuật lập trình (C)",
-        #     "Kỹ thuật lập trình (Java)",
-        #     "Cấu trúc dữ liệu và giải thuật",
-        #     "Mạng máy tính cơ bản"
-        # ]
-        # course_combobox['values'] = simple_course_titles
-        
-        # fr_lesson_tree = tk.Frame(fr_nav, bg='yellow')
-        # fr_lesson_tree.grid(row=2, column=0, sticky='nswe') 
-        
-        # fr_lesson_tree.rowconfigure(0, weight=1)
-        # fr_lesson_tree.columnconfigure(0, weight=1)
-
-        # # tree = ttk.Treeview(fr_lesson_tree, columns=("status", "score"), show="tree headings") 
-        # # tree.heading("status", text="Trạng thái", anchor='w')
-        # # tree.heading("score", text="Điểm", anchor='w')
-        # # tree.column("status", width=75, stretch=False)
-        # # tree.column("score", width=75, stretch=False)
-        # # tree.grid(row=0, column=0, sticky='nswe')
-        
-        # tree = ttk.Treeview(fr_lesson_tree, columns=("status", "score"), show="tree headings") 
-        
-        # # Đặt tiêu đề cho cột cây (cột đầu tiên)
-        # tree.heading("#0", text="Buổi và tên bài", anchor='w') # [cite: 1]
-        
-        # tree.heading("status", text="Trạng thái", anchor='w')
-        # tree.heading("score", text="Điểm", anchor='w')
-        # tree.column("status", width=75, stretch=False)
-        # tree.column("score", width=75, stretch=False)
-        # tree.grid(row=0, column=0, sticky='nswe')
-        
-        # # if simple_course_titles:
-        # #     course_combobox.set(simple_course_titles[0]) # Chọn mục đầu tiên mặc định
-        # #     # Liên kết sự kiện chọn của combobox.
-        # #     course_combobox.bind("<<ComboboxSelected>>", 
-        # #                         lambda event: on_course_select(event, tree, json_course, course_var)) 
-            
-        # #     # Tải toàn bộ json_course vào treeview khi khởi động
-        # #     # Sử dụng window.after để đảm bảo treeview đã sẵn sàng
-        # #     if json_course is not None:
-        # #         window.after(100, lambda: tree_load(tree, json_course)) # Đây là lời gọi tải dữ liệu ban đầu
-        # #     else:
-        # #         messagebox.showerror("Error", "lỗi load file data (course.json).")
-        # #         for item in tree.get_children():
-        # #             tree.delete(item)
-        # # else:
-        # #     messagebox.showerror("Error", "Không có dữ liệu môn học hoặc khóa học để hiển thị.")
-        # #     for item in tree.get_children():
-        # #         tree.delete(item)       
-        
-        # if simple_course_titles:
-        #     course_combobox.set("Kỹ thuật lập trình (C)") # Chọn mặc định "Kỹ thuật lập trình (C)"
-            
-        #     # Liên kết sự kiện chọn của combobox.
-        #     course_combobox.bind("<<ComboboxSelected>>", 
-        #                         lambda event: on_course_select(event, tree, json_course, course_var)) 
-            
-        #     # *** TẢI TOÀN BỘ JSON_COURSE VÀO TREEVIEW KHI KHỞI ĐỘNG (CHỈ MỘT LẦN) ***
-        #     # Loại bỏ lời gọi window.after(100, lambda: tree_load(tree, json_course))
-        #     # Thay vào đó, gọi trực tiếp tree_load SAU KHI tree đã được tạo.
-        #     if json_course is not None:
-        #         tree_load(tree, json_course) # Gọi tree_load ngay khi khởi tạo
-        #     else:
-        #         messagebox.showerror("Error", "lỗi load file data (course.json).")
-        #         for item in tree.get_children():
-        #             tree.delete(item)
-        # else:
-        #     messagebox.showerror("Error", "Không có dữ liệu môn học hoặc khóa học để hiển thị.")
-        #     for item in tree.get_children():
-        #         tree.delete(item)    
-
-        # ------------------- BẮT ĐẦU KHỐI TẠO FR_NAV VÀ CÁC WIDGET CON ---------------------
+        # ------------------- Bắt đầu phần tạo các frame và widget con ---------------------
         fr_left.rowconfigure(0, weight=1)
         fr_left.columnconfigure(0, weight=1)
-
+        
         fr_nav = tk.Frame(fr_left, bg='gray')
         fr_nav.grid(row=0, column=0, sticky='nswe')
-
+        
         fr_nav.rowconfigure(0, weight=0) # Label
         fr_nav.rowconfigure(1, weight=0) # Combobox
         fr_nav.rowconfigure(2, weight=1) # Treeview (phần này sẽ co giãn)
@@ -1598,55 +1208,50 @@ def main():
 
         tk.Label(fr_nav, text="Danh sách bài tập", font=("Arial", 12),
                 fg="white", bg="black").grid(row=0, column=0, sticky='nswe')
-
+    
         course_var = tk.StringVar()
         course_combobox = ttk.Combobox(fr_nav, textvariable=course_var, font=("Arial", 11), state="readonly")
         course_combobox.grid(row=1, column=0, sticky='ew', padx=5, pady=2) 
-
-        # Lấy danh sách các tên môn học từ bản đồ
-        available_course_names = list(COURSE_FILE_MAP.keys()) # Lấy các khóa (tên môn học)
-        course_combobox['values'] = available_course_names # Gán cho combobox
-
+        
+        simple_course_titles = [
+            "Kỹ thuật lập trình (C)",
+            "Kỹ thuật lập trình (Java)",
+            "Cấu trúc dữ liệu và giải thuật",
+            "Mạng máy tính cơ bản"
+        ]
+        course_combobox['values'] = simple_course_titles
+        
         fr_lesson_tree = tk.Frame(fr_nav, bg='yellow')
         fr_lesson_tree.grid(row=2, column=0, sticky='nswe') 
-
+        
         fr_lesson_tree.rowconfigure(0, weight=1)
         fr_lesson_tree.columnconfigure(0, weight=1)
 
         tree = ttk.Treeview(fr_lesson_tree, columns=("status", "score"), show="tree headings") 
-        tree.heading("#0", text="Buổi và tên bài", anchor='w') 
         tree.heading("status", text="Trạng thái", anchor='w')
         tree.heading("score", text="Điểm", anchor='w')
         tree.column("status", width=75, stretch=False)
         tree.column("score", width=75, stretch=False)
         tree.grid(row=0, column=0, sticky='nswe')
-
-        if available_course_names: # Kiểm tra nếu có môn học khả dụng
-            # Chọn môn mặc định (ví dụ: "Kỹ thuật lập trình (C)") hoặc môn đầu tiên
-            default_selection = "Kỹ thuật lập trình (C)" 
-            if default_selection in available_course_names:
-                course_combobox.set(default_selection)
-            else:
-                course_combobox.set(available_course_names[0]) # Chọn cái đầu tiên nếu mặc định không có
-
+        
+        if simple_course_titles:
+            course_combobox.set(simple_course_titles[0]) 
             # Liên kết sự kiện chọn của combobox.
             course_combobox.bind("<<ComboboxSelected>>", 
                                 lambda event: on_course_select(event, tree, json_course, course_var)) 
-
-            # *** Tải dữ liệu ban đầu cho treeview từ json_course đã được tải trong load_app_data() ***
+            
+            # Tải toàn bộ json_course vào treeview khi khởi động
             if json_course is not None:
-                # Lời gọi này sẽ tải dữ liệu của môn mặc định đã được set trong load_app_data
-                tree_load(tree, json_course) 
+                window.after(100, lambda: tree_load(tree, json_course)) #
             else:
-                messagebox.showerror("Error", "Lỗi tải dữ liệu khóa học ban đầu.")
+                messagebox.showerror("Error", "lỗi load file data (course.json).")
                 for item in tree.get_children():
                     tree.delete(item)
         else:
-            messagebox.showerror("Error", "Không tìm thấy file khóa học hợp lệ nào trong thư mục data/.")
+            messagebox.showerror("Error", "Không có dữ liệu môn học hoặc khóa học để hiển thị.")
             for item in tree.get_children():
-                tree.delete(item) 
-                
-        # ------------------- KẾT THÚC KHỐI TẠO FR_NAV VÀ CÁC WIDGET CON ---------------------
+                tree.delete(item)
+        
         #fr_input (bên trong fr_center)
         fr_center.rowconfigure(0, weight=3)
         fr_center.columnconfigure(0, weight=1)
@@ -1687,6 +1292,7 @@ def main():
         btn_help = tk.Button(fr_input_btn, text='AI Giúp đỡ', font=("Arial", 11))
         btn_help.grid(row=0, column=2, sticky='n')
         
+        #fr_response (bên trong fr_right)
         fr_right.rowconfigure(0, weight=1)
         fr_right.columnconfigure(0, weight=1)
         
@@ -1736,6 +1342,12 @@ def main():
         
         tree.bind("<<TreeviewSelect>>", lambda event: on_select(event, {"tree": tree, "fr_tree": fr_lesson_tree, "queue": queue, "output": txt_output, "fr_info": {'level': lbl_level, 'score': lbl_socre}}))
         
+        # Không cần else ở đây vì chúng ta đã xử lý json_course ở trên
+        # if json_course is not None:
+        #     tree_load(tree, json_course)
+        # else:
+        #     messagebox.showerror("Error", "lỗi load file data")   
+            
         #sự kiện
         window.protocol("WM_DELETE_WINDOW", lambda: window_on_closing(window))
         
