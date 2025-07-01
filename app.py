@@ -518,41 +518,98 @@ def load_app_data():
         json_course = None
         messagebox.showerror("Lỗi", "Không tìm thấy file course JSON hợp lệ nào trong thư mục data/. Vui lòng kiểm tra dữ liệu.")
 
+# def update_course_from_course_update(path_course_update):
+#     global json_course
+#     if os.path.exists(path_course_update):
+#         with open(path_course_update, "r", encoding="utf-8") as file:
+#             try:
+#                 json_course_update = json.load(file)
+#             except:
+#                 json_course_update=None
+                
+#         if json_course_update is not None:
+#             if json_course is not None:
+#                 update_map = {}
+#                 for session in json_course['sessions']:
+#                     for ex in session['exercises']:
+#                         update_map[ex['id']] = {
+#                             'status': ex['status'],
+#                             'score': ex['score']
+#                         }
+
+#                 # Cập nhật lại vào course_update_data
+#                 for session in json_course_update['sessions']:
+#                     for ex in session['exercises']:
+#                         ex_id = ex['id']
+#                         if ex_id in update_map:
+#                             ex['status'] = update_map[ex_id]['status']
+#                             ex['score'] = update_map[ex_id]['score']
+                            
+#                 with open(PATH_JSON_COURSE, 'w', encoding='utf-8') as f:
+#                     json.dump(json_course_update, f, indent=2, ensure_ascii=False)
+#                     delete_file(path_course_update)
+#             else:
+#                 with open(PATH_JSON_COURSE, 'w', encoding='utf-8') as f:
+#                     json.dump(json_course_update, f, indent=2, ensure_ascii=False)
+#                     delete_file(path_course_update)
+                            
 def update_course_from_course_update(path_course_update):
-    global json_course
+    global json_course # json_course hiện tại đang chứa dữ liệu của môn học đang hiển thị
+    
     if os.path.exists(path_course_update):
         with open(path_course_update, "r", encoding="utf-8") as file:
             try:
                 json_course_update = json.load(file)
-            except:
-                json_course_update=None
+            except Exception as e: # Catch specific exception
+                print(f"Lỗi tải course_update.json: {e}")
+                json_course_update = None
                 
         if json_course_update is not None:
-            if json_course is not None:
-                update_map = {}
-                for session in json_course['sessions']:
-                    for ex in session['exercises']:
-                        update_map[ex['id']] = {
-                            'status': ex['status'],
-                            'score': ex['score']
-                        }
+            # Xác định file JSON của môn học hiện tại để cập nhật
+            # Giả sử json_course (global) chứa dữ liệu của môn học đang hiển thị
+            # và nó có trường 'course_name' để tìm đường dẫn file.
+            
+            current_course_name = json_course.get("course_name") if json_course else None
+            
+            if current_course_name and current_course_name in COURSE_FILE_MAP:
+                # Lấy đường dẫn file JSON của môn học hiện tại
+                path_to_save_current_course = COURSE_FILE_MAP[current_course_name]
+                
+                # Cập nhật trạng thái và điểm của các bài tập trong json_course_update
+                # dựa trên trạng thái hiện tại của json_course
+                if json_course is not None:
+                    update_map = {}
+                    for session in json_course.get('sessions', []):
+                        for ex in session.get('exercises', []):
+                            update_map[ex['id']] = {
+                                'status': ex.get('status', '✗'), # Use .get()
+                                'score': ex.get('score', 0)     # Use .get()
+                            }
 
-                # Cập nhật lại vào course_update_data
-                for session in json_course_update['sessions']:
-                    for ex in session['exercises']:
-                        ex_id = ex['id']
-                        if ex_id in update_map:
-                            ex['status'] = update_map[ex_id]['status']
-                            ex['score'] = update_map[ex_id]['score']
-                            
-                with open(PATH_JSON_COURSE, 'w', encoding='utf-8') as f:
-                    json.dump(json_course_update, f, indent=2, ensure_ascii=False)
-                    delete_file(path_course_update)
+                    # Cập nhật lại vào json_course_update
+                    for session in json_course_update.get('sessions', []):
+                        for ex in session.get('exercises', []):
+                            ex_id = ex['id']
+                            if ex_id in update_map:
+                                ex['status'] = update_map[ex_id]['status']
+                                ex['score'] = update_map[ex_id]['score']
+                
+                # Ghi dữ liệu đã cập nhật vào file JSON TƯƠNG ỨNG của môn học đang hoạt động
+                try:
+                    with open(path_to_save_current_course, 'w', encoding='utf-8') as f:
+                        json.dump(json_course_update, f, indent=2, ensure_ascii=False)
+                    print(f"Đã cập nhật file: {path_to_save_current_course}")
+                    delete_file(path_course_update) # Xóa file update sau khi cập nhật
+                except Exception as e:
+                    print(f"Lỗi khi ghi file cập nhật cho môn học: {e}")
+                    messagebox.showerror("Lỗi ghi file", f"Không thể lưu cập nhật cho môn học: {e}")
             else:
-                with open(PATH_JSON_COURSE, 'w', encoding='utf-8') as f:
-                    json.dump(json_course_update, f, indent=2, ensure_ascii=False)
-                    delete_file(path_course_update)
-                            
+                print("Cảnh báo: Không thể xác định file môn học hiện tại để cập nhật.")
+                messagebox.showwarning("Cảnh báo", "Không thể lưu cập nhật: Môn học hiện tại không xác định.")
+        else:
+            print("Cảnh báo: course_update.json rỗng hoặc lỗi, không có gì để cập nhật.")
+            messagebox.showwarning("Cảnh báo", "Không có dữ liệu cập nhật từ course_update.json.")
+
 def save_json_file(filepath, data):
     with open(filepath, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2, ensure_ascii=False)
@@ -568,13 +625,31 @@ def update_exercise(json_data,id, new_status:ExerciseStatus, new_score=None):
                     return True  # cập nhật thành công
     return False  # không tìm thấy
 
+# def update_json_course(id, new_status:ExerciseStatus, new_score=None):
+#     global json_course
+#     res=update_exercise(json_course,id, new_status,new_score)
+#     if res ==True:
+#         save_json_file(PATH_JSON_COURSE,json_course)
+#     else:
+#         print('cập nhập lỗi')
+        
 def update_json_course(id, new_status:ExerciseStatus, new_score=None):
-    global json_course
+    global json_course # json_course đang chứa dữ liệu của môn học hiện tại
     res=update_exercise(json_course,id, new_status,new_score)
-    if res ==True:
-        save_json_file(PATH_JSON_COURSE,json_course)
+    if res == True:
+        # Xác định file JSON của môn học hiện tại để lưu
+        current_course_name = json_course.get("course_name") if json_course else None
+        if current_course_name and current_course_name in COURSE_FILE_MAP:
+            path_to_save = COURSE_FILE_MAP[current_course_name]
+            save_json_file(path_to_save, json_course) # Lưu vào file cụ thể của môn học
+            print(f"Đã lưu cập nhật cho bài tập {id} vào {path_to_save}")
+        else:
+            print("Cảnh báo: Không thể lưu cập nhật bài tập. Môn học hiện tại không xác định hoặc không có đường dẫn file.")
+            # Fallback: nếu không tìm được, có thể lưu vào course.json mặc định hoặc hiển thị lỗi
+            save_json_file(PATH_JSON_COURSE, json_course) # Vẫn lưu vào default nếu không tìm được map
     else:
-        print('cập nhập lỗi')
+        print('cập nhập lỗi bài tập trong bộ nhớ')
+        
         
 # def update_user_info(username='',mssv='',password=''):
 #     global DICT_USER_INFO
