@@ -59,7 +59,6 @@ if getattr(sys, 'frozen', False):
     PATH_STUDENT_LIST = get_path('../data/student.json')
     PATH_DOWNLOAD = get_path('../download')
     PATH_DATA = get_path('../data')
-    PATH_COMPILER=get_path('../compiler')
 else:
     PATH_CATCH = get_path('cache')
     PATH_LOG = get_path('log')
@@ -72,7 +71,6 @@ else:
     PATH_STUDENT_LIST = get_path('data/student.json')
     PATH_DOWNLOAD = get_path('download')
     PATH_DATA = get_path('data')
-    PATH_COMPILER=get_path('compiler')
 
 create_folder(PATH_CATCH)
 create_folder(PATH_LOG)

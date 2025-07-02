@@ -4,12 +4,12 @@ a = Analysis(
     ['app.py'],
     pathex=[
         '.',                      # chính là project/project4
-        '../../env_project4/Lib/site-packages'  # để import usersustomsize
+        'venv/Lib/site-packages'  # để import usersustomsize
     ],
     binaries=[],
     datas=[
         ('prompt', 'prompt'),
-        ('../../env_project4/Lib/site-packages/tkcode/schemes', 'tkcode/schemes')],
+        ('venv/Lib/site-packages/tkcode/schemes', 'tkcode/schemes')],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},

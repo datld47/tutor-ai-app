@@ -3,6 +3,7 @@ from tkinter import messagebox
 import json
 import os
 import sys
+from usercustomize import get_path
 
 # Giả sử các hàm này cần được truy cập từ bên ngoài hoặc được truyền vào
 # Nếu chúng thuộc về app.py và không được định nghĩa trong login_gui.py
@@ -18,7 +19,7 @@ import sys
 
 # Đây là một định nghĩa tạm thời cho các hàm mà us_login cần
 # Trong thực tế, bạn sẽ import chúng từ nơi chúng được định nghĩa (ví dụ: app.py hoặc một file util riêng)
-def get_path(relative_path):
+def get_path1(relative_path):
     # Định nghĩa tạm thời, thay thế bằng định nghĩa thực tế của bạn
     if getattr(sys, 'frozen', False):
         base_path = os.path.dirname(sys.executable)
@@ -26,7 +27,14 @@ def get_path(relative_path):
         base_path = os.path.dirname(os.path.abspath(__file__))
     return os.path.join(base_path, relative_path)
 
-PATH_JSON_CONFIG = get_path('data/config.json') # Cần định nghĩa hoặc import
+ # Cần định nghĩa hoặc import
+
+if getattr(sys, 'frozen', False):    
+    PATH_JSON_CONFIG = get_path1('../data/config.json')
+else:
+    PATH_JSON_CONFIG = get_path1('data/config.json')
+#PATH_JSON_CONFIG = get_path('data/config.json')
+    
 API_KEY_LIST = [] # Cần định nghĩa hoặc import
 API_KEY = '' # Cần định nghĩa hoặc import
 

@@ -1,4 +1,3 @@
-
 from usercustomize import *
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
@@ -8,6 +7,7 @@ from google.auth.transport.requests import Request
 from googleapiclient.http import MediaIoBaseDownload
 import io
 import zipfile
+from tkinter import messagebox
 
 def zip_folder(folder_path):
     parent_path = os.path.dirname(folder_path)
@@ -45,17 +45,17 @@ if getattr(sys, 'frozen', False):
     PATH_DOWNLOAD=get_path('../download')
 
 else:   
-    PATH_LOG=get_path('project/project4/log')
-    PATH_DATA=get_path('project/project4/data')
+    PATH_LOG=get_path('log')
+    PATH_DATA=get_path('data')
     #PATH_JSON_CONFIG=get_path('project/project4/data/config.json')
     PATH_JSON_CONFIG = get_path('data/config.json')
-    path_credis=get_path('project/project4/data/credentials.json')
-    path_token=get_path('project/project4/data/token.json')
-    PATH_IMG=get_path('project/project4/img')
-    PATH_DOWNLOAD=get_path('project/project4/download')
+    path_credis=get_path('data/credentials.json')
+    path_token=get_path('data/token.json')
+    PATH_IMG=get_path('img')
+    PATH_DOWNLOAD=get_path('download')
 
 create_folder(PATH_DOWNLOAD)
-    
+messagebox.showerror("Infor", "path "+PATH_JSON_CONFIG)
 with open(PATH_JSON_CONFIG, "r", encoding="utf-8") as file:
     try:
         config=json.load(file)

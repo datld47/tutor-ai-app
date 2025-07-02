@@ -4,451 +4,293 @@
   "task_list_title": "Chi tiết danh sách bài tập của từng buổi",
   "sessions": [
     {
-      "title": "Buổi 1: Hàm printf java",
+      "title": "Buổi 1: In ấn cơ bản",
       "exercises": [
         {
           "id": 1,
-          "title": "Bài 1.1: In helloworld java",
-          "description": "Viết chương trình tính in chữ  helloworld ra màn hình. Kết quả gióng như `Hình 1`",
+          "title": "Bài 1.1: In Hello World",
+          "description": "Viết chương trình Java để in chuỗi 'Hello World' ra màn hình console.",
           "status": "✗",
           "score": 0,
-          "image": [
-            {
-              "image_title": "Hình 1",
-              "link": "buoi1_1_1.PNG",
-              "image_description": {
-                "overall_description": "The image shows the text 'helloworld' on a dark background.",
-                "text_elements": [
-                  {
-                    "content": "helloworld",
-                    "color": "lightgray",
-                    "position": {
-                      "x": 10,
-                      "y": 20
-                    },
-                    "size": {
-                      "width": 120,
-                      "height": 20
-                    },
-                    "font": "monospace"
-                  }
-                ]
-              }
-            }
-          ],
+          "image": [],
           "guidance": [
-            "Khai báo thư viện stdio.h",
-            "Khai báo hàm chính",
-            "Sử dụng hàm printf để in chữ helloworld"
+            "Khai báo lớp (class) chính, ví dụ: `public class HelloWorld { ... }`",
+            "Khai báo phương thức (method) `main`, ví dụ: `public static void main(String[] args) { ... }`",
+            "Sử dụng `System.out.println()` để in chuỗi 'Hello World' ra màn hình."
           ]
         },
         {
           "id": 2,
-          "title": "Bài 1.2: In thông tin",
-          "description": "Viết chương trình in thông tin sinh viên\nTen:Nguyen Van A\nLop:EE23M\nTuoi:18\nKết quả giống như `Hình 1.2`",
+          "title": "Bài 1.2: In thông tin cá nhân",
+          "description": "Viết chương trình Java để in thông tin sinh viên ra màn hình console:\nTên: Nguyễn Văn A\nLớp: IT23M\nTuổi: 18.",
           "status": "✗",
           "score": 0,
-          "image": [
-            {
-              "image_title": "Hình 1.2",
-              "link": "buoi1_1_2.PNG",
-              "image_description": {
-                "description": "Ảnh chứa thông tin cá nhân với nền đen và chữ trắng, bao gồm tên, lớp và tuổi.",
-                "text_elements": [
-                  {
-                    "content": "Ten:Nguyen Van A",
-                    "color": "white",
-                    "position": {
-                      "x": 10,
-                      "y": 10
-                    },
-                    "size": {
-                      "width": 200,
-                      "height": 20
-                    },
-                    "font": "sans-serif"
-                  },
-                  {
-                    "content": "Lop:EE23M",
-                    "color": "white",
-                    "position": {
-                      "x": 10,
-                      "y": 40
-                    },
-                    "size": {
-                      "width": 120,
-                      "height": 20
-                    },
-                    "font": "sans-serif"
-                  },
-                  {
-                    "content": "Tuoi:18",
-                    "color": "white",
-                    "position": {
-                      "x": 10,
-                      "y": 70
-                    },
-                    "size": {
-                      "width": 80,
-                      "height": 20
-                    },
-                    "font": "sans-serif"
-                  }
-                ]
-              }
-            }
-          ],
+          "image": [],
           "guidance": [
-            "Khai báo thư viện stdio.h",
-            "Khai báo hàm chính",
-            "Sử dụng hàm printf để in từng dòng và dùng chuỗi thoát \\n để xuống dòng"
+            "Khai báo lớp và phương thức `main`.",
+            "Sử dụng `System.out.println()` để in từng dòng thông tin. Hàm này tự động thêm ký tự xuống dòng (`\\n`) sau mỗi lần in."
           ]
         },
         {
           "id": 3,
-          "title": "Bài 1.3: Sử dụng thẻ định dạng",
-          "description": "Viết chương trình in thông tin sinh viên\nTen:Nguyen Van A\nLop:EE23M\nTuoi:18\nChú ý ở đây bắt buộc sử dụng thẻ định dạng cho Ten, Tuoi, Lop . Kết quả giống như `Hình 1.2`",
+          "title": "Bài 1.3: Sử dụng biến và nối chuỗi",
+          "description": "Viết chương trình Java để in thông tin sinh viên:\nTên: Nguyễn Văn A\nLớp: IT23M\nTuổi: 18.\nChú ý: Sử dụng biến để lưu trữ Tên, Lớp, Tuổi và nối chuỗi để in ra màn hình.",
           "status": "✗",
           "score": 0,
-          "image": [
-            {
-              "image_title": "Hình 1.2",
-              "link": "buoi1_1_2.PNG",
-              "image_description": {
-                "description": "Ảnh chứa thông tin cá nhân với nền đen và chữ trắng, bao gồm tên, lớp và tuổi.",
-                "text_elements": [
-                  {
-                    "content": "Ten:Nguyen Van A",
-                    "color": "white",
-                    "position": {
-                      "x": 10,
-                      "y": 10
-                    },
-                    "size": {
-                      "width": 200,
-                      "height": 20
-                    },
-                    "font": "sans-serif"
-                  },
-                  {
-                    "content": "Lop:EE23M",
-                    "color": "white",
-                    "position": {
-                      "x": 10,
-                      "y": 40
-                    },
-                    "size": {
-                      "width": 120,
-                      "height": 20
-                    },
-                    "font": "sans-serif"
-                  },
-                  {
-                    "content": "Tuoi:18",
-                    "color": "white",
-                    "position": {
-                      "x": 10,
-                      "y": 70
-                    },
-                    "size": {
-                      "width": 80,
-                      "height": 20
-                    },
-                    "font": "sans-serif"
-                  }
-                ]
-              }
-            }
-          ],
+          "image": [],
           "guidance": [
-            "Khai báo thư viện stdio.h",
-            "Khai báo hàm chính",
-            "Trong hàm printf sử dụng hàm thẻ định dạng %s, %s ,%d lần lượt cho Ten,Tuoi,Lop và sử dụng chuỗi thoát \\n để xuống dòng. Ví dụ printf(\"Ten:%s\",\"abc\")"
+            "Khai báo lớp và phương thức `main`.",
+            "Khai báo biến kiểu `String` cho Tên và Lớp, và `int` cho Tuổi.",
+            "Gán giá trị cho các biến này.",
+            "Sử dụng `System.out.println()` và toán tử `+` để nối chuỗi và in thông tin ra màn hình. Ví dụ: `System.out.println(\"Tên: \" + tenSinhVien);`."
           ]
         },
         {
           "id": 4,
-          "title": "Bài 1.4:Sử dụng chuỗi thoát",
-          "description": "Viết chương trình in ra dòng văn bản sau:\n \"Đừng bao giờ sợ thất bại, bạn chỉ cần đúng một lần duy nhất trong đời.\" - \\ Drew Houston (CEO của Dropbox) \\ \n. Kết quả giống như `Hình 1.4`",
+          "title": "Bài 1.4: Ký tự thoát trong chuỗi",
+          "description": "Viết chương trình Java để in ra dòng văn bản sau:\n \"Đừng bao giờ sợ thất bại, bạn chỉ cần đúng một lần duy nhất trong đời.\" - \\ Drew Houston (CEO của Dropbox) \\ .",
           "status": "✗",
           "score": 0,
-          "image": [
-            {
-              "image_title": "Hình 1.4",
-              "link": "buoi1_1_4.PNG",
-              "image_description": {
-                "description": "The image is a dark background with white text displaying a quote.",
-                "text_elements": [
-                  {
-                    "content": "\"Dung bao gio so that bai, ban chi dung duy nhat mot lan trong doi.\"",
-                    "color": "white",
-                    "position": {
-                      "x": 10,
-                      "y": 10
-                    },
-                    "size": "medium",
-                    "font": "sans-serif"
-                  },
-                  {
-                    "content": "- \\ Drew Houston (CEO cua Dropbox) \\",
-                    "color": "white",
-                    "position": {
-                      "x": 580,
-                      "y": 10
-                    },
-                    "size": "medium",
-                    "font": "sans-serif"
-                  }
-                ]
-              }
-            }
-          ],
+          "image": [],
           "guidance": [
-            "Khai báo thư viện stdio.h",
-            "Khai báo hàm chính",
-            "Trong hàm printf sử dụng chuỗi thoát \\\" cho dấu \" , \\\\ cho dấu \\, \\\\\\\\ cho dấu \\\\"
+            "Khai báo lớp và phương thức `main`.",
+            "Sử dụng `System.out.println()` để in chuỗi.",
+            "Sử dụng ký tự thoát `\\\"` cho dấu `\"` bên trong chuỗi.",
+            "Sử dụng `\\\\` cho dấu `\\` trong chuỗi.",
+            "Ký tự `\\n` được dùng để xuống dòng (nhưng `println` tự động xuống dòng nên có thể không cần thiết nếu toàn bộ là một chuỗi)."
           ]
         }
       ]
     },
     {
-      "title": "Buổi 2: Biến và toán tử",
+      "title": "Buổi 2: Biến và Toán tử",
       "exercises": [
         {
           "id": 5,
-          "title": "Bài 2.1: Lưu số nguyên",
-          "description": "Viết chương trình thực hiện tác vụ sau\n-Khởi tạo biến x1 có kích thước 1 byte để lưu giá trị 125 vào máy tính và xuất kết quả ra màn hình\n-Khởi tạo biến x2 có kích thước 1 byte để lưu giá trị -123 vào máy tính và xuất kết quả ra màn hình\n-Khởi tạo biến x3 có kích thước 2 byte để lưu giá trị 6000 vào máy tính và xuất kết quả ra màn hình\n-Khởi tạo biến x4 có kích thước 2 byte để lưu giá trị -6000 vào máy tính và xuất kết quả ra màn hình\n-Khởi tạo biến x5 có kích thước 4 byte để lưu giá trị 6000000  vào máy tính và xuất kết quả ra màn hình\n-Khởi tạo biến x6 có kích thước 4 byte để lưu giá trị -6000000  vào máy tính và xuất kết quả ra màn hình\n-Sử dụng hàm sizeof() để kiểm tra lại kích thước của x1,x2,x3,x4,x5,x6",
+          "title": "Bài 2.1: Lưu trữ số nguyên",
+          "description": "Viết chương trình Java thực hiện các tác vụ sau:\n-Khởi tạo biến `x1` kiểu `byte` để lưu giá trị 125 và xuất kết quả ra màn hình.\n-Khởi tạo biến `x2` kiểu `byte` để lưu giá trị -123 và xuất kết quả ra màn hình.\n-Khởi tạo biến `x3` kiểu `short` để lưu giá trị 6000 và xuất kết quả ra màn hình.\n-Khởi tạo biến `x4` kiểu `short` để lưu giá trị -6000 và xuất kết quả ra màn hình.\n-Khởi tạo biến `x5` kiểu `int` để lưu giá trị 6000000 và xuất kết quả ra màn hình.\n-Khởi tạo biến `x6` kiểu `int` để lưu giá trị -6000000 và xuất kết quả ra màn hình.\n-Sử dụng `System.out.println()` để in giá trị và `Byte.BYTES`, `Short.BYTES`, `Integer.BYTES` để kiểm tra kích thước của các kiểu dữ liệu.",
           "status": "✗",
           "score": 0,
           "image": [],
           "guidance": [
-            "Khai báo thư viện stdio.h",
-            "Khai báo hàm chính.",
-            "1 byte sử dụng kiểu dữ liệu char hoặc unsigned char",
-            "2 byte sử dụng short hoặc unsigned short",
-            "4 byte sử dụng int hoặc unsigned int",
-            "Trong hàm printf sử dụng %d cho số dương hoặc âm , %u cho số dương",
-            "Sử dụng hàm sizeof() để lấy kích thước dữ liệu"
+            "Khai báo lớp và phương thức `main`.",
+            "Sử dụng các kiểu dữ liệu nguyên thủy: `byte` (1 byte), `short` (2 byte), `int` (4 byte).",
+            "Sử dụng `System.out.println()` để in giá trị của biến.",
+            "Sử dụng các hằng số `Byte.BYTES`, `Short.BYTES`, `Integer.BYTES` để lấy kích thước kiểu dữ liệu (tương đương `sizeof()` trong C)."
           ]
         },
         {
           "id": 6,
           "title": "Bài 2.2: Tràn bộ nhớ",
-          "description": "-Trả lời câu hỏi sau: chuyện gì xảy ra khi dùng 2 byte để lưu giá trị 100000?\n-Hãy viết chương trình để lưu 100000 vào máy tính và hiển thị ra màn hình",
+          "description": "-Trả lời câu hỏi sau: chuyện gì xảy ra khi dùng 2 byte (`short`) để lưu giá trị 100000 trong Java?\n-Hãy viết chương trình Java để cố gắng lưu 100000 vào một biến `short` và hiển thị ra màn hình. Quan sát kết quả.",
           "status": "✗",
           "score": 0,
           "image": [],
           "guidance": [
-            "2 byte không thể lưu được 100000",
-            "Sử dụng kiểu 4 byte để lưu 100000",
-            "Sử dụng hàm printf với định dạng %d hoặc %u"
+            "Khai báo lớp và phương thức `main`.",
+            "Kiểu `short` trong Java có giới hạn giá trị từ -32,768 đến 32,767.",
+            "Thử gán 100000 vào một biến `short`. Bạn sẽ thấy lỗi biên dịch hoặc tràn số nếu ép kiểu tường minh.",
+            "Sử dụng kiểu `int` (4 byte) để lưu 100000 một cách chính xác.",
+            "Sử dụng `System.out.println()` để hiển thị giá trị."
           ]
         },
         {
           "id": 7,
-          "title": "Bài 2.3: Lưu số thập phân",
-          "description": "Viết chương trình thực hiện tác vụ sau\n-Khởi tạo biến x1 có kích thước 4 byte để lưu giá trị 18.54 vào máy tính và xuất kết quả ra màn hình\n-Khởi tạo biến x2 có kích thước 4 byte để lưu giá trị -18.54 vào máy tính và xuất kết quả ra màn hình\n-Khởi tạo biến x3 có kích thước 8 byte để lưu giá trị 18000.54 vào máy tính và xuất kết quả ra màn hình\n-Khởi tạo biến x4 có kích thước 8 byte để lưu giá trị -18000.54 vào máy tính và xuất kết quả ra màn hình\n**Chú ý: Phải in đúng số lượng chữ số thập phân",
+          "title": "Bài 2.3: Lưu trữ số thập phân",
+          "description": "Viết chương trình Java thực hiện tác vụ sau:\n-Khởi tạo biến `x1` kiểu `float` để lưu giá trị 18.54 và xuất kết quả ra màn hình.\n-Khởi tạo biến `x2` kiểu `float` để lưu giá trị -18.54 và xuất kết quả ra màn hình.\n-Khởi tạo biến `x3` kiểu `double` để lưu giá trị 18000.54 và xuất kết quả ra màn hình.\n-Khởi tạo biến `x4` kiểu `double` để lưu giá trị -18000.54 và xuất kết quả ra màn hình.\n**Chú ý: Phải in đúng số lượng chữ số thập phân khi cần.**",
           "status": "✗",
           "score": 0,
           "image": [],
           "guidance": [
-            "Kiểu float có kích thước 2 byte để lưu số thập phân",
-            "Kiểu double có kích thước 4 byte để lưu số thập phân",
-            "Trong hàm printf() sử dụng %f với kiểu float , %lf với kiểu số double",
-            "Kết hợp cấp chính xác để lấy số lượng số thập phân. Ví dụ printf(\"%2.f\",8.8889) lấy 2 số thập phân"
+            "Khai báo lớp và phương thức `main`.",
+            "Kiểu `float` có kích thước 4 byte để lưu số thập phân (cần hậu tố `f` hoặc `F` khi khởi tạo: `18.54f`).",
+            "Kiểu `double` có kích thước 8 byte để lưu số thập phân.",
+            "Sử dụng `System.out.println()` để in giá trị của biến.",
+            "Để định dạng số thập phân, sử dụng `String.format()` hoặc `System.out.printf()` (tương tự `printf` trong C). Ví dụ: `System.out.printf(\"%.2f\", 8.8889);` để lấy 2 số thập phân."
           ]
         },
         {
           "id": 8,
-          "title": "Bài 2.4: Thư viện stdint",
-          "description": "-Trả lời câu hỏi sau: Kiểu int có phải luôn luôn có kích thước luôn 4 byte không? Yếu tố nào quyết định đến kích thước của kiểu int\n-Viết chương trình sử dụng thư viện <stdint.h> thực hiện tác vụ sau\n-Khởi tạo biến x1 có kích thước 1 byte để lưu giá trị 125 vào máy tính và xuất kết quả ra màn hình\n-Khởi tạo biến x2 có kích thước 1 byte để lưu giá trị -123 vào máy tính và xuất kết quả ra màn hình\n-Khởi tạo biến x3 có kích thước 2 byte để lưu giá trị 6000 vào máy tính và xuất kết quả ra màn hình\n-Khởi tạo biến x4 có kích thước 2 byte để lưu giá trị -6000 vào máy tính và xuất kết quả ra màn hình\n-Khởi tạo biến x5 có kích thước 4 byte để lưu giá trị 6000000  vào máy tính và xuất kết quả ra màn hình\n-Khởi tạo biến x6 có kích thước 4 byte để lưu giá trị -6000000  vào máy tính và xuất kết quả ra màn hình\n-Sử dụng hàm sizeof() để kiểm tra lại kích thước của x1,x2,x3,x4,x5,x6",
+          "title": "Bài 2.4: Kiểu dữ liệu chuẩn",
+          "description": "-Trả lời câu hỏi sau: Kiểu `int` trong Java có phải luôn luôn có kích thước 4 byte không? Yếu tố nào quyết định đến kích thước của kiểu `int`?\n-Java có cung cấp các kiểu dữ liệu với kích thước cố định tương tự C (`stdint.h`) không? Nếu có, hãy liệt kê và mô tả chúng.\n-Viết chương trình Java để kiểm tra kích thước (bằng byte) của `byte`, `short`, `int`, `long`, `float`, `double`.",
           "status": "✗",
           "score": 0,
           "image": [],
           "guidance": [
-            "Không phải, tùy trình biên dịch, để đồng bộ người ta đưa ra thư viện <stdint.h>",
-            "Khai báo thư viện <stdint.h",
-            "Sử dụng int8_t và uint8_t cho 1 byte",
-            "Sử dụng int16_t và uint16_t cho 2 byte",
-            "Sử dụng int32_t và uint32_t cho 4 byte",
-            "Trong hàm printf() sử dụng %d cho số nguyên âm và nguyên dương; sử dụng %u cho số nguyên dương"
+            "Lý thuyết: Trong Java, kích thước của các kiểu dữ liệu nguyên thủy (primitive types) là cố định và độc lập với nền tảng (platform-independent), ví dụ `int` luôn là 4 byte.",
+            "Java không có thư viện `<stdint.h>` như C. Các kiểu nguyên thủy của Java đã có kích thước cố định (`byte`, `short`, `int`, `long`).",
+            "Sử dụng các hằng số `Byte.BYTES`, `Short.BYTES`, `Integer.BYTES`, `Long.BYTES`, `Float.BYTES`, `Double.BYTES` để lấy kích thước kiểu dữ liệu."
           ]
         },
         {
           "id": 9,
-          "title": "Bài 2.5: Lưu chuỗi",
-          "description": "Viết chương trình thực hiện tác vụ sau\n-Khai báo biến s  để chuỗi \"Nguyen Van A\"\n-Xuất kết quả biến s lưu được ra màn hình",
+          "title": "Bài 2.5: Lưu trữ chuỗi",
+          "description": "Viết chương trình Java thực hiện tác vụ sau:\n-Khai báo biến `s` kiểu `String` để lưu chuỗi \"Nguyễn Văn A\".\n-Xuất kết quả biến `s` ra màn hình console.",
           "status": "✗",
           "score": 0,
           "image": [],
           "guidance": [
-            "khai báo thư viện stdio.h , khai báo hàm chính",
-            "Chuỗi trong C là một tập hợp nhiều kí tự và kết thúc bằng kí tự null",
-            "Sử dụng công thức: char tên_mảng [kích_thước]=\"chuỗi_kí_tự\" , với kích thước phải lớn hơn kích thước chuỗi. Ví dụ ten_cong_ty[30]=\"Hoang Ha Mobile\"",
-            "Trong hàm printf() sử dụng %s để in chuỗi"
+            "Khai báo lớp và phương thức `main`.",
+            "Chuỗi trong Java được biểu diễn bởi lớp `String`.",
+            "Sử dụng công thức: `String tenBien = \"chuỗi_kí_tự\";`.",
+            "Sử dụng `System.out.println()` để in chuỗi ra màn hình."
           ]
         },
         {
           "id": 10,
-          "title": "Bài 2.6: Địa chỉ biến",
-          "description": "Viết chương trình thực hiện tác vụ sau\n-Khai báo biến cục bộ x lưu giá trị 80\n-Khai báo biến toàn cục y lưu giá trị 80\n-In giá trị của biến x và địa chỉ biến x\n-In giá trị biến y và địa chỉ biến y\n-Sử dụng con trỏ p_x đê lưu địa chỉ biến x\n-In giá trị con trỏ p_x\nĐọc giá trị biến x thông qua con trỏ p_x và lưu vào biến z\n-In giá trị biến z",
+          "title": "Bài 2.6: Tham chiếu và Giá trị",
+          "description": "Viết chương trình Java thực hiện tác vụ sau:\n-Khai báo biến cục bộ `x` lưu giá trị 80.\n-Khai báo biến toàn cục `y` lưu giá trị 80.\n-In giá trị của biến `x` và `y` ra màn hình.",
           "status": "✗",
           "score": 0,
           "image": [],
           "guidance": [
-            "khai báo thư viện stdio.h , khai báo hàm chính",
-            "Khai báo biến x nằm trong hàm main, khai báo biến y nầm ngoài hàm main",
-            "Sử dụng toán tử & để đọc địa chỉ của x và y",
-            "Sử dụng %d để in giá trị x , y",
-            "Sử dụng %p để in địa chỉ x và y",
-            "Sử dụng công thức <kieu_du_lieu>*ten_con_tro=<dia_chi> để tạo con trỏ p_x lưu địa chỉ biến x",
-            "Sử dụng %p để in giá trị con trỏ p_x",
-            "Sử dụng công thức z=*<ten_con_tro> để đọc giá trị ô nhớ mà con trỏ nắm giữ; sử dụng %d để xuất z ra màn hình"
+            "Khai báo lớp và phương thức `main`.",
+            "Trong Java, không có 'biến toàn cục' theo nghĩa của C (tức là biến ngoài hàm `main` có thể truy cập trực tiếp từ bất cứ đâu). Thay vào đó, bạn sẽ sử dụng biến `static` của lớp (`static int y = 80;`).",
+            "Biến `x` sẽ là biến cục bộ trong phương thức `main`.",
+            "Sử dụng `System.out.println()` để in giá trị của biến."
           ]
         },
         {
           "id": 11,
-          "title": "Bài 2.7: Ứng dụng con trỏ",
-          "description": "-Trả lời câu hỏi: Khi cấp phát bộ nhớ ta dùng Ram đã đủ nhưng tại sao phải dùng con trỏ\n-Giả sử thanh ghi REG_A của vi xử lý có chức năng điều khiển IO PortA có địa chỉ là 0x25. Viết chương trình thực hiện tác vụ sau:\n-Đọc giá trị thanh ghi REG_A lưu vào biến x\n-Ghi giá trị 18 vào thanh ghi REG_A",
+          "title": "Bài 2.7: Thao tác trực tiếp với bộ nhớ (Java - Giới hạn)",
+          "description": "-Trả lời câu hỏi: Trong Java, có thể truy cập trực tiếp địa chỉ bộ nhớ (như `0x25`) để điều khiển phần cứng không? Tại sao?\n-Nêu ví dụ về cách Java tương tác với phần cứng hoặc tài nguyên cấp thấp (nếu có).",
           "status": "✗",
           "score": 0,
           "image": [],
           "guidance": [
-            "Ta dùng con trỏ để giúp truy cập các thanh ghi , bộ nhớ khác được liên kết với vi điều khiển",
-            "Sử dụng con trỏ p_x lưu địa chỉ 0x25: uint8_t* p_x=(uint8_t*)(0x25)",
-            "Đọc giá trị thanh ghi REG_A thông qua con trỏ p_x và gán vào biến x: x=*p_x",
-            "Thực hiện gán giá trị 18 vào  REG_A thông qua con trỏ p_x: *p_x=18"
+            "Lý thuyết: Java được thiết kế để chạy trên Máy ảo Java (JVM) và có tính năng 'quản lý bộ nhớ tự động' (Garbage Collection). Do đó, Java không cho phép truy cập trực tiếp địa chỉ bộ nhớ thông qua con trỏ như C/C++ để đảm bảo an toàn và tính di động.",
+            "Để tương tác với phần cứng hoặc các tài nguyên cấp thấp, Java thường sử dụng:\n- **JNI (Java Native Interface):** Cho phép Java gọi mã C/C++ và ngược lại.\n- **Thư viện chuyên dụng:** Ví dụ: thư viện cho lập trình GPIO trên Raspberry Pi (ví dụ: Pi4J), thư thư viện cho giao tiếp nối tiếp (Serial Port).",
+            "**Kết luận:** Java không có cú pháp con trỏ để thao tác trực tiếp với địa chỉ bộ nhớ như `uint8_t* p_x=(uint8_t*)(0x25)` trong C."
           ]
         },
         {
           "id": 12,
           "title": "Bài 2.8: Toán tử số học",
-          "description": "Cho x=15,y=18. Viết chương trình thực hiện tác vụ sau\nr1=x+y\nr2=x*y\nr3=x/y\nr4=x%y\nIn kết quả r1,r2,r3,r4 ra màn hình",
+          "description": "Cho `x = 15`, `y = 18`. Viết chương trình Java thực hiện tác vụ sau:\n`r1 = x + y`\n`r2 = x * y`\n`r3 = x / y`\n`r4 = x % y`\nIn kết quả `r1`, `r2`, `r3`, `r4` ra màn hình console.",
           "status": "✗",
           "score": 0,
           "image": [],
           "guidance": [
-            "Khai báo x, y kiểu số nguyên ( x, y có thể khai báo kiểu double hoặc float)",
-            "r3=x/y . Nếu x,y là số nguyên phải ép kiểu x về float hoặc double",
-            "r4=x%y đây là phép lấy dư  nêu x,y dang ở double hoặc float thì ta phải ép về kiểu số nguyên",
-            "sử dụng %d với  r1,r2,r4 và %f hoặc %lf với r3 để xuất kết quả ra màn hình"
+            "Khai báo lớp và phương thức `main`.",
+            "Khai báo `x`, `y` là các biến kiểu `int`.",
+            "Trong Java, phép chia số nguyên (`/`) sẽ trả về phần nguyên. Để có kết quả thập phân, ít nhất một toán hạng phải là số thực (ví dụ: `(double)x / y`).",
+            "Phép lấy dư (`%`) hoạt động với cả số nguyên và số thực (trả về `double` nếu có số thực).",
+            "Sử dụng `System.out.println()` để in các kết quả."
           ]
         },
         {
           "id": 13,
           "title": "Bài 2.9: Chuyển đổi thời gian",
-          "description": "Cho biến t lưu số giây , t==7515. Viết chương tình thực hiện tác vụ sau:\n-Tính toán số giờ từ biến t và lưu vào biến hour\n-Tính toán số phút từ biến t và lưu vào biến min\nTính số giây từ biến t và lưu vào biến sec\nIn biến hour, min, sec ra màn hình",
+          "description": "Cho biến `t` lưu số giây, `t = 7515`. Viết chương trình Java thực hiện tác vụ sau:\n-Tính toán số giờ từ biến `t` và lưu vào biến `hour`.\n-Tính toán số phút từ biến `t` và lưu vào biến `min`.\n-Tính số giây còn lại từ biến `t` và lưu vào biến `sec`.\nIn biến `hour`, `min`, `sec` ra màn hình console.",
           "status": "✗",
           "score": 0,
           "image": [],
           "guidance": [
-            "khai báo thư viện, hàm chính",
-            "gán biến t",
-            "hour=t/3600",
-            "min=(t%3600)/60",
-            "sec=t/60",
-            "sử dụng %d để xuất hour,min,sec ra màn hình"
+            "Khai báo lớp và phương thức `main`.",
+            "Khai báo biến `t` kiểu `int` và gán giá trị.",
+            "Tính toán `hour = t / 3600;`",
+            "Tính toán `min = (t % 3600) / 60;`",
+            "Tính toán `sec = t % 60;` (hoặc `sec = t - (hour * 3600) - (min * 60);`)",
+            "Sử dụng `System.out.println()` để xuất `hour`, `min`, `sec`."
           ]
         },
         {
           "id": 14,
-          "title": "Bài 2.10: Thư viện `<math.h>`",
-          "description": "Cho a=5,b=14,c=8. Viết chương trình thực hiện tác vụ sau\n- Tính delta=b^2-4*a*c và xuất delta ra màn hình\n- Tính x1=(-b+sqrt(delta))/2a\n- Tính x2=(-b-sqrt(delta))/2a\n- Xuất x1,x2 ra màn hình",
+          "title": "Bài 2.10: Thư viện `java.lang.Math`",
+          "description": "Cho `a = 5`, `b = 14`, `c = 8`. Viết chương trình Java thực hiện tác vụ sau:\n- Tính `delta = b^2 - 4*a*c` và xuất `delta` ra màn hình.\n- Tính `x1 = (-b + sqrt(delta)) / (2*a)`.\n- Tính `x2 = (-b - sqrt(delta)) / (2*a)`.\n- Xuất `x1`, `x2` ra màn hình console.",
           "status": "✗",
           "score": 0,
           "image": [],
           "guidance": [
-            "khai báo thư viện stdio.h, math.h",
-            "Khai báo hàm chính",
-            "Hàm mũ sử dụng hàm pow",
-            "Căn bậc hai sử dụng hàm sqrt()",
-            "delta,x1,x2 kiểu double, dùng %lf để xuất ra màn hình"
+            "Khai báo lớp và phương thức `main`.",
+            "Sử dụng lớp `Math` trong `java.lang` (không cần `import` tường minh vì nó là một phần của gói mặc định).",
+            "Sử dụng `Math.pow(base, exponent)` để tính lũy thừa (ví dụ: `Math.pow(b, 2)`).",
+            "Sử dụng `Math.sqrt(number)` để tính căn bậc hai.",
+            "Các biến `delta`, `x1`, `x2` nên có kiểu `double` để đảm bảo độ chính xác.",
+            "Sử dụng `System.out.println()` hoặc `System.out.printf(\"%.2f\", value)` để xuất kết quả ra màn hình."
           ]
         },
         {
           "id": 15,
           "title": "Bài 2.11: Toán tử so sánh",
-          "description": "Viết chương trình thực hiện tác vụ sau\n- Khởi tạo x1=3>7\n- Khởi tạo x2=8<9\n- In x1,x2 ra màn hình",
+          "description": "Viết chương trình Java thực hiện tác vụ sau:\n- Khởi tạo biến `x1 = 3 > 7`.\n- Khởi tạo biến `x2 = 8 < 9`.\n- In `x1`, `x2` ra màn hình console.",
           "status": "✗",
           "score": 0,
           "image": [],
           "guidance": [
-            "khai báo thư viện, khai báo hàm chính",
-            "Trong C để thực hiện lưu biểu thức logic ta sử dụng kiểu int",
-            "Sử dụng hàm printf() với định dạng %d để in x1,x2"
+            "Khai báo lớp và phương thức `main`.",
+            "Trong Java, kết quả của biểu thức so sánh là một giá trị `boolean` (`true` hoặc `false`).",
+            "Khai báo `x1`, `x2` kiểu `boolean` và gán các biểu thức so sánh.",
+            "Sử dụng `System.out.println()` để in `x1`, `x2`."
           ]
         },
         {
           "id": 16,
-          "title": "Bài 2.12: Kiểu bool (`<stdbool.h>`)",
-          "description": "Viết chương trình thực hiện tác vụ sau (chú ý sử dụng kiểu bool để lưu các biểu thức logic)\n- Khởi tạo x1=3>7\n- Khởi tạo x2=8<9\n- In x1,x2 ra màn hình\n- In kích thước x1\n -Nhận xét khi dùng kiểu bool và kiểu int",
+          "title": "Bài 2.12: Kiểu `boolean`",
+          "description": "Viết chương trình Java thực hiện tác vụ sau (chú ý sử dụng kiểu `boolean` để lưu các biểu thức logic):\n- Khởi tạo `x1 = 3 > 7`.\n- Khởi tạo `x2 = 8 < 9`.\n- In `x1`, `x2` ra màn hình console.\n- In kích thước của `x1`.\n- Nhận xét khi dùng kiểu `boolean` so với việc dùng `int` trong C.",
           "status": "✗",
           "score": 0,
           "image": [],
           "guidance": [
-            "khai báo thư viện <stdio.h>",
-            "Để lưu giá trị biểu thức logic ngoài kiểu int ta có thể dùng kiểu bool trong thư viện <stdbool.h> để tối ưu bộ nhớ",
-            "Khai báo hàm chính",
-            "Khai báo x1,x2 kiểu bool và gán các biểu thức vào x1,x2",
-            "Sử dụng hàm printf() với định dạng %d để in x1,x2",
-            "Sử dụng hàm sizeof() để in kích thước x1"
+            "Khai báo lớp và phương thức `main`.",
+            "Trong Java, kiểu `boolean` là kiểu dữ liệu riêng biệt để lưu trữ giá trị `true` hoặc `false`. Nó không phải là một số nguyên như trong C.",
+            "Khai báo `x1`, `x2` kiểu `boolean` và gán các biểu thức logic.",
+            "Sử dụng `System.out.println()` để in `x1`, `x2`.",
+            "Lý thuyết: Kích thước của `boolean` trong JVM không được quy định rõ ràng, có thể là 1 byte hoặc sử dụng 1 bit, nhưng thường được coi là 1 byte cho mục đích lưu trữ mảng `boolean`. Java không có toán tử `sizeof()` cho các kiểu nguyên thủy."
           ]
         },
         {
           "id": 17,
           "title": "Bài 2.13: Toán tử logic",
-          "description": "Cho x1=3>7, x2=8<9. Viết chương trình thực hiện tác vụ sau (chú ý sử dụng kiểu bool để lưu các biểu thức logic)\n- Khởi tạo z1=x1&&x2\n- Khởi tạo z2=x1||x2\n- Khởi tạo z3=!x1\n- In z1,z2,z3 ra màn hình",
+          "description": "Cho `x1 = 3 > 7`, `x2 = 8 < 9`. Viết chương trình Java thực hiện tác vụ sau (chú ý sử dụng kiểu `boolean` để lưu các biểu thức logic):\n- Khởi tạo `z1 = x1 && x2`.\n- Khởi tạo `z2 = x1 || x2`.\n- Khởi tạo `z3 = !x1`.\n- In `z1`, `z2`, `z3` ra màn hình console.",
           "status": "✗",
           "score": 0,
           "image": [],
           "guidance": [
-            "khai báo thư viện <stdio.h>, <stdbool.h>",
-            "Khởi tạo x1=3>7, khởi tạo x2=8<9",
-            "Khởi tọa z1, z2, z3",
-            "Sử dụng hàm printf() với định dạng %d để in z1,z2,z3"
+            "Khai báo lớp và phương thức `main`.",
+            "Khởi tạo `x1` và `x2` kiểu `boolean` với các biểu thức logic cho sẵn.",
+            "Khởi tạo `z1`, `z2`, `z3` kiểu `boolean` bằng các toán tử logic `&&` (AND), `||` (OR), `!` (NOT).",
+            "Sử dụng `System.out.println()` để in `z1`, `z2`, `z3`."
           ]
         },
         {
           "id": 18,
           "title": "Bài 2.14: Toán tử thao tác bit",
-          "description": "Cho A =0b10101001, B=0b11011011. Viết chương trình thực hiện tác vụ sau:\n- Khởi tạo z1=A&B\n- Khởi tạo z2=A|B\n- Khởi tạo z3=~A\n- Khởi tạo z4=A^B\n- Khởi tạo z5=A>>3\n- Khởi tạo z6=A<<3\n- Xuất z1,z2,z3,z4,z5,z6 ra màn hình",
+          "description": "Cho `A = 0b10101001`, `B = 0b11011011`. Viết chương trình Java thực hiện tác vụ sau:\n- Khởi tạo `z1 = A & B`.\n- Khởi tạo `z2 = A | B`.\n- Khởi tạo `z3 = ~A`.\n- Khởi tạo `z4 = A ^ B`.\n- Khởi tạo `z5 = A >> 3`.\n- Khởi tạo `z6 = A << 3`.\n- Xuất `z1`, `z2`, `z3`, `z4`, `z5`, `z6` ra màn hình console.",
           "status": "✗",
           "score": 0,
           "image": [],
           "guidance": [
-            "Tính toán bằng tay giá trị z1,z2,z3,z4,z5,z6",
-            "khai báo thư viện <stdio.h>",
-            "Khai báo hàm chính",
-            "Khởi tạo A=0b10101001, khởi tạo B=0b11011011",
-            "Khởi tọa z1, z2, z3,z4,z5,z6",
-            "Sử dụng hàm printf() với định dạng %d để in z1,z2,z3,z4,z5,z6",
-            "Sau khi có kết quả đổi sang hệ nhị phân bằng máy tính bỏ túi và kiểm tra lại với kết quả tính toán bằng tay"
+            "Tính toán bằng tay giá trị `z1`, `z2`, `z3`, `z4`, `z5`, `z6` ở dạng nhị phân và thập phân.",
+            "Khai báo lớp và phương thức `main`.",
+            "Khai báo biến `A` và `B` kiểu `int` và khởi tạo giá trị nhị phân bằng tiền tố `0b` (ví dụ: `int A = 0b10101001;`).",
+            "Khởi tạo `z1`, `z2`, `z3`, `z4`, `z5`, `z6` kiểu `int` bằng các toán tử thao tác bit `&`, `|`, `~`, `^`, `>>`, `<<`.",
+            "Sử dụng `System.out.println()` để in các kết quả. Để in dưới dạng nhị phân, sử dụng `Integer.toBinaryString(value)`."
           ]
         },
         {
           "id": 19,
-          "title": "Bài 2.15: Ứng dụng toán tử thao tác bit",
-          "description": "- Câu 1: Tại sao ta phải cần đến thao tác bit trong khi ta có thể tính toán số học +,-,*,/ thậm chí là thư viện `math` để tính sin, cos...\n- Câu 2: Cho A= 0b10001000 , viết chương trình thực hiện tác vụ sau\n -Đọc bit 3,4,5 và xuất ra màn hình\n- set bit 4 (cài bit 4 lên 1) và xuất kết quả ra màn hình\n- clear bit 3 (cài bit 3 về 0) và xuất kết quả ra màn hình",
+          "title": "Bài 2.15: Ứng dụng toán tử thao tác bit (Java - Giới hạn)",
+          "description": "- Câu 1: Tại sao ta cần đến thao tác bit trong Java, khi ta có thể tính toán số học +,-,*,/ hay thư viện `Math`?\n- Câu 2: Cho `A = 0b10001000`. Viết chương trình Java thực hiện tác vụ sau:\n -Đọc bit 3, 4, 5 (từ phải sang, bắt đầu từ 0) và xuất ra màn hình.\n- Set bit 4 (cài bit 4 lên 1) và xuất kết quả ra màn hình.\n- Clear bit 3 (cài bit 3 về 0) và xuất kết quả ra màn hình.",
           "status": "✗",
           "score": 0,
           "image": [],
           "guidance": [
-            "Thao tác bit là cơ sở cho các thư viện lập trình nhúng. Vì trong lập trình nhúng muốn điều khiển phần cứng ta phải đọc datasheet phần cứng và điều khiển thanh ghi dựa vào các bit mà nhà sản xuất cung cấp. Vi dụ điều khiển LED sáng ở PortA thì ta phải điều khiển các bit liên quan đến cấu hình hướng, cấu hình trạng thái, cấu hình tốc độ xung clock...",
-            "khai báo thư viện <stdio.h>",
-            "Khai báo hàm chính",
-            "Khởi tạo A= 0b10001000",
-            "Đọc bit thứ n bất kì của thanh ghi A áp dụng công thức: (A>>n)&1",
-            "Áp dụng công thức đọc bit ở trên khởi tạo 3 biến r1,r2,r3 để lưu trạng thái bit 3,4,5 của A và xuất r1,r2,r3 ra màn hình",
-            "Set bit thứ n (thiết lập lên 1) của thanh ghi A áp dụng công thức: A|(1<<n)",
-            "Áp dụng công thức set bit ở  trên tạo biến  REG1 để lưu giá trị của thanh ghi A sau khi thực hiện set bit, xuất REG1 ra màn hình",
-            "Clear bit thứ n (thiết lập về 0) của thanh ghi A áp dụng công thức: A&(~(1<<n))",
-            "Áp dụng công thức clear bit ở  trên tạo biến  REG2 để lưu giá trị của thanh ghi A sau khi thực hiện clear bit, xuất REG2 ra màn hình"
+            "Lý thuyết: Thao tác bit trong Java vẫn quan trọng cho các thuật toán tối ưu, mã hóa, nén dữ liệu hoặc khi làm việc với các định dạng dữ liệu nhị phân. Tuy nhiên, ít dùng để điều khiển phần cứng trực tiếp như trong C.",
+            "Khai báo lớp và phương thức `main`.",
+            "Khởi tạo `A = 0b10001000` (kiểu `int`).",
+            "Đọc bit thứ `n` bất kỳ của biến `A` áp dụng công thức: `(A >> n) & 1`.",
+            "Áp dụng công thức đọc bit ở trên, khởi tạo 3 biến `r1`, `r2`, `r3` để lưu trạng thái bit 3, 4, 5 của `A` và xuất `r1`, `r2`, `r3` ra màn hình.",
+            "Set bit thứ `n` (thiết lập lên 1) của biến `A` áp dụng công thức: `A | (1 << n)`.",
+            "Áp dụng công thức set bit ở trên, tạo biến `reg1` để lưu giá trị của `A` sau khi set bit, xuất `reg1` ra màn hình.",
+            "Clear bit thứ `n` (thiết lập về 0) của biến `A` áp dụng công thức: `A & (~(1 << n))`.",
+            "Áp dụng công thức clear bit ở trên, tạo biến `reg2` để lưu giá trị của `A` sau khi clear bit, xuất `reg2` ra màn hình."
           ]
         },
         {
           "id": 20,
           "title": "Bài 2.16: Độ ưu tiên toán tử",
-          "description": "Dựa vào bảng ưu tiên cho trong hình 2_2_16, viết chương trình thực hiện tính toán sau:\n- Khởi tạo biến X = a | b & c + d*e\n- Khởi tạo biến Y=((a| b) & c) + (d*e)\n- In kết quả biến X, biến Y ra màn hình và kiểm tra kết quả so với chạy tay",
+          "description": "Dựa vào bảng ưu tiên toán tử (tham khảo hình tương ứng), viết chương trình Java thực hiện tính toán sau:\n- Khởi tạo biến `X = a | b & c + d * e`.\n- Khởi tạo biến `Y = ((a | b) & c) + (d * e)`.\n- In kết quả biến `X`, `Y` ra màn hình console và kiểm tra kết quả so với chạy tay.",
           "status": "✗",
           "score": 0,
           "image": [
@@ -658,292 +500,189 @@
             }
           ],
           "guidance": [
-            "Click xem hình hướng dẫn ưu tiên toán tử",
-            "Tính toán bằng tay trước",
-            "Khai báo thư viện , khai báo hàm chính",
-            "Khởi tạo biến X = a | b & c + d*e",
-            "Khởi tạo biến Y=((a| b) & c) + (d*e)",
-            "Sử dụng hàm printf() với định dạng %d để in X,Y"
+            "Khai báo lớp và phương thức `main`.",
+            "Trong Java, độ ưu tiên toán tử tương tự C. Bạn có thể tham khảo bảng ưu tiên toán tử Java.",
+            "Khởi tạo các biến `a`, `b`, `c`, `d`, `e` với giá trị bất kỳ (ví dụ: `int a = 1, b = 2, c = 3, d = 4, e = 5;`).",
+            "Khởi tạo biến `X` và `Y` kiểu `int` với các biểu thức đã cho.",
+            "Sử dụng `System.out.println()` để in `X`, `Y` ra màn hình."
           ]
         }
       ]
     },
     {
-      "title": "Buổi 3: Xây dựng sơ đồ giải thuật",
+      "title": "Buổi 3: Nhập/Xuất Dữ liệu",
       "exercises": [
         {
           "id": 21,
-          "title": "Bài 3.1: Đọc sơ đồ giải thuật",
-          "description": "Cho sơ đồ giải thuật như hình 3_3_1 sơ đồ được vẽ từ phần mềm `Flowlogithm`, Hãy viết chương trình để triển khai sơ đồ trên",
+          "title": "Bài 3.1: Đọc sơ đồ giải thuật và nhập xuất",
+          "description": "Viết chương trình Java để triển khai sơ đồ giải thuật (mô tả tính diện tích hình chữ nhật) bao gồm việc nhập chiều dài, chiều rộng từ bàn phím và xuất kết quả diện tích.",
           "status": "✗",
           "score": 0,
-          "image": [
-            {
-              "image_title": "Hình 3_3_1",
-              "link": "buoi3_3_1.PNG",
-              "image_description": {
-                "overview": "The image depicts a flowchart illustrating a simple program to calculate the area of a rectangle. The flowchart starts with 'Main', initializes variables, takes input for length and width, calculates the area, and then outputs the result before ending with 'End'.",
-                "text_elements": [
-                  {
-                    "content": "Main",
-                    "color": "black",
-                    "position": {
-                      "x": 243,
-                      "y": 29
-                    },
-                    "size": "medium",
-                    "font": "Arial"
-                  },
-                  {
-                    "content": "Real chieuDai, chieuRong,\ndienTich",
-                    "color": "black",
-                    "position": {
-                      "x": 167,
-                      "y": 104
-                    },
-                    "size": "medium",
-                    "font": "Arial"
-                  },
-                  {
-                    "content": "Output \"Nhap chieu dai\"",
-                    "color": "black",
-                    "position": {
-                      "x": 171,
-                      "y": 201
-                    },
-                    "size": "medium",
-                    "font": "Arial"
-                  },
-                  {
-                    "content": "Input chieuDai",
-                    "color": "black",
-                    "position": {
-                      "x": 202,
-                      "y": 279
-                    },
-                    "size": "medium",
-                    "font": "Arial"
-                  },
-                  {
-                    "content": "Output \"Nhap chieu rong\"",
-                    "color": "black",
-                    "position": {
-                      "x": 165,
-                      "y": 354
-                    },
-                    "size": "medium",
-                    "font": "Arial"
-                  },
-                  {
-                    "content": "Input chieuRong",
-                    "color": "black",
-                    "position": {
-                      "x": 196,
-                      "y": 433
-                    },
-                    "size": "medium",
-                    "font": "Arial"
-                  },
-                  {
-                    "content": "dienTich = chieuDai*\nchieuRong",
-                    "color": "black",
-                    "position": {
-                      "x": 187,
-                      "y": 504
-                    },
-                    "size": "medium",
-                    "font": "Arial"
-                  },
-                  {
-                    "content": "Output \"dien tich =\"&dienTich",
-                    "color": "black",
-                    "position": {
-                      "x": 148,
-                      "y": 592
-                    },
-                    "size": "medium",
-                    "font": "Arial"
-                  },
-                  {
-                    "content": "End",
-                    "color": "black",
-                    "position": {
-                      "x": 256,
-                      "y": 670
-                    },
-                    "size": "medium",
-                    "font": "Arial"
-                  }
-                ]
-              }
-            }
-          ],
+          "image": [],
           "guidance": [
-            "Tìm hiểu công thức để đọc dữ liệu từ bàn phím: scanf(chuỗi_định_dạng, danh_sách_địa_chỉ)",
-            "Khai báo thư viện stdio.h",
-            "Khai báo hàm chính",
-            "Khai báo biến chieuDai, chieuRong,dienTich sử dụng kiểu số thực",
-            "In lời nhắc người dùng nhập chiều dài",
-            "Sử dụng hàm scanf() với định dạng %lf để bắt dữ dữ liêu chiều dài được nhập từ bàn phím và lưu về bến chieuDai",
-            "In lời nhắc người dùng nhập chiều rộng",
-            "Sử dụng hàm scanf() với định dạng %lf để bắt dữ dữ liêu chiều rộng được nhập từ bàn phím và lưu về bến chieuRong",
-            "Thực hiện tính toán dienTich=chieuDai*chieuRong và in kết quả diện tích ra màn hình"
+            "Tìm hiểu cách đọc dữ liệu từ bàn phím trong Java sử dụng lớp `Scanner` (`import java.util.Scanner;`).",
+            "Khai báo lớp và phương thức `main`.",
+            "Khai báo các biến `chieuDai`, `chieuRong`, `dienTich` sử dụng kiểu `double`.",
+            "Tạo một đối tượng `Scanner`: `Scanner scanner = new Scanner(System.in);`.",
+            "In lời nhắc người dùng nhập chiều dài: `System.out.println(\"Nhập chiều dài:\");`.",
+            "Đọc giá trị chiều dài bằng `scanner.nextDouble()` và lưu vào biến `chieuDai`.",
+            "In lời nhắc người dùng nhập chiều rộng.",
+            "Đọc giá trị chiều rộng bằng `scanner.nextDouble()` và lưu vào biến `chieuRong`.",
+            "Thực hiện tính toán `dienTich = chieuDai * chieuRong`.",
+            "In kết quả diện tích ra màn hình: `System.out.println(\"Diện tích = \" + dienTich);`.",
+            "Đóng đối tượng `Scanner` khi không còn dùng: `scanner.close();`."
           ]
         },
         {
           "id": 22,
-          "title": "Bài 3.2: Sử dụng hàm getchar",
-          "description": "- Câu 1: Viết chương trình thực hiện tác vụ sau\n- Cho phép người dùng nhập chuỗi abc từ bàn phím, sau đó đọc lần lượt các kí tự trong bộ đệm stdin bằng hàm getchar\n- Câu 2: Giải thích tại sao cần phải làm sạch stdin trước khi chờ người dùng nhập lần tiếp theo",
+          "title": "Bài 3.2: Sử dụng `Scanner` để đọc kí tự",
+          "description": "- Câu 1: Viết chương trình Java thực hiện tác vụ sau: Cho phép người dùng nhập chuỗi 'abc' từ bàn phím, sau đó đọc lần lượt các kí tự này.\n- Câu 2: Giải thích tại sao trong Java, việc làm sạch bộ đệm nhập liệu (như `fflush(stdin)` trong C) thường không cần thiết như trong C khi chuyển đổi giữa đọc số và đọc chuỗi?",
           "status": "✗",
           "score": 0,
           "image": [],
           "guidance": [
-            "Tìm hiểu hoạt động của hàm getchar(). Hàm getchar() cho phép lấy một kí tự trong bộ đệm stdin, và khi bộ đệm rỗng thì hàm getchar sẽ block chương trình để đợi người dùng nhập",
-            "Khai báo thư viện stdio.h",
-            "Khai báo hàm chính",
-            "In lời nhắc để người dùng nhập kí tự abc",
-            "Sử dụng getchar() để đọc kí tự thứ 1 lưu vào biến c, sau đó in biến c ra màn hình",
-            "Tiếp tục tương tự cho các kí tự còn lại",
-            "Vì chuỗi của ta có 3 kí tự abc và 1 kí tự xuống dòng khi người dùng nhấn enter. Tổng cộng ta phải đọc 4 lần mới đọc hết bộ đệm stdin",
-            "Cần phải làm sạch stdin trước khi tiếp tục bắt dữ liệu nhập mới, nếu không sẽ làm gây ra hiện tượng bị trôi stdin dẫn đến bắt dữ liệu không chính xác"
+            "Tìm hiểu cách hoạt động của `Scanner` khi đọc kí tự (`.next().charAt(0)`).",
+            "Khai báo lớp và phương thức `main`.",
+            "Tạo một đối tượng `Scanner`.",
+            "In lời nhắc để người dùng nhập chuỗi 'abc'.",
+            "Sử dụng `scanner.next().charAt(0)` để đọc kí tự thứ 1, lưu vào biến `char c1`, sau đó in biến `c1` ra màn hình.",
+            "Lặp lại tương tự cho các kí tự còn lại.",
+            "Giải thích: Trong Java, `Scanner` xử lý các kí tự xuống dòng một cách tự động khi bạn gọi các phương thức như `nextInt()`, `nextDouble()`, `next()`. Phương thức `nextLine()` sẽ đọc cả kí tự xuống dòng. Do đó, việc 'làm sạch' bộ đệm như `getchar()` trong C thường không cần thiết vì `Scanner` quản lý bộ đệm tốt hơn."
           ]
         },
         {
           "id": 23,
-          "title": "Bài 3.3: Bắt dữ lệu số sử dụng scanf()",
-          "description": "Viết chương trình thực hiện tác vụ sau\n- Sử dụng scanf() để chờ người dùng nhập số nguyên và lưu vào biến x1\n- Sử dụng scanf() để chờ người dùng nhập vào số thực và lưu vào biến x2\n- In x1,x2 ra màn hình",
+          "title": "Bài 3.3: Nhập dữ liệu số sử dụng `Scanner`",
+          "description": "Viết chương trình Java thực hiện tác vụ sau:\n- Sử dụng `Scanner` để chờ người dùng nhập số nguyên và lưu vào biến `x1`.\n- Sử dụng `Scanner` để chờ người dùng nhập số thực và lưu vào biến `x2`.\n- In `x1`, `x2` ra màn hình console.",
           "status": "✗",
           "score": 0,
           "image": [],
           "guidance": [
-            "Khai báo thư viện stdio.h",
-            "Khai báo hàm chính",
-            "Khởi tạo biến x1 kiểu số nguyên, x2 kiểu số thực",
-            "In lời nhắc để người dùng nhập số nguyên ",
-            "Sử dụng scanf() để đọc số vừa nhập và lưu vào biến x1",
-            "Hàm scanf() vẫn để lại kí tự xuống dòng trong bộ đệm stdin, gọi getchar() để làm sạch bộ đệm trước khi bắt dữ liệu tiếp theo",
-            "In lời nhắc để người dùng nhập số thực",
-            "Sử dụng scanf() để đọc số vừa nhập và lưu vào biến x2",
-            "Sử dụng getchar() làm sạch bộ đêm",
-            "In x1, x2 ra màn hình"
+            "Khai báo lớp và phương thức `main`.",
+            "Khai báo biến `x1` kiểu `int`, `x2` kiểu `double`.",
+            "Tạo một đối tượng `Scanner`.",
+            "In lời nhắc để người dùng nhập số nguyên.",
+            "Sử dụng `scanner.nextInt()` để đọc số nguyên vừa nhập và lưu vào biến `x1`.",
+            "In lời nhắc để người dùng nhập số thực.",
+            "Sử dụng `scanner.nextDouble()` để đọc số thực vừa nhập và lưu vào biến `x2`.",
+            "Đóng đối tượng `Scanner` khi hoàn tất.",
+            "In `x1`, `x2` ra màn hình."
           ]
         },
         {
           "id": 24,
-          "title": "Bài 3.2: Bắt dữ lệu chuỗi sử dụng scanf()",
-          "description": "Viết chương trình thực hiện tác vụ sau\n- Sử dụng scanf() để chờ người dùng nhập thông tin tên  và lưu vào biến `ten`\n- Sử dụng scanf() để chờ người dùng nhập vào tuổi và lưu vào biến `tuoi`\n- In `ten`,`tuoi` ra màn hình",
+          "title": "Bài 3.4: Nhập dữ liệu chuỗi sử dụng `Scanner`",
+          "description": "Viết chương trình Java thực hiện tác vụ sau:\n- Sử dụng `Scanner` để chờ người dùng nhập thông tin tên và lưu vào biến `ten`.\n- Sử dụng `Scanner` để chờ người dùng nhập tuổi và lưu vào biến `tuoi`.\n- In `ten`, `tuoi` ra màn hình console.",
           "status": "✗",
           "score": 0,
           "image": [],
           "guidance": [
-            "Khai báo thư viện stdio.h",
-            "Khai báo hàm chính",
-            "Khởi tạo biến `ten` kiểu dữ liệu chuỗi chứa tối đa 20 kí tự - sử dụng `char ten[20]`",
-            "Khởi tạo biến `tuoi` kiểu dữ liệu số nguyên dương",
-            "In lời nhắc để người dùng nhập tên",
-            "Sử dụng scanf() để bắt chuỗi vừa nhập và lưu vào biến `ten` - sử dụng %s",
-            "Sử dụng getchar() để làm sạch bộ đệm stdin",
-            "In lời nhắc để người dùng nhập tuổi ",
-            "Sử dụng scanf() để bắt số  vừa nhập và lưu vào biến `tuoi` - sử dụng %d",
-            "Sử dụng getchar() để làm sạch bộ đệm stdin",
-            "Dùng hàm printf() in kết quả biến `ten`, `tuoi` ra màn hình"
+            "Khai báo lớp và phương thức `main`.",
+            "Khai báo biến `ten` kiểu `String` và `tuoi` kiểu `int`.",
+            "Tạo một đối tượng `Scanner`.",
+            "In lời nhắc để người dùng nhập tên.",
+            "Sử dụng `scanner.next()` để đọc chuỗi (một từ) vừa nhập và lưu vào biến `ten`.",
+            "In lời nhắc để người dùng nhập tuổi.",
+            "Sử dụng `scanner.nextInt()` để đọc số nguyên vừa nhập và lưu vào biến `tuoi`.",
+            "Đóng đối tượng `Scanner`.",
+            "Sử dụng `System.out.println()` để in kết quả biến `ten`, `tuoi` ra màn hình."
           ]
         },
         {
           "id": 25,
-          "title": "Bài 3.3: Bắt dữ lệu chuỗi có khoảng trắng",
-          "description": "Viết chương trình thực hiện tác vụ sau\n- Sử dụng scanf() để chờ người dùng nhập thông tin họ và tên (chuỗi có khoãng trắng) và lưu vào biến `hoTen`\n- Sử dụng scanf() để chờ người dùng nhập vào tuổi và lưu vào biến `tuoi`\n- In `hoTen`,`tuoi` ra màn hình",
+          "title": "Bài 3.5: Nhập chuỗi có khoảng trắng sử dụng `Scanner`",
+          "description": "Viết chương trình Java thực hiện tác vụ sau:\n- Sử dụng `Scanner` để chờ người dùng nhập thông tin họ và tên (chuỗi có khoảng trắng) và lưu vào biến `hoTen`.\n- Sử dụng `Scanner` để chờ người dùng nhập vào tuổi và lưu vào biến `tuoi`.\n- In `hoTen`, `tuoi` ra màn hình console.",
           "status": "✗",
           "score": 0,
           "image": [],
           "guidance": [
-            "Khai báo thư viện stdio.h",
-            "Khai báo hàm chính",
-            "Khởi tạo biến `hoTen` kiểu dữ liệu chuỗi chứa tối đa 50 kí tự - sử dụng `char ten[20]`",
-            "Khởi tạo biến `tuoi` kiểu dữ liệu số nguyên dương",
-            "In lời nhắc để người dùng nhập tên",
-            "Sử dụng scanf() để bắt chuỗi vừa nhập và lưu vào biến `hoTen` - Để bắt chuỗi có khoảng trắng sử dụng %[^\\n]",
-            "Sử dụng getchar() để làm sạch bộ đệm stdin",
-            "In lời nhắc để người dùng nhập tuổi ",
-            "Sử dụng scanf() để bắt số  vừa nhập và lưu vào biến `tuoi` - sử dụng %d",
-            "Sử dụng getchar() để làm sạch bộ đệm stdin",
-            "Dùng hàm printf() in kết quả biến `hoTen`, `tuoi` ra màn hình"
+            "Khai báo lớp và phương thức `main`.",
+            "Khai báo biến `hoTen` kiểu `String` và `tuoi` kiểu `int`.",
+            "Tạo một đối tượng `Scanner`.",
+            "In lời nhắc để người dùng nhập họ và tên.",
+            "Sử dụng `scanner.nextLine()` để đọc toàn bộ dòng (bao gồm khoảng trắng) vừa nhập và lưu vào biến `hoTen`.",
+            "In lời nhắc để người dùng nhập tuổi.",
+            "Sử dụng `scanner.nextInt()` để đọc số nguyên vừa nhập và lưu vào biến `tuoi`.",
+            "**Lưu ý:** Nếu bạn dùng `scanner.nextInt()` (hoặc `nextDouble()`...) trước `scanner.nextLine()`, hãy thêm một `scanner.nextLine();` trống ngay sau lệnh đọc số để 'tiêu thụ' kí tự xuống dòng còn lại trong bộ đệm, nếu không `nextLine()` tiếp theo có thể bị trôi. Ví dụ: `tuoi = scanner.nextInt(); scanner.nextLine();`.",
+            "Đóng đối tượng `Scanner`.",
+            "Sử dụng `System.out.println()` để in kết quả biến `hoTen`, `tuoi` ra màn hình."
           ]
         }
       ]
     },
     {
-      "title": "Buổi 4: Cấu trúc câu điều kiện",
+      "title": "Buổi 4: Cấu trúc điều kiện",
       "exercises": [
         {
           "id": 26,
           "title": "Bài 4.1: Kiểm tra số chẵn/lẻ",
-          "description": "Viết chương trình thực hiện tác vụ sau\n -Chờ người dùng nhập một số nguyên bất kì và lưu vào biến n\n- Kiểm tra nếu n chia hết cho 2 thì xuất ra số chẵn, và ngược lại xuất ra số lẻ",
+          "description": "Viết chương trình Java thực hiện tác vụ sau:\n- Yêu cầu người dùng nhập một số nguyên bất kỳ và lưu vào biến `n`.\n- Kiểm tra nếu `n` chia hết cho 2 thì xuất ra 'Số chẵn', và ngược lại xuất ra 'Số lẻ'.",
           "status": "✗",
           "score": 0,
           "image": [],
           "guidance": [
-            "Tìm hiểu cấu trúc câu diều kiện - Nểu chỉ cần kiểm tra một trạng thái thì sử dụng if , hai trạng thái thì sử dụng if-else, nhiều trạng thái thì dùng if-elseif-else",
-            "Khai báo thư viện stdio.h",
-            "Khai báo hàm chính",
-            "Khai báo biến n kiểu số nguyên",
-            "In lời nhắc người dùng nhập số bất số nguyên",
-            "Sử dụng hàm scanf() với định dạng %d để bắt dữ dữ liệu nhập vào và lưu vào biến n",
-            "Sử dụng getchar() để làm sạch stdin",
-            "Cần kiểm tra 2 trạng thái nên sử dụng if-else",
-            "Điều kiện chia hết cho 2 sử dụng: n%2==0 , nếu trả về `true` thì xuất ra thông báo số chẵn, ngược lại xuất ra thông báo số lẻ"
+            "Tìm hiểu cấu trúc câu điều kiện `if-else` trong Java.",
+            "Khai báo lớp và phương thức `main`.",
+            "Khai báo biến `n` kiểu `int`.",
+            "Sử dụng `Scanner` (`import java.util.Scanner;`) để đọc dữ liệu nhập từ bàn phím.",
+            "In lời nhắc người dùng nhập số nguyên (`System.out.println(\"Nhập một số nguyên:\");`).",
+            "Đọc số nguyên bằng `scanner.nextInt()` và lưu vào biến `n`.",
+            "Sử dụng cấu trúc `if-else` để kiểm tra điều kiện.",
+            "Điều kiện chia hết cho 2 sử dụng toán tử modulo: `n % 2 == 0`. Nếu đúng thì in 'Số chẵn', ngược lại in 'Số lẻ'.",
+            "Đóng đối tượng `Scanner` khi hoàn tất: `scanner.close();`."
           ]
         },
         {
           "id": 27,
-          "title": "Bài 4.2: Chương trình chọn màu sắc",
-          "description": "Qui ước các số đại diện cho các màu: màu đỏ số 1, màu xanh số 2 , màu vàng số 3. Viết chương trình thực hiện tác vụ sau\n -Cho phép người dùng nhập vào số đại diện cho màu sắc\n- Kiểm tra số nhập vào nếu là 1 thì xuất ra màn hình màu đỏ , là 2 xuất ra màu xanh, là 3 xuất ra màu vàng, còn lại xuất ra màu không hợp lệ",
+          "title": "Bài 4.2: Chương trình chọn màu sắc (Java - if-else if)",
+          "description": "Qui ước các số đại diện cho các màu: màu đỏ số 1, màu xanh số 2, màu vàng số 3. Viết chương trình Java thực hiện tác vụ sau:\n- Cho phép người dùng nhập vào số đại diện cho màu sắc.\n- Kiểm tra số nhập vào nếu là 1 thì xuất ra 'Màu đỏ', là 2 xuất ra 'Màu xanh', là 3 xuất ra 'Màu vàng', còn lại xuất ra 'Màu không hợp lệ'.",
           "status": "✗",
           "score": 0,
           "image": [],
           "guidance": [
-            "Bài toán yêu cầu phải xét nhiều điều kiện và thực hiện hành động khi thỏa điều kiện vì vậy sử dụng cấu trúc if-elseif-else",
-            "Khai báo thư viện stdio.h",
-            "Khai báo hàm chính",
-            "Khai báo biến `mau` kiểu số nguyên để lưu só đại diện cho màu",
-            "In lời nhắc người dùng nhập số đại diện màu (1,2,3) ",
-            "Sử dụng hàm scanf() với định dạng %d để bắt dữ dữ liệu nhập vào và lưu vào biến `mau`",
-            "Sử dụng getchar() để làm sạch stdin",
-            "Sử dụng cấu trúc if-elseif-else để xét điều kiện và xử lý khi thỏa mãn điều kiện"
+            "Bài toán yêu cầu phải xét nhiều điều kiện và thực hiện hành động khi thỏa điều kiện, vì vậy sử dụng cấu trúc `if-else if-else` là phù hợp trong Java.",
+            "Khai báo lớp và phương thức `main`.",
+            "Khai báo biến `mau` kiểu `int` để lưu số đại diện cho màu.",
+            "Sử dụng `Scanner` để nhập dữ liệu.",
+            "In lời nhắc người dùng nhập số đại diện màu (1, 2, 3): `System.out.println(\"Nhập số đại diện màu (1: Đỏ, 2: Xanh, 3: Vàng):\");`.",
+            "Đọc số và lưu vào biến `mau`.",
+            "Sử dụng cấu trúc `if (mau == 1) { ... } else if (mau == 2) { ... } else if (mau == 3) { ... } else { ... }` để xét điều kiện và xử lý khi thỏa mãn điều kiện.",
+            "Đóng đối tượng `Scanner`."
           ]
         },
         {
           "id": 28,
-          "title": "Bài 4.3: Cấu trúc switch-case",
-          "description": "Qui ước các số đại diện cho các màu: màu đỏ số 1, màu xanh số 2 , màu vàng số 3. Viết chương trình thực hiện tác vụ sau\n -Cho phép người dùng nhập vào số đại diện cho màu sắc\n- Sử dụng cấu trúc switch-case để kiểm tra số nhập vào nếu là 1 thì xuất ra màn hình màu đỏ , là 2 xuất ra màu xanh, là 3 xuất ra màu vàng, còn lại xuất ra màu không hợp lệ",
+          "title": "Bài 4.3: Cấu trúc `switch-case`",
+          "description": "Qui ước các số đại diện cho các màu: màu đỏ số 1, màu xanh số 2, màu vàng số 3. Viết chương trình Java thực hiện tác vụ sau:\n- Cho phép người dùng nhập vào số đại diện cho màu sắc.\n- Sử dụng cấu trúc `switch-case` để kiểm tra số nhập vào nếu là 1 thì xuất ra 'Màu đỏ', là 2 xuất ra 'Màu xanh', là 3 xuất ra 'Màu vàng', còn lại xuất ra 'Màu không hợp lệ'.",
           "status": "✗",
           "score": 0,
           "image": [],
           "guidance": [
-            "Khi càn rẽ nhánh với các trường hợp số nguyên ta sử dụng cấu trúc switch-case giúp chương trình dễ đọc, tốc độ xử lý nhanh. Bài toán cần thực hiện với các trường hợp số nhập vào là 1,2,3 đây là số nguyên nên ta có thể sử dụng cấu trúc switch-case",
-            "Khai báo thư viện stdio.h",
-            "Khai báo hàm chính",
-            "Khai báo biến `mau` kiểu số nguyên để lưu só đại diện cho màu",
-            "In lời nhắc người dùng nhập số đại diện màu (1,2,3) ",
-            "Sử dụng hàm scanf() với định dạng %d để bắt dữ dữ liệu nhập vào và lưu vào biến `mau`",
-            "Sử dụng getchar() để làm sạch stdin",
-            "Sử dụng cấu trúc switch-case cho các trường hợp `mau` có giá trị 1, 2,3 và một số khác. Chú ý break sau khi kết thúc case để chương trình thoát lệnh swith-case nếu không sẽ dẫn đến thực hiện câu lệnh trong case nhiều lần"
+            "Khi cần rẽ nhánh với nhiều trường hợp số nguyên, sử dụng cấu trúc `switch-case` trong Java giúp chương trình dễ đọc và tốc độ xử lý nhanh. Bài toán này phù hợp với `switch-case`.",
+            "Khai báo lớp và phương thức `main`.",
+            "Khai báo biến `mau` kiểu `int` để lưu số đại diện cho màu.",
+            "Sử dụng `Scanner` để nhập dữ liệu.",
+            "In lời nhắc người dùng nhập số đại diện màu (1, 2, 3): `System.out.println(\"Nhập số đại diện màu (1: Đỏ, 2: Xanh, 3: Vàng):\");`.",
+            "Sử dụng `scanner.nextInt()` để đọc số và lưu vào biến `mau`.",
+            "Sử dụng cấu trúc `switch (mau) { case 1: ... break; case 2: ... break; case 3: ... break; default: ... break; }` cho các trường hợp giá trị của `mau`. Chú ý `break` sau mỗi `case` để thoát khỏi `switch-case`.",
+            "Đóng đối tượng `Scanner`."
           ]
         },
         {
           "id": 29,
           "title": "Bài 4.4: Ứng dụng kiểm tra điểm",
-          "description": "Viết chương trình thực hiện tác vụ sau\n- Yêu cầu người dùng nhập điểm\n- Kiểm tra điểm người dùng với các điều kiện sau\n- Nếu điểm >9 thì xuất ra `gioi`\n- Kiểm tra người dùng nếu điểm >7 thì xuất ra `kha`\n- Nếu điểm >5 xuất ra `trung binh`\n- Còn lại xuất ra `yeu`",
+          "description": "Viết chương trình Java thực hiện tác vụ sau:\n- Yêu cầu người dùng nhập điểm.\n- Kiểm tra điểm người dùng với các điều kiện sau:\n  - Nếu điểm > 9 thì xuất ra `\"Giỏi\"`.\n  - Nếu điểm > 7 thì xuất ra `\"Khá\"`.\n  - Nếu điểm > 5 thì xuất ra `\"Trung bình\"`.\n  - Còn lại xuất ra `\"Yếu\"`.",
           "status": "✗",
           "score": 0,
           "image": [],
           "guidance": [
-            "Phân tích do điểm là số thực và có nhiều trường hợp xét nên chỉ có câu lệnh if-else if-else là phù hợp",
-            "Khai báo thư viện, khai báo hàm chính",
-            "khai báo biến `diem` với kiểu số thực",
-            "Sử dụng scanf() để bắt được điểm người dùng nhập và lưu về biến `diem`",
-            "Sử dụng getchar() để làm sạch stdin",
-            "Sử dụng câu điều kiện if-else-if để giải quyết các trường hợp khác nhau về `diem` và hàm printf() để xuất ra kết quả"
+            "Phân tích: Vì điểm là số thực và có nhiều trường hợp xét, cấu trúc `if-else if-else` là phù hợp trong Java.",
+            "Khai báo lớp và phương thức `main`.",
+            "Khai báo biến `diem` với kiểu số thực, ví dụ `double`.",
+            "Sử dụng `Scanner` để nhập dữ liệu.",
+            "Sử dụng `scanner.nextDouble()` để đọc điểm người dùng nhập và lưu vào biến `diem`.",
+            "Sử dụng cấu trúc `if (diem > 9) { ... } else if (diem > 7) { ... } else if (diem > 5) { ... } else { ... }` để giải quyết các trường hợp khác nhau về `diem` và `System.out.println()` để xuất ra kết quả.",
+            "Đóng đối tượng `Scanner`."
           ]
         }
       ]
@@ -954,260 +693,136 @@
         {
           "id": 30,
           "title": "Bài 5.1: In số nguyên",
-          "description": "Cho sơ đồ giải thuật như hình 5.1 được vẽ bởi phần mềm `Flowgorithm`. Hãy viết chương trình C để thực hiện sơ đồ trên",
+          "description": "Viết chương trình Java để in các số nguyên từ 0 đến 10.",
           "status": "✗",
           "score": 0,
-          "image": [
-            {
-              "image_title": "Hình 5.1",
-              "link": "buoi5_5_1.PNG",
-              "image_description": {
-                "flowgorithm": {
-                  "fileversion": "2.11",
-                  "attributes": {
-                    "attribute": [
-                      {
-                        "name": "name",
-                        "value": ""
-                      },
-                      {
-                        "name": "authors",
-                        "value": "dat"
-                      },
-                      {
-                        "name": "about",
-                        "value": ""
-                      },
-                      {
-                        "name": "saved",
-                        "value": "2025-05-30 04:03:15 PM"
-                      },
-                      {
-                        "name": "created",
-                        "value": "ZGF0O0RFU0tUT1AtN0hBR1RITDsyMDI1LTA1LTMwOzAzOjU3OjIzIFBNOzI2NzI="
-                      },
-                      {
-                        "name": "edited",
-                        "value": "ZGF0O0RFU0tUT1AtN0hBR1RITDsyMDI1LTA1LTMwOzA0OjAzOjE1IFBNOzQ7Mjc3Ng=="
-                      }
-                    ]
-                  },
-                  "function": {
-                    "name": "Main",
-                    "type": "None",
-                    "variable": "",
-                    "parameters": {},
-                    "body": {
-                      "declare": {
-                        "name": "i",
-                        "type": "Integer",
-                        "array": "False",
-                        "size": ""
-                      },
-                      "for": {
-                        "variable": "i",
-                        "start": "0",
-                        "end": "10",
-                        "direction": "inc",
-                        "step": "1",
-                        "output": {
-                          "expression": "i",
-                          "newline": "True"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          ],
+          "image": [],
           "guidance": [
-            "Xác định thành phần của vòng lặp: biến đếm (biến `i`), điều kiện lặp (`i<=10`); cập nhập biến đếm: `i++`, khối lệnh trong vòng lặp",
-            "Khai báo thư viện , khai báo hàm chính",
-            "Khai báo vòng lặp `for`",
-            "Sử dụng hàm `printf()` để xuất giá trị biến đếm `i` ra màn hình "
+            "Xác định thành phần của vòng lặp `for` trong Java: khởi tạo biến đếm, điều kiện lặp, biểu thức cập nhật biến đếm, và khối lệnh trong vòng lặp.",
+            "Khai báo lớp và phương thức `main`.",
+            "Sử dụng vòng lặp `for` (ví dụ: `for (int i = 0; i <= 10; i++) { ... }`).",
+            "Sử dụng `System.out.println()` để xuất giá trị biến đếm `i` ra màn hình."
           ]
         },
         {
           "id": 31,
           "title": "Bài 5.2: In số chẵn",
-          "description": "Cho sơ đồ giải thuật như `Hình 5.2` được vẽ bởi phần mềm `Flowgorithm`. Hãy viết chương trình C để thực hiện sơ đồ trên",
+          "description": "Viết chương trình Java để in các số chẵn từ 0 đến 10.",
           "status": "✗",
           "score": 0,
-          "image": [
-            {
-              "image_title": "Hình 5.2",
-              "link": "buoi5_5_2.PNG",
-              "image_description": {
-                "flowgorithm": {
-                  "fileversion": "2.11",
-                  "attributes": {
-                    "attribute": [
-                      {
-                        "name": "name",
-                        "value": ""
-                      },
-                      {
-                        "name": "authors",
-                        "value": "dat"
-                      },
-                      {
-                        "name": "about",
-                        "value": ""
-                      },
-                      {
-                        "name": "saved",
-                        "value": "2025-05-30 03:59:18 PM"
-                      },
-                      {
-                        "name": "created",
-                        "value": "ZGF0O0RFU0tUT1AtN0hBR1RITDsyMDI1LTA1LTMwOzAzOjU3OjIzIFBNOzI2NzI="
-                      },
-                      {
-                        "name": "edited",
-                        "value": "ZGF0O0RFU0tUT1AtN0hBR1RITDsyMDI1LTA1LTMwOzAzOjU5OjE4IFBNOzE7Mjc4Ng=="
-                      }
-                    ]
-                  },
-                  "function": {
-                    "name": "Main",
-                    "type": "None",
-                    "variable": "",
-                    "parameters": {},
-                    "body": {
-                      "declare": {
-                        "name": "i",
-                        "type": "Integer",
-                        "array": "False",
-                        "size": ""
-                      },
-                      "for": {
-                        "variable": "i",
-                        "start": "0",
-                        "end": "10",
-                        "direction": "inc",
-                        "step": "2",
-                        "output": {
-                          "expression": "i",
-                          "newline": "True"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          ],
+          "image": [],
           "guidance": [
-            "Xác định thành phần của vòng lặp: biến đếm , điều kiện lặp ; biểu thức cập nhập biến đếm, khối lệnh trong vòng lặp",
-            "Khai báo thư viện , khai báo hàm chính",
-            "Khai báo vòng lặp `for`",
-            "Sử dụng hàm `printf()` để xuất giá trị biến đếm `i` ra màn hình "
+            "Xác định thành phần của vòng lặp: biến đếm, điều kiện lặp, biểu thức cập nhật biến đếm, và khối lệnh trong vòng lặp.",
+            "Khai báo lớp và phương thức `main`.",
+            "Sử dụng vòng lặp `for`. Bạn có thể tăng biến đếm 2 đơn vị mỗi lần (ví dụ: `i += 2`) hoặc sử dụng điều kiện `if (i % 2 == 0)` bên trong vòng lặp tăng 1 đơn vị.",
+            "Sử dụng `System.out.println()` để xuất giá trị biến đếm `i` ra màn hình."
           ]
         },
         {
           "id": 32,
           "title": "Bài 5.3: Từ khóa `break`",
-          "description": "- Trả lời câu hỏi: `break` dùng để làm gì?. Nêu một ví dụ `break` trong thực tế\n- Nhắc lại bài tập 5.1: Sử dụng vòng lặp in các số nguyên từ 0 đến 10. Bài tập này yêu cầu hãy sử dụng từ khóa `break` để thoát vòng lặp khi biến `i` bằng 5",
+          "description": "- Trả lời câu hỏi: Từ khóa `break` trong Java dùng để làm gì? Nêu một ví dụ `break` trong thực tế.\n- Nhắc lại bài tập 5.1: Sử dụng vòng lặp in các số nguyên từ 0 đến 10. Bài tập này yêu cầu hãy sử dụng từ khóa `break` để thoát vòng lặp khi biến `i` bằng 5.",
           "status": "✗",
           "score": 0,
           "image": [],
           "guidance": [
-            "Lý thuyết: Đối với vòng lặp để thoát vòng lặp thì biểu thức điều kiện phải sai, ngoài ra ta có thể dùng lệnh `break` để thoát vòng lặp ngay lập tức",
-            "Ưng dụng:Trong thực tế để kiểm tra một danh sách bất kỳ thì sẽ dùng vòng lặp để quét từng thành viên trong danh sách và `break` được dùng để thoát tìm kiếm khi đã tìm ra đối tượng trong danh sách",
-            "Khai báo thư viện , khai báo hàm chính",
-            "Khai báo vòng lặp `for` với biến đếm `i` chạy từ 0 đến 10",
-            "Sử dụng hàm `printf()` để xuất `i`  ra màn hình",
-            "Sử dụng câu điều kiện để kiểm tra `i` có bằng 5 hay không, nếu đúng sử dụng lệnh `break` để thoát vòng lặp"
+            "Lý thuyết: Từ khóa `break` trong Java được sử dụng để thoát khỏi vòng lặp (hoặc câu lệnh `switch`) ngay lập tức, bất kể điều kiện lặp còn đúng hay không.",
+            "Ứng dụng: Trong thực tế, `break` thường được dùng khi bạn đã tìm thấy kết quả mình cần trong một danh sách và không cần duyệt thêm (ví dụ: tìm kiếm một phần tử trong mảng).",
+            "Khai báo lớp và phương thức `main`.",
+            "Sử dụng vòng lặp `for` với biến đếm `i` chạy từ 0 đến 10.",
+            "Sử dụng `System.out.println()` để xuất `i` ra màn hình.",
+            "Sử dụng câu điều kiện `if (i == 5)` và lệnh `break;` bên trong vòng lặp để thoát khi `i` bằng 5."
           ]
         },
         {
           "id": 33,
           "title": "Bài 5.4: Từ khóa `continue`",
-          "description": "- Trả lời câu hỏi: `continue` dùng để làm gì?. Nêu một ví dụ dùng `continue` trong thực tế\n- Nhắc lại bài tập 5.1: Sử dụng vòng lặp in các số nguyên từ 0 đến 10. Bài tập này yêu cầu hãy sử dụng từ khóa `continue` để bỏ qua thực thi khi biến `i` bằng 5",
+          "description": "- Trả lời câu hỏi: Từ khóa `continue` trong Java dùng để làm gì? Nêu một ví dụ dùng `continue` trong thực tế.\n- Nhắc lại bài tập 5.1: Sử dụng vòng lặp in các số nguyên từ 0 đến 10. Bài tập này yêu cầu hãy sử dụng từ khóa `continue` để bỏ qua thực thi khi biến `i` bằng 5.",
           "status": "✗",
           "score": 0,
           "image": [],
           "guidance": [
-            "Lý thuyết: Để bỏ qua thực thi câu lệnh trong vòng lặp và nhảy đến bước lặp tiếp theo ta dùng từ khóa `continue`",
-            "Ưng dụng:Trong điện tử giả sử ta cần đọc tín hiệu `adc` ta cần phải dùng vòng lặp để đọc nhiều lần và lấy trung bình, từ khóa `continue` được dùng để bỏ qua bước lặp khi đọc giá trị âm",
-            "Khai báo thư viện , khai báo hàm chính",
-            "Khai báo vòng lặp `for` với biến đếm `i` chạy từ 0 đến 10",
-            "Sử dụng hàm `printf()` để xuất `i`  ra màn hình",
-            "Sử dụng câu điều kiện để kiểm tra `i` có bằng 5 hay không, nếu đúng sử dụng lệnh `continue` để nhảy sang bước lặp kế tiếp"
+            "Lý thuyết: Từ khóa `continue` trong Java được sử dụng để bỏ qua phần còn lại của khối lệnh trong vòng lặp hiện tại và chuyển sang bước lặp tiếp theo.",
+            "Ứng dụng: `continue` có thể được dùng khi bạn muốn bỏ qua xử lý một số trường hợp cụ thể trong vòng lặp mà không muốn thoát hoàn toàn vòng lặp (ví dụ: bỏ qua các giá trị âm khi tính trung bình của các số dương).",
+            "Khai báo lớp và phương thức `main`.",
+            "Sử dụng vòng lặp `for` với biến đếm `i` chạy từ 0 đến 10.",
+            "Sử dụng `System.out.println()` để xuất `i` ra màn hình (đặt sau `if` kiểm tra).",
+            "Sử dụng câu điều kiện `if (i == 5)` và lệnh `continue;` bên trong vòng lặp. Đặt lệnh `System.out.println()` sau `if` để nó bị bỏ qua khi `i` bằng 5."
           ]
         },
         {
           "id": 34,
-          "title": "Bài 5.5: Vòng lặp siêu loop",
-          "description": "Viết chương trình xuất ra `helloworld` với chu kỳ 1 giây (sử dụng vòng lặp for)",
+          "title": "Bài 5.5: Vòng lặp vô hạn (Super Loop)",
+          "description": "Viết chương trình Java xuất ra 'Hello World' với chu kỳ 1 giây, sử dụng vòng lặp vô hạn.",
           "status": "✗",
           "score": 0,
           "image": [],
           "guidance": [
-            "Lý thuyết: Để chương trình chúng ta chạy liên tục thì các câu lệnh phải đặc trong vòng lặp siêu loop, luôn có một vòng lặp siêu loop được đặt ngay trong hàm `main`. Vòng lặp siêu loop cũng thường được sử dụng trong các ứng dụng đa luồng để chờ các sự kiện IO\n- Chú ý quan trọng: khi sử dụng vòng lặp siêu loop bắt buộc phải có một hàm dừng ví dụ như `scanf`, `getchar`,`sleep`..., nếu không sẽ tốn tài nguyên CPU",
-            "Để chờ một khoảng thời gian ta cần sử dụng hàm `sleep` trong thư viện `<time.h>`. Ví dụ chờ 1s ta dùng `sleep(1)` , chờ 500ms ta dùng `sleep(0.5)`",
-            "Khai báo thư viện `<stdio.h>`, `<time.h>` ",
-            "Sử dụng vòng lặp `for` dạng siêu loop ",
-            "Sử dụng hàm `printf()` để xuất `helloworld` ra màn hình",
-            "Sử dụng hàm `sleep(1) để chờ 1 giây"
+            "Lý thuyết: Trong Java, vòng lặp vô hạn thường dùng `while(true)`. Nó được ứng dụng trong các chương trình chạy liên tục, như server, ứng dụng đa luồng chờ sự kiện. Cần có hàm dừng (ví dụ: `Thread.sleep()`) để tránh tốn tài nguyên CPU.",
+            "Để chờ một khoảng thời gian, sử dụng `Thread.sleep(milliseconds)` trong Java (`import java.lang.Thread;`). Ví dụ: chờ 1s dùng `Thread.sleep(1000);`.",
+            "Khai báo lớp và phương thức `main`.",
+            "Sử dụng vòng lặp `while(true)`.",
+            "Sử dụng `System.out.println(\"Hello World\");`.",
+            "Sử dụng `Thread.sleep(1000);` để chờ 1 giây. Chú ý rằng `Thread.sleep()` có thể ném `InterruptedException`, nên bạn cần bọc nó trong khối `try-catch`."
           ]
         },
         {
           "id": 35,
-          "title": "Bài 5.6: Thòi gian thực thi vòng lặp",
-          "description": "Viết chương trình thực hiện tác vụ sau\n- Xuất `helloworld` 10 lần, với chu kỳ mỗi lần là 1s\n- Tính toán thời gian thực thi vòng lặp sử dụng hàm `clock()` trong thư viện `<time.h>`",
+          "title": "Bài 5.6: Thời gian thực thi vòng lặp",
+          "description": "Viết chương trình Java thực hiện tác vụ sau:\n- Xuất 'Hello World' 10 lần, với chu kỳ mỗi lần là 1s.\n- Tính toán thời gian thực thi tổng cộng của vòng lặp bằng cách sử dụng `System.currentTimeMillis()` hoặc `System.nanoTime()`.",
           "status": "✗",
           "score": 0,
           "image": [],
           "guidance": [
-            "Lý thuyết: Việc xác định thời gian thực thi của vòng lặp hết sức quan trọng vì nó sẽ đánh giá giải thuật của chúng ta có tốt hay không, trong lập trình chip nếu giải thuật của chúng ta không tốt dẫn đến thời gian thực thi lâu (trên 3 giây)  điều này sẽ dẫn đến kích hoạt watchdog (đây là timer giám sát lỗi) dẫn đến chương trình khởi động lại",
-            "Để chờ một khoảng thời gian ta cần sử dụng hàm `sleep` trong thư viện `<time.h>`. Ví dụ chờ 1s ta dùng `sleep(1)` , chờ 500ms ta dùng `sleep(0.5)`",
-            "Khai báo thư viện `<stdio.h>`, `<time.h>` ",
-            "Sử dụng vòng lặp `for` dạng siêu loop ",
-            "Sử dụng hàm `printf()` để xuất `helloworld` ra màn hình",
-            "Sử dụng hàm `sleep(1) để chờ 1 giây",
-            "Gọi hàm `clock()` trước vòng lặp lưu vào biến `t1`",
-            "Gọi hàm `clock()` sau vòng lặp lưu vào biến `t2`",
-            "Tính toán thời gian thực thi theo công thức `t = (t2-t1)/CLOCKS_PER_SEC` với CLOCKS_PER_SEC là số xung clock mỗi 1s"
+            "Lý thuyết: Việc xác định thời gian thực thi của vòng lặp quan trọng để đánh giá hiệu suất giải thuật. Trong Java, `System.currentTimeMillis()` trả về thời gian hiện tại theo mili giây, và `System.nanoTime()` trả về thời gian theo nano giây (chính xác hơn cho đo lường khoảng thời gian).",
+            "Khai báo lớp và phương thức `main`.",
+            "Sử dụng vòng lặp `for` để lặp 10 lần.",
+            "Sử dụng `System.out.println(\"Hello World\");`.",
+            "Sử dụng `Thread.sleep(1000);` để chờ 1 giây trong mỗi lần lặp (bọc trong `try-catch`).",
+            "Gọi `long startTime = System.currentTimeMillis();` (hoặc `System.nanoTime();`) trước vòng lặp.",
+            "Gọi `long endTime = System.currentTimeMillis();` (hoặc `System.nanoTime();`) sau vòng lặp.",
+            "Tính toán thời gian thực thi: `long elapsedTime = endTime - startTime;`.",
+            "Xuất `elapsedTime` ra màn hình (đơn vị mili giây hoặc nano giây tùy thuộc vào hàm bạn dùng)."
           ]
         },
         {
           "id": 36,
           "title": "Bài 5.7: Tính tổng `S=3+6+9+12`",
-          "description": "Viết chương trình sử dụng vòng lặp for để tính tổng `S=3+6+9+12`",
+          "description": "Viết chương trình Java sử dụng vòng lặp `for` để tính tổng `S=3+6+9+12`.",
           "status": "✗",
           "score": 0,
           "image": [],
           "guidance": [
-            "Lý thuyết: Khi muốn sử dụng vòng lặp điều cần làm là phân tích để phát hiện ra mối quan hệ lặp hoặc một hành động lặp đi lặp lại\n- Ta tìm mối quan hệ lặp trong  đề bài:\n. 3=3*1\n. 6=3*2\n. 9=3*3\n. 12=3*4\n***Ta thấy chỉ cần sử dụng cho `i` chạy từ 1 đến 3 và sử dụng kỹ thuật cộng dồn biến `tmp=3*i` vào biến `S` sẽ giải quyết bài toán",
-            "Khai báo thư viện `<stdio.h>`, khai báo hàm `main`",
-            "Tạo biến `S` ban đầu gán bằng 0 để thực hiện cộng dồn",
-            "Sử dụng vòng lặp `for` với biến `i` chạy từ 1 đến 4",
-            "Cộng dồn `S` theo công thức `S+=3*i`",
-            "Xuất `S` ra màn hình"
+            "Lý thuyết: Khi sử dụng vòng lặp, hãy phân tích mối quan hệ lặp lại. Trong trường hợp này, các số là bội số của 3.",
+            "Phân tích: `3=3*1`, `6=3*2`, `9=3*3`, `12=3*4`. Ta cần một biến đếm chạy từ 1 đến 4 và cộng dồn `3*i` vào biến `S`.",
+            "Khai báo lớp và phương thức `main`.",
+            "Tạo biến `S` kiểu `int` ban đầu gán bằng 0 để thực hiện cộng dồn.",
+            "Sử dụng vòng lặp `for` với biến `i` chạy từ 1 đến 4 (bao gồm cả 4).",
+            "Cộng dồn `S` theo công thức `S += 3 * i;`.",
+            "Xuất `S` ra màn hình bằng `System.out.println(S);`."
           ]
         },
         {
           "id": 37,
           "title": "Bài 5.8: In số nguyên tố",
-          "description": "Viết chương trình xuất các số nguyên tố nhỏ hơn 100",
+          "description": "Viết chương trình Java xuất các số nguyên tố nhỏ hơn 100.",
           "status": "✗",
           "score": 0,
           "image": [],
           "guidance": [
-            "Lý thuyết: Số nguyên tố là số chỉ chia hết cho chính nó, số 0 và số 1 không phải là số nguyên tố",
-            "Khai báo thư viện `<stdio.h>`, khai báo hàm `main`",
-            "Sử dụng vòng lặp 1 với biến đếm `i` chạy từ 0 đên 100",
-            "Tạo biền `flag` gán bằng 1, để báo hiệu có phải số ngyên tố hay không",
-            "Với mối giá trị `i` , sử dụng thêm vòng lặp 2 vói biến chạy `j` , `2<j<i` và nếu tồn tại `i` chia hết cho `j` thì `i` không phải là số nguyên tố lúc này gán `flag=0` và dùng `break` thoát vòng lặp 2",
-            "Sau khi thoát vòng lặp 2 , nếu `flag=1` thì `i` là số nguyên tố và xuất `i` ra màn hình , nếu `flag=0` thì `i` không phải là số nguyên tố"
+            "Lý thuyết: Số nguyên tố là số lớn hơn 1 và chỉ chia hết cho 1 và chính nó. Số 0 và 1 không phải là số nguyên tố.",
+            "Khai báo lớp và phương thức `main`.",
+            "Sử dụng vòng lặp ngoài (`for` hoặc `while`) với biến đếm `num` chạy từ 2 đến 99.",
+            "Bên trong vòng lặp ngoài, tạo một biến `boolean isPrime = true;` để đánh dấu `num` có phải số nguyên tố không.",
+            "Sử dụng vòng lặp trong (`for` hoặc `while`) với biến `j` chạy từ 2 đến `sqrt(num)` (hoặc `num/2`).",
+            "Nếu `num % j == 0`, thì `num` không phải số nguyên tố. Gán `isPrime = false;` và dùng `break;` để thoát vòng lặp trong.",
+            "Sau vòng lặp trong, nếu `isPrime` vẫn là `true`, xuất `num` ra màn hình (`System.out.println(num);`)."
           ]
         },
         {
           "id": 38,
           "title": "Bài 5.9: Vòng lặp `while`",
-          "description": "Cho sơ đồ giải thuật như `Hình 5.9`.\n- Hãy cho biết chương trình trên làm gì\n- Viết chương trình thực hiện giải thuật trên",
+          "description": "Viết chương trình Java thực hiện tác vụ sau: in các số từ 0 đến 10 sử dụng vòng lặp `while`.",
           "status": "✗",
           "score": 0,
           "image": [
@@ -1241,7 +856,7 @@
                       },
                       {
                         "name": "edited",
-                        "value": "ZGF0O0RFU0tUT1AtN0hBR1RITDsyMDI1LTA1LTMwOzA0OjAwOjIwIFBNOzI7Mjc2Nw=="
+                        "value": "ZGF0O0RFU0tUT1AtN0hBR1RITDsyMDI1LTA1LTMwOzAzOjU5OjE4IFBNOzE7Mjc4Ng=="
                       }
                     ]
                   },
@@ -1275,36 +890,37 @@
             }
           ],
           "guidance": [
-            "Lý thuyết: Vòng lặp `while` thường dùng để lặp đến khi nào điều kiện sai mới thoát vòng lặp. Được ứng dụng khi muốn chờ một tín hiệu nào đó kích hoạt ví dụ công tắc hành trình, thời gian bị quá giờ...",
-            "Chương trình in ra các số từ 0 đến 10",
-            "Khai báo thư viện `<stdio.h>`, khai báo hàm `main`",
-            "Khai báo biến đếm `i` và gán = 0 ",
-            "Sử dụng vòng lặp `while` vói điều kiện `i<=10`",
-            "Khi i thỏa điều kiện, xuất `i` ra màn hình và cập nhập `i=i+1`"
+            "Lý thuyết: Vòng lặp `while` trong Java thường dùng để lặp cho đến khi điều kiện sai mới thoát vòng lặp. Được ứng dụng khi muốn chờ một sự kiện hoặc điều kiện nào đó xảy ra.",
+            "Chương trình in ra các số từ 0 đến 10.",
+            "Khai báo lớp và phương thức `main`.",
+            "Khai báo biến đếm `int i = 0;`.",
+            "Sử dụng vòng lặp `while (i <= 10) { ... }`.",
+            "Trong vòng lặp, xuất `i` ra màn hình bằng `System.out.println(i);` và cập nhật `i` bằng `i = i + 1;` hoặc `i++;`."
           ]
         },
         {
           "id": 39,
-          "title": "Bài 5.10: Lập trình đa nhiệm",
-          "description": "Viết chương trình thực hiện tác vụ sau:\n- Mỗi 1 giây đọc nhiệt độ ngẫu nhiên bằng hàm `rand()` lưu vào biến `nhiet_do` và xuất ra màn hình\n- Mỗi 2 giây đọc ngẫu nhiên độ ẩm bằng hàm `rand()` lưu vào biến `do_am` và xuất kết quả ra màn hình\n**Chú ý hàm rand() cho ra nhiệt độ nằm trong khoảng 20 đến 50 độ và cho ra độ ẩm nằm trong khoảng 40 đến 95 phần trăm**",
+          "title": "Bài 5.10: Lập trình đa nhiệm đơn giản",
+          "description": "Viết chương trình Java thực hiện tác vụ sau:\n- Mỗi 1 giây đọc nhiệt độ ngẫu nhiên (sử dụng `Random` class) lưu vào biến `nhiet_do` và xuất ra màn hình.\n- Mỗi 2 giây đọc ngẫu nhiên độ ẩm (sử dụng `Random` class) lưu vào biến `do_am` và xuất kết quả ra màn hình.\n**Chú ý:** Hàm `Random` cho ra nhiệt độ nằm trong khoảng 20 đến 50 độ và cho ra độ ẩm nằm trong khoảng 40 đến 95 phần trăm.",
           "status": "✗",
           "score": 0,
           "image": [],
           "guidance": [
-            "Lý thuyết: Nhớ lại hàm `clock()` dùng để đọc thời gian thực thi, vì vậy ta chỉ cần tạo ra biến `t1_start` , `t2_start` lưu giá trị ban đầu của hệ thống và sử dụng vòng lặp siêu loop để đọc `t1_stop`, `t2_stop` sau đó  kiểm tra điều kiện `t1=(t1_stop-t1_start)/CLOCKS_PER_SEC` có lớn hơn 1s hay không, nếu lớn hơn thì ta thực hiện đọc `nhiet_do` và thiết lập `t1_start=t1_stop`. Làm tương tự cho đọc độ ẩm",
-            "Để sinh ra số ngẫu nhiên trong khoảng `[a,b]` ta sử dụng hàm `rand()` trong thư viện `<stdlib.h>`  với công thức `rand() % (b - a + 1) + a`",
-            "Khai báo thư viện `<stdio.h>`, `<time.h>`,`<stdlib.h>`, khai báo hàm `main`",
-            "Khai báo biến `t1_start=clock()`, `t2_start=clock()`",
-            "Sử dụng vòng lặp `while` siêu loop`",
-            "Trong vòng lặp khai báo biến `t1_stop=clock()`, `t2_stop=clock()`",
-            "Kiểm tra điều kiện `t1=(t1_stop-t1_start)/CLOCKS_PER_SEC` có lớn hơn 1s hay không, nếu lớn hơn thì đọc nhiệt độ bằng hàm rand()",
-            "Kiểm tra điều kiện `t2=(t2_stop-t2_start)/CLOCKS_PER_SEC` có lớn hơn 2s hay không, nếu lớn hơn thì đọc độ ẩm bằng hàm rand()"
+            "Lý thuyết: Trong Java, để mô phỏng đa nhiệm không chặn, chúng ta có thể sử dụng vòng lặp `while(true)` kết hợp với kiểm tra thời gian. Lớp `System.currentTimeMillis()` hoặc `System.nanoTime()` dùng để đọc thời gian hiện tại.",
+            "Để sinh ra số ngẫu nhiên trong khoảng `[a,b]`, sử dụng lớp `Random` (`import java.util.Random;`). Công thức: `random.nextInt(b - a + 1) + a`.",
+            "Để tạm dừng chương trình, sử dụng `Thread.sleep(milliseconds)` (bọc trong `try-catch InterruptedException`).",
+            "Khai báo lớp và phương thức `main`.",
+            "Khai báo `long` biến `t1_start = System.currentTimeMillis();`, `long t2_start = System.currentTimeMillis();`.",
+            "Sử dụng vòng lặp `while(true)`.",
+            "Trong vòng lặp, đọc `long t_current = System.currentTimeMillis();`.",
+            "Kiểm tra điều kiện `if ((t_current - t1_start) >= 1000)`: nếu đúng thì tính `nhiet_do` ngẫu nhiên, xuất ra màn hình, và cập nhật `t1_start = t_current`.",
+            "Kiểm tra điều kiện `if ((t_current - t2_start) >= 2000)`: nếu đúng thì tính `do_am` ngẫu nhiên, xuất ra màn hình, và cập nhật `t2_start = t_current`."
           ]
         },
         {
           "id": 40,
           "title": "Bài 5.11: Vòng lặp `do...while`",
-          "description": "Cho sơ đồ giải thuật như `Hình 5.11` được vẽ bằng phần mềm `flowgorithm`.\n- Hãy cho biết chương trình trên làm gì\n- Viết chương trình thực hiện giải thuật trên",
+          "description": "Cho sơ đồ giải thuật như `Hình 5.11` được vẽ bằng phần mềm `flowgorithm`.\n- Hãy cho biết chương trình trên làm gì.\n- Viết chương trình Java thực hiện giải thuật trên, in các số từ 0 đến 10.",
           "status": "✗",
           "score": 0,
           "image": [
@@ -1372,17 +988,17 @@
             }
           ],
           "guidance": [
-            "Lý thuyết:Khác với for và while phải kiểm tra điều kiện trước, nếu điều kiện đúng thì mới gọi câu lệnh trong vòng lặp. Cấu trúc do...while cho phép thực hiện câu lệnh trược rồi mới kiểm tra điều kiện , như vậy sẽ luôn thực thi ít nhất một lần câu lệnh.",
-            "Ứng dụng: Khi ta muốn thực hiện câu lệnh trước rồi mới kiểm tra điều kiện; rất hay gặp khi chờ phần cứng sẵn sàng, chờ epprom ghi xong...",
-            "Khai báo thư viện , hàm chính",
-            "Khai báo biến `i`=0",
-            "Sử dụng do..while thực thi lệnh xuất i ra màn hình và kiểm tra điều kiện biến `i` "
+            "Lý thuyết: Cấu trúc `do...while` trong Java cho phép thực hiện khối lệnh trước rồi mới kiểm tra điều kiện. Do đó, nó luôn thực thi khối lệnh ít nhất một lần.",
+            "Ứng dụng: Khi bạn muốn đảm bảo một hành động được thực hiện ít nhất một lần trước khi kiểm tra điều kiện (ví dụ: đọc dữ liệu lần đầu, sau đó kiểm tra điều kiện để tiếp tục đọc).",
+            "Khai báo lớp và phương thức `main`.",
+            "Khai báo biến `int i = 0;`.",
+            "Sử dụng cấu trúc `do { System.out.println(i); i++; } while (i <= 10);` để thực thi lệnh và kiểm tra điều kiện."
           ]
         },
         {
           "id": 41,
-          "title": "Bài 5.12: Điều khiển động cơ",
-          "description": "Cho sơ đồ giải thuật như `Hình 5.12` được vẽ bằng phần mềm `draw.io`.\n- Hãy cho biết chương trình trên làm gì\n- Viết chương trình thực hiện giải thuật trên",
+          "title": "Bài 5.12: Điều khiển thiết bị đơn giản",
+          "description": "Cho sơ đồ giải thuật như `Hình 5.12` được vẽ bằng phần mềm `draw.io`.\n- Hãy cho biết chương trình trên làm gì.\n- Viết chương trình Java thực hiện giải thuật trên để mô phỏng điều khiển thiết bị.",
           "status": "✓",
           "score": 7,
           "image": [
@@ -1618,605 +1234,311 @@
       ]
     },
     {
-      "title": "Buổi 6: Xây dựng hàm",
+      "title": "Buổi 6: Xây dựng hàm (Python)",
       "exercises": [
         {
           "id": 42,
-          "title": "Bài 6.1: Hàm tính tổng không có giá trị trả về",
-          "description": "- Trả lời câu hỏi: Hàm hoạt động như thế nào, tại sao phải dùng hàm?\n- Cho sơ đồ giải thuật như hình 6.1 được vẽ bởi phần mềm `Flowgorithm`. Hãy viết chương trình C để thực hiện sơ đồ trên",
+          "title": "Bài 6.1: Hàm không trả về giá trị (Python)",
+          "description": "- Trả lời câu hỏi: Hàm trong Python hoạt động như thế nào, tại sao phải dùng hàm?\n- Hãy viết chương trình Python thực hiện tác vụ sau: định nghĩa một hàm `tinh_tong` nhận hai số `a` và `b` làm tham số, tính tổng của chúng và in kết quả ra màn hình (hàm này không cần trả về giá trị). Sau đó, gọi hàm này từ chương trình chính với `a=5, b=7`.",
           "status": "✗",
           "score": 0,
-          "image": [
-            {
-              "image_title": "Hình 6.1",
-              "link": "buoi6_6_1.PNG",
-              "image_description": {
-                "flowgorithm": {
-                  "fileversion": "2.11",
-                  "attributes": {
-                    "name": "",
-                    "authors": "dat",
-                    "about": "",
-                    "saved": "2025-05-31 12:18:17 AM",
-                    "created": "ZGF0O0RFU0tUT1AtN0hBR1RITDsyMDI1LTA1LTMxOzEyOjEzOjAyIEFNOzI2NDc=",
-                    "edited": "ZGF0O0RFU0tUT1AtN0hBR1RITDsyMDI1LTA1LTMxOzEyOjE4OjE3IEFNOzE7Mjc2Ng=="
-                  },
-                  "functions": [
-                    {
-                      "name": "Main",
-                      "type": "None",
-                      "variable": "",
-                      "parameters": [],
-                      "body": [
-                        {
-                          "type": "declare",
-                          "name": "a, b",
-                          "dataType": "Real",
-                          "array": "False",
-                          "size": ""
-                        },
-                        {
-                          "type": "assign",
-                          "variable": "a",
-                          "expression": "5"
-                        },
-                        {
-                          "type": "assign",
-                          "variable": "b",
-                          "expression": "7"
-                        },
-                        {
-                          "type": "call",
-                          "expression": "tinhTong(a,b)"
-                        }
-                      ]
-                    },
-                    {
-                      "name": "tinhTong",
-                      "type": "None",
-                      "variable": "",
-                      "parameters": [
-                        {
-                          "name": "a",
-                          "type": "Real",
-                          "array": "False"
-                        },
-                        {
-                          "name": "b",
-                          "type": "Real",
-                          "array": "False"
-                        }
-                      ],
-                      "body": [
-                        {
-                          "type": "declare",
-                          "name": "c",
-                          "dataType": "Real",
-                          "array": "False",
-                          "size": ""
-                        },
-                        {
-                          "type": "assign",
-                          "variable": "c",
-                          "expression": "a+b"
-                        },
-                        {
-                          "type": "output",
-                          "expression": "c",
-                          "newline": "True"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              }
-            }
-          ],
+          "image": [],
           "guidance": [
-            "Lý thuyết:\n- Hàm dùng để gom các tác vụ lặp đi lặp lại thành một hàm để tái sử dụng về sau, giúp clean code được tốt hơn, dễ đọc , dễ bảo trì\n- Nguyên tắc hoạt động: Khi hàm chính hay hàm phụ đến dòng có lệnh gọi hàm thì chương trình sẽ tiến vào hàm thực thi, thực thi xong sé tiếp tục thư thi các lệnh trong hàm chính hoặc hàm phù\n- Hàm có hai loại: loại có giá trị trả về và loại không có giấ trị trả về",
-            "Khai báo thư viện , khai báo hàm chính",
-            "Khai báo hàm tinhTong nằm trên hàm main, ** Chú ý hàm tinhTong sẽ xây dựng không có giá trị trả về **. Trong hàm tính tổng triển khai biến `c` để lưu kết quả tính cộng và xuất kết quả ra màn hình",
-            "Tại hàm main() sau khi thiết lập giá trị các biến `a=5,b=7` sau đó gọi hàm tinhTong với tham số là `a` và `b` và xuất kết quả ra màn hình"
+            "Lý thuyết:\n- Hàm dùng để gom các tác vụ lặp đi lặp lại thành một khối code để tái sử dụng, giúp code gọn gàng, dễ đọc, dễ bảo trì.",
+            "- Nguyên tắc hoạt động: Khi chương trình đến dòng gọi hàm, nó sẽ thực thi các lệnh trong hàm đó. Sau khi hàm thực thi xong, chương trình tiếp tục thực thi các lệnh tiếp theo.",
+            "- Hàm có hai loại: loại có giá trị trả về (sử dụng `return`) và loại không có giá trị trả về (không có `return` hoặc `return None`).",
+            "Khai báo hàm `tinh_tong` bằng từ khóa `def` (ví dụ: `def tinh_tong(a, b):`). Hàm này sẽ không có giá trị trả về.",
+            "Trong hàm `tinh_tong`, tính tổng `c = a + b` và xuất kết quả ra màn hình bằng `print(c)`.",
+            "Trong chương trình chính, thiết lập giá trị các biến `a = 5`, `b = 7`, sau đó gọi hàm `tinh_tong` với tham số là `a` và `b` (ví dụ: `tinh_tong(a, b)`)."
           ]
         },
         {
           "id": 43,
-          "title": "Bài 6.2: Hàm tính tổng có giá trị trả về",
-          "description": "- Trả lời câu hỏi: Hàm có giá trị trả về hoạt động như thế nào?\n- Cho sơ đồ giải thuật như hình 6.2 được vẽ bởi phần mềm `Flowgorithm`. Hãy viết chương trình C để thực hiện sơ đồ trên",
+          "title": "Bài 6.2: Hàm có giá trị trả về (Python)",
+          "description": "- Trả lời câu hỏi: Hàm có giá trị trả về trong Python hoạt động như thế nào?\n- Hãy viết chương trình Python thực hiện tác vụ sau: định nghĩa một hàm `tinh_tong` nhận hai số `a` và `b`, tính tổng của chúng và trả về kết quả. Sau đó, gọi hàm này từ chương trình chính với `a=5, b=7` và in kết quả trả về ra màn hình.",
           "status": "✗",
           "score": 0,
-          "image": [
-            {
-              "image_title": "Hình 6.2",
-              "link": "buoi6_6_2.PNG",
-              "image_description": {
-                "flowgorithm": {
-                  "fileversion": "2.11",
-                  "attributes": {
-                    "attribute": [
-                      {
-                        "name": "name",
-                        "value": ""
-                      },
-                      {
-                        "name": "authors",
-                        "value": "dat"
-                      },
-                      {
-                        "name": "about",
-                        "value": ""
-                      },
-                      {
-                        "name": "saved",
-                        "value": "2025-05-31 01:04:04 AM"
-                      },
-                      {
-                        "name": "created",
-                        "value": "ZGF0O0RFU0tUT1AtN0hBR1RITDsyMDI1LTA1LTMxOzAxOjAwOjU4IEFNOzI2NTI="
-                      },
-                      {
-                        "name": "edited",
-                        "value": "ZGF0O0RFU0tUT1AtN0hBR1RITDsyMDI1LTA1LTMxOzAxOjA0OjA0IEFNOzE7Mjc1NQ=="
-                      }
-                    ]
-                  },
-                  "function": [
-                    {
-                      "name": "Main",
-                      "type": "None",
-                      "variable": "",
-                      "parameters": {},
-                      "body": {
-                        "declare": {
-                          "name": "z",
-                          "type": "Integer",
-                          "array": "False",
-                          "size": ""
-                        },
-                        "assign": {
-                          "variable": "z",
-                          "expression": "tinhTong(a,b)"
-                        },
-                        "output": {
-                          "expression": "z",
-                          "newline": "True"
-                        }
-                      }
-                    },
-                    {
-                      "name": "tinhTong",
-                      "type": "Real",
-                      "variable": "c",
-                      "parameters": {
-                        "parameter": [
-                          {
-                            "name": "a",
-                            "type": "Real",
-                            "array": "False"
-                          },
-                          {
-                            "name": "b",
-                            "type": "Real",
-                            "array": "False"
-                          }
-                        ]
-                      },
-                      "body": {
-                        "declare": {
-                          "name": "c",
-                          "type": "Real",
-                          "array": "False",
-                          "size": ""
-                        },
-                        "assign": {
-                          "variable": "c",
-                          "expression": "a+b"
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          ],
+          "image": [],
           "guidance": [
-            "Lý thuyết: Hàm có giá trị trả về sẽ trả về một giá trị cùng với kiểu dữ khi khai báo hàm và khi gọi hàm ta sẽ lưu giá trị trả về của hàm để tiếp tục xử lý",
-            "Khai báo hàm tinhTong nằm trên hàm main, ** Chú ý hàm tinhTong sẽ xây dựng là hàm có giá trị trả về là tổng của hai số, kiểu trả về là kiểu số thực **. Trong hàm tính tổng triển khai biến `c` để lưu kết quả tính cộng và dùng lệnh `return` với biến `c`",
-            "Tại hàm main() sau khi thiết lập giá trị các biến `a=5,b=7` , sử dụng biến `z` để lưu kết quả trả về của hàm tinhTong, sau đó in kết quả biến `z` ra màn hình"
+            "Lý thuyết: Hàm có giá trị trả về sẽ trả về một giá trị thông qua từ khóa `return`. Khi gọi hàm, giá trị trả về này có thể được lưu vào một biến để sử dụng hoặc xử lý tiếp.",
+            "Khai báo hàm `tinh_tong` nhận hai tham số `a` và `b` và trả về tổng của chúng (ví dụ: `def tinh_tong(a, b): return a + b`).",
+            "Trong chương trình chính, thiết lập giá trị các biến `a = 5`, `b = 7`. Sử dụng một biến `z` để lưu kết quả trả về của hàm `tinh_tong` (ví dụ: `z = tinh_tong(a, b)`), sau đó in kết quả biến `z` ra màn hình."
           ]
         },
         {
           "id": 44,
-          "title": "Bài 6.3: Truyền tham trị",
-          "description": "Viết chương trình thực hiện nhiệm vụ sau:  \nXây hàm `tinh_bieu_thuc` thực hiện biểu thức S= a+4*b và xuất giá trị S ra màn hình  \nGọi hàm `tinh_bieu_thuc` với 2 giá trị truyền vào tương ứng `5 và 6` ",
+          "title": "Bài 6.3: Truyền tham trị (Python)",
+          "description": "Viết chương trình Python thực hiện nhiệm vụ sau:\n- Xây dựng hàm `tinh_bieu_thuc` thực hiện biểu thức `S = a + 4 * b` và xuất giá trị `S` ra màn hình.\n- Khởi tạo biến `x = 5, y = 6` trong chương trình chính.\n- Gọi hàm `tinh_bieu_thuc` với 2 giá trị truyền vào tương ứng `x` và `y`.\n- Trong hàm `tinh_bieu_thuc`, thử thay đổi giá trị của `a` hoặc `b` (ví dụ: `a = 100`). Quan sát xem giá trị gốc của `x` và `y` trong chương trình chính có bị ảnh hưởng không.",
           "status": "✗",
           "score": 0,
           "image": [],
           "guidance": [
-            "Lý thuyết: Truyển tham số vào hàm tức là ta cung cấp giá trị hoặc địa chỉ cho các tham số của hàm để hoạt động. Truyền tham trị tức là truyền giá trị; trong C trừ dữ liệu con trỏ và mảng, tất cả đều là dữ liệu tham trị",
-            "Khai báo thư viện",
-            "Viết hàm `tinh_bieu_thuc` với hai tham số `a` và `b`. Trong hàm triển khai `S=a+4*b` và in S ra màn hình",
-            "Trong hàm chính khởi tạo  x =5, y=6 và truyền x,y vào hàm `tinh_bieu_thuc` như vậy tham số `a` sẽ nhận giá trị x truyền vào và tham số `b` sẽ nhận giá trị y truyền vào"
+            "Lý thuyết: Trong Python, mọi tham số truyền vào hàm đều là 'truyền theo tham chiếu đối tượng' (pass by object reference). Đối với các kiểu dữ liệu 'bất biến' (immutable) như số (int, float) và chuỗi (str), việc thay đổi tham số trong hàm sẽ không ảnh hưởng đến biến gốc bên ngoài.",
+            "Viết hàm `tinh_bieu_thuc` với hai tham số `a` và `b`. Trong hàm, triển khai `S = a + 4 * b` và in `S` ra màn hình.",
+            "Trong chương trình chính, khởi tạo `x = 5`, `y = 6`. Sau đó gọi hàm `tinh_bieu_thuc` với `x` và `y` (ví dụ: `tinh_bieu_thuc(x, y)`)."
           ]
         },
         {
           "id": 45,
-          "title": "Bài 6.4: Truyền tham chiếu",
-          "description": "Viết chương trình thực hiện nhiệm vụ sau:  \nXây hàm `tinh_bieu_thuc` thực hiện biểu thức S= a+4*b và xuất giá trị S ra màn hình. Chú ý ở đây tham số a sẽ nhận địa chỉ và tham số b sẽ nhận giá trị   \nKhởi tạo biến `x=5, y=6` sau đó gọi hàm `tinh_bieu_thuc` với 2 tham số truyền vào là địa chỉ của x và giá trị của y ",
+          "title": "Bài 6.4: Truyền tham chiếu đối tượng có thể thay đổi (Python)",
+          "description": "Viết chương trình Python thực hiện nhiệm vụ sau:\n- Xây dựng hàm `thay_doi_danh_sach` nhận một danh sách (list) làm tham số.\n- Trong hàm, thêm một phần tử mới vào danh sách đó.\n- Khởi tạo một danh sách trong chương trình chính.\n- Gọi hàm `thay_doi_danh_sach` với danh sách này và quan sát xem danh sách gốc có bị thay đổi không.",
           "status": "✗",
           "score": 0,
           "image": [],
           "guidance": [
-            "Lý thuyết: Truyền tham chiếu tức là ta truyền địa chỉ vào tham số hàm và tham số hàm phải là kiểu con trỏ để nhận được địa chỉ. Thông qua con trỏ ta có thể đọc được giá trị tại địa chỉ nó lưu thông qua 2 cách: `*p_con_tro` hoặc `p_con_tro[0]`",
-            "Khai báo thư viện",
-            "Viết hàm `tinh_bieu_thuc` với hai tham số `a` và `b` trong đó a nhận địa chỉ và b nhận giá trị, trong hàm triển khai biến `gia_tri_a=*a` và `S=gia_tri_a+4*b`",
-            "Trong hàm chính khởi tạo  x =5, y=6 và truyền địa chỉ x, và giá trị y vào hàm `tinh_bieu_thuc`"
+            "Lý thuyết: Đối với các kiểu dữ liệu 'có thể thay đổi' (mutable) như danh sách (list), từ điển (dict), tập hợp (set), khi bạn truyền chúng vào hàm, bạn vẫn đang truyền tham chiếu đến cùng một đối tượng. Do đó, việc thay đổi nội dung của đối tượng bên trong hàm sẽ ảnh hưởng đến đối tượng gốc bên ngoài.",
+            "Trong chương trình chính, khởi tạo một danh sách: `my_list = [1, 2, 3]`.",
+            "Viết hàm `thay_doi_danh_sach` (ví dụ: `def thay_doi_danh_sach(lst_param):`) nhận một danh sách làm tham số.",
+            "Trong hàm `thay_doi_danh_sach`, thêm một phần tử vào danh sách (ví dụ: `lst_param.append(4)`).",
+            "Trong chương trình chính, in danh sách `my_list` trước và sau khi gọi `thay_doi_danh_sach(my_list)` để thấy sự thay đổi."
           ]
         },
         {
           "id": 46,
-          "title": "Bài 6.5: Hàm trả về nhiều giá trị",
-          "description": "Viết một hàm `tinh_toan` nhận 4 tham số `a`, `b` , `kq_cong`, `kq_nhan` với a và b giá trị truyền vào và `kq_cong` , `kq_nhan` là giá trị mình muốn trả ra",
+          "title": "Bài 6.5: Hàm trả về nhiều giá trị (Python)",
+          "description": "Viết một hàm `tinh_toan` trong Python nhận 2 tham số `a`, `b` và trả về cả tổng và tích của `a` và `b`.",
           "status": "✗",
           "score": 0,
           "image": [],
           "guidance": [
-            "Lý thuyết: Trước giờ ta chỉ xây dựng hàm trả về 1 giá trị thông qua `return` ; để có nhiều giá trị trả về ta phải dùng cách truyền tham chiếu. Trong bài tập trên `kq_cong` và `kq_nhan` phải là kiểu con trỏ để bắt lấy địa chỉ truyền vào, việc thay đổi `kq_cong` và `kq_nhan` trong hàm sẽ ảnh hướng đến tham số truyền vào, tận dụng tính chất này ta có thể trả ra nhiều giá trị",
-            "khai báo thư viện",
-            "Viết hàm `tinh_toan` với bốn  tham số `a` và `b`, `kq_cong`, `kq_nhan`  trong đó  `a` ,`b` nhận giá trị; `kq_cong`, `kq_nhan` là kiểu con trỏ nhận địa chỉ",
-            "Trong hàm `tinh_toan` thực hiện `*kq_cong=a+b`, `*kq_nhan=a*b`. Như vậy ta đã thay đổi giá trị của địa chỉ mà biến `kq_cong`, `kq_nhan` đang lưu, cũng đồng thời đưa ra được kết quả ta muốn lấy từ bên ngoài thông qua địa chỉ biến truyền vào",
-            "Trong hàm chính khởi tạo  biến `x =5`, biến `y=6`, biến `sum`, biến `nhan` ; sau đó truyền x, y , địa chỉ biến `sum` , địa chỉ biến `nhan` vào hàm `tinh_toan`"
+            "Lý thuyết: Python cho phép hàm trả về nhiều giá trị một cách trực tiếp bằng cách liệt kê chúng sau `return`. Các giá trị này sẽ tự động được đóng gói vào một `tuple`.",
+            "Viết hàm `tinh_toan` (ví dụ: `def tinh_toan(a, b):`).",
+            "Trong hàm `tinh_toan`, tính `tong = a + b` và `tich = a * b`. Sau đó, `return tong, tich`.",
+            "Trong chương trình chính, gọi `tong_kq, tich_kq = tinh_toan(5, 6);` để nhận các giá trị trả về và in chúng ra màn hình."
           ]
         },
         {
           "id": 47,
-          "title": "Bài 6.6: Hàm đệ qui",
-          "description": "- Cho biết thế nào là hàm đệ qui? hàm đệ qui được dùng mục địch gì? và cho ví dụ minh họa\n- Viết chương trình sử dụng hàm đệ qui để tính tổng `S=1+2+...n` với `n` là số người dùng nhập vào hoặc có thẻ gán cứng",
+          "title": "Bài 6.6: Hàm đệ quy (Python)",
+          "description": "- Cho biết thế nào là hàm đệ quy? Hàm đệ quy được dùng mục đích gì? Và cho ví dụ minh họa.\n- Viết chương trình Python sử dụng hàm đệ quy để tính tổng `S = 1 + 2 + ... + n` với `n` là số người dùng nhập vào hoặc có thể gán cứng.",
           "status": "✗",
           "score": -5,
           "image": [],
           "guidance": [
-            "Khái niệm đệ qui:\n- Hàm đệ qui là hàm gọi lại chính nó, mục đích sử dụng hàm đệ qui là giải quyết bài toán lớn bằng cách chia thành bài toán nhỏ tương tự \n- Sau khi chia nhỏ ta tiếp tục chia nhỏ để đạt điều kiện dừng như vậy ta sẽ giải quyết được bài toán lớn\n- Lấy ví dụ khi tính tồng từ 1 đến n thường ta dùng vòng lặp sau đó sử dụng phương pháp cộng dồn để tính, nhưng khi tư duy theo đệ qui ta thấy ta sẽ thấy việc tính tổng từ 1 đến n ta chỉ cần biết tính tổng 2 số sau đó gọi đệ qui cho n số là được\n**Quan trọng ** khi thực hiện giải thuật đệ qui sẽ chạy trên vùng nhớ stack cho nên cần lưu ý khi cài giải thuật đệ qui trên những thiết bị có bộ nhớ ram hạn chế và trong lập trình vi điều khiển rất ít dùng đệ qui, thường những bài toán không biết cách giải hoặc nhiều vòng lặp for phức tạp mới nghĩ đến đệ việc đệ qui",
+            "Lý thuyết về đệ quy:\n- Hàm đệ quy là hàm gọi lại chính nó.",
+            "- Mục đích: Giải quyết bài toán lớn bằng cách chia thành bài toán nhỏ hơn tương tự, cho đến khi đạt được 'điều kiện dừng' (base case).",
+            "- Quan trọng: Phải có điều kiện dừng để tránh vòng lặp vô hạn và lỗi `RecursionError`.",
+            "- Ứng dụng: Thường dùng cho các bài toán có cấu trúc đệ quy tự nhiên như duyệt cây, tính giai thừa, số Fibonacci.",
             "Viết chương trình:",
-            "Khai báo hàm thư viện",
-            "Khai báo hàm `tinh_tong` nhận một tham số là `n`",
-            "Phân tích đệ qui với `n=5`và đây là tình huống vui như sau như sau:\n- Muốn biêt tổng từ 1 đến 5 ta nhờ đứa em tính 1 đến 4 và ta chỉ cần cộng 5 là được:`Tong(5)=Tong(4)+5`\n- Tiếp tục đứa em để tính tổng từ 1 đến 4 nó lại nhờ bạn nó tính tổng từ 1 đến 3 và nó chỉ cộng thêm 4 vào là đựoc:`Tong(4)=Tong(3)+4\n- Tiếp tục như vậy ta được `Tong(3)=Tong(2)+2`\n- `Tong(2)=Tong(1)+1` ta nhận thấy Tong(1) là điều kiện dừng rồi vì lúc này `n=1` nên Tong(1) sẽ bằng 1\n- Công thức đệ qui `Tong(n)=Tong(n-1)+n` với `n=1` là điều kiện dừng , hàm trả về 1",
-            "Trong hàm `tinh_tong` thực hiện `return tinh_tong(n-1)+n` và nếu `n bằng 1 sẽ return 1`",
-            "Khai báo hàm chính",
-            "Khởi tạo giá trị n có thể lấy từ người dùng nhập từ bàn phím hoặc gán cứng",
-            "Truyền `n` vào hàm `tinh_tong` sau đó in kết quả trả về của hàm `tinh_tong` ra màn hình"
+            "Định nghĩa hàm `tinh_tong(n)` nhận một tham số `n`.",
+            "Phân tích đệ quy: `Tong(n) = Tong(n-1) + n`.",
+            "Điều kiện dừng (base case): Nếu `n == 1`, `return 1`.",
+            "Trường hợp đệ quy: Nếu `n > 1`, `return tinh_tong(n-1) + n`.",
+            "Trong chương trình chính, lấy giá trị `n` (ví dụ: `n = int(input(\"Nhập số n:\"))`), gọi `tinh_tong(n)` và in kết quả."
           ]
         },
         {
           "id": 48,
-          "title": "Bài 6.7: Hàm tính n giai thừa",
-          "description": "Xây dựng hàm `tinh_giai_thua` để tính n giai thừa theo giải thuật đệ qui, biết `n!=1*2*3..n`. Sau khi xây dựng xong hãy viết chương trình nhận dữ liệu `n` là số bất kỳ do ngưởi dùng nhập và in kết quả sau khi gọi hàm `tinh_gia_thua` ra màn hình",
+          "title": "Bài 6.7: Hàm tính n giai thừa (Python)",
+          "description": "Xây dựng hàm `tinh_giai_thua` để tính n giai thừa theo giải thuật đệ quy, biết `n! = 1 * 2 * 3 * ... * n`. Sau khi xây dựng xong, hãy viết chương trình Python nhận dữ liệu `n` là số bất kỳ do người dùng nhập và in kết quả sau khi gọi hàm `tinh_giai_thua` ra màn hình.",
           "status": "✗",
           "score": 0,
           "image": [],
           "guidance": [
-            "Phân tích đệ qui:Giả sử tính 3!\n- `tinh_giai_thua(3) =tinh_giai_thua(2)*3`\n- `tinh_giai_thua(2) =tinh_giai_thua(1)*2`\n- `tinh_giai_thua(1)` tức là 1! bằng 1 đây là điều kiện dừng\n- Công thức đệ qui `tinh_giai_thua(n) =tinh_giai_thua(n-1)*n` và `n=1` là điệu kiện dừng",
+            "Phân tích đệ quy: `tinh_giai_thua(n) = tinh_giai_thua(n-1) * n`.",
+            "Điều kiện dừng (base case): Nếu `n == 0` hoặc `n == 1`, `return 1` (0! = 1, 1! = 1).",
             "Viết chương trình:",
-            "Khai báo hàm thư viện",
-            "Khai báo hàm `tinh_giai_thua` nhận một tham số là `n` và trả ra kết quả kiểu `int` ",
-            "Với n=1 thực hiện `return 1` trường hợp còn lại thực hiện đệ qui `return tinh_giai_thua(n-1)*n`",
-            "Khai báo hàm chính",
-            "Khởi tạo lời nhắc nhập n và sử dụng hàm scanf() để lấy giá trị người dùng lưu vào biến `N`",
-            "Truyền `N` vào hàm `tinh_giai_thua` sau đó in kết quả trả về của hàm `tinh_giai_thua` ra màn hình"
+            "Định nghĩa hàm `tinh_giai_thua(n)` nhận một tham số `n` và trả về `int`.",
+            "Trong `tinh_giai_thua`, nếu `n` là 0 hoặc 1, `return 1`. Trường hợp còn lại, `return tinh_giai_thua(n-1) * n`.",
+            "Trong chương trình chính, lấy giá trị `n` (nhập từ `input()` và chuyển sang `int()`), gọi `tinh_giai_thua(n)` và in kết quả."
           ]
         },
         {
           "id": 49,
-          "title": "Bài 6.8: Tính điện áp cầu phân áp",
-          "description": "Cho sơ đồ giải thuật để tính điện áp cầu phân áp như `hình 6.8` được vẽ bằng `flowgorithm`.\n- Hãy cho biết tại sao chúng ta phải phân chia chương trình thành các hàm con, dựa vào sơ đồ hãy cho biết chương trình được phân chia theo top-down các khối như thế nào.\n- Hãy viết chương trình C thực hiện sơ đồ giải thuật trên",
+          "title": "Bài 6.8: Chia nhỏ chương trình thành các hàm (Python)",
+          "description": "Viết chương trình Python để tính điện áp cầu phân áp. Hãy cho biết tại sao chúng ta phải phân chia chương trình thành các hàm con, dựa vào sơ đồ hãy cho biết chương trình được phân chia theo Top-Down các khối như thế nào.\n- Hãy viết chương trình Python thực hiện các tác vụ sau:\n  - Hàm để nhập điện áp đầu vào `Vin`.\n  - Hàm để nhập giá trị điện trở `R`.\n  - Hàm để tính điện áp đầu ra `Vout`.\n  - Chương trình chính sẽ gọi các hàm này và in ra kết quả cuối cùng.",
           "status": "✗",
           "score": 0,
-          "image": [
-            {
-              "image_title": "Hình 6.8",
-              "link": "buoi6_6_8.PNG",
-              "image_description": {
-                "flowgorithm": {
-                  "fileversion": "2.11",
-                  "attributes": {
-                    "name": "",
-                    "authors": "dat",
-                    "about": "",
-                    "saved": "2025-06-03 01:59:26 PM",
-                    "created": "ZGF0O0RFU0tUT1AtN0hBR1RITDsyMDI1LTA2LTAzOzAxOjQwOjI1IFBNOzI2NjU=",
-                    "edited": "ZGF0O0RFU0tUT1AtN0hBR1RITDsyMDI1LTA2LTAzOzAxOjU5OjI2IFBNOzE7Mjc4NA=="
-                  },
-                  "functions": [
-                    {
-                      "name": "Main",
-                      "type": "None",
-                      "variable": "",
-                      "parameters": [],
-                      "body": [
-                        {
-                          "type": "declare",
-                          "name": "R1, R2, Vin",
-                          "dataType": "Real",
-                          "array": "False",
-                          "size": ""
-                        },
-                        {
-                          "type": "output",
-                          "expression": "\"Nhap dien ap Vin\"",
-                          "newline": "True"
-                        },
-                        {
-                          "type": "assign",
-                          "variable": "Vin",
-                          "expression": "nhapDienApVao()"
-                        },
-                        {
-                          "type": "output",
-                          "expression": "\"Nhap dien tro R1\"",
-                          "newline": "True"
-                        },
-                        {
-                          "type": "assign",
-                          "variable": "R1",
-                          "expression": "nhapDienTro()"
-                        },
-                        {
-                          "type": "output",
-                          "expression": "\"Nhap dien tro R2\"",
-                          "newline": "True"
-                        },
-                        {
-                          "type": "assign",
-                          "variable": "R2",
-                          "expression": "nhapDienTro()"
-                        },
-                        {
-                          "type": "output",
-                          "expression": "\"Vin=\"&Vin",
-                          "newline": "True"
-                        },
-                        {
-                          "type": "output",
-                          "expression": "\"R1=\"&R1",
-                          "newline": "True"
-                        },
-                        {
-                          "type": "output",
-                          "expression": "\"R2=\"&R2",
-                          "newline": "True"
-                        },
-                        {
-                          "type": "declare",
-                          "name": "Vout",
-                          "dataType": "Real",
-                          "array": "False",
-                          "size": ""
-                        },
-                        {
-                          "type": "assign",
-                          "variable": "Vout",
-                          "expression": "tinhVout(R1,R2,Vin)"
-                        },
-                        {
-                          "type": "output",
-                          "expression": "\"Vout=\"&Vout",
-                          "newline": "True"
-                        }
-                      ]
-                    },
-                    {
-                      "name": "nhapDienApVao",
-                      "type": "Real",
-                      "variable": "Vin",
-                      "parameters": [],
-                      "body": [
-                        {
-                          "type": "declare",
-                          "name": "Vin",
-                          "dataType": "Real",
-                          "array": "False",
-                          "size": ""
-                        },
-                        {
-                          "type": "input",
-                          "variable": "Vin"
-                        }
-                      ]
-                    },
-                    {
-                      "name": "nhapDienTro",
-                      "type": "Real",
-                      "variable": "R",
-                      "parameters": [],
-                      "body": [
-                        {
-                          "type": "declare",
-                          "name": "R",
-                          "dataType": "Real",
-                          "array": "False",
-                          "size": ""
-                        },
-                        {
-                          "type": "input",
-                          "variable": "R"
-                        }
-                      ]
-                    },
-                    {
-                      "name": "tinhVout",
-                      "type": "Real",
-                      "variable": "V2",
-                      "parameters": [
-                        {
-                          "name": "R1",
-                          "dataType": "Real",
-                          "array": "False"
-                        },
-                        {
-                          "name": "R2",
-                          "dataType": "Real",
-                          "array": "False"
-                        },
-                        {
-                          "name": "Vin",
-                          "dataType": "Real",
-                          "array": "False"
-                        }
-                      ],
-                      "body": [
-                        {
-                          "type": "declare",
-                          "name": "V2",
-                          "dataType": "Real",
-                          "array": "False",
-                          "size": ""
-                        },
-                        {
-                          "type": "assign",
-                          "variable": "V2",
-                          "expression": "(Vin/(R1+R2))*R2"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              }
-            }
-          ],
+          "image": [],
           "guidance": [
-            "Việc phân chia chương trình thành các hàm con giúp tối ưu code, dễ bảo trì, với thiết kế theo top-down giúp phân rã bài toán lớn thành những bài toán nhỏ hơn, việc phân rã thường sẽ phân rã đến khi không thể nào phân rã được nữa",
-            "Ví dụ với bài tập trên ta tách chương trình thành các khối chức năng sau:\n- Khối input: khối nhập giá trị điện áp, khối nhập giá trị điện trở\n- Khối output: thực hiện tính toán điện áp cầu chia áp\n- Rõ ràng các khối input là những khối rất đơn giản ta đã học trước đó, còn khối output cũng khá đơn giản chỉ cần trả về giá trị biểu thức; tới đây việc phân rã đã hoàn tất",
-            "Viết chương trình",
-            "Khai báo hàm `nhapDienApVao` hàm này sẽ nhận giá trị điện áp người dùng nhập từ bàn phím lưu vào biến `Vin` bằng cách sử dụng `scanf()` và trả về `Vin`",
-            "Khai báo hàm `nhapDienTro` hàm này sẽ nhận giá trị điện trở người dùng nhập từ bàn phím lưu vào biến `R` bằng cách sử dụng `scanf()` và trả về `R`",
-            "Khai báo hàm `tinhVout` hàm này sẽ nhận 3 tham số giá trị điện trở `R1`, `R2` và `Vin` và trả về giá trị `Vout` theo công thức: `Vout=(Vin/R1+R2)*R2`",
-            "Sau khi xây dụng các khối xong trong hàm chính thực hiện gọi các khối như sơ đồ và xuất kết quả `Vout` cuối cùng ra màn hình, vói `Vout` được đọc từ hàm `tinhVout`"
+            "Lý thuyết: Việc phân chia chương trình thành các hàm con giúp tối ưu code, dễ bảo trì, và tái sử dụng. Thiết kế Top-Down giúp phân rã bài toán lớn thành những bài toán nhỏ hơn, dễ quản lý hơn.",
+            "Viết chương trình:",
+            "Định nghĩa hàm `nhap_dien_ap_vao()` không nhận tham số, sử dụng `input()` để đọc điện áp, chuyển sang `float()` và trả về giá trị đó.",
+            "Định nghĩa hàm `nhap_dien_tro()` không nhận tham số, sử dụng `input()` để đọc điện trở, chuyển sang `float()` và trả về giá trị đó.",
+            "Định nghĩa hàm `tinh_Vout(R1, R2, Vin)` nhận 3 tham số `R1`, `R2`, `Vin`, tính `Vout = (Vin / (R1 + R2)) * R2` và trả về `Vout`.",
+            "Trong chương trình chính, gọi các hàm `nhap_dien_ap_vao()` và `nhap_dien_tro()` để lấy `Vin`, `R1`, `R2`. Sau đó gọi `tinh_Vout` và in kết quả `Vout` cuối cùng ra màn hình."
           ]
         }
       ]
     },
     {
-      "title": "Buổi 7: Mảng và kiểu dữ liệu struct",
+      "title": "Buổi 7: Mảng và Lớp",
       "exercises": [
         {
-          "id": 50,
+          "id": 56,
           "title": "Bài 7.1: In mảng",
-          "description": "Trả lời câu hỏi: Kiểu dữ liệu mảng là gì? Tại sao phải dùng mảng? Nêu vài ứng dụng mảng trong thực tế\n\ncho mảng A có 5 phần tử `1,2,3,4,5` viết chương trình thực hiện nhiệm vụ sau:\n- Khởi tạo mảng A chứa 5 phần tử 1,2,3,4,5\n- In các phần tử của mảng A ra màn hình bằng cách **truy cập từng index,chú ý không sử dụng vòng lặp**\n- Thay đổi phần tử 0 của mảng A thành 100 và in phần tử 0 của mảng A ra màn hình\n- Sư dụng vòng lặp để quét các phần tử của mảng A và xuất kết quả các phần tử ra màn hình",
+          "description": "Trả lời câu hỏi: Kiểu dữ liệu mảng trong Java là gì? Tại sao phải dùng mảng? Nêu vài ứng dụng mảng trong thực tế.\n\nCho mảng `A` có 5 phần tử `1, 2, 3, 4, 5`. Viết chương trình Java thực hiện nhiệm vụ sau:\n- Khởi tạo mảng `A` chứa 5 phần tử 1, 2, 3, 4, 5.\n- In các phần tử của mảng `A` ra màn hình bằng cách **truy cập từng index, chú ý không sử dụng vòng lặp**.\n- Thay đổi phần tử thứ 0 của mảng `A` thành 100 và in phần tử thứ 0 của mảng `A` ra màn hình.\n- Sử dụng vòng lặp để quét các phần tử của mảng `A` và xuất kết quả các phần tử ra màn hình.",
           "status": "✗",
           "score": -6,
           "image": [],
           "guidance": [
-            "Kiểu dữ liệu mảng cho phép lưu trữ nhiều giá trị cùng loại dưới một biến duy nhất\n- Các thành viên trong mảng được lưu ở các vùng nhớ liên tục, kiểu mảng sử dụng chỉ số (index) là số nguyên dương bắt đầu bằng 0 để truy cập thành viên mảng\n- Kiểu dữ liệu mảng sẽ tốn bộ nhớ ram và cần khai báo kích thước hợp lý\n- Lý do ta sử dụng kiểu mảng với mục đích tập trung lưu trữ vào một biến và dễ dàng dùng vòng lặp for để duyệt mảng\n- Kiểu mảng được ứng dụng khi làm bộ đệm buffer như bộ đệm `stdin` phục vụ input dữ liệu bàn phím , bộ đệm `stdiout` thực hiện output dữ liệu ra màn hình, bộ đệm thu nhận dữ liệu khi truyền thông qua `socket`, `serial`; làm một buffer tạm để lưu tạm danh sách để dễ dàng xử lý trước khi đưa vào database hoặc đọc từ database ra...",
-            "Viết chương trình",
-            "Khai báo thư viện, khai báo hàm chính",
-            "Khai báo biến mảng `A` có kiểu dữ liệu `int` để lưu 5 phần tử `1,2,3,4,5` theo công thức `kieu_du_lieu ten_mang[kich_thuoc]`",
-            "Truy cập các thành viên của mảng `A` và in ra màn hình, công thức truy cập thành viên  `ten_mang[chi_so]` với chỉ số bắt đầu bằng 0",
-            "Thay đổi phần tử `0` của màng A thành 100 theo công thức `ten_mang[chi_so]=gia_tri` và giá trị phần tử `0` ra màn hình",
-            "Sử dụng vòng lặp for để quét các phần tử mảng `A` và xuất ra màn hình"
+            "Lý thuyết: Mảng trong Java là một đối tượng, cho phép lưu trữ nhiều giá trị cùng kiểu dưới một biến duy nhất. Các thành viên trong mảng được lưu ở các vùng nhớ liên tục và được truy cập bằng chỉ số (index) bắt đầu từ 0.",
+            "Ưu điểm: Tập trung lưu trữ, dễ dàng duyệt mảng bằng vòng lặp.",
+            "Ứng dụng: Bộ đệm, danh sách tạm thời, ma trận, v.v.",
+            "Viết chương trình:",
+            "Khai báo lớp và phương thức `main`.",
+            "Khai báo và khởi tạo mảng `A` kiểu `int` chứa 5 phần tử `1, 2, 3, 4, 5` theo công thức: `int[] tenMang = {giaTri1, giaTri2, ...};`.",
+            "Truy cập các thành viên của mảng `A` và in ra màn hình bằng `System.out.println(tenMang[chiSo]);`.",
+            "Thay đổi phần tử thứ 0 của mảng `A` thành 100 theo công thức: `tenMang[chiSo] = giaTri;` và in giá trị phần tử thứ 0 ra màn hình.",
+            "Sử dụng vòng lặp `for` (hoặc `for-each`) để quét các phần tử mảng `A` và xuất ra màn hình."
           ]
         },
         {
-          "id": 50,
-          "title": "Bài 7.2: Tìm giá trị lớn nhất, nhỏ nhất",
-          "description": "Cho mảng A có 5 phần tử `1,5,7,9,3` hãy viết chương trình thực hiện tác vụ sau\n- Tìm phần tử có giá trị lớn nhất của mảng A và xuất ra màn hình giá trị tìm được\n- Tìm phần tử có giá trị nhỏ nhất của mảng A và xuất ra màn hình kết giá trị tìm được",
+          "id": 57,
+          "title": "Bài 7.2: Tìm giá trị lớn nhất, nhỏ nhất trong mảng",
+          "description": "Cho mảng `A` có 5 phần tử `1, 5, 7, 9, 3`. Hãy viết chương trình Java thực hiện tác vụ sau:\n- Tìm phần tử có giá trị lớn nhất của mảng `A` và xuất ra màn hình giá trị tìm được.\n- Tìm phần tử có giá trị nhỏ nhất của mảng `A` và xuất ra màn hình giá trị tìm được.",
           "status": "✗",
           "score": -6,
           "image": [],
           "guidance": [
-            "Phân tích: ta dùng một biến  tạm `tmp` để lưu giá trị phần tử `0` của màng A sau đó dùng vòng lặp để quét các phần tử mảng A và mỗi khi lấy được phần tử mảng A ta sẽ so sánh với biến tạm `tmp` như sau:\n- Khi tìm lớn nhất: nếu biến tạm `tmp` nhỏ hơn giá trị phần tử ta đã quét thì gán lại biến tạm `tmp` giá trị này. Khi kết thúc vòng lặp biến tạm `tmp` chính là giá trị lớn nhất của mảng A\n- Khi tìm nhỏ nhất: nếu biến tạm `tmp` lớn hơn giá trị phần tử ta đã quét thì gán lại biến tạm `tmp` giá trị này. Khi kết thúc vòng lặp biến tạm `tmp` chính là giá trị nhỏ nhất của mảng A",
-            "**Viết chương tình**",
-            "Khai báo thư viện,khai báo hàm chính",
-            "Khởi tạo 2 biến `max_A` và `min_A` được gán giá trị phần tử đầu tiên `A[0]`",
-            "Sử dụng vòng lặp for để duyệt mảng `A` với biến đếm bắt đầu từ 1",
-            "Với `max_A`: thực thiện nếu `max_A<A[i]` sẽ gán `max_A=A[i]`",
-            "Với `min_A`: thực thiện nếu `min_A>A[i]` sẽ gán `min_A=A[i]`",
-            "Xuất kết quả `max_A`, `min_A` ra màn hìn"
+            "Phân tích: Khởi tạo một biến `max_A` (hoặc `min_A`) với giá trị của phần tử đầu tiên của mảng. Sau đó, dùng vòng lặp để duyệt qua các phần tử còn lại của mảng. Trong mỗi lần lặp, so sánh giá trị của phần tử hiện tại với `max_A` (hoặc `min_A`) và cập nhật nếu tìm thấy giá trị lớn hơn (hoặc nhỏ hơn).",
+            "Viết chương trình:",
+            "Khai báo lớp và phương thức `main`.",
+            "Khởi tạo mảng `int[] A = {1, 5, 7, 9, 3};`.",
+            "Khởi tạo 2 biến `int max_A = A[0];` và `int min_A = A[0];`.",
+            "Sử dụng vòng lặp `for` để duyệt mảng `A` bắt đầu từ chỉ số 1 (vì phần tử 0 đã được dùng để khởi tạo `max_A`, `min_A`).",
+            "Đối với `max_A`: Nếu `max_A < A[i]`, gán `max_A = A[i];`.",
+            "Đối với `min_A`: Nếu `min_A > A[i]`, gán `min_A = A[i];`.",
+            "Sử dụng `System.out.println()` để xuất kết quả `max_A`, `min_A` ra màn hình."
           ]
         },
         {
-          "id": 51,
-          "title": "Bài 7.3: Tìm giá trị trung bình của màng",
-          "description": "Cho mảng `A` chứa kết quả 5 cảm biến nhiệt `20.5,40.5,30,50,60`. Hãy viết chương trình thực hiện tác vụ sau:\n- Tính giá trị nhiệt độ trung bình của mảng `A` và xuất kết quả ra màn hình",
+          "id": 58,
+          "title": "Bài 7.3: Tìm giá trị trung bình của mảng",
+          "description": "Cho mảng `A` chứa kết quả 5 cảm biến nhiệt `20.5, 40.5, 30.0, 50.0, 60.0`. Hãy viết chương trình Java thực hiện tác vụ sau:\n- Tính giá trị nhiệt độ trung bình của mảng `A` và xuất kết quả ra màn hình.",
           "status": "✗",
           "score": -1,
           "image": [],
           "guidance": [
-            "Phân tích: ta dùng một biến  tạm `sum` được khởi tạo =0; sau đó dùng vòng lặp để quét các phần tử mảng A và cộng dồn vào biến `sum`. Sau khi kết thúc vòng lặp ta được tổng giá trị nhiệt độ của mảng `A` và thực hiện chia cho số phần tử mảng `A` ta được giá trị trung bình",
-            "**Viết chương tình**",
-            "Khai báo thư viện,khai báo hàm chính",
-            "Khởi tạo mảng `A` chứa 5 phần tử  `20.5,40.5,30,50,60` . Do mảng A chứa kiểu số thực nên kiểu dữ liệu màng A phải là `float` hoặc `double`",
-            "Khởi tạo biến `sum` gán bằng 0. Do `sum` lưu kết quả tổng của phần tử mảng A nên `sum` phải là kiểu số thực",
-            "Sử dụng vòng lặp for để duyệt mảng `A` với biến đếm bắt đầu từ 0",
-            "Cộng dồn các phần tử quét được vào biến `sum` theo công thức `sum+=A[i]`",
-            "Khi kết thúc vòng lặp biến `sum` sẽ chứa kết quả tổng các nhiệt độ của mảng `A`. Tìm số lượng phần tử mảng `A` ta dùng công thức `sizeof(A)/sizof(kieu_du_lieu_mang_A)` lưu vào bến `so_luong` ***ví dụ nếu mảng `A` kiểu dữ liệu là `float` công thức sẽ là `so_luong=sizeof(A)/sizeof(float)`",
-            "Khởi tạo biến `trung_binh` lưu kết quả trung bình nhiệt độ theo công thức `trung_binh=sum/so_luong`. Xuất kết quả `trung_binh` ra màn hình"
+            "Phân tích: Khởi tạo một biến `sum` bằng 0. Sử dụng vòng lặp để quét các phần tử của mảng `A` và cộng dồn vào biến `sum`. Sau khi kết thúc vòng lặp, chia `sum` cho tổng số phần tử để có giá trị trung bình.",
+            "Viết chương trình:",
+            "Khai báo lớp và phương thức `main`.",
+            "Khởi tạo mảng `double[] A = {20.5, 40.5, 30.0, 50.0, 60.0};`. Sử dụng `double` vì đây là số thực.",
+            "Khởi tạo biến `double sum = 0.0;`.",
+            "Sử dụng vòng lặp `for` (hoặc `for-each`) để duyệt mảng `A`.",
+            "Cộng dồn các phần tử quét được vào biến `sum` theo công thức `sum += A[i];`.",
+            "Khi kết thúc vòng lặp, `sum` sẽ chứa tổng các nhiệt độ. Số lượng phần tử mảng `A` có thể lấy bằng `A.length`.",
+            "Khởi tạo biến `double average = sum / A.length;`. Xuất kết quả `average` ra màn hình."
           ]
         },
         {
-          "id": 52,
+          "id": 59,
           "title": "Bài 7.4: Tìm kiếm vị trí phần tử trong mảng",
-          "description": "Cho mảng `A` chứa kết quả 5 cảm biến nhiệt `20.5,40.5,30,50,60`. Hãy viết chương trình thực hiện tác vụ sau:\n- Tìm kiếm vị trí (index) của mảng A tại đó nhiệt độ đạt cao nhất và giá trị nhiệt độ cao nhất\n- In vị trí (index) và giá trị nhiệt độ tìm được ra màn hình",
+          "description": "Cho mảng `A` chứa kết quả 5 cảm biến nhiệt `20.5, 40.5, 30.0, 50.0, 60.0`. Hãy viết chương trình Java thực hiện tác vụ sau:\n- Tìm kiếm vị trí (index) của mảng `A` tại đó nhiệt độ đạt cao nhất và giá trị nhiệt độ cao nhất.\n- In vị trí (index) và giá trị nhiệt độ tìm được ra màn hình.",
           "status": "✗",
           "score": 0,
           "image": [],
           "guidance": [
-            "Phân tích: Trước đây ta bài `7.2` ta đã cập nhập được giá trị lớn nhất vào biến `max_value` khi điều kiện `max_value <A[i]` đúng, giờ ta cần tạo thêm một biến `id` ban đầu =0,  biến này sẽ lưu vị trí `i` của mảng mỗi khi chúng ta cập nhập `max_value`. Như vậy sau khi kết thúc vòng lặp `id` sẽ là vị trí mảng tại đó nhiệt độ đạt cao nhất",
-            "**Viết chương tình**",
-            "Khai báo thư viện,khai báo hàm chính",
-            "Khởi tạo mảng `A` chứa 5 phần tử  `20.5,40.5,30,50,60` . Do mảng A chứa kiểu số thực nên kiểu dữ liệu màng A phải là `float` hoặc `double`",
-            "Khởi tạo biến `id` =0 , biến `max_value=A[0]`",
-            "Sử dụng vòng lặp for để duyệt mảng `A` với biến đếm bắt đầu từ 1",
-            "kiểm tra nếu điều kiện `max_value<A[i]` đúng thực hiện cập nhập `max_value=A[i]` , cập nhập `id=i`",
-            "Kết thúc vòng lặp, xuất `max_value` và `id` ra màn hình"
+            "Phân tích: Dùng một biến `maxValue` để lưu giá trị lớn nhất tìm được và một biến `maxIndex` để lưu vị trí của nó. Duyệt qua mảng, nếu tìm thấy phần tử lớn hơn `maxValue`, cập nhật cả `maxValue` và `maxIndex`.",
+            "Viết chương trình:",
+            "Khai báo lớp và phương thức `main`.",
+            "Khởi tạo mảng `double[] A = {20.5, 40.5, 30.0, 50.0, 60.0};`.",
+            "Khởi tạo biến `double maxValue = A[0];` và `int maxIndex = 0;`.",
+            "Sử dụng vòng lặp `for` để duyệt mảng `A` từ chỉ số 1 trở đi.",
+            "Kiểm tra nếu `A[i] > maxValue`, thì cập nhật `maxValue = A[i];` và `maxIndex = i;`.",
+            "Sử dụng `System.out.println()` để xuất `maxValue` và `maxIndex` ra màn hình."
           ]
         },
         {
-          "id": 53,
-          "title": "Bài 7.5: Tráo đổi vị trí phần tử mảng ",
-          "description": "Cho mảng `A` chứa 5 phần tử`10,20,30,40,50`. Hãy viết chương trình thực hiện tác vụ sau:\n- Thực hiện tráo đổi phần tử ở vị trí 2 và vị trí 3 của mảng A cho nhau`\n- Xuất ra màn hình phần vị trí 2 và vị trí 3 để kiểm chứng",
+          "id": 60,
+          "title": "Bài 7.5: Tráo đổi vị trí phần tử mảng",
+          "description": "Cho mảng `A` chứa 5 phần tử `10, 20, 30, 40, 50`. Hãy viết chương trình Java thực hiện tác vụ sau:\n- Thực hiện tráo đổi phần tử ở vị trí 2 và vị trí 3 của mảng `A` cho nhau (chỉ số 0-based).\n- Xuất ra màn hình các phần tử của mảng `A` sau khi tráo đổi để kiểm chứng.",
           "status": "✗",
           "score": 0,
           "image": [],
           "guidance": [
-            "Phân tích: Để tráo giá trị vị trí 2 và giá trị vị trí 3 cho nhau. Ta cần một biến tạm `tmp` để lưu giá trị vị trí 2 lại vì sau khi gán giá trị sẽ mất; sau đó thực hiện gán giá trị vị trí 3 vào vị trí 2 và gán giá trị biến tạm `tmp` vào vị trí 3",
-            "**Viết chương tình**",
-            "Khai báo thư viện,khai báo hàm chính",
-            "Khởi tạo mảng `A` chứa 5 phần tử  `10,20,30,40,50`",
-            "Khởi tạo biến tạm `tmp` và thực hiện giải thuật như phân tích: `tmp=A[2]` , `A[2]=A[3]` , `A[3]=tmp`",
-            "Xuất ra màn hình phần tử vị trí 2 và  vị trí 3 của mảng A"
+            "Phân tích: Để tráo đổi giá trị giữa hai vị trí, cần một biến tạm `temp` để lưu giữ giá trị của một vị trí trước khi gán đè. Sau đó, gán giá trị từ vị trí thứ hai vào vị trí thứ nhất, và gán giá trị trong biến `temp` vào vị trí thứ hai.",
+            "Viết chương trình:",
+            "Khai báo lớp và phương thức `main`.",
+            "Khởi tạo mảng `int[] A = {10, 20, 30, 40, 50};`.",
+            "Khai tạo biến tạm `int temp;`.",
+            "Thực hiện giải thuật tráo đổi: `temp = A[2]; A[2] = A[3]; A[3] = temp;`.",
+            "Sử dụng vòng lặp `for-each` hoặc `Arrays.toString(A)` (`import java.util.Arrays;`) để xuất ra màn hình toàn bộ mảng `A` sau khi tráo đổi."
           ]
         },
         {
-          "id": 54,
-          "title": "Bài 7.6: Hàm in tất cả phần tử",
-          "description": "Cho mảng `A` chứa 5 phần tử`10,20,30,40,50`. Hãy viết chương trình thực hiện tác vụ sau:\n- Xây dựng hàm để in tất cả phần tử của mảng `A`\n- Thực hiện gọi hàm để kiểm tra kết quả",
+          "id": 61,
+          "title": "Bài 7.6: Phương thức in tất cả phần tử mảng",
+          "description": "Cho mảng `A` chứa 5 phần tử `10, 20, 30, 40, 50`. Hãy viết chương trình Java thực hiện tác vụ sau:\n- Xây dựng phương thức để in tất cả phần tử của mảng `A`.\n- Thực hiện gọi phương thức này từ `main` để kiểm tra kết quả.",
           "status": "✗",
           "score": 0,
           "image": [],
           "guidance": [
-            "**Lý thuyết**: Trước đây ta đã truyền địa chỉ, giá trị vào hàm trong bài `Xây dựng hàm` trong phần này sẽ học cách truyền một mảng vào trong hàm. Về mặt bản chất khi truyền mảng vào trong hàm chính là ta truyền địa chỉ của mảng vào trong hàm, chính vì vậy ta có thể sử dụng con trỏ để bắt lấy địa chỉ của mảng và truy cập cũng như thao tác mảng thông qua con trỏ; biến con trỏ chỉ bắt được địa chỉ của mảng còn nếu muốn quét được mảng ta cần phải thêm một biến lưu số phần tử của mảng. Công thức chung để truyền một mảng `A` vào hàm , với mảng `A` giả sử kiểu int như sau `ten_ham(int a[], int so_phan_tu)` hoặc  `ten_ham(int* a, int so_phan_tu)`",
-            "**Viết chương trình**",
-            "Xây dựng hàm `in_mang` không có kiểu trả về ; nhận 2 tham số `a` và `kich_thuoc` với tham số `a` lưu mảng `A` và tham số `so_phan_tu` lưu số phần tử mảng",
-            "Trong hàm `in_mang` dùng vòng lặp for để quét các phần tử và dùng `print()` để xuất các phần tử quét được ra màn hình",
-            "Khai báo thư viện, khai báo hàm chính",
-            "Khai báo mảng `A` kiểu `int` chứa 5 phần tử `10,20,30,40,50`",
-            "Gọi hàm `in_mang` với 2 tham số truyền vào là màng `A` và số phần tử được tính theo công thức `sizeof(A)/sizeof(int)"
+            "Lý thuyết: Trong Java, khi bạn truyền một mảng vào một phương thức, bạn đang truyền một bản sao của tham chiếu đến đối tượng mảng đó. Điều này có nghĩa là phương thức có thể thay đổi nội dung của mảng gốc. Bạn thường truyền mảng và kích thước của nó (hoặc `array.length`).",
+            "Viết chương trình:",
+            "Xây dựng phương thức `printArray` (ví dụ: `public static void printArray(int[] arr)`) không có kiểu trả về, nhận một mảng `int[]` làm tham số.",
+            "Trong phương thức `printArray`, sử dụng vòng lặp `for` (hoặc `for-each`) để quét các phần tử và dùng `System.out.println()` để xuất các phần tử ra màn hình.",
+            "Khai báo lớp và phương thức `main`.",
+            "Khai báo mảng `int[] A = {10, 20, 30, 40, 50};`.",
+            "Gọi phương thức `printArray` với mảng `A` làm tham số (ví dụ: `printArray(A);`)."
           ]
         },
         {
-          "id": 55,
-          "title": "Bài 7.7: Hàm tráo đổi phần tử ",
-          "description": "Cho mảng `A` chứa 5 phần tử`10,20,30,40,50`. Hãy viết chương trình thực hiện tác vụ sau:\n- Thiết kế hàm `swap` để thực hiện tráo đổi 2 vị trí bất kì của mảng `A`\n- Sử dụng hàm `swap` để thực hiện tráo đổi vị trí 2 và vị trí 3 cho nhau\n- Xuất ra màn hình phần tử ở vị trí 2 và vị trí 3 của mảng A",
+          "id": 62,
+          "title": "Bài 7.7: Phương thức tráo đổi phần tử mảng",
+          "description": "Cho mảng `A` chứa 5 phần tử `10, 20, 30, 40, 50`. Hãy viết chương trình Java thực hiện tác vụ sau:\n- Thiết kế phương thức `swap` để thực hiện tráo đổi 2 phần tử ở vị trí bất kỳ của mảng `A`.\n- Sử dụng phương thức `swap` để thực hiện tráo đổi phần tử ở vị trí 2 và vị trí 3 cho nhau.\n- Xuất ra màn hình các phần tử của mảng `A` sau khi tráo đổi để kiểm chứng.",
           "status": "✗",
           "score": 0,
           "image": [],
           "guidance": [
-            "Xây dựng hàm `swap` với 3 tham số: `mang`, `vi_tri_1`,`vi_tri_2`; trong đó tham số `mang` nhận mảng `A` truyền vào, tham số `vi_tri_1` và `vi_tri_2` là 2 vị trí cần tráo đổi",
-            "Thực hiện giải thuật như như bài `7.5`: Khởi tạo biến tạm `tmp` , `tmp=mang[vi_tri_1]`, `mang[vi_tri_1]=mang[vi_tri_2]`, `mang[vi_tri_2]=tmp`. Lúc này mảng `A` đã được thay dổi vì ta truyền mảng `A` là tham chiếu",
-            "Khai báo thư viện,khai báo hàm chính",
-            "Khởi tạo mảng `A` chứa 5 phần tử  `10,20,30,40,50`",
-            "Gọi hàm `swap` với tham số truyên vào như sau `swap(A,1,2)` để thực hiện tráo đổi",
-            "Xuất ra màn hình giá trị vị trí 1 và vị trí 2 của mảng A"
+            "Xây dựng phương thức `swap` (ví dụ: `public static void swap(int[] arr, int index1, int index2)`) không có kiểu trả về, nhận 3 tham số: mảng `arr`, vị trí `index1` và `index2` cần tráo đổi.",
+            "Trong phương thức `swap`, thực hiện giải thuật tráo đổi: `int temp = arr[index1]; arr[index1] = arr[index2]; arr[index2] = temp;`.",
+            "Khai báo lớp và phương thức `main`.",
+            "Khởi tạo mảng `int[] A = {10, 20, 30, 40, 50};`.",
+            "Gọi phương thức `swap` với mảng `A` và các chỉ số cần tráo đổi (ví dụ: `swap(A, 2, 3);`).",
+            "Sử dụng vòng lặp hoặc `Arrays.toString(A)` để xuất ra màn hình toàn bộ mảng `A` sau khi tráo đổi."
+          ]
+        },
+        {
+          "id": 63,
+          "title": "Bài 7.8: Kiểu dữ liệu `Map`",
+          "description": "Trả lời câu hỏi: Kiểu dữ liệu `Map` trong Java là gì? Tại sao phải dùng `Map`? Nêu vài ứng dụng `Map` trong thực tế.\n\nViết chương trình Java thực hiện tác vụ sau:\n- Khởi tạo một `Map<String, Object>` (hoặc `Map<String, String>` nếu các giá trị đều là chuỗi) `sinhVien` với các thông tin: `\"ten\": \"Nguyen Van A\"`, `\"lop\": \"IT23M\"`, `\"tuoi\": 18`.\n- In ra thông tin của sinh viên bằng cách truy cập các khóa.\n- Thay đổi tuổi của sinh viên thành 19 và in lại thông tin tuổi.",
+          "status": "✗",
+          "score": 0,
+          "image": [],
+          "guidance": [
+            "Lý thuyết: `Map` trong Java là một đối tượng lưu trữ các cặp khóa-giá trị. Khóa phải là duy nhất. `HashMap` là một triển khai phổ biến của `Map`.",
+            "Ưu điểm: Truy cập dữ liệu nhanh bằng khóa, linh hoạt cho dữ liệu cấu trúc.",
+            "Ứng dụng: Lưu trữ hồ sơ, cấu hình, ánh xạ dữ liệu.",
+            "Khai báo và import `java.util.Map` và `java.util.HashMap`.",
+            "Khởi tạo `Map`: `Map<String, Object> sinhVien = new HashMap<>();`.",
+            "Thêm phần tử: `sinhVien.put(\"ten\", \"Nguyen Van A\");`.",
+            "Truy cập giá trị bằng khóa: `sinhVien.get(\"ten\")`.",
+            "Thay đổi giá trị: `sinhVien.put(\"tuoi\", 19);`.",
+            "Sử dụng `System.out.println()` để in thông tin."
+          ]
+        },
+        {
+          "id": 64,
+          "title": "Bài 7.9: Duyệt `Map` và các phương thức",
+          "description": "Cho `Map` `sinhVien` từ bài 7.8. Viết chương trình Java thực hiện tác vụ sau:\n- In ra tất cả các khóa của `Map`.\n- In ra tất cả các giá trị của `Map`.\n- In ra tất cả các cặp khóa-giá trị của `Map`.\n- Kiểm tra xem khóa `\"lop\"` có tồn tại trong `Map` không.",
+          "status": "✗",
+          "score": 0,
+          "image": [],
+          "guidance": [
+            "Sử dụng phương thức `.keySet()` để lấy tất cả các khóa (ví dụ: `for (String key : sinhVien.keySet())`).",
+            "Sử dụng phương thức `.values()` để lấy tất cả các giá trị (ví dụ: `for (Object value : sinhVien.values())`).",
+            "Sử dụng phương thức `.entrySet()` để lấy tất cả các cặp khóa-giá trị (ví dụ: `for (Map.Entry<String, Object> entry : sinhVien.entrySet())`).",
+            "Để kiểm tra sự tồn tại của khóa, sử dụng phương thức `containsKey()` (ví dụ: `if (sinhVien.containsKey(\"lop\"))`)."
+          ]
+        },
+        {
+          "id": 65,
+          "title": "Bài 7.10: Kiểu dữ liệu `record` hoặc một lớp tùy chỉnh đơn giản",
+          "description": "Trả lời câu hỏi: Làm thế nào để tạo một kiểu dữ liệu cố định, không thay đổi (immutable) trong Java (tương tự Tuple trong Python) để lưu trữ nhiều giá trị? Nêu vài ứng dụng của nó trong thực tế.\n\nViết chương trình Java thực hiện tác vụ sau:\n- Định nghĩa một `record` (hoặc lớp tùy chỉnh) `Coordinates` để lưu trữ hai giá trị `x` và `y` (kiểu `int`).\n- Khởi tạo một đối tượng `Coordinates` với `x=10, y=20`.\n- Truy cập và in ra giá trị `x` và `y`.\n- Thử thay đổi giá trị `x` hoặc `y` của đối tượng `Coordinates` này. Quan sát kết quả.",
+          "status": "✗",
+          "score": 0,
+          "image": [],
+          "guidance": [
+            "Lý thuyết: Trong Java, để tạo một kiểu dữ liệu bất biến (immutable) chứa nhiều giá trị, bạn có thể sử dụng:\n  - **`record` (từ Java 16 trở lên):** Một cách ngắn gọn để khai báo các lớp dữ liệu bất biến.\n  - **Lớp tùy chỉnh (class) với các trường `final` và không có `setter`:** Đảm bảo đối tượng không thay đổi sau khi khởi tạo.",
+            "Ưu điểm: Đảm bảo tính toàn vẹn dữ liệu, dễ dàng sử dụng làm khóa trong `Map`.",
+            "Ứng dụng: Trả về nhiều giá trị từ phương thức, lưu trữ tọa độ, thông tin cấu hình cố định.",
+            "Viết chương trình:",
+            "Nếu Java 16 trở lên, định nghĩa `record Coordinates(int x, int y) {}`.",
+            "Nếu Java cũ hơn, định nghĩa `class Coordinates { public final int x; public final int y; public Coordinates(int x, int y) { this.x = x; this.y = y; } }`.",
+            "Khởi tạo đối tượng: `Coordinates coords = new Coordinates(10, 20);`.",
+            "Truy cập giá trị: `coords.x`, `coords.y` (hoặc `coords.getX()`, `coords.getY()` nếu dùng getter).",
+            "Khi thử thay đổi, bạn sẽ thấy lỗi biên dịch vì các trường là `final` hoặc không có `setter`."
           ]
         }
       ]

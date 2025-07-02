@@ -1,5 +1,18 @@
 @echo off
-echo D:/Dat_Code/project4_06_06_25/project4/compiler/ucrt64/bin/../lib/gcc/x86_64-w64-mingw32/14.2.0/../../../../x86_64-w64-mingw32/bin/ld.exe: D:/Dat_Code/project4_06_06_25/project4/compiler/ucrt64/bin/../lib/gcc/x86_64-w64-mingw32/14.2.0/../../../../lib/libmingw32.a(lib64_libmingw32_a-crtexewin.o): in function `main':
-echo C:/M/B/src/mingw-w64/mingw-w64-crt/crt/crtexewin.c:67:(.text.startup+0xc5): undefined reference to `WinMain'
-echo collect2.exe: error: ld returned 1 exit status
+echo d:\Dat_Code\project4_06_06_25\project4\project\project4\temp\tmpgjggr0en\program.c: In function 'main':
+echo d:\Dat_Code\project4_06_06_25\project4\project\project4\temp\tmpgjggr0en\program.c:3:16: warning: missing terminating " character
+echo     3 |         printf("Hello);
+echo       |                ^
+echo d:\Dat_Code\project4_06_06_25\project4\project\project4\temp\tmpgjggr0en\program.c:3:16: error: missing terminating " character
+echo     3 |         printf("Hello);
+echo       |                ^~~~~~~~
+echo d:\Dat_Code\project4_06_06_25\project4\project\project4\temp\tmpgjggr0en\program.c:4:9: error: expected expression before 'return'
+echo     4 |         return 0;
+echo       |         ^~~~~~
+echo d:\Dat_Code\project4_06_06_25\project4\project\project4\temp\tmpgjggr0en\program.c:4:18: error: expected ';' before '}' token
+echo     4 |         return 0;
+echo       |                  ^
+echo       |                  ;
+echo     5 | }
+echo       | ~                 
 pause

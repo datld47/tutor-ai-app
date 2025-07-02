@@ -58,8 +58,6 @@ if getattr(sys, 'frozen', False):
     PATH_UPLOAD = get_path('../upload')
     PATH_STUDENT_LIST = get_path('../data/student.json')
     PATH_DOWNLOAD = get_path('../download')
-    PATH_DATA = get_path('../data')
-    PATH_COMPILER=get_path('../compiler')
 else:
     PATH_CATCH = get_path('cache')
     PATH_LOG = get_path('log')
@@ -71,8 +69,6 @@ else:
     PATH_UPLOAD = get_path('upload')
     PATH_STUDENT_LIST = get_path('data/student.json')
     PATH_DOWNLOAD = get_path('download')
-    PATH_DATA = get_path('data')
-    PATH_COMPILER=get_path('compiler')
 
 create_folder(PATH_CATCH)
 create_folder(PATH_LOG)
@@ -234,8 +230,8 @@ def is_connected():
     except requests.ConnectionError as err:
         return False
     
-
 # def load_app_data():
+    
 #     global STUDENT_LIST
 #     global API_KEY_LIST
 #     global API_KEY
@@ -245,10 +241,148 @@ def is_connected():
 #     global main_rule
 #     global CACHE_STATUS
 #     global APP_VERSION
-#     global COURSE_FILE_MAP
-#     global CURRENT_EXERCISE_LANGUAGE # Đảm bảo biến này được khai báo global
+#     global COURSE_FILE_MAP # THÊM COURSE_FILE_MAP
+   
+#     with open(PATH_STUDENT_LIST, "r", encoding="utf-8") as file:
+#         try:
+#             STUDENT_LIST=json.load(file)
+#         except:
+#             STUDENT_LIST=[]
 
-#     #     # Tải STUDENT_LIST (giữ nguyên)
+#     with open(PATH_JSON_CONFIG, "r", encoding="utf-8") as file:
+#         try:
+#             config=json.load(file)
+#             if not config['api'][0]['gemini_key']:
+#                 API_KEY_LIST= [
+#                                     "AIzaSyDvCMr_GJMvGxFynOvLedw04rqJ6_iElF0",
+#                                     "AIzaSyAF5-pKkd-y_EJYRoOQbYgw7fAmNWtvsq4",
+#                                     "AIzaSyAxVA26qSbc3Hvg6Hdqti4HvxtU0wN1sqo",
+#                                     "AIzaSyDrCxX9U0zNXPVkU2SE9wpGeN0sSYwNJ2I",
+#                                     "AIzaSyAK4nsb74n2I51jt3sH9bqpuHMRlJntV6Q",
+#                                     "AIzaSyAeB3zypsW9cgqENXPt1QfwkSBL7Bm2BAM",
+#                                     "AIzaSyD5j90VdXoQCRiVWD0bMzhpSXiOIcWx_Mg",
+#                                     "AIzaSyAhl5OP4FG7m048BHjjiKhZSC4pFrMBpVo",
+#                                     "AIzaSyDy5z-BHwmPL8ItNJJ6IdNaWjw-l2bNR4E",
+#                                     "AIzaSyAi2miv5ixUjrMTrFehhPH62Efo6wMIMMA",
+#                                     "AIzaSyBEpoVLETjcehxmd7faIkU7lablGAm7k9k",
+#                                     "AIzaSyBP39bWjuKeCDYqzLlY1FBueSQH2wtGfDg",
+#                                     "AIzaSyBrLVKtuwIs11WjYVS-1VyYICpkxpcRLys",
+#                                     "AIzaSyAT7ghjymT6klV-uN_8zqaGapnxnHJO7FI",
+#                                     "AIzaSyDhUZ9TOsGH5oIj4xHVg7wTootfe0eJCjY",
+#                                     "AIzaSyAg85SyVh8bwmoAHD5ClMYPSZDYcUKZge8",
+#                                     "AIzaSyBgXlzFpaQJbAaj-_6DYeE4m-Q-fYq21GM",
+#                                     "AIzaSyDLBPmqFncpruW52U5jQvWsLbkeMsf6c0g",
+#                                     "AIzaSyB64OSSTmfiaAKokNhYIeG1xHAv1Vq4jEw",
+#                                     "AIzaSyB2rtw9IJH8U_T064-Egx-iq0l16vq9Bj0",
+#                                     "AIzaSyCcQ0B0xrMTrxfo_4FVvgVX059dHHu0WKA",
+#                                     "AIzaSyCMdYZUu20OuhGvg4GlkF9Tg1E-aCWuXgw",
+#                                     "AIzaSyDkI2K-mytvzdWm7isbcSATa0sELEtzuRU",
+#                                     "AIzaSyB0tadJbKusAxTbYQBkvTqulK2UkMU82sQ",
+#                                     "AIzaSyALNGPa7ub-cvNTBNz1oKKjU631yKHP3Hw",
+#                                     "AIzaSyApCym0pQaZFHKVZIABBrZdxpKV-mzCuZg",
+#                                     "AIzaSyBqmgmNPF76Ex5u7S0IWIP-tZyMVv_Bcxk",
+#                                     "AIzaSyBrx2NP9XH2wkimt9XItNe6g9lbIDg8A2c",
+#                                     "AIzaSyCZiYQ9rofcm3ndFDIPcpEXk3y0b2LbKLA",
+#                                     "AIzaSyCss_cuhhDcA2ScTtTJ9VttU7Zq35e3MOE",
+#                                     "AIzaSyBQM1j6IMi08CfToV96aS96XFCpcKUYyPE"                                    
+#                                 ]
+#             else:
+#                 API_KEY_LIST=config['api'][0]['gemini_key']
+            
+#             API_KEY=API_KEY_LIST[0]
+#             MODEL=config['api'][1]['model']
+#             DICT_USER_INFO=config['user']
+#             CACHE_STATUS=config['system'][0]['cache_status']
+#             print(f'cache_status={CACHE_STATUS}')
+#             APP_VERSION=config['system'][1]['version']
+#             print(f'APP_VERSION={APP_VERSION}')
+#         except:
+#             API_KEY=''
+#             MODEL=''
+#             DICT_USER_INFO=None
+    
+#     with open(PATH_JSON_COURSE, "r", encoding="utf-8") as file:
+#         try:
+#             json_course = json.load(file)
+#         except:
+#             json_course=None
+
+#     with open(PATH_JSON_RULE, "r", encoding="utf-8") as file:
+#         try:
+#             main_rule = file.read()
+#         except:
+#             main_rule=''
+            
+#      # --- PHẦN MỚI: QUÉT CÁC FILE COURSE VÀ TẠO ÁNH XẠ ---
+#     COURSE_FILE_MAP.clear() # Xóa map cũ nếu có
+#     course_files = glob.glob(os.path.join(get_path('data'), 'course_*.json')) # Tìm các file course_*.json
+
+#     if not course_files:
+#         # Fallback nếu không tìm thấy file nào theo mẫu mới. Thử tải course.json cũ.
+#         try:
+#             with open(PATH_JSON_COURSE, "r", encoding="utf-8") as file:
+#                 json_course = json.load(file)
+#                 if "course_name" not in json_course:
+#                     json_course["course_name"] = "Môn học mặc định (Course.json)" # Gán tên mặc định
+#                 COURSE_FILE_MAP[json_course["course_name"]] = PATH_JSON_COURSE
+#                 print(f"DEBUG: Loaded default course.json: {json_course['course_name']}")
+#         except Exception as e:
+#             print(f"Lỗi tải course.json mặc định: {e}")
+#             json_course = None
+#             messagebox.showwarning("Cảnh báo", "Không tìm thấy file course.json nào.")
+#         return # Thoát nếu không có file để xử lý
+
+#     # Duyệt qua các file course_*.json tìm được
+#     for file_path in course_files:
+#         try:
+#             with open(file_path, "r", encoding="utf-8") as file:
+#                 temp_course_data = json.load(file)
+#                 course_name = temp_course_data.get("course_name") # Lấy tên môn học từ file
+#                 if course_name:
+#                     COURSE_FILE_MAP[course_name] = file_path
+#                     print(f"DEBUG: Found course file: {course_name} -> {file_path}")
+#                 else:
+#                     print(f"Cảnh báo: File {file_path} thiếu trường 'course_name'. Bỏ qua.")
+#         except Exception as e:
+#             print(f"Lỗi khi đọc file course JSON {file_path}: {e}")
+
+#     # Tải course mặc định khi khởi động (ví dụ: Kỹ thuật lập trình (C))
+#     default_course_name = "Kỹ thuật lập trình (C)"
+#     if default_course_name in COURSE_FILE_MAP:
+#         try:
+#             with open(COURSE_FILE_MAP[default_course_name], "r", encoding="utf-8") as file:
+#                 json_course = json.load(file)
+#             print(f"DEBUG: Loaded initial course: {default_course_name}")
+#         except Exception as e:
+#             print(f"Lỗi tải course ban đầu '{default_course_name}': {e}")
+#             json_course = None
+#     elif COURSE_FILE_MAP: # Nếu không tìm thấy mặc định, chọn cái đầu tiên tìm được
+#         first_course_name = list(COURSE_FILE_MAP.keys())[0]
+#         try:
+#             with open(COURSE_FILE_MAP[first_course_name], "r", encoding="utf-8") as file:
+#                 json_course = json.load(file)
+#             print(f"DEBUG: Loaded initial course: {first_course_name} (fallback)")
+#         except Exception as e:
+#             print(f"Lỗi tải course ban đầu '{first_course_name}': {e}")
+#             json_course = None
+#     else: # Không có file course nào hợp lệ
+#         json_course = None
+#         messagebox.showerror("Lỗi", "Không tìm thấy file course JSON hợp lệ nào trong thư mục data/.")
+
+# def load_app_data():
+    
+#     global STUDENT_LIST
+#     global API_KEY_LIST
+#     global API_KEY
+#     global MODEL
+#     global DICT_USER_INFO
+#     global json_course
+#     global main_rule
+#     global CACHE_STATUS
+#     global APP_VERSION
+#     global COURSE_FILE_MAP # THÊM COURSE_FILE_MAP
+   
+#     # Tải STUDENT_LIST (giữ nguyên)
 #     with open(PATH_STUDENT_LIST, "r", encoding="utf-8") as file:
 #         try:
 #             STUDENT_LIST=json.load(file)
@@ -260,6 +394,110 @@ def is_connected():
 #     with open(PATH_JSON_CONFIG, "r", encoding="utf-8") as file:
 #         try:
 #             config=json.load(file)
+#             if not config['api'][0].get('gemini_key') or not config['api'][0]['gemini_key']: # Use .get()
+#                 # ... (API Keys mặc định) ...
+#                 API_KEY_LIST= [ # Các API key mặc định
+#                                     "AIzaSyDvCMr_GJMvGxFynOvLedw04rqJ6_iElF0",
+#                                     "AIzaSyAF5-pKkd-y_EJYRoOQbYgw7fAmNWtvsq4",
+#                                     "AIzaSyAxVA26qSbc3Hvg6Hdqti4HvxtU0wN1sqo",
+#                                     "AIzaSyDrCxX9U0zNXPVkU2SE9wpGeN0sSYwNJ2I",
+#                                     "AIzaSyAK4nsb74n2I51jt3sH9bqpuHMRlJntV6Q",
+#                                     "AIzaSyAeB3zypsW9cgqENXPt1QfwkSBL7Bm2BAM",
+#                                     "AIzaSyD5j90VdXoQCRiVWD0bMzhpSXiOIcWx_Mg",
+#                                     "AIzaSyAhl5OP4FG7m048BHjjiKhZSC4pFrMBpVo",
+#                                     "AIzaSyDy5z-BHwmPL8ItNJJ6IdNaWjw-l2bNR4E",
+#                                     "AIzaSyAi2miv5ixUjrMTrFehhPH62Efo6wMIMMA",
+#                                     "AIzaSyBEpoVLETjcehxmd7faIkU7lablGAm7k9k",
+#                                     "AIzaSyBP39bWjuKeCDYqzLlY1FBueSQH2wtGfDg",
+#                                     "AIzaSyBrLVKtuwIs11WjYVS-1VyYICpkxpcRLys",
+#                                     "AIzaSyAT7ghjymT6klV-uN_8zqaGapnxnHJO7FI",
+#                                     "AIzaSyDhUZ9TOsGH5oIj4xHVg7wTootfe0eJCjY",
+#                                     "AIzaSyAg85SyVh8bwmoAHD5ClMYPSZDYcUKZge8",
+#                                     "AIzaSyBgXlzFpaQJbAaj-_6DYeE4m-Q-fYq21GM",
+#                                     "AIzaSyDLBPmqFncpruW52U5jQvWsLbkeMsf6c0g",
+#                                     "AIzaSyB64OSSTmfiaAKokNhYIeG1xHAv1Vq4jEw",
+#                                     "AIzaSyB2rtw9IJH8U_T064-Egx-iq0l16vq9Bj0",
+#                                     "AIzaSyCcQ0B0xrMTrxfo_4FVvgVX059dHHu0WKA",
+#                                     "AIzaSyCMdYZUu20OuhGvg4GlkF9Tg1E-aCWuXgw",
+#                                     "AIzaSyDkI2K-mytvzdWm7isbcSATa0sELEtzuRU",
+#                                     "AIzaSyB0tadJbKusAxTbYQBkvTqulK2UkMU82sQ",
+#                                     "AIzaSyALNGPa7ub-cvNTBNz1oKKjU631yKHP3Hw",
+#                                     "AIzaSyApCym0pQaZFHKVZIABBrZdxpKV-mzCuZg",
+#                                     "AIzaSyBqmgmNPF76Ex5u7S0IWIP-tZyMVv_Bcxk",
+#                                     "AIzaSyBrx2NP9XH2wkimt9XItNe6g9lbIDg8A2c",
+#                                     "AIzaSyCZiYQ9rofcm3ndFDIPcpEXk3y0b2LbKLA",
+#                                     "AIzaSyCss_cuhhDcA2ScTtTJ9VttU7Zq35e3MOE",
+#                                     "AIzaSyBQM1j6IMi08CfToV96aS96XFCpcKUYyPE"                                    
+#                                 ]
+#             else:
+#                 API_KEY_LIST=config['api'][0]['gemini_key']
+            
+#             API_KEY=API_KEY_LIST[0] if API_KEY_LIST else '' # Handle empty API_KEY_LIST
+#             MODEL=config['api'][1]['model']
+#             DICT_USER_INFO=config['user']
+#             CACHE_STATUS=config['system'][0]['cache_status']
+#             print(f'cache_status={CACHE_STATUS}')
+#             APP_VERSION=config['system'][1]['version']
+#             print(f'APP_VERSION={APP_VERSION}')
+#         except Exception as e: # Catch specific exception
+#             print(f"Lỗi khi tải config.json: {e}")
+#             API_KEY=''
+#             MODEL=''
+#             DICT_USER_INFO=None
+    
+#     # --- XÓA KHỐI CODE NÀY: Nó đang cố gắng đọc course.json cũ ---
+#     # with open(PATH_JSON_COURSE, "r", encoding="utf-8") as file:
+#     #     try:
+#     #         json_course = json.load(file)
+#     #     except:
+#     #         json_course=None
+
+#     # Tải RULE (giữ nguyên)
+#     with open(PATH_JSON_RULE, "r", encoding="utf-8") as file:
+#         try:
+#             main_rule = file.read()
+#         except Exception as e: # Catch specific exception
+#             print(f"Lỗi tải rule.md: {e}")
+#             main_rule=''
+            
+#     # --- PHẦN MỚI: QUÉT CÁC FILE COURSE VÀ TẠO ÁNH XẠ (Đã có, giữ nguyên) ---
+#     COURSE_FILE_MAP.clear() # Xóa map cũ nếu có
+#     course_files = glob.glob(os.path.join(get_path('data'), 'course_*.json')) # Tìm các file course_*.json
+
+#     if not course_files:
+#         # Fallback: Nếu không tìm thấy file course_*.json, cố gắng tải course.json cũ nếu tồn tại
+#         if os.path.exists(PATH_JSON_COURSE): # KIỂM TRA SỰ TỒN TẠI CỦA FILE
+#             try:
+#                 with open(PATH_JSON_COURSE, "r", encoding="utf-8") as file:
+#                     json_course = json.load(file)
+#                     if "course_name" not in json_course:
+#                         json_course["course_name"] = "Môn học mặc định (Course.json)" # Gán tên mặc định
+#                     COURSE_FILE_MAP[json_course["course_name"]] = PATH_JSON_COURSE
+#                     print(f"DEBUG: Loaded default course.json: {json_course['course_name']}")
+#             except Exception as e:
+#                 print(f"Lỗi tải course.json mặc định: {e}")
+#                 json_course = None
+#                 messagebox.showwarning("Cảnh báo", "Không tìm thấy file course.json nào.")
+#             return # Thoát nếu không có file để xử lý
+#         else: # Nếu cả course_*.json và course.json đều không có
+#             json_course = None
+#             messagebox.showerror("Lỗi", "Không tìm thấy file course JSON hợp lệ nào trong thư mục data/. Vui lòng kiểm tra dữ liệu.")
+#             return
+
+#     # Duyệt qua các file course_*.json tìm được
+#     for file_path in course_files:
+#         try:
+#             with open(file_path, "r", encoding="utf-8") as file:
+#                 temp_course_data = json.load(file)
+#                 course_name = temp_course_data.get("course_name") # Lấy tên môn học từ file
+#                 if course_name:
+#                     COURSE_FILE_MAP[course_name] = file_path
+#                     print(f"DEBUG: Found course file: {course_name} -> {file_path}")
+#                 else:
+#                     print(f"Cảnh báo: File {file_path} thiếu trường 'course_name'. Bỏ qua.")
+#         except Exception as e: # Catch specific exception
+#             print(f"Lỗi khi đọc file course JSON {file_path}: {e}")
+
 def load_app_data():
     global STUDENT_LIST
     global API_KEY_LIST
@@ -271,18 +509,17 @@ def load_app_data():
     global CACHE_STATUS
     global APP_VERSION
     global COURSE_FILE_MAP
-    global CURRENT_EXERCISE_LANGUAGE
+    global CURRENT_EXERCISE_LANGUAGE # Đảm bảo biến này được khai báo global
 
-    # Tải STUDENT_LIST
-    # PATH_STUDENT_LIST đã được định nghĩa ở global scope
+    #     # Tải STUDENT_LIST (giữ nguyên)
     with open(PATH_STUDENT_LIST, "r", encoding="utf-8") as file:
         try:
             STUDENT_LIST=json.load(file)
-        except Exception as e:
+        except Exception as e: # Catch specific exception
             print(f"Lỗi tải student.json: {e}")
             STUDENT_LIST=[]
 
-    # Tải CONFIG
+    # Tải CONFIG (giữ nguyên)
     with open(PATH_JSON_CONFIG, "r", encoding="utf-8") as file:
         try:
             config=json.load(file)
@@ -331,13 +568,13 @@ def load_app_data():
             print(f'cache_status={CACHE_STATUS}')
             APP_VERSION=config['system'][1]['version']
             print(f'APP_VERSION={APP_VERSION}')
-        except Exception as e:
+        except Exception as e: # Catch specific exception
             print(f"Lỗi khi tải config.json: {e}")
             API_KEY=''
             MODEL=''
             DICT_USER_INFO=None
 
-    # Tải RULE
+    # Tải RULE (giữ nguyên)
     with open(PATH_JSON_RULE, "r", encoding="utf-8") as file:
         try:
             main_rule = file.read()
@@ -347,18 +584,11 @@ def load_app_data():
 
     # --- QUÉT CÁC FILE COURSE VÀ TẠO ÁNH XẠ ---
     COURSE_FILE_MAP.clear()
-
-    # get_path('data') sẽ trả về đường dẫn đến thư mục 'data'
-    # ví dụ: 'C:\path\to\your_app\dist\app\data' khi frozen
-    # và 'C:\path\to\your_project\data' khi unfrozen (dev)
-    data_folder_path =  PATH_DATA #get_path('data') 
-    messagebox.showerror("Check", " data_folder_path "+data_folder_path)
-    # Sử dụng glob.glob với đường dẫn thư mục và pattern file
-    course_files = glob.glob(os.path.join(data_folder_path, 'course_*.json'))
+    course_files = glob.glob(os.path.join(get_path('data'), 'course_*.json'))
 
     if not course_files:
         # Fallback: Nếu không tìm thấy file course_*.json, cố gắng tải course.json cũ nếu tồn tại
-        if os.path.exists(PATH_JSON_COURSE): # PATH_JSON_COURSE giờ đã đúng
+        if os.path.exists(PATH_JSON_COURSE):
             try:
                 with open(PATH_JSON_COURSE, "r", encoding="utf-8") as file:
                     json_course = json.load(file)
@@ -366,19 +596,19 @@ def load_app_data():
                         json_course["course_name"] = "Môn học mặc định (Course.json)"
                     COURSE_FILE_MAP[json_course["course_name"]] = PATH_JSON_COURSE
                     print(f"DEBUG: Loaded default course.json: {json_course['course_name']}")
+                    # THÊM DÒNG NÀY: Thiết lập ngôn ngữ nếu tải course.json cũ
                     CURRENT_EXERCISE_LANGUAGE = json_course.get("course_language", "c").lower()
                     print(f"DEBUG: Initial language (fallback course.json): {CURRENT_EXERCISE_LANGUAGE}")
             except Exception as e:
                 print(f"Lỗi tải course.json mặc định: {e}")
                 json_course = None
-                CURRENT_EXERCISE_LANGUAGE = "c"
+                CURRENT_EXERCISE_LANGUAGE = "c" # Fallback language on error
                 messagebox.showwarning("Cảnh báo", "Không tìm thấy file course.json nào.")
             return
         else:
             json_course = None
-            CURRENT_EXERCISE_LANGUAGE = "c"
-            # PATH_JSON_COURSE hiển thị ở đây đã đúng đường dẫn
-            messagebox.showerror("Lỗi", "Không tìm thấy file course JSON hợp lệ nào trong thư mục data/. Vui lòng kiểm tra dữ liệu. path "+PATH_JSON_COURSE)
+            CURRENT_EXERCISE_LANGUAGE = "c" # Fallback language
+            messagebox.showerror("Lỗi", "Không tìm thấy file course JSON hợp lệ nào trong thư mục data/. Vui lòng kiểm tra dữ liệu.")
             return
 
     # Duyệt qua các file course_*.json tìm được
@@ -394,164 +624,6 @@ def load_app_data():
                     print(f"Cảnh báo: File {file_path} thiếu trường 'course_name'. Bỏ qua.")
         except Exception as e:
             print(f"Lỗi khi đọc file course JSON {file_path}: {e}")
-    #     except Exception as e: # Catch specific exception
-    #         print(f"Lỗi khi tải config.json: {e}")
-    #         API_KEY=''
-    #         MODEL=''
-    #         DICT_USER_INFO=None
-
-    # # Tải RULE (giữ nguyên)
-    # with open(PATH_JSON_RULE, "r", encoding="utf-8") as file:
-    #     try:
-    #         main_rule = file.read()
-    #     except Exception as e:
-    #         print(f"Lỗi tải rule.md: {e}")
-    #         main_rule = ''
-
-    # # # --- QUÉT CÁC FILE COURSE VÀ TẠO ÁNH XẠ ---
-    # # COURSE_FILE_MAP.clear()
-    # # #course_files = glob.glob(os.path.join(get_path('data'), 'course_*.json'))
-    # # if getattr(sys, 'frozen', False):    
-    # #     course_files = get_path('../data/course_*.json')
-    # # else:
-    # #     course_files = glob.glob(os.path.join(get_path('data'), 'course_*.json'))
-
-    # # if not course_files:
-    # #     # Fallback: Nếu không tìm thấy file course_*.json, cố gắng tải course.json cũ nếu tồn tại
-    # #     if os.path.exists(PATH_JSON_COURSE):
-    # #         try:
-    # #             with open(PATH_JSON_COURSE, "r", encoding="utf-8") as file:
-    # #                 json_course = json.load(file)
-    # #                 if "course_name" not in json_course:
-    # #                     json_course["course_name"] = "Môn học mặc định (Course.json)"
-    # #                 COURSE_FILE_MAP[json_course["course_name"]] = PATH_JSON_COURSE
-    # #                 print(f"DEBUG: Loaded default course.json: {json_course['course_name']}")
-    # #                 # THÊM DÒNG NÀY: Thiết lập ngôn ngữ nếu tải course.json cũ
-    # #                 CURRENT_EXERCISE_LANGUAGE = json_course.get("course_language", "c").lower()
-    # #                 print(f"DEBUG: Initial language (fallback course.json): {CURRENT_EXERCISE_LANGUAGE}")
-    # #         except Exception as e:
-    # #             print(f"Lỗi tải course.json mặc định: {e}")
-    # #             json_course = None
-    # #             CURRENT_EXERCISE_LANGUAGE = "c" # Fallback language on error
-    # #             messagebox.showwarning("Cảnh báo", "Không tìm thấy file course.json nào.")
-    # #         return
-    # #     else:
-    # #         json_course = None
-    # #         CURRENT_EXERCISE_LANGUAGE = "c" # Fallback language
-    # #         messagebox.showerror("Lỗi", "Không tìm thấy file course JSON hợp lệ nào trong thư mục data/. Vui lòng kiểm tra dữ liệu. path "+PATH_JSON_COURSE)
-    # #         return
-
-    # # # Duyệt qua các file course_*.json tìm được
-    # # for file_path in course_files:
-    # #     try:
-    # #         with open(file_path, "r", encoding="utf-8") as file:
-    # #             temp_course_data = json.load(file)
-    # #             course_name = temp_course_data.get("course_name")
-    # #             if course_name:
-    # #                 COURSE_FILE_MAP[course_name] = file_path
-    # #                 print(f"DEBUG: Found course file: {course_name} -> {file_path}")
-    # #             else:
-    # #                 print(f"Cảnh báo: File {file_path} thiếu trường 'course_name'. Bỏ qua.")
-    # #     except Exception as e:
-    # #         print(f"Lỗi khi đọc file course JSON {file_path}: {e}")
-    # # ------------ new ----------------------------
-    # # --- QUÉT CÁC FILE COURSE VÀ TẠO ÁNH XẠ ---
-    # COURSE_FILE_MAP.clear()
-    
-    # # Xác định thư mục chứa các file course JSON
-    # # get_path('data') sẽ trả về đường dẫn đến thư mục 'data'
-    # # ví dụ: 'C:\path\to\your_app\dist\app\data' khi frozen
-    # # và 'C:\path\to\your_project\data' khi unfrozen (dev)
-    # data_folder_path = get_path('data') 
-    
-    # # Sử dụng glob.glob với đường dẫn thư mục và pattern file
-    # course_files = glob.glob(os.path.join(data_folder_path, 'course_*.json'))
-
-    # if not course_files:
-    #     # Fallback: Nếu không tìm thấy file course_*.json, cố gắng tải course.json cũ nếu tồn tại
-    #     # PATH_JSON_COURSE cũng cần được định nghĩa lại cho đúng
-    #     # Hiện tại PATH_JSON_COURSE = get_path('../data/course.json') khi frozen,
-    #     # điều này là không đúng nếu data nằm CÙNG CẤP với EXE.
-    #     # Nó phải là get_path('data/course.json')
-        
-    #     # Hãy kiểm tra lại phần định nghĩa biến PATH_JSON_COURSE của bạn
-    #     # Dựa trên file app.py của bạn:
-    #     # if getattr(sys, 'frozen', False):
-    #     #     PATH_JSON_COURSE = get_path('../data/course.json') # <-- Vẫn đang dùng ../
-    #     # else:
-    #     #     PATH_JSON_COURSE = get_path('data/course.json')
-
-    #     # Cần sửa lại các PATH_xxx ở đầu app.py và google_driver_api.py
-    #     # để chúng không sử dụng "../" khi frozen
-        
-    #     # Sửa lại block biến toàn cục ở đầu app.py và google_driver_api.py:
-    #     # Trong `app.py` và `google_driver_api.py`:
-    #     # (Đảm bảo hàm `get_path` trong `usercustomize.py` đã được cập nhật như hướng dẫn trước)
-
-    #     if getattr(sys, 'frozen', False):
-    #         # Khi đóng gói EXE, các thư mục này sẽ nằm CÙNG CẤP với tệp EXE
-    #         # (ví dụ: dist/app/app.exe, dist/app/data/)
-    #         PATH_CATCH = get_path('cache')
-    #         PATH_LOG = get_path('log')
-    #         PATH_JSON_COURSE = get_path(os.path.join('data', 'course.json')) # SỬA Ở ĐÂY
-    #         PATH_JSON_COURSE_UPDATE = get_path(os.path.join('data', 'course_update.json')) # SỬA Ở ĐÂY
-    #         PATH_JSON_CONFIG = get_path(os.path.join('data', 'config.json')) # SỬA Ở ĐÂY
-    #         PATH_JSON_RULE = get_path(os.path.join('data', 'rule.md'))     # SỬA Ở ĐÂY
-    #         PATH_IMG = get_path('img')
-    #         PATH_UPLOAD = get_path('upload')
-    #         PATH_STUDENT_LIST = get_path(os.path.join('data', 'student.json')) # SỬA Ở ĐÂY
-    #         PATH_DOWNLOAD = get_path('download')
-    #     else:
-    #         # Trong môi trường phát triển, các đường dẫn là tương đối so với script
-    #         PATH_CATCH = get_path('cache')
-    #         PATH_LOG = get_path('log')
-    #         PATH_JSON_COURSE = get_path(os.path.join('data', 'course.json'))
-    #         PATH_JSON_COURSE_UPDATE = get_path(os.path.join('data', 'course_update.json'))
-    #         PATH_JSON_CONFIG = get_path(os.path.join('data', 'config.json'))
-    #         PATH_JSON_RULE = get_path(os.path.join('data', 'rule.md'))
-    #         PATH_IMG = get_path('img')
-    #         PATH_UPLOAD = get_path('upload')
-    #         PATH_STUDENT_LIST = get_path(os.path.join('data', 'student.json'))
-    #         PATH_DOWNLOAD = get_path('download')
-
-
-    #     # Sau khi sửa các biến PATH_JSON_COURSE, PATH_JSON_CONFIG, v.v.
-    #     # thì đoạn code fallback này mới hoạt động chính xác
-    #     if os.path.exists(PATH_JSON_COURSE):
-    #         try:
-    #             with open(PATH_JSON_COURSE, "r", encoding="utf-8") as file:
-    #                 json_course = json.load(file)
-    #                 if "course_name" not in json_course:
-    #                     json_course["course_name"] = "Môn học mặc định (Course.json)"
-    #                 COURSE_FILE_MAP[json_course["course_name"]] = PATH_JSON_COURSE
-    #                 print(f"DEBUG: Loaded default course.json: {json_course['course_name']}")
-    #                 CURRENT_EXERCISE_LANGUAGE = json_course.get("course_language", "c").lower()
-    #                 print(f"DEBUG: Initial language (fallback course.json): {CURRENT_EXERCISE_LANGUAGE}")
-    #         except Exception as e:
-    #             print(f"Lỗi tải course.json mặc định: {e}")
-    #             json_course = None
-    #             CURRENT_EXERCISE_LANGUAGE = "c"
-    #             messagebox.showwarning("Cảnh báo", "Không tìm thấy file course.json nào.")
-    #         return
-    #     else:
-    #         json_course = None
-    #         CURRENT_EXERCISE_LANGUAGE = "c"
-    #         messagebox.showerror("Lỗi", "Không tìm thấy file course JSON hợp lệ nào trong thư mục data/. Vui lòng kiểm tra dữ liệu. path "+PATH_JSON_COURSE)
-    #         return
-
-    # # Duyệt qua các file course_*.json tìm được (đoạn này giữ nguyên)
-    # for file_path in course_files:
-    #     try:
-    #         with open(file_path, "r", encoding="utf-8") as file:
-    #             temp_course_data = json.load(file)
-    #             course_name = temp_course_data.get("course_name")
-    #             if course_name:
-    #                 COURSE_FILE_MAP[course_name] = file_path
-    #                 print(f"DEBUG: Found course file: {course_name} -> {file_path}")
-    #             else:
-    #                 print(f"Cảnh báo: File {file_path} thiếu trường 'course_name'. Bỏ qua.")
-    #     except Exception as e:
-    #         print(f"Lỗi khi đọc file course JSON {file_path}: {e}")
 
     # Tải course mặc định khi khởi động (ví dụ: Kỹ thuật lập trình (C))
     default_course_name = "Kỹ thuật lập trình (C)"
@@ -583,8 +655,7 @@ def load_app_data():
     else: # Không có file course nào hợp lệ
         json_course = None
         CURRENT_EXERCISE_LANGUAGE = "c" # Fallback language
-        #messagebox.showerror("Lỗi", "Không tìm thấy file course JSON hợp lệ nào trong thư mục data/. Vui lòng kiểm tra dữ liệu.")
-        messagebox.showerror("Lỗi", "Không tìm thấy file course JSON hợp lệ nào trong thư mục data/. Vui lòng kiểm tra dữ liệu. course_files: "+course_files)
+        messagebox.showerror("Lỗi", "Không tìm thấy file course JSON hợp lệ nào trong thư mục data/. Vui lòng kiểm tra dữ liệu.")
         
     # Tải course mặc định khi khởi động (ví dụ: Kỹ thuật lập trình (C))
     # default_course_name = "Kỹ thuật lập trình (C)"
@@ -826,14 +897,8 @@ def update_data_from_foler_download(path_course_update,path_img_zip):
         
 ##################################################################################################################
 def get_latest_cache():
-    
+    file_list = glob.glob(os.path.join(PATH_CATCH, "cache_*.json"))
 
-    if getattr(sys, 'frozen', False):    
-        course_files = get_path('../cache/cache_*.json')
-    else:
-        file_list = glob.glob(os.path.join(PATH_CATCH, "cache_*.json"))
-        
-        
     # Nếu có file thì tìm file mới nhất dựa trên tên
     if file_list:
         # Sắp xếp theo tên giảm dần (tên chứa timestamp)
