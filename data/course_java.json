@@ -1,5 +1,6 @@
 {
   "course_name": "Kỹ thuật lập trình (Java)",
+  "course_language": "java",
   "task_list_title": "Chi tiết danh sách bài tập của từng buổi",
   "sessions": [
     {

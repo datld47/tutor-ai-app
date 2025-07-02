@@ -81,7 +81,7 @@ STUDENT_LIST=[]
 API_KEY_LIST=[]
 API_KEY=''
 ACCOUNT_ROLE=''
-MODEL=None # Đã sửa NONE thành None
+MODEL=NONE
 DICT_USER_INFO=None
 json_course=None
 main_rule=''
@@ -1083,49 +1083,24 @@ def window_on_closing(window):
     window.destroy()  # Bắt buộc gọi để thoát
 
 def btn_run_code_click(args):
-    code_input = args['input']
-    code = code_input.get("1.0", tk.END).strip()
-    
-    if not code: # Kiểm tra chuỗi rỗng sau khi loại bỏ khoảng trắng
-        messagebox.showwarning("Cảnh báo", "Vui lòng nhập mã để chạy.")
+    code_input=args['input']
+    #output_display = args['output']         # Lấy tham số label từ args
+    code = code_input.get("1.0", tk.END)
+    if not code.strip():
+        messagebox.showwarning("Cảnh báo", "Vui lòng nhập mã C để chạy.")
         return
+    #output_display.delete("1.0", tk.END)
+    #compile_code(code)
+    #for C
+    #result=compile_code(code)
     
-    #global CURRENT_EXERCISE_LANGUAGE # Truy cập biến ngôn ngữ toàn cục
-    result = ""
+    #for java
+    #result=compile_java(code)
     
-    print(f"DEBUG: Attempting to run code for language: {CURRENT_EXERCISE_LANGUAGE}")
-
-    if CURRENT_EXERCISE_LANGUAGE == "c":
-        # Kiểm tra xem hàm compile_code có tồn tại không trước khi gọi
-        if 'compile_code' in globals(): 
-            result = compile_code(code)
-        else:
-            result = "Error: C compiler function (compile_code) not found. Please check compiler_c.py import."
-            messagebox.showerror("Lỗi", "Không tìm thấy trình biên dịch C.")
-    elif CURRENT_EXERCISE_LANGUAGE == "java":
-        # Giả định bạn có hàm compile_java được import
-        if 'compile_java' in globals(): 
-            result = compile_java(code)
-        else:
-            result = "Error: Java compiler function (compile_java) not found. Please ensure it's imported."
-            messagebox.showerror("Lỗi", "Không tìm thấy trình biên dịch Java.")
-    elif CURRENT_EXERCISE_LANGUAGE == "python":
-        # Giả định bạn có hàm run_python được import
-        if 'run_python' in globals(): 
-            result = run_python(code)
-        else:
-            result = "Error: Python runner function (run_python) not found. Please ensure it's imported."
-            messagebox.showerror("Lỗi", "Không tìm thấy trình chạy Python.")
-    else:
-        result = f"Error: Ngôn ngữ '{CURRENT_EXERCISE_LANGUAGE}' không được hỗ trợ hoặc không xác định."
-        messagebox.showerror("Lỗi", result)
-        
-    # Hiển thị kết quả ra txt_output (giả định txt_output là biến toàn cục và là một widget Text/HTMLLabel)
-    if 'txt_output' in globals() and hasattr(txt_output, 'delete') and hasattr(txt_output, 'insert'):
-        txt_output.delete("1.0", tk.END)
-        txt_output.insert(tk.END, result)
-    else:
-        print(result) # Fallback để in ra console nếu không có output widget
+    #for python
+    result = run_python(code)
+    
+    #output_display.insert(tk.END,result)
 
 def tree_load(tree,json_course):
     for i, session in enumerate(json_course["sessions"]):
@@ -1202,91 +1177,37 @@ def btn_refesh_offline_click(args):
     
         
 # Định nghĩa hàm on_course_select ở cấp độ toàn cục (trước hàm main())
-# def on_course_select(event, tree_widget, json_course_data_current, course_var_obj): # đổi tên json_course_data thành json_course_data_current
-#     global json_course # Khai báo để có thể thay đổi biến global json_course
-
-#     selected_course_name = course_var_obj.get()
-#     print(f"Môn học được chọn: {selected_course_name}")
-
-#     # Xóa tất cả các node hiện tại trong treeview
-#     for item in tree_widget.get_children():
-#         tree_widget.delete(item)
-
-#     if selected_course_name in COURSE_FILE_MAP: # Kiểm tra xem môn học có trong bản đồ file không
-#         file_path_to_load = COURSE_FILE_MAP[selected_course_name]
-#         try:
-#             with open(file_path_to_load, "r", encoding="utf-8") as file:
-#                 json_course_new = json.load(file) # Tải dữ liệu từ file mới
-            
-#             json_course = json_course_new # Cập nhật biến global json_course
-            
-#             tree_load(tree_widget, json_course) # Tải dữ liệu mới vào treeview
-#             #messagebox.showinfo("Thông báo", f"Đã tải danh sách bài tập cho môn: {selected_course_name}.")
-#             print(f"DEBUG: Loaded course: {selected_course_name} from {file_path_to_load}")
-
-#         except FileNotFoundError:
-#             messagebox.showerror("Lỗi", f"Không tìm thấy file: {file_path_to_load}")
-#             print(f"ERROR: File not found: {file_path_to_load}")
-#         except Exception as e:
-#             messagebox.showerror("Lỗi", f"Lỗi khi tải dữ liệu cho môn {selected_course_name}: {e}")
-#             print(f"ERROR: Failed to load course {selected_course_name}: {e}")
-#     else:
-#         messagebox.showwarning("Cảnh báo", f"Không tìm thấy file dữ liệu cho môn: {selected_course_name}.")
-
-def update_code_editor_language(code_editor_widget, language):
-    """Cập nhật ngôn ngữ highlight cho CodeEditor."""
-    if hasattr(code_editor_widget, 'configure_language'):
-        code_editor_widget.configure_language(language)
-    else:
-        print(f"Cảnh báo: CodeEditor không hỗ trợ configure_language. Không thể thay đổi highlight cho: {language}")
-
-
-# Trong hàm on_course_select (khoảng dòng 799 trong app.py của bạn):
-# SỬA DÒNG ĐỊNH NGHĨA HÀM NÀY:
-def on_course_select(event, tree_widget, course_var_obj, input_widget=None): # ĐÃ THÊM input_widget=None VÀ BỎ json_course_data_current
-    global json_course
-    global CURRENT_EXERCISE_LANGUAGE
+def on_course_select(event, tree_widget, json_course_data_current, course_var_obj): # đổi tên json_course_data thành json_course_data_current
+    global json_course # Khai báo để có thể thay đổi biến global json_course
 
     selected_course_name = course_var_obj.get()
     print(f"Môn học được chọn: {selected_course_name}")
 
+    # Xóa tất cả các node hiện tại trong treeview
     for item in tree_widget.get_children():
         tree_widget.delete(item)
 
-    if selected_course_name in COURSE_FILE_MAP:
+    if selected_course_name in COURSE_FILE_MAP: # Kiểm tra xem môn học có trong bản đồ file không
         file_path_to_load = COURSE_FILE_MAP[selected_course_name]
         try:
             with open(file_path_to_load, "r", encoding="utf-8") as file:
-                json_course_new = json.load(file)
+                json_course_new = json.load(file) # Tải dữ liệu từ file mới
             
             json_course = json_course_new # Cập nhật biến global json_course
             
-            # Cập nhật ngôn ngữ của môn học hiện tại
-            # Sử dụng .get() để tránh KeyError nếu 'course_language' không tồn tại (mặc dù đã yêu cầu thêm vào JSON)
-            CURRENT_EXERCISE_LANGUAGE = json_course.get("course_language", "c").lower() 
-            print(f"DEBUG: Course language set to: {CURRENT_EXERCISE_LANGUAGE}")
-
-            # Cập nhật ngôn ngữ cho CodeEditor ngay lập tức
-            if input_widget: # Kiểm tra nếu input_widget được truyền vào
-                update_code_editor_language(input_widget, CURRENT_EXERCISE_LANGUAGE)
-            
-            tree_load(tree_widget, json_course)
-            messagebox.showinfo("Thông báo", f"Đã tải danh sách bài tập cho môn: {selected_course_name}.")
+            tree_load(tree_widget, json_course) # Tải dữ liệu mới vào treeview
+            #messagebox.showinfo("Thông báo", f"Đã tải danh sách bài tập cho môn: {selected_course_name}.")
             print(f"DEBUG: Loaded course: {selected_course_name} from {file_path_to_load}")
 
         except FileNotFoundError:
             messagebox.showerror("Lỗi", f"Không tìm thấy file: {file_path_to_load}")
             print(f"ERROR: File not found: {file_path_to_load}")
-            CURRENT_EXERCISE_LANGUAGE = "c" # Fallback language on error
         except Exception as e:
             messagebox.showerror("Lỗi", f"Lỗi khi tải dữ liệu cho môn {selected_course_name}: {e}")
             print(f"ERROR: Failed to load course {selected_course_name}: {e}")
-            CURRENT_EXERCISE_LANGUAGE = "c" # Fallback language on error
     else:
         messagebox.showwarning("Cảnh báo", f"Không tìm thấy file dữ liệu cho môn: {selected_course_name}.")
-        CURRENT_EXERCISE_LANGUAGE = "c" # Fallback language if course not in map
-        
-        
+
 def on_select(event,args):
     #{"tree":tree,"fr_tree":fr_lesson_tree,"queue":queue,"output":txt_output}
     global json_course
@@ -1582,16 +1503,16 @@ def main():
         btn_load_rule = tk.Button(fr_control, text='load rule')
         btn_load_rule.grid(row=0, column=7, padx=5) 
 
-        #fr_footer.columnconfigure(0, weight=1)
+        fr_footer.columnconfigure(0, weight=1)
         
-        #fr_footer_tittle = tk.Frame(fr_footer)
-        #fr_footer_tittle.grid(row=0, column=0, sticky='nswe')
+        fr_footer_tittle = tk.Frame(fr_footer)
+        fr_footer_tittle.grid(row=0, column=0, sticky='nswe')
         
-        #fr_footer_tittle.columnconfigure(0, weight=1)
-        # tk.Label(fr_footer_tittle, text="Khoa điện-điện tử", font=("Arial", 14), 
-        #             fg="white", bg="green").grid(row=0, column=0, sticky='nswe')
+        fr_footer_tittle.columnconfigure(0, weight=1)
+        tk.Label(fr_footer_tittle, text="Khoa điện-điện tử", font=("Arial", 14), 
+                    fg="white", bg="green").grid(row=0, column=0, sticky='nswe')
         
-        #tk.Label(fr_footer, text=f'Version:{APP_VERSION}', font=("Arial", 14), fg="white", bg="green").grid(row=0, column=2, sticky='e')
+        tk.Label(fr_footer, text=f'Version:{APP_VERSION}', font=("Arial", 14), fg="white", bg="green").grid(row=0, column=2, sticky='e')
 
         # # ------------------- Bắt đầu phần tạo các frame và widget con (CHỈ MỘT LẦN DUY NHẤT) ---------------------
         # fr_left.rowconfigure(0, weight=1)
@@ -1721,17 +1642,21 @@ def main():
         tree.column("score", width=75, stretch=False)
         tree.grid(row=0, column=0, sticky='nswe')
 
-        if available_course_names:
+        if available_course_names: # Kiểm tra nếu có môn học khả dụng
+            # Chọn môn mặc định (ví dụ: "Kỹ thuật lập trình (C)") hoặc môn đầu tiên
             default_selection = "Kỹ thuật lập trình (C)" 
             if default_selection in available_course_names:
                 course_combobox.set(default_selection)
             else:
-                course_combobox.set(available_course_names[0]) 
+                course_combobox.set(available_course_names[0]) # Chọn cái đầu tiên nếu mặc định không có
 
+            # Liên kết sự kiện chọn của combobox.
             course_combobox.bind("<<ComboboxSelected>>", 
-                                 lambda event: on_course_select(event, tree, course_var, input_widget=txt_input)) # Đã sửa
-            
+                                lambda event: on_course_select(event, tree, json_course, course_var)) 
+
+            # *** Tải dữ liệu ban đầu cho treeview từ json_course đã được tải trong load_app_data() ***
             if json_course is not None:
+                # Lời gọi này sẽ tải dữ liệu của môn mặc định đã được set trong load_app_data
                 tree_load(tree, json_course) 
             else:
                 messagebox.showerror("Error", "Lỗi tải dữ liệu khóa học ban đầu.")
@@ -1743,14 +1668,13 @@ def main():
                 tree.delete(item) 
                 
         # ------------------- KẾT THÚC KHỐI TẠO FR_NAV VÀ CÁC WIDGET CON ---------------------
-        
         #fr_input (bên trong fr_center)
         fr_center.rowconfigure(0, weight=3)
         fr_center.columnconfigure(0, weight=1)
         
         fr_input = tk.Frame(fr_center, bg='black')
         fr_input.grid(row=0, column=0, sticky="nswe")
-        fr_input.grid_propagate(False) 
+        fr_input.grid_propagate(False) # Ngăn không cho frame co lại theo nội dung
         
         fr_input.rowconfigure(1, weight=1)
         fr_input.columnconfigure(0, weight=1)
@@ -1760,20 +1684,13 @@ def main():
         
         txt_input = CodeEditor(
                 fr_input,
-                # `CURRENT_EXERCISE_LANGUAGE` đã được set bởi `load_app_data()`
-                language=CURRENT_EXERCISE_LANGUAGE if CURRENT_EXERCISE_LANGUAGE else "c", 
+                language="c",               
                 font=("Consolas", 14),
                 highlighter="monokai",      
                 blockcursor=True,
                 cursor="xterm",             
                 wrap="word")
         txt_input.grid(row=1, column=0, sticky='nswe', padx=5, pady=5)
-        
-        # Cập nhật ngôn ngữ cho CodeEditor sau khi nó được tạo và sau khi language đã được thiết lập.
-        # Điều này là cần thiết nếu language của CodeEditor không tự cập nhật sau khi khởi tạo.
-        # Dùng window.after() để đảm bảo mọi thứ đã ổn định.
-        if txt_input and CURRENT_EXERCISE_LANGUAGE:
-            window.after(50, lambda: update_code_editor_language(txt_input, CURRENT_EXERCISE_LANGUAGE))
         
         fr_input_btn = tk.Frame(fr_input, bg='black')
         fr_input_btn.grid(row=2, column=0, sticky='nswe')
