@@ -1,0 +1,34 @@
+{
+  "api": [
+    {
+      "gemini_key": [
+        "AIzaSyDLBPmqFncpruW52U5jQvWsLbkeMsf6c0g"
+      ]
+    },
+    {
+      "model": "gemini-2.0-flash"
+    }
+  ],
+  "user": [
+    {
+      "username": "Lam Du Dat",
+      "password": "",
+      "mssv": "0"
+    }
+  ],
+  "google_driver": {
+    "scopes": [
+      "https://www.googleapis.com/auth/drive.file"
+    ],
+    "folder_id": "10h_cILGawcbMW1PIm3YIU7EGS2KFKMZI",
+    "config_folder_id": "13iGyyR7AILqDkJP_WjGbggdT8P4CmYMM"
+  },
+  "system": [
+    {
+      "cache_status": 0
+    },
+    {
+      "version": "V6"
+    }
+  ]
+}
