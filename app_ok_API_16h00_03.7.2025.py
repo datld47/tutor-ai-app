@@ -46,26 +46,6 @@ from datetime import datetime, timedelta
 
 from google_driver_api import upload_file_to_driver,upload_file_course,download_file_course_from_driver,upload_img,extract_zip_overwrite,download_file_img_from_driver
 
-#for firebase
-import pyrebase
-# ----------------------------------------------------
-# KHỞI TẠO CẤU HÌNH FIREBASE - CẬP NHẬT CÁC GIÁ TRỊ TỪ BƯỚC NÀY
-firebaseConfig = {
-  "apiKey": "AIzaSyAgTDYs03DJ8FOHjL0v_EfD4R3TQoPUheM", # Dán giá trị từ Firebase Console vào đây
-  "authDomain": "tutoraiexercisesteps.firebaseapp.com", # Dán giá trị từ Firebase Console vào đây
-  "databaseURL": "https://tutoraiexercisesteps-default-rtdb.firebaseio.com/", # THÊM DÒNG NÀY VÀ THAY tutoraiexercisesteps BẰNG projectId CỦA BẠN (nếu bạn dùng Realtime Database)
-  "projectId": "tutoraiexercisesteps", # Dán giá trị từ Firebase Console vào đây
-  "storageBucket": "tutoraiexercisesteps.firebasestorage.app", # Dán giá trị từ Firebase Console vào đây
-  "messagingSenderId": "396805630899", # Dán giá trị từ Firebase Console vào đây
-  "appId": "1:396805630899:web:7ca9be22701f35589b79c6" # Dán giá trị từ Firebase Console vào đây
-}
-
-firebase = pyrebase.initialize_app(firebaseConfig)
-
-# Lấy tham chiếu đến các dịch vụ Firebase
-auth = firebase.auth()
-db = firebase.database() # Nếu bạn dùng Realtime Database
-
 ##########Biến toàn cục #################################################################################
 if getattr(sys, 'frozen', False):
     PATH_CATCH = get_path('../cache')
@@ -107,7 +87,6 @@ API_KEY=''
 ACCOUNT_ROLE=''
 MODEL=None # Đã sửa NONE thành None
 DICT_USER_INFO=None
-CURRENT_USER_TOKEN = None
 json_course=None
 main_rule=''
 model=None
@@ -529,7 +508,7 @@ def update_model():
     global model
     genai.configure(api_key=API_KEY)
     model = genai.GenerativeModel(MODEL)
-               
+    
 def write_log(data):
     try:
         path_log = get_path_join(PATH_LOG,'log.json')
@@ -1365,151 +1344,92 @@ def btn_upload_course_click(args):
 
 import webbrowser # Đảm bảo dòng này đã được thêm ở đầu file
 
-
 def open_gemini_api_window(parent_window):
-    """
-    Mở cửa sổ quản lý API key, hiển thị key của người dùng đang đăng nhập từ Firebase.
-    """
-    global DICT_USER_INFO
-    global db
-
-    if not DICT_USER_INFO or not DICT_USER_INFO[0].get('mssv'):
-        messagebox.showwarning("Cảnh báo", "Vui lòng đăng nhập để quản lý API Keys.")
-        return
-
-    current_user_uid = DICT_USER_INFO[0]['mssv']
-
     new_window = tk.Toplevel(parent_window)
     new_window.title("Quản lý Gemini API Keys")
-    new_window.geometry("600x400")
-    new_window.rowconfigure(3, weight=1)
+    new_window.geometry("600x400") # Kích thước mặc định
+
+    new_window.rowconfigure(3, weight=1) # Để txt_gemini_api_keys co giãn
     new_window.columnconfigure(0, weight=1)
 
-    # ... (code tạo các label, button như cũ) ...
-    tk.Label(new_window, text="Quản lý Gemini API Keys", font=("Arial", 14, "bold"), fg="blue", pady=10).grid(row=0, column=0, columnspan=2, sticky='ew')
-    tk.Button(new_window, text="Mở trang Get Gemini API", font=("Arial", 11), command=btn_get_gemini_api_click_external).grid(row=1, column=0, padx=10, pady=5, sticky='w')
-    tk.Label(new_window, text="Các Gemini API Key của bạn (mỗi key một dòng):", font=("Arial", 11)).grid(row=2, column=0, columnspan=2, padx=10, pady=5, sticky='w')
-    # txt_gemini_api_keys = scrolledtext.ScrolledText(new_window, wrap="word", font=("Arial", 10), height=10)
-    # txt_gemini_api_keys.grid(row=3, column=0, columnspan=2, padx=10, pady=5, sticky='nswe')
+    tk.Label(new_window, text="Quản lý Gemini API Keys", font=("Arial", 14, "bold"),
+             fg="blue", pady=10).grid(row=0, column=0, columnspan=2, sticky='ew')
 
-    # keys_to_display = []
-    # try:
-    #     user_data = db.child("users").child(current_user_uid).get()
-    #     if user_data.val() and 'gemini_api_keys' in user_data.val():
-    #         keys_to_display = user_data.val()['gemini_api_keys']
-    #         print(f"DEBUG: Hiển thị {len(keys_to_display)} key từ Firebase cho người dùng.")
-    #     else:
-    #         print(f"DEBUG: Người dùng chưa có key trên Firebase, hiển thị ô trống.")
-    # except Exception as e:
-    #     messagebox.showerror("Lỗi", f"Không thể tải API keys từ Firebase: {e}")
+    btn_get_gemini_api = tk.Button(new_window, text="Mở trang Get Gemini API", font=("Arial", 11),
+                                 command=lambda: btn_get_gemini_api_click())
+    btn_get_gemini_api.grid(row=1, column=0, padx=10, pady=5, sticky='w')
 
-    # # Hiển thị các key đã lấy được
-    # if keys_to_display:
-    #     for key in keys_to_display:
-    #         txt_gemini_api_keys.insert(tk.END, key + "\n")
+    lbl_api_keys = tk.Label(new_window, text="Các Gemini API Key (mỗi API key một dòng):", font=("Arial", 11))
+    lbl_api_keys.grid(row=2, column=0, columnspan=2, padx=10, pady=5, sticky='w')
 
-    # tk.Button(new_window, text="Lưu API Keys", font=("Arial", 11), command=lambda: btn_save_gemini_api_click(txt_gemini_api_keys, new_window)).grid(row=4, column=0, padx=10, pady=10, sticky='w')
-    
     txt_gemini_api_keys = scrolledtext.ScrolledText(new_window, wrap="word", font=("Arial", 10), height=10)
     txt_gemini_api_keys.grid(row=3, column=0, columnspan=2, padx=10, pady=5, sticky='nswe')
 
-    keys_to_display = []
-    try:
-        current_user_uid = DICT_USER_INFO[0]['mssv']
-        # **SỬA ĐỔI**: Thêm token vào lệnh get()
-        user_data = db.child("users").child(current_user_uid).get(token=CURRENT_USER_TOKEN)
-        
-        if user_data.val() and 'gemini_api_keys' in user_data.val():
-            keys_to_display = user_data.val()['gemini_api_keys']
-    except Exception as e:
-        messagebox.showerror("Lỗi", f"Không thể tải API keys từ Firebase: {e}")
-
-    if keys_to_display:
-        for key in keys_to_display:
+    # Load API keys hiện có vào textbox khi khởi tạo
+    if API_KEY_LIST:
+        for key in API_KEY_LIST:
             txt_gemini_api_keys.insert(tk.END, key + "\n")
 
-    tk.Button(new_window, text="Lưu API Keys", font=("Arial", 11), command=lambda: btn_save_gemini_api_click(txt_gemini_api_keys, new_window)).grid(row=4, column=0, padx=10, pady=10, sticky='w')
+    btn_save_gemini_api = tk.Button(new_window, text="Lưu API Keys", font=("Arial", 11),
+                                  command=lambda: btn_save_gemini_api_click(txt_gemini_api_keys, new_window)) # Truyền new_window để có thể đóng nếu muốn
+    btn_save_gemini_api.grid(row=4, column=0, padx=10, pady=10, sticky='w')
 
+    # Thiết lập window là transient của cửa sổ cha
     new_window.transient(parent_window)
+    # Ngăn người dùng tương tác với cửa sổ cha khi cửa sổ này mở (modal)
     new_window.grab_set()
+    # Chờ cho đến khi cửa sổ này bị hủy
     parent_window.wait_window(new_window)
-    
-# Moved to app.py
-def btn_get_gemini_api_click_external(): # Renamed from btn_get_gemini_api_click
-    url = "https://ai.google.dev/gemini-api/docs"
-    webbrowser.open_new_tab(url)
-    
+
 # Hàm này giữ nguyên như đã tạo ở câu trả lời trước
 def btn_get_gemini_api_click():
     url = "https://ai.google.dev/gemini-api/docs"
     webbrowser.open_new_tab(url)
 
+# Hàm này cần một thay đổi nhỏ để nhận parent_window nếu bạn muốn đóng cửa sổ sau khi lưu
 def btn_save_gemini_api_click(txt_widget, parent_window=None):
-    """
-    Lưu danh sách API key từ textbox vào Firebase cho người dùng đang đăng nhập.
-    """
-    global API_KEY_LIST, API_KEY, DICT_USER_INFO, db
-
-    if not DICT_USER_INFO or not DICT_USER_INFO[0].get('mssv'):
-        messagebox.showwarning("Cảnh báo", "Bạn chưa đăng nhập. Không thể lưu API Keys.")
-        return
-
-    # current_user_uid = DICT_USER_INFO[0]['mssv']
-    # api_keys_text = txt_widget.get("1.0", tk.END).strip()
-    # # Cho phép lưu danh sách rỗng
-    # new_api_keys = [line.strip() for line in api_keys_text.split('\n') if line.strip()]
-
-    # try:
-    #     # LƯU VÀO FIREBASE
-    #     db.child("users").child(current_user_uid).update({"gemini_api_keys": new_api_keys})
-
-    #     # CẬP NHẬT TRẠNG THÁI ỨNG DỤNG LOCAL
-    #     API_KEY_LIST = new_api_keys
-    #     API_KEY = API_KEY_LIST[0] if API_KEY_LIST else ''
-    #     update_model()
-
-    #     messagebox.showinfo("Thành công", "Đã lưu API Keys lên tài khoản của bạn thành công!")
-    #     print(f"API Keys đã được cập nhật trên Firebase cho người dùng {current_user_uid}.")
-        
-    #     if parent_window:
-    #         parent_window.destroy()
-
-    # except Exception as e:
-    #     messagebox.showerror("Lỗi", f"Không thể lưu API Keys lên Firebase: {e}")
+    global API_KEY_LIST
     
-    current_user_uid = DICT_USER_INFO[0]['mssv']
     api_keys_text = txt_widget.get("1.0", tk.END).strip()
     new_api_keys = [line.strip() for line in api_keys_text.split('\n') if line.strip()]
 
-    try:
-        # **SỬA ĐỔI**: Thêm token vào lệnh update()
-        db.child("users").child(current_user_uid).update({"gemini_api_keys": new_api_keys}, token=CURRENT_USER_TOKEN)
+    if not new_api_keys:
+        messagebox.showwarning("Cảnh báo", "Vui lòng nhập ít nhất một API Key.")
+        return
 
-        # CẬP NHẬT TRẠNG THÁI ỨNG DỤNG LOCAL
-        global API_KEY_LIST, API_KEY
+    try:
+        current_config = {}
+        if os.path.exists(PATH_JSON_CONFIG):
+            with open(PATH_JSON_CONFIG, "r", encoding="utf-8") as f:
+                current_config = json.load(f)
+        
+        if 'api' not in current_config:
+            current_config['api'] = [{}, {}]
+        if not isinstance(current_config['api'], list) or len(current_config['api']) < 1:
+            current_config['api'] = [{}]
+        
+        current_config['api'][0]['gemini_key'] = new_api_keys
+        
+        save_json_file(PATH_JSON_CONFIG, current_config)
+        
         API_KEY_LIST = new_api_keys
+        
+        global API_KEY
         API_KEY = API_KEY_LIST[0] if API_KEY_LIST else ''
+        
         update_model()
 
-        messagebox.showinfo("Thành công", "Đã lưu API Keys lên tài khoản của bạn thành công!")
+        messagebox.showinfo("Thành công", "Đã lưu API Keys thành công!")
+        print("API Keys đã được cập nhật và lưu vào config.json")
+        
+        # Đóng cửa sổ sau khi lưu thành công
         if parent_window:
             parent_window.destroy()
-    except Exception as e:
-        messagebox.showerror("Lỗi", f"Không thể lưu API Keys lên Firebase: {e}")
 
-def update_user_info(username='', mssv='', password='', token=''):
-    global DICT_USER_INFO, CURRENT_USER_TOKEN # Thêm CURRENT_USER_TOKEN vào global
-    
-    # Cập nhật thông tin người dùng như cũ
-    if DICT_USER_INFO and isinstance(DICT_USER_INFO, list) and len(DICT_USER_INFO) > 0:
-        DICT_USER_INFO[0]['username'] = username
-        DICT_USER_INFO[0]['mssv'] = mssv
-        DICT_USER_INFO[0]['password'] = password
-    
-    # **QUAN TRỌNG**: Lưu token vào biến toàn cục
-    CURRENT_USER_TOKEN = token
-    print(f"DEBUG: Đã cập nhật và lưu token người dùng.")
-    
+    except Exception as e:
+        messagebox.showerror("Lỗi", f"Không thể lưu API Keys: {e}")
+        print(f"Lỗi khi lưu API Keys: {e}")
+
 def main():
     global STUDENT_LIST, API_KEY_LIST, API_KEY, MODEL, DICT_USER_INFO, json_course, main_rule, model, history, queue, queue_log, APP_VERSION, ACCOUNT_ROLE, ID_EXERCISE
     
@@ -1518,105 +1438,15 @@ def main():
     
     ##################################GUI###############################################################
     window = tk.Tk()
-    window.title(f"UIT Programming Assistant {APP_VERSION}")
-    #window.geometry(f"{INITIAL_WIDTH}x{INITIAL_HEIGHT}")
-    #window.title('app')
+    window.title('app')
     window.minsize(1200, 700) 
-    
-    # ẨN CỬA SỔ CHÍNH TRƯỚC KHI HIỂN THỊ CỬA SỔ ĐĂNG NHẬP
-    window.withdraw() # Dòng này sẽ ẩn cửa sổ chính đi
     
     #yêu cầu đăng nhập (bỏ comment nếu muốn sử dụng login)
     # login = us_login(window, {'dict_user': DICT_USER_INFO, 'student_list': STUDENT_LIST})
     
     # if login.result == 'ok':
-    #if (1): # Tạm thời bỏ qua login để test GUI
-    # 3. Hiển thị cửa sổ đăng nhập
-    # Truyền DICT_USER_INFO dưới dạng danh sách để nó có thể thay đổi và các thay đổi được phản ánh
-    # Truyền các hàm cập nhật và đường dẫn file thực tế
-    # login_app = LoginApp(root, STUDENT_LIST, DICT_USER_INFO, update_user_info_main, update_api_key_main, PATH_STUDENT_LIST, PATH_JSON_CONFIG)
-    
-    # # Sau khi login_app.wait_window() trả về, kiểm tra kết quả
-    # if login_app.result == 'ok':
-    # Check for user login
-    #is_login = False
-    #if (1):
-    #login = LoginApp(window, {'dict_user': DICT_USER_INFO, 'student_list': STUDENT_LIST})
-    #login_app = LoginApp(root, auth, db, update_user_info_main, update_api_key_main, PATH_JSON_CONFIG)
-    #login_app = LoginApp(window, auth, db, update_user_info_main, update_api_key_main, PATH_JSON_CONFIG)
-    login_app = LoginApp(window, auth, db, update_user_info, update_api_key, PATH_JSON_CONFIG)
-    
-    is_login = False
-    print("DEBUG: Always attempting login for development.") # Thông báo debug
-    #login_app = LoginApp(root, auth, db, update_user_info_main, update_api_key_main, PATH_JSON_CONFIG)
-    
-        # # ---- PHẦN CÒN LẠI CỦA HÀM MAIN GIỮ NGUYÊN ----
-        # window.state('zoomed')
-    # if login_app.result == 'ok':
-    #     is_login = True
-    #     print("DEBUG: Login successful.")
-        
-    #     # --- LOGIC MỚI: Tải API Key từ Firebase cho người dùng đã đăng nhập ---
-    #     try:
-    #         current_user_uid = DICT_USER_INFO[0]['mssv']
-    #         user_data = db.child("users").child(current_user_uid).get()
-            
-    #         # Kiểm tra xem người dùng có trường 'gemini_api_keys' không
-    #         if user_data.val() and 'gemini_api_keys' in user_data.val():
-    #             firebase_keys = user_data.val()['gemini_api_keys']
-                
-    #             # Cập nhật API_KEY_LIST toàn cục bằng dữ liệu từ Firebase
-    #             # Kể cả khi nó là danh sách rỗng, nó sẽ ghi đè lên key mặc định
-    #             API_KEY_LIST = firebase_keys
-                
-    #             if firebase_keys:
-    #                 API_KEY = API_KEY_LIST[0]
-    #                 print(f"DEBUG: Đã tải {len(API_KEY_LIST)} API key tùy chỉnh từ Firebase cho UID: {current_user_uid}.")
-    #             else:
-    #                 # Nếu danh sách rỗng, đảm bảo API_KEY hiện tại cũng rỗng
-    #                 API_KEY = ''
-    #                 print(f"DEBUG: Người dùng {current_user_uid} có danh sách API key rỗng trên Firebase.")
-    #         else:
-    #             # Nếu không có trường 'gemini_api_keys', giữ nguyên API key mặc định đã tải lúc đầu
-    #             print(f"DEBUG: Không tìm thấy 'gemini_api_keys' cho {current_user_uid}. Sử dụng key mặc định từ config.")
-    #             # API_KEY_LIST và API_KEY đã được thiết lập bởi load_app_data(), không cần làm gì thêm.
-
-    #         # Luôn cập nhật model với API key mới (hoặc rỗng)
-    #         update_model() 
-    if login_app.result == 'ok':
-        is_login = True
-        print("DEBUG: Login successful.")
-        
-        try:
-            current_user_uid = DICT_USER_INFO[0]['mssv']
-            
-            # **SỬA ĐỔI**: Truyền token vào lệnh get()
-            user_data = db.child("users").child(current_user_uid).get(token=CURRENT_USER_TOKEN)
-            
-            if user_data.val() and 'gemini_api_keys' in user_data.val():
-                firebase_keys = user_data.val()['gemini_api_keys']
-                API_KEY_LIST = firebase_keys
-                API_KEY = API_KEY_LIST[0] if API_KEY_LIST else ''
-                print(f"DEBUG: Đã tải {len(API_KEY_LIST)} API key từ Firebase.")
-            else:
-                API_KEY_LIST = []
-                API_KEY = ''
-                print("DEBUG: Người dùng không có API key trên Firebase. Sử dụng danh sách rỗng.")
-            
-            update_model()
-
-        except Exception as e:
-            print(f"DEBUG: Lỗi khi tải API key từ Firebase sau khi đăng nhập: {e}. Sử dụng key mặc định.")
-            # Nếu lỗi, vẫn có thể dùng key mặc định từ config nếu có
-            update_model()
-        except Exception as e:
-            print(f"DEBUG: Lỗi khi tải API key từ Firebase sau khi đăng nhập: {e}. Sử dụng key mặc định.")
-            # Nếu có lỗi, API_KEY_LIST và API_KEY sẽ giữ nguyên giá trị từ load_app_data()
-            update_model()
-        # --- KẾT THÚC LOGIC MỚI ---
-        
-        # ---- PHẦN CÒN LẠI CỦA HÀM MAIN GIỮ NGUYÊN ----
-        window.state('zoomed')
+    if (1): # Tạm thời bỏ qua login để test GUI
+        window.state('zoomed') # Phóng to cửa sổ, giữ thanh tiêu đề
         
         if DICT_USER_INFO and isinstance(DICT_USER_INFO, list) and len(DICT_USER_INFO) > 0:
             mssv = DICT_USER_INFO[0].get('mssv', '0')
@@ -1626,7 +1456,7 @@ def main():
             print("DICT_USER_INFO không hợp lệ hoặc rỗng.")
             ACCOUNT_ROLE = 'GUEST'
 
-        # update_model() # Đã được gọi bên trên, không cần gọi lại ở đây
+        update_model()
 
         window.grid_rowconfigure(1, weight=1) 
         window.grid_columnconfigure(0, weight=1) 

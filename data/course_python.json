@@ -10,8 +10,8 @@
           "id": 1,
           "title": "Bài 1.1: In Hello World",
           "description": "Viết chương trình Python để in chuỗi 'Hello World' ra màn hình console.",
-          "status": "✓",
-          "score": 10,
+          "status": "✗",
+          "score": 0,
           "image": [],
           "guidance": [
             "Không cần khai báo thư viện hay hàm chính đặc biệt cho chương trình đơn giản này.",

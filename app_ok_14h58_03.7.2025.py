@@ -46,26 +46,6 @@ from datetime import datetime, timedelta
 
 from google_driver_api import upload_file_to_driver,upload_file_course,download_file_course_from_driver,upload_img,extract_zip_overwrite,download_file_img_from_driver
 
-#for firebase
-import pyrebase
-# ----------------------------------------------------
-# KHỞI TẠO CẤU HÌNH FIREBASE - CẬP NHẬT CÁC GIÁ TRỊ TỪ BƯỚC NÀY
-firebaseConfig = {
-  "apiKey": "AIzaSyAgTDYs03DJ8FOHjL0v_EfD4R3TQoPUheM", # Dán giá trị từ Firebase Console vào đây
-  "authDomain": "tutoraiexercisesteps.firebaseapp.com", # Dán giá trị từ Firebase Console vào đây
-  "databaseURL": "https://tutoraiexercisesteps-default-rtdb.firebaseio.com/", # THÊM DÒNG NÀY VÀ THAY tutoraiexercisesteps BẰNG projectId CỦA BẠN (nếu bạn dùng Realtime Database)
-  "projectId": "tutoraiexercisesteps", # Dán giá trị từ Firebase Console vào đây
-  "storageBucket": "tutoraiexercisesteps.firebasestorage.app", # Dán giá trị từ Firebase Console vào đây
-  "messagingSenderId": "396805630899", # Dán giá trị từ Firebase Console vào đây
-  "appId": "1:396805630899:web:7ca9be22701f35589b79c6" # Dán giá trị từ Firebase Console vào đây
-}
-
-firebase = pyrebase.initialize_app(firebaseConfig)
-
-# Lấy tham chiếu đến các dịch vụ Firebase
-auth = firebase.auth()
-db = firebase.database() # Nếu bạn dùng Realtime Database
-
 ##########Biến toàn cục #################################################################################
 if getattr(sys, 'frozen', False):
     PATH_CATCH = get_path('../cache')
@@ -107,7 +87,6 @@ API_KEY=''
 ACCOUNT_ROLE=''
 MODEL=None # Đã sửa NONE thành None
 DICT_USER_INFO=None
-CURRENT_USER_TOKEN = None
 json_course=None
 main_rule=''
 model=None
@@ -260,6 +239,31 @@ def is_connected():
         return False
     
 
+# def load_app_data():
+#     global STUDENT_LIST
+#     global API_KEY_LIST
+#     global API_KEY
+#     global MODEL
+#     global DICT_USER_INFO
+#     global json_course
+#     global main_rule
+#     global CACHE_STATUS
+#     global APP_VERSION
+#     global COURSE_FILE_MAP
+#     global CURRENT_EXERCISE_LANGUAGE # Đảm bảo biến này được khai báo global
+
+#     #     # Tải STUDENT_LIST (giữ nguyên)
+#     with open(PATH_STUDENT_LIST, "r", encoding="utf-8") as file:
+#         try:
+#             STUDENT_LIST=json.load(file)
+#         except Exception as e: # Catch specific exception
+#             print(f"Lỗi tải student.json: {e}")
+#             STUDENT_LIST=[]
+
+#     # Tải CONFIG (giữ nguyên)
+#     with open(PATH_JSON_CONFIG, "r", encoding="utf-8") as file:
+#         try:
+#             config=json.load(file)
 def load_app_data():
     global STUDENT_LIST
     global API_KEY_LIST
@@ -433,7 +437,42 @@ def load_app_data():
         print(f"DEBUG: Initial language (default/fallback course): {CURRENT_EXERCISE_LANGUAGE}")
     else:
         CURRENT_EXERCISE_LANGUAGE = "c" # Fallback nếu không có môn học nào được tải
-                                
+    
+# def update_course_from_course_update(path_course_update):
+#     global json_course
+#     if os.path.exists(path_course_update):
+#         with open(path_course_update, "r", encoding="utf-8") as file:
+#             try:
+#                 json_course_update = json.load(file)
+#             except:
+#                 json_course_update=None
+                
+#         if json_course_update is not None:
+#             if json_course is not None:
+#                 update_map = {}
+#                 for session in json_course['sessions']:
+#                     for ex in session['exercises']:
+#                         update_map[ex['id']] = {
+#                             'status': ex['status'],
+#                             'score': ex['score']
+#                         }
+
+#                 # Cập nhật lại vào course_update_data
+#                 for session in json_course_update['sessions']:
+#                     for ex in session['exercises']:
+#                         ex_id = ex['id']
+#                         if ex_id in update_map:
+#                             ex['status'] = update_map[ex_id]['status']
+#                             ex['score'] = update_map[ex_id]['score']
+                            
+#                 with open(PATH_JSON_COURSE, 'w', encoding='utf-8') as f:
+#                     json.dump(json_course_update, f, indent=2, ensure_ascii=False)
+#                     delete_file(path_course_update)
+#             else:
+#                 with open(PATH_JSON_COURSE, 'w', encoding='utf-8') as f:
+#                     json.dump(json_course_update, f, indent=2, ensure_ascii=False)
+#                     delete_file(path_course_update)
+                            
 def update_course_from_course_update(path_course_update):
     global json_course # json_course hiện tại đang chứa dữ liệu của môn học đang hiển thị
     
@@ -505,6 +544,14 @@ def update_exercise(json_data,id, new_status:ExerciseStatus, new_score=None):
                         ex["score"] = new_score
                     return True  # cập nhật thành công
     return False  # không tìm thấy
+
+# def update_json_course(id, new_status:ExerciseStatus, new_score=None):
+#     global json_course
+#     res=update_exercise(json_course,id, new_status,new_score)
+#     if res ==True:
+#         save_json_file(PATH_JSON_COURSE,json_course)
+#     else:
+#         print('cập nhập lỗi')
         
 def update_json_course(id, new_status:ExerciseStatus, new_score=None):
     global json_course # json_course đang chứa dữ liệu của môn học hiện tại
@@ -522,6 +569,34 @@ def update_json_course(id, new_status:ExerciseStatus, new_score=None):
             save_json_file(PATH_JSON_COURSE, json_course) # Vẫn lưu vào default nếu không tìm được map
     else:
         print('cập nhập lỗi bài tập trong bộ nhớ')
+        
+        
+# def update_user_info(username='',mssv='',password=''):
+#     global DICT_USER_INFO
+#     print('-----')
+#     print(username,mssv)
+    
+#     DICT_USER_INFO[0]['username']=username
+#     DICT_USER_INFO[0]['mssv']=mssv
+    
+#     with open(PATH_JSON_CONFIG, "r", encoding="utf-8") as file:
+#         try:
+#             config=json.load(file)
+#             config['user'][0]['username']=username
+#             config['user'][0]['mssv']=mssv
+#             config['user'][0]['password']=password
+#         except:
+#             config=None
+#     if config is not None:
+#         save_json_file(PATH_JSON_CONFIG,config)
+        
+# def update_api_key(id_sv):
+#     global API_KEY
+#     global API_KEY_LIST
+#     num_api_key=len(API_KEY_LIST)
+#     index=id_sv%num_api_key
+#     API_KEY=API_KEY_LIST[index]
+#     print(f"idsv={id_sv} ; index={index} ; api_key={API_KEY}")
     
 def update_model():
     global MODEL
@@ -771,6 +846,23 @@ def process_markdown_escape_smart(md_text):
         inline_placeholders.append((placeholder, block))
         temp_text = temp_text.replace(block, placeholder)
 
+    # Xử lý escape trong phần văn bản thường
+    # def decode_unicode_escapes(m):
+    #     try:
+    #         return bytes(m.group(0), "utf-8").decode("unicode_escape")
+    #     except:
+    #         return m.group(0)
+
+    # temp_text = temp_text.replace('\\\\', '\\')      # \\ -> \
+    # temp_text = temp_text.replace('\\n', '\n')       # \n -> xuống dòng
+    # temp_text = temp_text.replace('\\t', '\t')       # \t -> tab
+    # # temp_text = re.sub(r'\\u[0-9a-fA-F]{4}', decode_unicode_escapes, temp_text)  # unicode
+
+    # # Trả inline code và block code về vị trí
+    # for placeholder, block in inline_placeholders:
+    #     temp_text = temp_text.replace(placeholder, block)
+    # for placeholder, block in placeholders:
+    #     temp_text = temp_text.replace(placeholder, block)
     print('-----')
     print(temp_text)
     
@@ -1031,6 +1123,38 @@ def btn_refesh_offline_click(args):
             messagebox.showerror('Error','Lỗi load file course.json')
             return
     
+        
+# Định nghĩa hàm on_course_select ở cấp độ toàn cục (trước hàm main())
+# def on_course_select(event, tree_widget, json_course_data_current, course_var_obj): # đổi tên json_course_data thành json_course_data_current
+#     global json_course # Khai báo để có thể thay đổi biến global json_course
+
+#     selected_course_name = course_var_obj.get()
+#     print(f"Môn học được chọn: {selected_course_name}")
+
+#     # Xóa tất cả các node hiện tại trong treeview
+#     for item in tree_widget.get_children():
+#         tree_widget.delete(item)
+
+#     if selected_course_name in COURSE_FILE_MAP: # Kiểm tra xem môn học có trong bản đồ file không
+#         file_path_to_load = COURSE_FILE_MAP[selected_course_name]
+#         try:
+#             with open(file_path_to_load, "r", encoding="utf-8") as file:
+#                 json_course_new = json.load(file) # Tải dữ liệu từ file mới
+            
+#             json_course = json_course_new # Cập nhật biến global json_course
+            
+#             tree_load(tree_widget, json_course) # Tải dữ liệu mới vào treeview
+#             #messagebox.showinfo("Thông báo", f"Đã tải danh sách bài tập cho môn: {selected_course_name}.")
+#             print(f"DEBUG: Loaded course: {selected_course_name} from {file_path_to_load}")
+
+#         except FileNotFoundError:
+#             messagebox.showerror("Lỗi", f"Không tìm thấy file: {file_path_to_load}")
+#             print(f"ERROR: File not found: {file_path_to_load}")
+#         except Exception as e:
+#             messagebox.showerror("Lỗi", f"Lỗi khi tải dữ liệu cho môn {selected_course_name}: {e}")
+#             print(f"ERROR: Failed to load course {selected_course_name}: {e}")
+#     else:
+#         messagebox.showwarning("Cảnh báo", f"Không tìm thấy file dữ liệu cho môn: {selected_course_name}.")
 
 def update_code_editor_language(code_editor_widget, language):
     """Cập nhật ngôn ngữ highlight cho CodeEditor."""
@@ -1039,13 +1163,13 @@ def update_code_editor_language(code_editor_widget, language):
     else:
         print(f"Cảnh báo: CodeEditor không hỗ trợ configure_language. Không thể thay đổi highlight cho: {language}")
 
-        
-# def on_course_select(event, tree_widget, course_var_obj, input_widget=None):
+
+# Trong hàm on_course_select (khoảng dòng 799 trong app.py của bạn):
+# SỬA DÒNG ĐỊNH NGHĨA HÀM NÀY:
+# def on_course_select(event, tree_widget, course_var_obj, input_widget=None): # ĐÃ THÊM input_widget=None VÀ BỎ json_course_data_current
 #     global json_course
-#     global CURRENT_COURSE_NAME
-#     global CURRENT_COURSE_LANGUAGE
-#     global CURRENT_EXERCISE_LANGUAGE # This one is used by the compiler
-    
+#     global CURRENT_EXERCISE_LANGUAGE
+
 #     selected_course_name = course_var_obj.get()
 #     print(f"Môn học được chọn: {selected_course_name}")
 
@@ -1058,59 +1182,41 @@ def update_code_editor_language(code_editor_widget, language):
 #             with open(file_path_to_load, "r", encoding="utf-8") as file:
 #                 json_course_new = json.load(file)
             
-#             json_course = json_course_new # Update global json_course
+#             json_course = json_course_new # Cập nhật biến global json_course
             
-#             # Cập nhật thông tin môn học hiện tại
-#             CURRENT_COURSE_NAME = json_course.get("course_name", "Môn học không xác định")
-#             CURRENT_COURSE_LANGUAGE = json_course.get("course_language", "c").lower()
-#             CURRENT_EXERCISE_LANGUAGE = CURRENT_COURSE_LANGUAGE # Đồng bộ cho compiler
+#             # Cập nhật ngôn ngữ của môn học hiện tại
+#             # Sử dụng .get() để tránh KeyError nếu 'course_language' không tồn tại (mặc dù đã yêu cầu thêm vào JSON)
+#             CURRENT_EXERCISE_LANGUAGE = json_course.get("course_language", "c").lower() 
+#             print(f"DEBUG: Course language set to: {CURRENT_EXERCISE_LANGUAGE}")
 
-#             print(f"DEBUG: Course language set to: {CURRENT_COURSE_LANGUAGE}")
-#             print(f"DEBUG: Course name set to: {CURRENT_COURSE_NAME}")
-
-#             if input_widget:
+#             # Cập nhật ngôn ngữ cho CodeEditor ngay lập tức
+#             if input_widget: # Kiểm tra nếu input_widget được truyền vào
 #                 update_code_editor_language(input_widget, CURRENT_EXERCISE_LANGUAGE)
             
 #             tree_load(tree_widget, json_course)
+#             #messagebox.showinfo("Thông báo", f"Đã tải danh sách bài tập cho môn: {selected_course_name}.")
 #             print(f"DEBUG: Loaded course: {selected_course_name} from {file_path_to_load}")
 
 #         except FileNotFoundError:
 #             messagebox.showerror("Lỗi", f"Không tìm thấy file: {file_path_to_load}")
 #             print(f"ERROR: File not found: {file_path_to_load}")
-#             CURRENT_COURSE_NAME = "Môn học không xác định"
-#             CURRENT_COURSE_LANGUAGE = "c"
-#             CURRENT_EXERCISE_LANGUAGE = "c"
+#             CURRENT_EXERCISE_LANGUAGE = "c" # Fallback language on error
 #         except Exception as e:
 #             messagebox.showerror("Lỗi", f"Lỗi khi tải dữ liệu cho môn {selected_course_name}: {e}")
 #             print(f"ERROR: Failed to load course {selected_course_name}: {e}")
-#             CURRENT_COURSE_NAME = "Môn học không xác định"
-#             CURRENT_COURSE_LANGUAGE = "c"
-#             CURRENT_EXERCISE_LANGUAGE = "c"
+#             CURRENT_EXERCISE_LANGUAGE = "c" # Fallback language on error
 #     else:
 #         messagebox.showwarning("Cảnh báo", f"Không tìm thấy file dữ liệu cho môn: {selected_course_name}.")
-#         CURRENT_COURSE_NAME = "Môn học không xác định"
-#         CURRENT_COURSE_LANGUAGE = "c"
-#         CURRENT_EXERCISE_LANGUAGE = "c"        
-
-# Sửa định nghĩa hàm on_course_select
-def on_course_select(event, tree_widget, course_var_obj, input_widget=None, fr_lesson_tree_widget=None): # THÊM fr_lesson_tree_widget
+#         CURRENT_EXERCISE_LANGUAGE = "c" # Fallback language if course not in map
+        
+def on_course_select(event, tree_widget, course_var_obj, input_widget=None):
     global json_course
     global CURRENT_COURSE_NAME
     global CURRENT_COURSE_LANGUAGE
-    global CURRENT_EXERCISE_LANGUAGE
+    global CURRENT_EXERCISE_LANGUAGE # This one is used by the compiler
     
     selected_course_name = course_var_obj.get()
     print(f"Môn học được chọn: {selected_course_name}")
-
-    # Đảm bảo hiển thị lại treeview nếu đang ở chế độ xem chi tiết bài tập
-    if fr_lesson_tree_widget:
-        # Lấy tất cả các widget con của fr_lesson_tree_widget
-        for widget in fr_lesson_tree_widget.winfo_children():
-            # Kiểm tra nếu widget con không phải là tree_widget (cây bài tập)
-            # thì hủy bỏ nó (vì nó là frame_content chứa chi tiết bài học)
-            if widget != tree_widget:
-                widget.destroy()
-        tree_widget.grid(row=0, column=0, sticky='nswe') # Đảm bảo tree_widget hiển thị
 
     for item in tree_widget.get_children():
         tree_widget.delete(item)
@@ -1153,7 +1259,7 @@ def on_course_select(event, tree_widget, course_var_obj, input_widget=None, fr_l
         messagebox.showwarning("Cảnh báo", f"Không tìm thấy file dữ liệu cho môn: {selected_course_name}.")
         CURRENT_COURSE_NAME = "Môn học không xác định"
         CURRENT_COURSE_LANGUAGE = "c"
-        CURRENT_EXERCISE_LANGUAGE = "c"
+        CURRENT_EXERCISE_LANGUAGE = "c"        
         
 def on_select(event,args):
     #{"tree":tree,"fr_tree":fr_lesson_tree,"queue":queue,"output":txt_output}
@@ -1264,6 +1370,16 @@ def on_select(event,args):
             frame_content.destroy()
             tree.grid(row=0, column=0, sticky='nswe')
             reload_tree(tree,json_course)
+            
+        # def help_from_AI(args):
+        #     #lbl_note=args['label']
+        #     #lbl_note.config(text="Đã upload bài tập lên AI", fg="blue")  # Thay đổi nội dung và màu chữ
+        #     history.clear()
+        #     print('clear cache ok')
+        #     print(f'sesion_index={session_index};exercise_index={exercise_index}')
+        #     prompt=create_main_rule(main_rule,json_sessions_to_markdown(json_course,session_index,exercise_index))
+        #     #print(prompt)
+        #     call_gemini_api_thread(prompt,queue,output,fr_info)
         
         def help_from_AI(args):
             history.clear()
@@ -1363,153 +1479,6 @@ def btn_upload_course_click(args):
     new_window.protocol("WM_DELETE_WINDOW", on_close)
     new_window.wait_window()
 
-import webbrowser # Đảm bảo dòng này đã được thêm ở đầu file
-
-
-def open_gemini_api_window(parent_window):
-    """
-    Mở cửa sổ quản lý API key, hiển thị key của người dùng đang đăng nhập từ Firebase.
-    """
-    global DICT_USER_INFO
-    global db
-
-    if not DICT_USER_INFO or not DICT_USER_INFO[0].get('mssv'):
-        messagebox.showwarning("Cảnh báo", "Vui lòng đăng nhập để quản lý API Keys.")
-        return
-
-    current_user_uid = DICT_USER_INFO[0]['mssv']
-
-    new_window = tk.Toplevel(parent_window)
-    new_window.title("Quản lý Gemini API Keys")
-    new_window.geometry("600x400")
-    new_window.rowconfigure(3, weight=1)
-    new_window.columnconfigure(0, weight=1)
-
-    # ... (code tạo các label, button như cũ) ...
-    tk.Label(new_window, text="Quản lý Gemini API Keys", font=("Arial", 14, "bold"), fg="blue", pady=10).grid(row=0, column=0, columnspan=2, sticky='ew')
-    tk.Button(new_window, text="Mở trang Get Gemini API", font=("Arial", 11), command=btn_get_gemini_api_click_external).grid(row=1, column=0, padx=10, pady=5, sticky='w')
-    tk.Label(new_window, text="Các Gemini API Key của bạn (mỗi key một dòng):", font=("Arial", 11)).grid(row=2, column=0, columnspan=2, padx=10, pady=5, sticky='w')
-    # txt_gemini_api_keys = scrolledtext.ScrolledText(new_window, wrap="word", font=("Arial", 10), height=10)
-    # txt_gemini_api_keys.grid(row=3, column=0, columnspan=2, padx=10, pady=5, sticky='nswe')
-
-    # keys_to_display = []
-    # try:
-    #     user_data = db.child("users").child(current_user_uid).get()
-    #     if user_data.val() and 'gemini_api_keys' in user_data.val():
-    #         keys_to_display = user_data.val()['gemini_api_keys']
-    #         print(f"DEBUG: Hiển thị {len(keys_to_display)} key từ Firebase cho người dùng.")
-    #     else:
-    #         print(f"DEBUG: Người dùng chưa có key trên Firebase, hiển thị ô trống.")
-    # except Exception as e:
-    #     messagebox.showerror("Lỗi", f"Không thể tải API keys từ Firebase: {e}")
-
-    # # Hiển thị các key đã lấy được
-    # if keys_to_display:
-    #     for key in keys_to_display:
-    #         txt_gemini_api_keys.insert(tk.END, key + "\n")
-
-    # tk.Button(new_window, text="Lưu API Keys", font=("Arial", 11), command=lambda: btn_save_gemini_api_click(txt_gemini_api_keys, new_window)).grid(row=4, column=0, padx=10, pady=10, sticky='w')
-    
-    txt_gemini_api_keys = scrolledtext.ScrolledText(new_window, wrap="word", font=("Arial", 10), height=10)
-    txt_gemini_api_keys.grid(row=3, column=0, columnspan=2, padx=10, pady=5, sticky='nswe')
-
-    keys_to_display = []
-    try:
-        current_user_uid = DICT_USER_INFO[0]['mssv']
-        # **SỬA ĐỔI**: Thêm token vào lệnh get()
-        user_data = db.child("users").child(current_user_uid).get(token=CURRENT_USER_TOKEN)
-        
-        if user_data.val() and 'gemini_api_keys' in user_data.val():
-            keys_to_display = user_data.val()['gemini_api_keys']
-    except Exception as e:
-        messagebox.showerror("Lỗi", f"Không thể tải API keys từ Firebase: {e}")
-
-    if keys_to_display:
-        for key in keys_to_display:
-            txt_gemini_api_keys.insert(tk.END, key + "\n")
-
-    tk.Button(new_window, text="Lưu API Keys", font=("Arial", 11), command=lambda: btn_save_gemini_api_click(txt_gemini_api_keys, new_window)).grid(row=4, column=0, padx=10, pady=10, sticky='w')
-
-    new_window.transient(parent_window)
-    new_window.grab_set()
-    parent_window.wait_window(new_window)
-    
-# Moved to app.py
-def btn_get_gemini_api_click_external(): # Renamed from btn_get_gemini_api_click
-    url = "https://ai.google.dev/gemini-api/docs"
-    webbrowser.open_new_tab(url)
-    
-# Hàm này giữ nguyên như đã tạo ở câu trả lời trước
-def btn_get_gemini_api_click():
-    url = "https://ai.google.dev/gemini-api/docs"
-    webbrowser.open_new_tab(url)
-
-def btn_save_gemini_api_click(txt_widget, parent_window=None):
-    """
-    Lưu danh sách API key từ textbox vào Firebase cho người dùng đang đăng nhập.
-    """
-    global API_KEY_LIST, API_KEY, DICT_USER_INFO, db
-
-    if not DICT_USER_INFO or not DICT_USER_INFO[0].get('mssv'):
-        messagebox.showwarning("Cảnh báo", "Bạn chưa đăng nhập. Không thể lưu API Keys.")
-        return
-
-    # current_user_uid = DICT_USER_INFO[0]['mssv']
-    # api_keys_text = txt_widget.get("1.0", tk.END).strip()
-    # # Cho phép lưu danh sách rỗng
-    # new_api_keys = [line.strip() for line in api_keys_text.split('\n') if line.strip()]
-
-    # try:
-    #     # LƯU VÀO FIREBASE
-    #     db.child("users").child(current_user_uid).update({"gemini_api_keys": new_api_keys})
-
-    #     # CẬP NHẬT TRẠNG THÁI ỨNG DỤNG LOCAL
-    #     API_KEY_LIST = new_api_keys
-    #     API_KEY = API_KEY_LIST[0] if API_KEY_LIST else ''
-    #     update_model()
-
-    #     messagebox.showinfo("Thành công", "Đã lưu API Keys lên tài khoản của bạn thành công!")
-    #     print(f"API Keys đã được cập nhật trên Firebase cho người dùng {current_user_uid}.")
-        
-    #     if parent_window:
-    #         parent_window.destroy()
-
-    # except Exception as e:
-    #     messagebox.showerror("Lỗi", f"Không thể lưu API Keys lên Firebase: {e}")
-    
-    current_user_uid = DICT_USER_INFO[0]['mssv']
-    api_keys_text = txt_widget.get("1.0", tk.END).strip()
-    new_api_keys = [line.strip() for line in api_keys_text.split('\n') if line.strip()]
-
-    try:
-        # **SỬA ĐỔI**: Thêm token vào lệnh update()
-        db.child("users").child(current_user_uid).update({"gemini_api_keys": new_api_keys}, token=CURRENT_USER_TOKEN)
-
-        # CẬP NHẬT TRẠNG THÁI ỨNG DỤNG LOCAL
-        global API_KEY_LIST, API_KEY
-        API_KEY_LIST = new_api_keys
-        API_KEY = API_KEY_LIST[0] if API_KEY_LIST else ''
-        update_model()
-
-        messagebox.showinfo("Thành công", "Đã lưu API Keys lên tài khoản của bạn thành công!")
-        if parent_window:
-            parent_window.destroy()
-    except Exception as e:
-        messagebox.showerror("Lỗi", f"Không thể lưu API Keys lên Firebase: {e}")
-
-def update_user_info(username='', mssv='', password='', token=''):
-    global DICT_USER_INFO, CURRENT_USER_TOKEN # Thêm CURRENT_USER_TOKEN vào global
-    
-    # Cập nhật thông tin người dùng như cũ
-    if DICT_USER_INFO and isinstance(DICT_USER_INFO, list) and len(DICT_USER_INFO) > 0:
-        DICT_USER_INFO[0]['username'] = username
-        DICT_USER_INFO[0]['mssv'] = mssv
-        DICT_USER_INFO[0]['password'] = password
-    
-    # **QUAN TRỌNG**: Lưu token vào biến toàn cục
-    CURRENT_USER_TOKEN = token
-    print(f"DEBUG: Đã cập nhật và lưu token người dùng.")
-    
 def main():
     global STUDENT_LIST, API_KEY_LIST, API_KEY, MODEL, DICT_USER_INFO, json_course, main_rule, model, history, queue, queue_log, APP_VERSION, ACCOUNT_ROLE, ID_EXERCISE
     
@@ -1518,105 +1487,15 @@ def main():
     
     ##################################GUI###############################################################
     window = tk.Tk()
-    window.title(f"UIT Programming Assistant {APP_VERSION}")
-    #window.geometry(f"{INITIAL_WIDTH}x{INITIAL_HEIGHT}")
-    #window.title('app')
+    window.title('app')
     window.minsize(1200, 700) 
-    
-    # ẨN CỬA SỔ CHÍNH TRƯỚC KHI HIỂN THỊ CỬA SỔ ĐĂNG NHẬP
-    window.withdraw() # Dòng này sẽ ẩn cửa sổ chính đi
     
     #yêu cầu đăng nhập (bỏ comment nếu muốn sử dụng login)
     # login = us_login(window, {'dict_user': DICT_USER_INFO, 'student_list': STUDENT_LIST})
     
     # if login.result == 'ok':
-    #if (1): # Tạm thời bỏ qua login để test GUI
-    # 3. Hiển thị cửa sổ đăng nhập
-    # Truyền DICT_USER_INFO dưới dạng danh sách để nó có thể thay đổi và các thay đổi được phản ánh
-    # Truyền các hàm cập nhật và đường dẫn file thực tế
-    # login_app = LoginApp(root, STUDENT_LIST, DICT_USER_INFO, update_user_info_main, update_api_key_main, PATH_STUDENT_LIST, PATH_JSON_CONFIG)
-    
-    # # Sau khi login_app.wait_window() trả về, kiểm tra kết quả
-    # if login_app.result == 'ok':
-    # Check for user login
-    #is_login = False
-    #if (1):
-    #login = LoginApp(window, {'dict_user': DICT_USER_INFO, 'student_list': STUDENT_LIST})
-    #login_app = LoginApp(root, auth, db, update_user_info_main, update_api_key_main, PATH_JSON_CONFIG)
-    #login_app = LoginApp(window, auth, db, update_user_info_main, update_api_key_main, PATH_JSON_CONFIG)
-    login_app = LoginApp(window, auth, db, update_user_info, update_api_key, PATH_JSON_CONFIG)
-    
-    is_login = False
-    print("DEBUG: Always attempting login for development.") # Thông báo debug
-    #login_app = LoginApp(root, auth, db, update_user_info_main, update_api_key_main, PATH_JSON_CONFIG)
-    
-        # # ---- PHẦN CÒN LẠI CỦA HÀM MAIN GIỮ NGUYÊN ----
-        # window.state('zoomed')
-    # if login_app.result == 'ok':
-    #     is_login = True
-    #     print("DEBUG: Login successful.")
-        
-    #     # --- LOGIC MỚI: Tải API Key từ Firebase cho người dùng đã đăng nhập ---
-    #     try:
-    #         current_user_uid = DICT_USER_INFO[0]['mssv']
-    #         user_data = db.child("users").child(current_user_uid).get()
-            
-    #         # Kiểm tra xem người dùng có trường 'gemini_api_keys' không
-    #         if user_data.val() and 'gemini_api_keys' in user_data.val():
-    #             firebase_keys = user_data.val()['gemini_api_keys']
-                
-    #             # Cập nhật API_KEY_LIST toàn cục bằng dữ liệu từ Firebase
-    #             # Kể cả khi nó là danh sách rỗng, nó sẽ ghi đè lên key mặc định
-    #             API_KEY_LIST = firebase_keys
-                
-    #             if firebase_keys:
-    #                 API_KEY = API_KEY_LIST[0]
-    #                 print(f"DEBUG: Đã tải {len(API_KEY_LIST)} API key tùy chỉnh từ Firebase cho UID: {current_user_uid}.")
-    #             else:
-    #                 # Nếu danh sách rỗng, đảm bảo API_KEY hiện tại cũng rỗng
-    #                 API_KEY = ''
-    #                 print(f"DEBUG: Người dùng {current_user_uid} có danh sách API key rỗng trên Firebase.")
-    #         else:
-    #             # Nếu không có trường 'gemini_api_keys', giữ nguyên API key mặc định đã tải lúc đầu
-    #             print(f"DEBUG: Không tìm thấy 'gemini_api_keys' cho {current_user_uid}. Sử dụng key mặc định từ config.")
-    #             # API_KEY_LIST và API_KEY đã được thiết lập bởi load_app_data(), không cần làm gì thêm.
-
-    #         # Luôn cập nhật model với API key mới (hoặc rỗng)
-    #         update_model() 
-    if login_app.result == 'ok':
-        is_login = True
-        print("DEBUG: Login successful.")
-        
-        try:
-            current_user_uid = DICT_USER_INFO[0]['mssv']
-            
-            # **SỬA ĐỔI**: Truyền token vào lệnh get()
-            user_data = db.child("users").child(current_user_uid).get(token=CURRENT_USER_TOKEN)
-            
-            if user_data.val() and 'gemini_api_keys' in user_data.val():
-                firebase_keys = user_data.val()['gemini_api_keys']
-                API_KEY_LIST = firebase_keys
-                API_KEY = API_KEY_LIST[0] if API_KEY_LIST else ''
-                print(f"DEBUG: Đã tải {len(API_KEY_LIST)} API key từ Firebase.")
-            else:
-                API_KEY_LIST = []
-                API_KEY = ''
-                print("DEBUG: Người dùng không có API key trên Firebase. Sử dụng danh sách rỗng.")
-            
-            update_model()
-
-        except Exception as e:
-            print(f"DEBUG: Lỗi khi tải API key từ Firebase sau khi đăng nhập: {e}. Sử dụng key mặc định.")
-            # Nếu lỗi, vẫn có thể dùng key mặc định từ config nếu có
-            update_model()
-        except Exception as e:
-            print(f"DEBUG: Lỗi khi tải API key từ Firebase sau khi đăng nhập: {e}. Sử dụng key mặc định.")
-            # Nếu có lỗi, API_KEY_LIST và API_KEY sẽ giữ nguyên giá trị từ load_app_data()
-            update_model()
-        # --- KẾT THÚC LOGIC MỚI ---
-        
-        # ---- PHẦN CÒN LẠI CỦA HÀM MAIN GIỮ NGUYÊN ----
-        window.state('zoomed')
+    if (1): # Tạm thời bỏ qua login để test GUI
+        window.state('zoomed') # Phóng to cửa sổ, giữ thanh tiêu đề
         
         if DICT_USER_INFO and isinstance(DICT_USER_INFO, list) and len(DICT_USER_INFO) > 0:
             mssv = DICT_USER_INFO[0].get('mssv', '0')
@@ -1626,7 +1505,7 @@ def main():
             print("DICT_USER_INFO không hợp lệ hoặc rỗng.")
             ACCOUNT_ROLE = 'GUEST'
 
-        # update_model() # Đã được gọi bên trên, không cần gọi lại ở đây
+        update_model()
 
         window.grid_rowconfigure(1, weight=1) 
         window.grid_columnconfigure(0, weight=1) 
@@ -1673,46 +1552,7 @@ def main():
             print(f"DEBUG: PanedWidth: {current_paned_width}, Sash0: {paned_window.sashpos(0)}, Sash1: {paned_window.sashpos(1)}")
 
         window.after(200, set_initial_sashes_after_zoom) 
-                
-        # Tạo menu bar ----------------------------------------------------------
-        menubar = tk.Menu(window)
-        window.config(menu=menubar) # Gán menubar vào cửa sổ chính
         
-        # Tạo menu "File"
-        file_menu = tk.Menu(menubar, tearoff=0) # tearoff=0 để loại bỏ đường gạch đứt
-        menubar.add_cascade(label="File", menu=file_menu)
-
-        # Tạo menu "Edit"
-        edit_menu = tk.Menu(menubar, tearoff=0)
-        menubar.add_cascade(label="Edit", menu=edit_menu)
-
-        # Tạo menu "Tool"
-        tool_menu = tk.Menu(menubar, tearoff=0)
-        menubar.add_cascade(label="Function", menu=tool_menu)
-        
-        # THÊM MỤC MENU MỚI CHO GEMINI API
-        menubar.add_command(label="Gemini API", command=lambda: open_gemini_api_window(window))
-        
-        # Thêm các lệnh vào menu "File"
-        #!file_menu.add_command(label="Open", command=your_open_function) # Thay bằng hàm của bạn
-        #!file_menu.add_command(label="Save", command=your_save_function)
-        file_menu.add_separator() # Thêm đường phân cách
-        file_menu.add_command(label="Exit", command=lambda: window_on_closing(window))
-
-        # Thêm các lệnh vào menu "Tool"
-        tool_menu.add_command(label="Làm mới", command=lambda: btn_refesh_click({"tree": tree}))
-        tool_menu.add_command(label="Tạo giới thiệu ảnh", command=lambda: btn_create_img_description_click({'model': model, 'frame': fr_center}))
-        tool_menu.add_command(label="Cập nhật bài tập", command=lambda: btn_upload_course_click({'frame': fr_center}))
-        tool_menu.add_command(label="Nộp bài", command=lambda: btn_submit_exercise_click({'frame': fr_center}))
-        tool_menu.add_command(label="Làm mới trực tiếp", command=lambda: btn_refesh_offline_click({"tree": tree}))
-        tool_menu.add_command(label="Xóa Cache", command=lambda: btn_clear_cache_click({'input': txt_input, 'output': txt_output}))
-        tool_menu.add_command(label="Load Rule", command=lambda: btn_load_rule_click({'queue': queue, 'output': txt_output}))
-
-        # Menu "Edit" có thể để trống hoặc thêm các chức năng chỉnh sửa nếu có
-        edit_menu.add_command(label="Cut")
-        edit_menu.add_command(label="Copy")
-        edit_menu.add_command(label="Paste")
-                
         fr_title = tk.Frame(fr_header, bg='green')
         fr_title.grid(row=0, column=0, sticky='nswe')
         fr_title.columnconfigure(0, weight=1) 
@@ -1721,34 +1561,34 @@ def main():
         #             fg="white", bg="green").grid(row=0, column=0, sticky='nswe')
         
         fr_control = tk.Frame(fr_header, bg='gray')
-        # fr_control.grid(row=1, column=0, sticky='nswe')
+        fr_control.grid(row=1, column=0, sticky='nswe')
         
         btn_exit = tk.Button(fr_control, text='Thoát', font=("Arial", 11), command=lambda: window_on_closing(window))
-        # btn_exit.grid(row=0, column=5, padx=5) 
+        btn_exit.grid(row=0, column=5, padx=5) 
         
         btn_refesh = tk.Button(fr_control, text='Làm mới')
-        # btn_refesh.grid(row=0, column=0, padx=5)
+        btn_refesh.grid(row=0, column=0, padx=5)
                 
         btn_create_img_description = tk.Button(fr_control, text='Tạo giới thiệu ảnh')
-        # if ACCOUNT_ROLE == 'ADMIN':
-        #     btn_create_img_description.grid(row=0, column=1, padx=5)
+        if ACCOUNT_ROLE == 'ADMIN':
+            btn_create_img_description.grid(row=0, column=1, padx=5)
 
         btn_upload_course = tk.Button(fr_control, text='Cập nhập bài tập')
-        # if ACCOUNT_ROLE == 'ADMIN':
-        #     btn_upload_course.grid(row=0, column=2, padx=5)
+        if ACCOUNT_ROLE == 'ADMIN':
+            btn_upload_course.grid(row=0, column=2, padx=5)
         
         btn_submit_exercise = tk.Button(fr_control, text="Nộp bài")
-        # btn_submit_exercise.grid(row=0, column=3, padx=5)
+        btn_submit_exercise.grid(row=0, column=3, padx=5)
         
         btn_refesh_offline = tk.Button(fr_control, text='làm mới trực tiếp')
-        # if ACCOUNT_ROLE == 'ADMIN':
-        #     btn_refesh_offline.grid(row=0, column=4, padx=5)
+        if ACCOUNT_ROLE == 'ADMIN':
+            btn_refesh_offline.grid(row=0, column=4, padx=5)
 
         btn_clear_cache = tk.Button(fr_control, text='Xóa Cache')
-        # btn_clear_cache.grid(row=0, column=6, padx=5) 
+        btn_clear_cache.grid(row=0, column=6, padx=5) 
 
         btn_load_rule = tk.Button(fr_control, text='load rule')
-        # btn_load_rule.grid(row=0, column=7, padx=5) 
+        btn_load_rule.grid(row=0, column=7, padx=5) 
 
         #fr_footer.columnconfigure(0, weight=1)
         
@@ -1805,10 +1645,8 @@ def main():
             else:
                 course_combobox.set(available_course_names[0]) 
 
-            # course_combobox.bind("<<ComboboxSelected>>", 
-            #                      lambda event: on_course_select(event, tree, course_var, input_widget=txt_input)) # Đã sửa
             course_combobox.bind("<<ComboboxSelected>>", 
-                                 lambda event: on_course_select(event, tree, course_var, input_widget=txt_input, fr_lesson_tree_widget=fr_lesson_tree)) # THÊM fr_lesson_tree_widget=fr_lesson_tree
+                                 lambda event: on_course_select(event, tree, course_var, input_widget=txt_input)) # Đã sửa
             
             if json_course is not None:
                 tree_load(tree, json_course) 
@@ -1836,6 +1674,33 @@ def main():
 
         tk.Label(fr_input, text='Bài làm', font=("Arial", 12), 
                     fg="white", bg="green").grid(row=0, column=0)
+        
+        # txt_input = CodeEditor(
+        #         fr_input,
+        #         # `CURRENT_EXERCISE_LANGUAGE` đã được set bởi `load_app_data()`
+        #         language=CURRENT_EXERCISE_LANGUAGE if CURRENT_EXERCISE_LANGUAGE else "c", 
+        #         font=("Consolas", 14),
+        #         highlighter="monokai",      
+        #         blockcursor=True,
+        #         cursor="xterm",             
+        #         wrap="word")
+        # txt_input.grid(row=1, column=0, sticky='nswe', padx=5, pady=5)
+        
+        
+        # txt_input = CodeEditor(
+        #         fr_input,
+        #         language=CURRENT_EXERCISE_LANGUAGE if CURRENT_EXERCISE_LANGUAGE else "c", 
+        #         font=("Consolas", 14),
+        #         highlighter="monokai",      # Đổi từ "monokai" sang "default" để có nền trắng [cite: 1]
+        #         blockcursor=False,          # Đổi từ True sang False để có con trỏ thanh dọc [cite: 1]
+        #         cursor="xterm",             # "xterm" thường là con trỏ thanh dọc màu đen trên nền sáng
+        #         wrap="word")
+        # txt_input.grid(row=1, column=0, sticky='nswe', padx=5, pady=5)
+        # txt_input.configure(
+        #     background="white",
+        #     foreground="black",
+        #     insertbackground="black"   # 👈 thêm dòng này để con trỏ có màu đen
+        # )
         
         txt_input = CodeEditor(
                 fr_input,

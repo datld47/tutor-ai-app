@@ -10,8 +10,8 @@
           "id": 1,
           "title": "Bài 1.1: In Hello World",
           "description": "Viết chương trình Java để in chuỗi 'Hello World' ra màn hình console.",
-          "status": "✓",
-          "score": 10,
+          "status": "✗",
+          "score": 0,
           "image": [],
           "guidance": [
             "Khai báo lớp (class) chính, ví dụ: `public class HelloWorld { ... }`",

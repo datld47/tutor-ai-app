@@ -4,6 +4,9 @@ import json
 import os
 import sys
 from usercustomize import get_path
+import pyrebase
+from datetime import datetime
+#from requests.exceptions import HTTPError
 
 # Giả sử các hàm này cần được truy cập từ bên ngoài hoặc được truyền vào
 # Nếu chúng thuộc về app.py và không được định nghĩa trong login_gui.py
@@ -82,50 +85,80 @@ def update_api_key(id_sv):
         print("Cảnh báo: Không có API Key nào trong danh sách.")
 
 
-class us_login(tk.Toplevel):
+class LoginApp(tk.Toplevel):
+    def __init__(self, master, firebase_auth, firebase_db, update_user_info_callback, update_api_key_callback, path_json_config):
+        super().__init__(master)
+        self.master = master
+        self.auth = firebase_auth
+        self.db = firebase_db
+        self.update_user_info_callback = update_user_info_callback
+        self.update_api_key_callback = update_api_key_callback
+        self.path_json_config = path_json_config
+        
+        self.current_user_uid = None
 
-    def __init__(self, parent, args, width=300, height=150):
-        super().__init__(parent)
-        self.title('Đăng nhập')
         self.result = 'nok'
 
-        self.dict_user = args['dict_user']
-        self.student_list = args['student_list']
-        # Lấy các hàm callback từ args nếu chúng được truyền vào từ main app
-        # self.update_user_info_callback = args.get('update_user_info_callback', update_user_info)
-        # self.update_api_key_callback = args.get('update_api_key_callback', update_api_key)
+        self.title("Đăng nhập")
+        # self.geometry("350x250") # XÓA HOẶC COMMENT DÒNG NÀY
+        
+        # THÊM ĐOẠN CODE NÀY VÀO ĐÂY ĐỂ TÍNH TOÁN KÍCH THƯỚC VÀ VỊ TRÍ
+        # Lấy kích thước màn hình
+        screen_width = self.master.winfo_screenwidth()
+        screen_height = self.master.winfo_screenheight()
 
+        # Kích thước cửa sổ đăng nhập mong muốn
+        width = 350
+        height = 250
 
-        screen_width = self.winfo_screenwidth()
-        screen_height = self.winfo_screenheight()
+        # Tính toán vị trí để căn giữa
         x = (screen_width // 2) - (width // 2)
         y = (screen_height // 2) - (height // 2)
 
+        # Đặt kích thước và vị trí cho cửa sổ
         self.geometry(f"{width}x{height}+{x}+{y}")
-        self.transient(parent)
+        # KẾT THÚC ĐOẠN CODE THÊM MỚI
+
+        self.resizable(False, False)
         self.grab_set()
+        self.focus_set()        
+        
+        # Tạo khung chứa các thành phần
+        frame = tk.Frame(self, padx=20, pady=20)
+        frame.pack(expand=True, fill="both") # Thêm fill="both" để khung mở rộng ra
 
-        self.columnconfigure(0, weight=1)
-        self.columnconfigure(1, weight=1)
-        self.rowconfigure(2, weight=1)
+        # Tiêu đề (đã đặt trong frame)
+        tk.Label(frame, text="ĐĂNG NHẬP / ĐĂNG KÝ", font=("Arial", 14, "bold")).grid(row=0, column=0, columnspan=2, pady=10)
 
-        self.lbl_name = tk.Label(self, text='Đăng Nhập hệ thống', font=("Arial", 14), bg='green', fg='white')
-        self.lbl_name.grid(row=0, column=0, columnspan=2, sticky='nswe', pady=5)
+        # Các thành phần khác như label và entry cho email, mật khẩu...
+        # SỬA CÁC DÒNG NÀY ĐỂ CHẮC CHẮN CHÚNG LÀ CON CỦA `frame`, KHÔNG PHẢI `self`
+        
+        # Ví dụ: sửa các dòng như sau:
+        # self.lbl_name = tk.Label(self, text="Email:")  # SAI
+        # thành:
+        self.lbl_email = tk.Label(frame, text="Email:") # ĐÚNG - lbl_email là con của frame
+        self.lbl_email.grid(row=1, column=0, sticky='w', pady=5) # Sử dụng grid cho lbl_email bên trong frame
 
-        self.lbl_mssv = tk.Label(self, text='ID sinh viên', font=("Arial", 12))
-        self.lbl_mssv.grid(row=1, column=0, sticky='ns')
+        self.txt_email = tk.Entry(frame, width=30) # txt_email cũng là con của frame
+        self.txt_email.grid(row=1, column=1, pady=5) # Sử dụng grid cho txt_email bên trong frame
 
-        self.txt_mssv = tk.Entry(self, font=("Arial", 12))
-        self.txt_mssv.grid(row=1, column=1, sticky='we', padx=5, pady=10)
+        # Tương tự với mật khẩu
+        self.lbl_password = tk.Label(frame, text="Mật khẩu:")
+        self.lbl_password.grid(row=2, column=0, sticky='w', pady=5)
 
-        if self.dict_user is not None and self.dict_user: # Kiểm tra dict_user không rỗng
-            if 'mssv' in self.dict_user[0]: # Kiểm tra khóa 'mssv' tồn tại
-                mssv = self.dict_user[0]['mssv']
-                self.txt_mssv.delete(0, tk.END)
-                self.txt_mssv.insert(0, mssv)
+        self.txt_password = tk.Entry(frame, show="*", width=30)
+        self.txt_password.grid(row=2, column=1, pady=5)
+        
+        # Nút đăng nhập/đăng ký cũng phải là con của `frame`
+        self.btn_submit = tk.Button(frame, text="Đăng nhập", command=self.btn_submit_click, font=("Arial", 12))
+        self.btn_submit.grid(row=3, column=0, columnspan=2, pady=10)
 
-        btn_submit = tk.Button(self, text='Đăng nhập', command=self.btn_submit_click, font=("Arial", 12))
-        btn_submit.grid(row=2, column=0, columnspan=2, sticky='n', pady=5)
+        self.btn_register = tk.Button(frame, text="Đăng ký", command=self.btn_register_click, font=("Arial", 12))
+        self.btn_register.grid(row=4, column=0, columnspan=2, pady=5)
+
+        self.btn_forgot_password = tk.Button(frame, text="Quên mật khẩu?", command=self.btn_forgot_password_click, font=("Arial", 10), fg="blue", cursor="hand2")
+        self.btn_forgot_password.grid(row=5, column=0, columnspan=2, pady=(0, 10))
+
 
         self.protocol("WM_DELETE_WINDOW", self.on_close)
         self.wait_window()
@@ -134,30 +167,192 @@ class us_login(tk.Toplevel):
         print('đóng cửa sổ')
         self.result = 'nok'
         self.destroy()
+        
+    #def btn_login_click(self):
+    # def btn_submit_click(self):
+    #     #email_ = self.txt_mssv.get()
+    #     email_ = self.txt_email.get()
+    #     password_ = self.txt_password.get()
 
+    #     if email_ == '' or password_ == '':
+    #         messagebox.showerror("Lỗi", "Vui lòng nhập đầy đủ email và mật khẩu.")
+    #         return
+
+    #     try:
+    #         # Đăng nhập bằng Firebase Authentication
+    #         #user = self.firebase_auth.sign_in_with_email_and_password(email_, password_)
+    #         user = self.auth.sign_in_with_email_and_password(email_, password_)
+    #         self.current_user_uid = user['localId'] # SET UID ON LOGIN
+    #         print(f"Đăng nhập thành công: {user['email']}")
+
+    #         # Lấy thông tin user từ Realtime Database hoặc Firestore nếu cần
+    #         # Trong ví dụ này, chúng ta sẽ giả định username là phần trước @ của email hoặc tìm trong student_list
+    #         username_for_db = email_.split('@')[0]
+    #         uid = user['localId'] # Firebase UID
+
+    #         # Cập nhật thông tin người dùng trong ứng dụng
+    #         # self.dict_user_info[0]['mssv'] = uid  # Lưu UID làm mssv
+    #         # self.dict_user_info[0]['username'] = username_for_db # Lưu username
+
+    #         # Cập nhật thông tin người dùng và API key trong app.py
+    #         self.update_user_info_callback(username=username_for_db, mssv=uid)
+    #         self.update_api_key_callback(uid) # Truyền UID để chọn API Key (hoặc tạo mới)
+
+    #         messagebox.showinfo('Thành công', f'Đăng nhập thành công: Xin chào {username_for_db}')
+    #         self.result = 'ok'
+    #         self.destroy()
+
+    #     except Exception as e: # Catch any exception, including those wrapped by Pyrebase
+    #         # Try to parse Firebase specific error message from the response text
+    #         try:
+    #             # Pyrebase wraps the original HTTPError, and the Firebase error JSON is in e.args[1]
+    #             error_data = json.loads(e.args[1])
+    #             error_message = error_data['error']['message']
+
+    #             if "EMAIL_NOT_FOUND" in error_message or "INVALID_LOGIN_CREDENTIALS" in error_message:
+    #                 messagebox.showerror("Lỗi đăng nhập", "Email hoặc mật khẩu không đúng. Vui lòng kiểm tra lại.")
+    #             elif "TOO_MANY_ATTEMPTS_TRY_LATER" in error_message:
+    #                 messagebox.showerror("Lỗi đăng nhập", "Tài khoản bị khóa do quá nhiều lần thử sai. Vui lòng thử lại sau.")
+    #             else:
+    #                 messagebox.showerror("Lỗi đăng nhập", f"Đã xảy ra lỗi Firebase: {error_message}")
+    #         except (IndexError, json.JSONDecodeError, KeyError):
+    #             # Fallback if e.args[1] is not present, not valid JSON, or missing 'error' key
+    #             # This might catch non-Firebase HTTP errors too, but the prompt requests simplicity.
+    #             messagebox.showerror("Lỗi đăng nhập", f"Đã xảy ra lỗi không xác định. Chi tiết: {e}")
+    #         # No need for a second 'except Exception' block here, as it's already caught above.
+            
     def btn_submit_click(self):
-        mssv_ = self.txt_mssv.get()
-        if mssv_ == '':
-            messagebox.showerror("Lỗi", "Thông tin cần nhập đầy đủ")
-        else:
-            print(mssv_)
-            found_student = False
-            for student in self.student_list:
-                if student.get('idsv') == mssv_: # Sử dụng .get() để tránh KeyError
-                    name_ = student.get('name')
-                    id_ = int(student.get('id', 0)) # Mặc định là 0 nếu 'id' không tồn tại
+        email_ = self.txt_email.get()
+        password_ = self.txt_password.get()
 
-                    self.dict_user[0]['mssv'] = mssv_
-                    self.dict_user[0]['username'] = name_
+        if not email_ or not password_:
+            messagebox.showerror("Lỗi", "Vui lòng nhập đầy đủ email và mật khẩu.")
+            return
 
-                    # Gọi các hàm cập nhật. Sử dụng hàm tạm thời hoặc hàm được truyền vào
-                    update_user_info(name_, mssv_) # hoặc self.update_user_info_callback(...)
-                    update_api_key(id_) # hoặc self.update_api_key_callback(...)
+        try:
+            # Đăng nhập và lấy thông tin, bao gồm cả token
+            user = self.auth.sign_in_with_email_and_password(email_, password_)
+            
+            uid = user['localId']
+            token = user['idToken'] # <-- Lấy token xác thực tại đây
+            username_for_db = email_.split('@')[0]
+            
+            print(f"Đăng nhập thành công: {user['email']}")
 
-                    messagebox.showinfo('info', f'Đăng nhập thành công: Xin chào {name_}')
-                    self.result = 'ok'
-                    self.destroy()
-                    found_student = True
-                    return
-            if not found_student:
-                messagebox.showerror('error', 'Đăng nhập không thành công')
+            # **QUAN TRỌNG**: Truyền cả `token` về cho hàm callback
+            self.update_user_info_callback(username=username_for_db, mssv=uid, token=token)
+            
+            # Hàm update_api_key_callback có thể không cần thiết nữa nếu logic được xử lý trong main
+            # self.update_api_key_callback(uid) 
+
+            messagebox.showinfo('Thành công', f'Đăng nhập thành công: Xin chào {username_for_db}')
+            self.result = 'ok'
+            self.destroy()
+
+        except Exception as e:
+            # ... (phần xử lý lỗi của bạn giữ nguyên) ...
+            try:
+                error_data = json.loads(e.args[1])
+                error_message = error_data['error']['message']
+                if "INVALID_LOGIN_CREDENTIALS" in error_message:
+                    messagebox.showerror("Lỗi đăng nhập", "Email hoặc mật khẩu không đúng.")
+                else:
+                    messagebox.showerror("Lỗi đăng nhập", f"Lỗi: {error_message}")
+            except (IndexError, json.JSONDecodeError, KeyError):
+                messagebox.showerror("Lỗi đăng nhập", f"Đã xảy ra lỗi không xác định: {e}")
+                
+    
+    
+    # Trong file: login_gui.py
+
+    def btn_register_click(self):
+        email_ = self.txt_email.get()
+        password_ = self.txt_password.get()
+
+        if not email_ or not password_:
+            messagebox.showerror("Lỗi", "Vui lòng nhập đầy đủ Email và Mật khẩu để đăng ký.")
+            return
+
+        try:
+            # Bước 1: Đăng ký người dùng mới với Firebase Authentication
+            self.auth.create_user_with_email_and_password(email_, password_)
+            
+            # Bước 2: Đăng nhập để lấy thông tin và token xác thực
+            user_signed_in = self.auth.sign_in_with_email_and_password(email_, password_)
+            
+            uid = user_signed_in['localId']
+            token = user_signed_in['idToken'] # <-- LẤY TOKEN XÁC THỰC TẠI ĐÂY
+
+            self.current_user_uid = uid
+
+            # Bước 3: Lưu thông tin bổ sung vào Realtime Database
+            username_for_db = email_.split('@')[0]
+            user_data = {
+                "email": email_,
+                "username": username_for_db,
+                "created_at": datetime.now().isoformat(),
+                "gemini_api_keys": []
+            }
+            
+            # SỬA LẠI DÒNG NÀY: Truyền `token` vào làm tham số thứ hai của lệnh `set`
+            self.db.child("users").child(uid).set(user_data, token)
+            self.update_user_info_callback(username=username_for_db, mssv=uid, token=token)
+            # Bước 4: Cập nhật thông tin trong ứng dụng chính
+            #self.update_user_info_callback(username=username_for_db, mssv=uid)
+            
+            self.update_api_key_callback(uid)
+
+            messagebox.showinfo("Thành công", f"Đăng ký tài khoản '{email_}' thành công! Đã tự động đăng nhập.")
+            self.result = 'ok'
+            self.destroy()
+
+        except Exception as e:
+            # Phần xử lý lỗi giữ nguyên như cũ
+            print(f"DEBUG: Full exception details caught: {e}") 
+            error_message_display = "Đã xảy ra lỗi không xác định." 
+            
+            raw_error_text = ""
+            if len(e.args) > 1:
+                raw_error_text = e.args[1]
+                print(f"DEBUG: Raw error text from e.args[1]: {raw_error_text}")
+
+            try:
+                error_data = json.loads(raw_error_text)
+                
+                if isinstance(error_data, dict) and 'error' in error_data and \
+                isinstance(error_data['error'], dict) and 'message' in error_data['error']:
+                    error_message = error_data['error']['message']
+                    
+                    if "EMAIL_EXISTS" in error_message:
+                        error_message_display = "Email này đã được sử dụng. Vui lòng thử một email khác hoặc đăng nhập."
+                    elif "WEAK_PASSWORD" in error_message:
+                        error_message_display = "Mật khẩu quá yếu. Vui lòng sử dụng mật khẩu mạnh hơn (ít nhất 6 ký tự)."
+                    elif "INVALID_EMAIL" in error_message:
+                        error_message_display = "Email không hợp lệ."
+                    else:
+                        error_message_display = f"Đã xảy ra lỗi Firebase: {error_message}"
+                elif isinstance(error_data, dict) and 'error' in error_data and \
+                    isinstance(error_data['error'], str) and ("404 Not Found" in error_data['error'] or "Permission denied" in error_data['error']):
+                    error_message_display = "Lỗi cấu hình Database hoặc quyền truy cập. Vui lòng kiểm tra Firebase Realtime Database URL và Rules."
+                else:
+                    error_message_display = f"Đã xảy ra lỗi Firebase với định dạng không mong muốn: {raw_error_text}"
+
+            except (json.JSONDecodeError, IndexError):
+                if "404 Client Error: Not Found" in str(e):
+                    error_message_display = "Lỗi cấu hình Database hoặc quyền truy cập. Vui lòng kiểm tra Firebase Realtime Database URL và Rules."
+                elif "401 Client Error: Unauthorized" in str(e) or "Permission denied" in str(e):
+                    error_message_display = "Lỗi quyền truy cập Realtime Database. Vui lòng kiểm tra Rules."
+                elif "requests.exceptions.HTTPError" in str(e):
+                    error_message_display = f"Lỗi phản hồi từ server: {str(e)}"
+                else:
+                    error_message_display = f"Đã xảy ra lỗi không xác định trong quá trình xử lý: {e}"
+            except Exception as inner_e:
+                error_message_display = f"Đã xảy ra lỗi không mong muốn khi xử lý lỗi: {inner_e}. Chi tiết gốc: {e}"
+            
+            messagebox.showerror("Lỗi đăng ký", error_message_display)
+            
+    def btn_forgot_password_click(self):
+        # Phương thức này sẽ xử lý việc đặt lại mật khẩu
+        messagebox.showinfo("Thông báo", "Chức năng quên mật khẩu sẽ được triển khai.")
+        # Logic Firebase quên mật khẩu sẽ được thêm vào đây sau
+        
