@@ -9,7 +9,7 @@
         {
           "id": 1,
           "title": "Bài 1.1: Khái niệm cơ bản",
-          "description": "Đây là nội dung mô tả chi tiết cho bài tập về các khái niệm cơ bản của thương mại điện tử. Sinh viên cần đọc và tóm tắt các ý chính.",
+          "description": "Hoạt động nào sau đây được xem là cốt lõi của Thương mại điện tử (E-commerce)?\nA. Quảng cáo sản phẩm trên truyền hình.\nB. Giao dịch mua bán hàng hóa và dịch vụ thông qua mạng Internet.\nC. Trưng bày sản phẩm tại cửa hàng bán lẻ.\nD. Vận chuyển hàng hóa bằng đường hàng không.",
           "status": "✗",
           "score": 0,
           "image": [],
@@ -18,7 +18,7 @@
         {
           "id": 2,
           "title": "Bài 1.2: Lịch sử hình thành",
-          "description": "Phần này mô tả về lịch sử hình thành và phát triển của TMĐT qua các thời kỳ.",
+          "description": "Trong giai đoạn đầu của lịch sử phát triển TMĐT, mô hình kinh doanh nào được xem là tiên phong và chiếm ưu thế chủ yếu?\nA. B2C (Business-to-Consumer)\nB. C2C (Consumer-to-Consumer)\nC. B2B (Business-to-Business), chủ yếu qua hệ thống EDI (Trao đổi dữ liệu điện tử).\nD. G2C (Government-to-Consumer)",
           "status": "✗",
           "score": 0,
           "image": [],
@@ -31,8 +31,17 @@
       "exercises": [
         {
           "id": 3,
-          "title": "Bài 2.1: Mô hình B2B",
-          "description": "Nội dung mô tả về mô hình Business-to-Business. (Style: Normal)",
+          "title": "Bài 2.1: Bài tập thực hành - Phân tích mô hình B2C",
+          "description": "Yêu cầu:\nChọn một doanh nghiệp B2C (Business-to-Consumer) nổi tiếng tại Việt Nam (ví dụ: Tiki, Lazada, FPT Shop...).\nViết một bài phân tích ngắn (khoảng 300 từ) về doanh nghiệp đó, bao gồm các nội dung:\n- Giới thiệu chung về doanh nghiệp.\n- Các sản phẩm/dịch vụ chính mà họ cung cấp cho người tiêu dùng cuối.\n- Theo bạn, đâu là yếu tố giúp họ thành công và thu hút khách hàng?",
+          "status": "✗",
+          "score": 0,
+          "image": [],
+          "guidance": []
+        },
+        {
+          "id": 4,
+          "title": "Bài 2.3: Bài tập thực hành - So sánh các sàn TMĐT",
+          "description": "Yêu cầu: Lựa chọn hai sàn thương mại điện tử hoạt động tại Việt Nam (ví dụ: Shopee và Tiki, hoặc Lazada và Sendo). Dựa trên trải nghiệm cá nhân và tìm hiểu, hãy thực hiện so sánh hai sàn này dựa trên các tiêu chí sau:\nGiao diện người dùng (Website/Ứng dụng).\nSự đa dạng của sản phẩm.\nChính sách vận chuyển và giao hàng.\nCác chương trình khuyến mãi. Từ đó, nêu nhận xét cá nhân bạn thích sử dụng sàn nào hơn và tại sao.",
           "status": "✗",
           "score": 0,
           "image": [],

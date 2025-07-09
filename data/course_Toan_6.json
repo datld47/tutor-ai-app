@@ -1,0 +1,67 @@
+{
+  "course_name": "Toán 6",
+  "course_language": "không",
+  "task_list_title": "Chi tiết danh sách bài tập của từng buổi",
+  "sessions": [
+    {
+      "title": "Buổi 1: Tập hợp và các phép toán với số tự nhiên",
+      "exercises": [
+        {
+          "id": 1,
+          "title": "Bài 1.1: Tập hợp và phần tử",
+          "description": "Cho tập hợp A = {2; 4; 6}. Khẳng định nào sau đây là sai?\nA. 2 ∈ A\nB. 4 ∈ A\nC. 5 ∈ A\nD. 6 ∈ A",
+          "status": "✓",
+          "score": 10,
+          "image": [],
+          "guidance": []
+        },
+        {
+          "id": 2,
+          "title": "Bài 1.2: Lũy thừa và thứ tự thực hiện phép tính",
+          "description": "Yêu cầu: Tính giá trị của các biểu thức sau, trình bày rõ các bước thực hiện:\n50 - [ (20 - 2^3) : 2 + 34 ]\n120 + 7 * ( 15 - 8 )",
+          "status": "✗",
+          "score": 0,
+          "image": [],
+          "guidance": []
+        }
+      ]
+    },
+    {
+      "title": "Buổi 2: Tính chia hết trong tập hợp số tự nhiên",
+      "exercises": [
+        {
+          "id": 3,
+          "title": "Bài 2.1: Dấu hiệu chia hết",
+          "description": "Trong các số sau, số nào chia hết cho cả 3 và 5?\nA. 123\nB. 245\nC. 345\nD. 452",
+          "status": "✗",
+          "score": 0,
+          "image": [],
+          "guidance": []
+        },
+        {
+          "id": 4,
+          "title": "Bài 2.2: Bài tập thực hành - Số nguyên tố",
+          "description": "Yêu cầu:\nPhân biệt số nguyên tố và hợp số là gì?\nViết ra các số nguyên tố nhỏ hơn 20.\nPhân tích số 90 ra thừa số nguyên tố.",
+          "status": "✗",
+          "score": 0,
+          "image": [],
+          "guidance": []
+        }
+      ]
+    },
+    {
+      "title": "Buổi 3: Hình học trực quan",
+      "exercises": [
+        {
+          "id": 5,
+          "title": "Bài 3.1: Điểm, đường thẳng, tia, đoạn thẳng",
+          "description": "Cho ba điểm A, B, C thẳng hàng. Khẳng định nào sau đây đúng nhất?\nA. Có một điểm nằm giữa hai điểm còn lại.\nB. Ba điểm tạo thành một tam giác.\nC. Không thể vẽ đường thẳng đi qua cả ba điểm.\nD. Điểm A luôn nằm giữa B và C.",
+          "status": "✓",
+          "score": 10,
+          "image": [],
+          "guidance": []
+        }
+      ]
+    }
+  ]
+}

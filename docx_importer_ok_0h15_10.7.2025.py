@@ -7,6 +7,7 @@ import unicodedata
 def sanitize_filename(name):
     """
     Loại bỏ các ký tự không hợp lệ và khoảng trắng khỏi tên để tạo tên file an toàn.
+    Ví dụ: "Thương mại điện tử" -> "Thuong_mai_dien_tu"
     """
     s = unicodedata.normalize('NFD', name)
     s = re.sub(r'[\u0300-\u036f]', '', s)
@@ -18,6 +19,13 @@ def sanitize_filename(name):
 def process_docx_to_json(docx_path, output_folder):
     """
     Đọc một file DOCX có cấu trúc, phân tích và tạo ra một file course_*.json.
+    
+    Args:
+        docx_path (str): Đường dẫn đến file .docx đầu vào.
+        output_folder (str): Thư mục để lưu file JSON đầu ra.
+
+    Returns:
+        tuple: (True, output_path) nếu thành công, (False, error_message) nếu thất bại.
     """
     try:
         doc = docx.Document(docx_path)
@@ -39,9 +47,6 @@ def process_docx_to_json(docx_path, output_folder):
 
             style_name = para.style.name
 
-            # --- BẮT ĐẦU LOGIC CẬP NHẬT ---
-
-            # Ưu tiên 1: Kiểm tra các dòng thông tin chung
             if para.text.lower().startswith("tên môn:"):
                 course_data["course_name"] = para.text[len("tên môn:"):].strip()
                 continue
@@ -50,18 +55,15 @@ def process_docx_to_json(docx_path, output_folder):
                 course_data["course_language"] = para.text[len("ngôn ngữ:"):].strip().lower()
                 continue
 
-            # Ưu tiên 2: Kiểm tra các tiêu đề để thay đổi "trạng thái" đọc
-            # Nếu là Buổi học mới
             if 'Heading 1' in style_name:
                 current_session = {
                     "title": para.text.strip(),
                     "exercises": []
                 }
                 course_data["sessions"].append(current_session)
-                current_exercise = None # Reset, vì đã sang buổi mới
+                current_exercise = None
                 continue
 
-            # Nếu là Bài tập mới
             if 'Heading 2' in style_name:
                 if current_session is None:
                     return (False, "Lỗi cấu trúc: Tìm thấy 'Tên bài' (Heading 2) nhưng chưa có 'Buổi học' (Heading 1).")
@@ -79,18 +81,22 @@ def process_docx_to_json(docx_path, output_folder):
                 exercise_id_counter += 1
                 continue
             
-            # Ưu tiên 3: Nếu không phải các trường hợp trên, nó là nội dung mô tả
-            # Chỉ thêm vào mô tả nếu chúng ta đang ở trong một bài tập
-            if current_exercise is not None:
-                line_text = para.text.strip()
-                
-                # Để giữ định dạng danh sách đẹp hơn, ta có thể thêm dấu "-"
-                if 'List Paragraph' in style_name:
-                    current_exercise["description"] += "- " + line_text + "\n"
+            # ===== BẮT ĐẦU THAY ĐỔI TỪ ĐÂY =====
+            # 4. Phân tích nội dung (description) và danh sách (list)
+            # Sửa đổi điều kiện để bao gồm cả style của list, ví dụ 'List Paragraph'
+            if 'Normal' in style_name or 'List Paragraph' in style_name:
+                if current_exercise is not None:
+                    line_text = para.text.strip()
+                    
+                    # Nếu là một list item, thêm dấu gạch đầu dòng cho rõ ràng
+                    if 'List Paragraph' in style_name:
+                        current_exercise["description"] += "- " + line_text + "\n"
+                    else:
+                        current_exercise["description"] += line_text + "\n"
                 else:
-                    current_exercise["description"] += line_text + "\n"
-            
-            # --- KẾT THÚC LOGIC CẬP NHẬT ---
+                    # Bỏ qua các đoạn text thừa
+                    pass
+            # ===== KẾT THÚC THAY ĐỔI =====
 
         # Dọn dẹp description (xóa dấu xuống dòng thừa ở cuối)
         for session in course_data["sessions"]:

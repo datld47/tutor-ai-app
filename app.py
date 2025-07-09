@@ -1244,53 +1244,191 @@ def on_course_select(event, tree_widget, course_var_obj, input_widget=None, fr_l
         CURRENT_COURSE_LANGUAGE = "c"
         CURRENT_EXERCISE_LANGUAGE = "c"
         
-def on_select(event,args):
-    #{"tree":tree,"fr_tree":fr_lesson_tree,"queue":queue,"output":txt_output}
-    global json_course
-    global history 
-    global main_rule
-    global ID_EXERCISE   
-    global CURRENT_COURSE_NAME # Thêm vào để có thể cập nhật
-    global CURRENT_COURSE_LANGUAGE # Thêm vào để có thể cập nhật
-    global CURRENT_EXERCISE_LANGUAGE # Thêm vào để có thể cập nhật
+# def on_select(event,args):
+#     #{"tree":tree,"fr_tree":fr_lesson_tree,"queue":queue,"output":txt_output}
+#     global json_course
+#     global history 
+#     global main_rule
+#     global ID_EXERCISE   
+#     global CURRENT_COURSE_NAME # Thêm vào để có thể cập nhật
+#     global CURRENT_COURSE_LANGUAGE # Thêm vào để có thể cập nhật
+#     global CURRENT_EXERCISE_LANGUAGE # Thêm vào để có thể cập nhật
 
-    tree=args['tree']
-    fr_lesson_tree=args['fr_tree']
-    queue=args['queue']
-    output=args['output']
-    fr_info=args['fr_info']
+#     tree=args['tree']
+#     fr_lesson_tree=args['fr_tree']
+#     queue=args['queue']
+#     output=args['output']
+#     fr_info=args['fr_info']
+#     selected_item = tree.focus()
+#     data = tree.item(selected_item)
+#     values = data.get("values")
+    
+#     ID_EXERCISE=None
+#     if values: # Kiểm tra xem đây có phải là một bài tập (leaf node) không
+#         session_index=values[-2]
+#         exercise_index = values[-1]
+#         print(session_index,exercise_index)
+#         exercise = json_course["sessions"][session_index]["exercises"][exercise_index]
+#         ID_EXERCISE=exercise['id']
+    
+#         # ----------- ĐẶT KHỐI LỆNH CỦA BẠN TẠI ĐÂY -----------
+#         # Nó sẽ được thực thi mỗi khi một bài tập được chọn trong Treeview.
+#         CURRENT_COURSE_NAME = json_course.get("course_name", "Môn học không xác định")
+#         CURRENT_COURSE_LANGUAGE = json_course.get("course_language", "c").lower()
+#         CURRENT_EXERCISE_LANGUAGE = CURRENT_COURSE_LANGUAGE # Đồng bộ cho compiler và CodeEditor
+#         print(f"DEBUG: Current Course Name (on_select): {CURRENT_COURSE_NAME}")
+#         print(f"DEBUG: Current Course Language (on_select): {CURRENT_COURSE_LANGUAGE}")
+#         print(f"DEBUG: Current Exercise Language (on_select): {CURRENT_EXERCISE_LANGUAGE}")
+#         # ----------------------------------------------------
+        
+#         # Cập nhật ngôn ngữ cho CodeEditor (nếu đã tạo)
+#         # Truyền input_widget vào args của on_select, ví dụ: "input_widget": txt_input
+#         # input_widget = args.get('input_widget') 
+#         # if input_widget:
+#         #     update_code_editor_language(input_widget, CURRENT_EXERCISE_LANGUAGE)
+
+#         tree.grid_forget()
+
+#         frame_content=tk.Frame(fr_lesson_tree)
+#         frame_content.grid(row=0,column=0,sticky='nswe')
+#         frame_content.columnconfigure(0,weight=1)
+#         frame_content.rowconfigure(1,weight=1)
+#         frame_content.rowconfigure(2,weight=1)
+#         frame_content.rowconfigure(4,weight=1)
+        
+#         tk.Label(frame_content, text=exercise["title"],font=("Arial", 12)).grid(row=0,column=0,sticky='nswe')
+#         txt=tk.Text(frame_content,font=("Arial", 12),height=10,width=40,wrap='word',bg='white',fg='black')
+#         txt.grid(row=1,column=0,sticky='nswe')
+#         txt.insert(tk.END, exercise["description"])
+        
+#         fr_pic=tk.Frame(frame_content,bg='gray')
+#         fr_pic.grid(row=2,column=0,sticky='nswe')
+        
+#         #fr_pic.columnconfigure(0,weight=1)
+#         fr_pic.rowconfigure(0,weight=0)
+        
+#         def btn_img_click(args):
+
+#             new_window = tk.Toplevel(frame_content)
+#             new_window.title(args['img_tittle'])
+#             #new_window.geometry("500x400")  # Kích thước cửa sổ mới
+#             new_window.transient(frame_content)  # Gắn cửa sổ mới vào cửa sổ chính
+#             new_window.grab_set()       # Vô hiệu hóa tương tác với cửa sổ chính
+
+#             new_window.rowconfigure(0,weight=1)
+#             new_window.columnconfigure(0,weight=1)
+            
+#             tk_label_image=label_image(new_window,args['img_path'],args['img_tittle'])
+#             tk_label_image.grid(row=0,column=0,sticky='nswe')
+            
+#             def on_close():
+#                 print('đóng cửa sổ')
+#                 new_window.destroy()
+            
+#             new_window.protocol("WM_DELETE_WINDOW", on_close)
+#             new_window.wait_window()
+
+        
+#         btn_img=[]
+#         for i,img in enumerate(exercise["image"]):
+#             if(img['link']!=''):
+#                 img_path_=  get_path_join(PATH_IMG,img['link'])
+#                 img_title_= img['image_title']
+#                 btn_img.append({'id':i,'img_tittle':img_title_,'img_path':img_path_ ,'btn':tk.Button(fr_pic,text=img_title_)})
+
+#         for btn in btn_img:
+#             id = btn['id']
+#             btn['btn'].grid(row=0,column=id,sticky='w',padx='2')
+#             btn['btn'].config(command=lambda: btn_img_click({'img_tittle':img_title_,'img_path':img_path_}))
+            
+            
+#         tk.Label(frame_content, text="Hướng dẫn:",font=("Arial", 12), fg="white",bg="green").grid(row=3,column=0,sticky='nswe')
+#         txt_guidance=tk.Text(frame_content,font=("Arial", 11),height=10,width=40,wrap='word')
+#         txt_guidance.grid(row=4,column=0,sticky='nswe')
+                
+#         for g in exercise["guidance"]:
+#             txt_guidance.insert(tk.END, "• " + g+"\n")
+            
+#         def back_to_tree():
+#             frame_content.destroy()
+#             tree.grid(row=0, column=0, sticky='nswe')
+#             reload_tree(tree,json_course)
+        
+#         def help_from_AI(args):
+#             history.clear()
+#             print('clear cache ok')
+#             print(f'sesion_index={session_index};exercise_index={exercise_index}')
+
+#             # Gọi hàm create_main_rule với đủ các đối số
+#             prompt = create_main_rule(
+#                 main_rule, # main_rule là nội dung thô của rule.md đã có placeholders
+#                 json_sessions_to_markdown(json_course, session_index, exercise_index),
+#                 course_name=CURRENT_COURSE_NAME, # Sử dụng biến global
+#                 course_language=CURRENT_COURSE_LANGUAGE # Sử dụng biến global
+#             )
+#             #print(prompt) # Để debug prompt cuối cùng
+#             call_gemini_api_thread(prompt,queue,output,fr_info)
+        
+#         fr_button=tk.Frame(frame_content,bg='green')
+#         fr_button.grid(row=5,column=0,sticky='nswe')
+#         fr_button.columnconfigure(0,weight=1)
+#         fr_button.columnconfigure(1,weight=1)
+        
+#         #lbl_note=tk.Label(fr_button,text='Nhấn nút tải bài tập lên AI để bắt đầu bài mới',font=("Arial", 11),fg='red')
+#         lbl_note=tk.Label(fr_button,text='',font=("Arial", 11),fg='red')
+#         lbl_note.grid(row=1,column=0,columnspan=2,sticky='nswe')
+        
+#         tk.Button(fr_button, text="Quay lại",font=("Arial", 11), command=back_to_tree).grid(row=0, column=0, sticky='w', pady=10,padx=10)
+        
+#         # Lưu tham chiếu đến nút "Tải bài tập lên AI"
+#         #btn_load_exercise_to_ai = tk.Button(fr_button, text="Tải bài tập lên AI",font=("Arial", 11), command=lambda:help_from_AI({'label':lbl_note}))
+#         #btn_load_exercise_to_ai.grid(row=0, column=1, sticky='w', pady=10,padx=10)
+
+#         # *** THÊM DÒNG NÀY ĐỂ TỰ ĐỘNG NHẤN NÚT ***
+#         # Gọi command của nút ngay sau khi nó được tạo và cấu hình
+#         help_from_AI({'label':lbl_note}) # Gọi hàm tương ứng với nút
+        
+# file: app.py
+
+def on_select(event,args):
+    global json_course, history, main_rule, ID_EXERCISE, CURRENT_COURSE_NAME, CURRENT_COURSE_LANGUAGE, CURRENT_EXERCISE_LANGUAGE
+
+    tree = args['tree']
+    fr_lesson_tree = args['fr_tree']
+    queue = args['queue']
+    output = args['output']
+    fr_info = args['fr_info']
+    
+    # Lấy widget 'Bài làm' từ arguments
+    input_widget = args.get('input_widget')
+
     selected_item = tree.focus()
     data = tree.item(selected_item)
     values = data.get("values")
     
-    ID_EXERCISE=None
-    if values: # Kiểm tra xem đây có phải là một bài tập (leaf node) không
-        session_index=values[-2]
+    ID_EXERCISE = None
+    if values: # Kiểm tra xem đây có phải là một bài tập không
+        session_index = values[-2]
         exercise_index = values[-1]
-        print(session_index,exercise_index)
         exercise = json_course["sessions"][session_index]["exercises"][exercise_index]
-        ID_EXERCISE=exercise['id']
-    
-        # ----------- ĐẶT KHỐI LỆNH CỦA BẠN TẠI ĐÂY -----------
-        # Nó sẽ được thực thi mỗi khi một bài tập được chọn trong Treeview.
+        ID_EXERCISE = exercise['id']
+
+        # ----------- BẮT ĐẦU PHẦN CHỈNH SỬA -----------
+        # Xóa nội dung cũ trong ô "Bài làm"
+        if input_widget:
+            input_widget.delete("1.0", tk.END)
+            print("DEBUG: Đã xóa nội dung ô 'Bài làm' cho bài tập mới.")
+        # ----------- KẾT THÚC PHẦN CHỈNH SỬA -----------
+        
         CURRENT_COURSE_NAME = json_course.get("course_name", "Môn học không xác định")
         CURRENT_COURSE_LANGUAGE = json_course.get("course_language", "c").lower()
-        CURRENT_EXERCISE_LANGUAGE = CURRENT_COURSE_LANGUAGE # Đồng bộ cho compiler và CodeEditor
-        print(f"DEBUG: Current Course Name (on_select): {CURRENT_COURSE_NAME}")
-        print(f"DEBUG: Current Course Language (on_select): {CURRENT_COURSE_LANGUAGE}")
-        print(f"DEBUG: Current Exercise Language (on_select): {CURRENT_EXERCISE_LANGUAGE}")
-        # ----------------------------------------------------
+        CURRENT_EXERCISE_LANGUAGE = CURRENT_COURSE_LANGUAGE
         
-        # Cập nhật ngôn ngữ cho CodeEditor (nếu đã tạo)
-        # Truyền input_widget vào args của on_select, ví dụ: "input_widget": txt_input
-        # input_widget = args.get('input_widget') 
-        # if input_widget:
-        #     update_code_editor_language(input_widget, CURRENT_EXERCISE_LANGUAGE)
-
         tree.grid_forget()
 
-        frame_content=tk.Frame(fr_lesson_tree)
+        frame_content = tk.Frame(fr_lesson_tree)
         frame_content.grid(row=0,column=0,sticky='nswe')
+        # ... (phần còn lại của hàm giữ nguyên)
         frame_content.columnconfigure(0,weight=1)
         frame_content.rowconfigure(1,weight=1)
         frame_content.rowconfigure(2,weight=1)
@@ -1304,30 +1442,21 @@ def on_select(event,args):
         fr_pic=tk.Frame(frame_content,bg='gray')
         fr_pic.grid(row=2,column=0,sticky='nswe')
         
-        #fr_pic.columnconfigure(0,weight=1)
         fr_pic.rowconfigure(0,weight=0)
         
         def btn_img_click(args):
-
             new_window = tk.Toplevel(frame_content)
             new_window.title(args['img_tittle'])
-            #new_window.geometry("500x400")  # Kích thước cửa sổ mới
-            new_window.transient(frame_content)  # Gắn cửa sổ mới vào cửa sổ chính
-            new_window.grab_set()       # Vô hiệu hóa tương tác với cửa sổ chính
-
+            new_window.transient(frame_content)
+            new_window.grab_set()
             new_window.rowconfigure(0,weight=1)
             new_window.columnconfigure(0,weight=1)
-            
             tk_label_image=label_image(new_window,args['img_path'],args['img_tittle'])
             tk_label_image.grid(row=0,column=0,sticky='nswe')
-            
             def on_close():
-                print('đóng cửa sổ')
                 new_window.destroy()
-            
             new_window.protocol("WM_DELETE_WINDOW", on_close)
             new_window.wait_window()
-
         
         btn_img=[]
         for i,img in enumerate(exercise["image"]):
@@ -1339,8 +1468,7 @@ def on_select(event,args):
         for btn in btn_img:
             id = btn['id']
             btn['btn'].grid(row=0,column=id,sticky='w',padx='2')
-            btn['btn'].config(command=lambda: btn_img_click({'img_tittle':img_title_,'img_path':img_path_}))
-            
+            btn['btn'].config(command=lambda btn=btn: btn_img_click({'img_tittle':btn['img_tittle'],'img_path':btn['img_path']}))
             
         tk.Label(frame_content, text="Hướng dẫn:",font=("Arial", 12), fg="white",bg="green").grid(row=3,column=0,sticky='nswe')
         txt_guidance=tk.Text(frame_content,font=("Arial", 11),height=10,width=40,wrap='word')
@@ -1356,17 +1484,12 @@ def on_select(event,args):
         
         def help_from_AI(args):
             history.clear()
-            print('clear cache ok')
-            print(f'sesion_index={session_index};exercise_index={exercise_index}')
-
-            # Gọi hàm create_main_rule với đủ các đối số
             prompt = create_main_rule(
-                main_rule, # main_rule là nội dung thô của rule.md đã có placeholders
+                main_rule,
                 json_sessions_to_markdown(json_course, session_index, exercise_index),
-                course_name=CURRENT_COURSE_NAME, # Sử dụng biến global
-                course_language=CURRENT_COURSE_LANGUAGE # Sử dụng biến global
+                course_name=CURRENT_COURSE_NAME,
+                course_language=CURRENT_COURSE_LANGUAGE
             )
-            #print(prompt) # Để debug prompt cuối cùng
             call_gemini_api_thread(prompt,queue,output,fr_info)
         
         fr_button=tk.Frame(frame_content,bg='green')
@@ -1374,19 +1497,12 @@ def on_select(event,args):
         fr_button.columnconfigure(0,weight=1)
         fr_button.columnconfigure(1,weight=1)
         
-        #lbl_note=tk.Label(fr_button,text='Nhấn nút tải bài tập lên AI để bắt đầu bài mới',font=("Arial", 11),fg='red')
         lbl_note=tk.Label(fr_button,text='',font=("Arial", 11),fg='red')
         lbl_note.grid(row=1,column=0,columnspan=2,sticky='nswe')
         
         tk.Button(fr_button, text="Quay lại",font=("Arial", 11), command=back_to_tree).grid(row=0, column=0, sticky='w', pady=10,padx=10)
         
-        # Lưu tham chiếu đến nút "Tải bài tập lên AI"
-        #btn_load_exercise_to_ai = tk.Button(fr_button, text="Tải bài tập lên AI",font=("Arial", 11), command=lambda:help_from_AI({'label':lbl_note}))
-        #btn_load_exercise_to_ai.grid(row=0, column=1, sticky='w', pady=10,padx=10)
-
-        # *** THÊM DÒNG NÀY ĐỂ TỰ ĐỘNG NHẤN NÚT ***
-        # Gọi command của nút ngay sau khi nó được tạo và cấu hình
-        help_from_AI({'label':lbl_note}) # Gọi hàm tương ứng với nút
+        help_from_AI({'label':lbl_note})        
         
 def apply_treeview_style():
     style = ttk.Style()
@@ -2053,7 +2169,9 @@ def main():
         btn_upload_course.config(command=lambda: btn_upload_course_click({'frame': fr_center}))
         btn_refesh_offline.config(command=lambda: btn_refesh_offline_click({"tree": tree}))
         
-        tree.bind("<<TreeviewSelect>>", lambda event: on_select(event, {"tree": tree, "fr_tree": fr_lesson_tree, "queue": queue, "output": txt_output, "fr_info": {'level': lbl_level, 'score': lbl_socre}}))
+        #tree.bind("<<TreeviewSelect>>", lambda event: on_select(event, {"tree": tree, "fr_tree": fr_lesson_tree, "queue": queue, "output": txt_output, "fr_info": {'level': lbl_level, 'score': lbl_socre}}))
+        
+        tree.bind("<<TreeviewSelect>>", lambda event: on_select(event, {"tree": tree, "fr_tree": fr_lesson_tree, "queue": queue, "output": txt_output, "fr_info": {'level': lbl_level, 'score': lbl_socre}, "input_widget": txt_input}))
         
         #sự kiện
         window.protocol("WM_DELETE_WINDOW", lambda: window_on_closing(window))
