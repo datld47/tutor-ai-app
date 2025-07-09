@@ -66,6 +66,9 @@ firebase = pyrebase.initialize_app(firebaseConfig)
 auth = firebase.auth()
 db = firebase.database() # Nếu bạn dùng Realtime Database
 
+# để import file docx tạo bài tập cho môn học mới môn học mới
+from docx_importer import process_docx_to_json
+
 ##########Biến toàn cục #################################################################################
 if getattr(sys, 'frozen', False):
     PATH_CATCH = get_path('../cache')
@@ -251,7 +254,60 @@ class us_upload_file_to_google_driver(tk.Frame):
             self.status2.config(text='✗')
                      
 #############Khai báo hàm#########################################################################################
+# Thêm hàm này vào khu vực khai báo hàm trong app.py
+"""Quét lại thư mục data, cập nhật COURSE_FILE_MAP và làm mới Combobox."""
+def refresh_course_list(course_combobox_widget, course_variable_obj):
+    """Quét lại thư mục data, cập nhật COURSE_FILE_MAP và làm mới Combobox."""
+    global COURSE_FILE_MAP
+    
+    COURSE_FILE_MAP.clear()
+    data_folder_path = PATH_DATA
+    course_files = glob.glob(os.path.join(data_folder_path, 'course_*.json'))
+    
+    for file_path in course_files:
+        try:
+            with open(file_path, "r", encoding="utf-8") as file:
+                temp_course_data = json.load(file)
+                course_name = temp_course_data.get("course_name")
+                if course_name:
+                    COURSE_FILE_MAP[course_name] = file_path
+        except Exception as e:
+            print(f"Lỗi khi quét lại file course {file_path}: {e}")
+            
+    available_courses = list(COURSE_FILE_MAP.keys())
+    course_combobox_widget['values'] = available_courses
+    
+    # Tùy chọn: chọn môn học đầu tiên nếu có
+    if available_courses:
+        course_variable_obj.set(available_courses[0])
+        # Trigger event để tải dữ liệu môn học đầu tiên
+        course_combobox_widget.event_generate("<<ComboboxSelected>>")
 
+# Tạo hàm xử lý sự kiện handle_import_docx
+#Hàm này sẽ được gọi khi bạn nhấn vào nút menu. 
+# Nó sẽ mở hộp thoại chọn file và gọi hàm process_docx_to_json.
+"""Mở hộp thoại file, xử lý import từ DOCX và làm mới danh sách."""
+def handle_import_docx(course_combobox_widget, course_variable_obj):
+    """Mở hộp thoại file, xử lý import từ DOCX và làm mới danh sách."""
+    file_path = filedialog.askopenfilename(
+        title="Chọn file Word để import",
+        filetypes=(("Word Documents", "*.docx"), ("All files", "*.*"))
+    )
+    
+    if not file_path:
+        # Người dùng đã hủy
+        return
+        
+    # PATH_DATA là biến toàn cục đã được định nghĩa trong app.py
+    success, message = process_docx_to_json(file_path, PATH_DATA)
+    
+    if success:
+        messagebox.showinfo("Thành công", f"Đã import thành công và lưu tại:\n{message}")
+        # Làm mới lại danh sách môn học trên giao diện
+        refresh_course_list(course_combobox_widget, course_variable_obj)
+    else:
+        messagebox.showerror("Lỗi Import", f"Không thể import file:\n{message}")
+            
 def is_connected():
     try:
         requests.get("https://www.google.com", timeout=3)
@@ -1779,6 +1835,10 @@ def main():
         tool_menu.add_command(label="Làm mới trực tiếp", command=lambda: btn_refesh_offline_click({"tree": tree}))
         tool_menu.add_command(label="Xóa Cache", command=lambda: btn_clear_cache_click({'input': txt_input, 'output': txt_output}))
         tool_menu.add_command(label="Load Rule", command=lambda: btn_load_rule_click({'queue': queue, 'output': txt_output}))
+
+        #tạo nút "Import từ Word".
+        tool_menu.add_command(label="Import từ Word (.docx)", 
+                              command=lambda: handle_import_docx(course_combobox, course_var))
 
         # Menu "Edit" có thể để trống hoặc thêm các chức năng chỉnh sửa nếu có
         edit_menu.add_command(label="Cut")

@@ -1,0 +1,44 @@
+{
+  "course_name": "Thương mại điện tử",
+  "course_language": "không",
+  "task_list_title": "Chi tiết danh sách bài tập của từng buổi",
+  "sessions": [
+    {
+      "title": "Buổi 1: Giới thiệu Thương mại điện tử",
+      "exercises": [
+        {
+          "id": 1,
+          "title": "Bài 1.1: Khái niệm cơ bản",
+          "description": "Đây là nội dung mô tả chi tiết cho bài tập về các khái niệm cơ bản của thương mại điện tử. Sinh viên cần đọc và tóm tắt các ý chính.",
+          "status": "✗",
+          "score": 0,
+          "image": [],
+          "guidance": []
+        },
+        {
+          "id": 2,
+          "title": "Bài 1.2: Lịch sử hình thành",
+          "description": "Phần này mô tả về lịch sử hình thành và phát triển của TMĐT qua các thời kỳ.",
+          "status": "✗",
+          "score": 0,
+          "image": [],
+          "guidance": []
+        }
+      ]
+    },
+    {
+      "title": "Buổi 2: Các mô hình kinh doanh",
+      "exercises": [
+        {
+          "id": 3,
+          "title": "Bài 2.1: Mô hình B2B",
+          "description": "Nội dung mô tả về mô hình Business-to-Business. (Style: Normal)",
+          "status": "✗",
+          "score": 0,
+          "image": [],
+          "guidance": []
+        }
+      ]
+    }
+  ]
+}
