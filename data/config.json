@@ -1,0 +1,34 @@
+{
+  "api": [
+    {
+      "gemini_key": [
+        "AIzaSyDLM92u7A-qiZ_JFsBwwZZ04WZVBV4WFnQ"
+      ]
+    },
+    {
+      "model": "gemini-2.0-flash"
+    }
+  ],
+  "user": [
+    {
+      "username": "thangtt",
+      "password": "",
+      "mssv": "Pwwax1xiOtf0B43HLWvKJjClyej2"
+    }
+  ],
+  "google_driver": {
+    "scopes": [
+      "https://www.googleapis.com/auth/drive.file"
+    ],
+    "folder_id": "10h_cILGawcbMW1PIm3YIU7EGS2KFKMZI",
+    "config_folder_id": "13iGyyR7AILqDkJP_WjGbggdT8P4CmYMM"
+  },
+  "system": [
+    {
+      "cache_status": 0
+    },
+    {
+      "version": "V6"
+    }
+  ]
+}

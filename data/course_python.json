@@ -1,0 +1,930 @@
+{
+  "course_name": "Lập trình Python",
+  "course_language": "python",
+  "task_list_title": "Chi tiết danh sách bài tập của từng buổi",
+  "sessions": [
+    {
+      "title": "Buổi 1: In ấn cơ bản",
+      "exercises": [
+        {
+          "id": 1,
+          "title": "Bài 1.1: In Hello World",
+          "description": "Viết chương trình Python để in chuỗi 'Hello World' ra màn hình console.",
+          "status": "✗",
+          "score": 0,
+          "image": [],
+          "guidance": [
+            "Không cần khai báo thư viện hay hàm chính đặc biệt cho chương trình đơn giản này.",
+            "Sử dụng hàm `print()` để in chuỗi 'Hello World' ra màn hình."
+          ]
+        },
+        {
+          "id": 2,
+          "title": "Bài 1.2: In thông tin cá nhân",
+          "description": "Viết chương trình Python để in thông tin sinh viên ra màn hình console:\nTên: Nguyễn Văn A\nLớp: IT23M\nTuổi: 18.",
+          "status": "✗",
+          "score": 0,
+          "image": [],
+          "guidance": [
+            "Sử dụng hàm `print()` để in từng dòng thông tin. Hàm `print()` tự động thêm ký tự xuống dòng (`\\n`) sau mỗi lần in."
+          ]
+        },
+        {
+          "id": 3,
+          "title": "Bài 1.3: Sử dụng biến và f-string",
+          "description": "Viết chương trình Python để in thông tin sinh viên:\nTên: Nguyễn Văn A\nLớp: IT23M\nTuổi: 18.\nChú ý: Sử dụng biến để lưu trữ Tên, Lớp, Tuổi và dùng f-string (formatted string literals) để in ra màn hình.",
+          "status": "✗",
+          "score": 0,
+          "image": [],
+          "guidance": [
+            "Khai báo biến `ten` kiểu chuỗi (string), `lop` kiểu chuỗi, và `tuoi` kiểu số nguyên (integer).",
+            "Gán giá trị cho các biến này.",
+            "Sử dụng f-string để in thông tin ra màn hình. Ví dụ: `print(f\"Tên: {ten_sinh_vien}\")`.",
+            "Mỗi thông tin nên được in trên một dòng riêng biệt."
+          ]
+        },
+        {
+          "id": 4,
+          "title": "Bài 1.4: Ký tự thoát trong chuỗi",
+          "description": "Viết chương trình Python để in ra dòng văn bản sau:\n \"Đừng bao giờ sợ thất bại, bạn chỉ cần đúng một lần duy nhất trong đời.\" - \\ Drew Houston (CEO của Dropbox) \\ .",
+          "status": "✗",
+          "score": 0,
+          "image": [],
+          "guidance": [
+            "Sử dụng hàm `print()` để in chuỗi.",
+            "Sử dụng ký tự thoát `\\\"` cho dấu `\"` bên trong chuỗi.",
+            "Sử dụng `\\\\` cho dấu `\\` trong chuỗi.",
+            "Ký tự `\\n` được dùng để xuống dòng (nhưng `print` tự động xuống dòng nên có thể không cần thiết nếu toàn bộ là một chuỗi)."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Buổi 2: Biến và Toán tử",
+      "exercises": [
+        {
+          "id": 5,
+          "title": "Bài 2.1: Lưu trữ số nguyên",
+          "description": "Viết chương trình Python thực hiện các tác vụ sau:\n- Khởi tạo biến `x1` lưu giá trị 125 và xuất kết quả ra màn hình.\n- Khởi tạo biến `x2` lưu giá trị -123 và xuất kết quả ra màn hình.\n- Khởi tạo biến `x3` lưu giá trị 6000 và xuất kết quả ra màn hình.\n- Khởi tạo biến `x4` lưu giá trị -6000 và xuất kết quả ra màn hình.\n- Khởi tạo biến `x5` lưu giá trị 6000000 và xuất kết quả ra màn hình.\n- Khởi tạo biến `x6` lưu giá trị -6000000 và xuất kết quả ra màn hình.\n- Sử dụng hàm `sys.getsizeof()` để kiểm tra kích thước bộ nhớ của các biến `x1` đến `x6` (lưu ý: `getsizeof()` trả về kích thước đối tượng Python, không phải kích thước byte kiểu dữ liệu nguyên thủy như C).",
+          "status": "✗",
+          "score": 0,
+          "image": [],
+          "guidance": [
+            "Python tự động quản lý kiểu dữ liệu dựa trên giá trị gán, không cần khai báo tường minh kích thước byte.",
+            "Khai báo các biến bằng cách gán giá trị trực tiếp (ví dụ: `x1 = 125`).",
+            "Sử dụng hàm `print()` để in giá trị của biến.",
+            "Để kiểm tra kích thước đối tượng Python, `import sys` và sử dụng `sys.getsizeof(variable)`."
+          ]
+        },
+        {
+          "id": 6,
+          "title": "Bài 2.2: Tràn số nguyên",
+          "description": "- Trả lời câu hỏi sau: Chuyện gì xảy ra khi bạn cố gắng lưu một số rất lớn (ví dụ: 100000000000000000000000000000000000) vào một biến số nguyên trong Python?\n- Hãy viết chương trình Python để kiểm chứng việc lưu trữ một số nguyên lớn và hiển thị ra màn hình.",
+          "status": "✗",
+          "score": 0,
+          "image": [],
+          "guidance": [
+            "Lý thuyết: Python hỗ trợ số nguyên có độ chính xác tùy ý (arbitrary precision integers), nghĩa là số nguyên có thể lớn tùy ý chỉ bị giới hạn bởi bộ nhớ khả dụng của máy tính.",
+            "Bạn sẽ không gặp lỗi tràn số (overflow) với các số nguyên lớn trong Python như trong C hoặc Java với các kiểu `int` cố định.",
+            "Thử gán một số nguyên rất lớn vào một biến (ví dụ: `num_lon = 10**100`).",
+            "Sử dụng hàm `print()` để hiển thị giá trị."
+          ]
+        },
+        {
+          "id": 7,
+          "title": "Bài 2.3: Lưu trữ số thập phân",
+          "description": "Viết chương trình Python thực hiện tác vụ sau:\n- Khởi tạo biến `x1` lưu giá trị 18.54 và xuất kết quả ra màn hình.\n- Khởi tạo biến `x2` lưu giá trị -18.54 và xuất kết quả ra màn hình.\n- Khởi tạo biến `x3` lưu giá trị 18000.54 và xuất kết quả ra màn hình.\n- Khởi tạo biến `x4` lưu giá trị -18000.54 và xuất kết quả ra màn hình.\n**Chú ý: Python sử dụng kiểu `float` (thường là 64-bit double-precision) cho số thập phân. In đúng số lượng chữ số thập phân khi cần.",
+          "status": "✗",
+          "score": 0,
+          "image": [],
+          "guidance": [
+            "Python tự động nhận diện số thập phân là kiểu `float` (tương đương `double` trong C/Java).",
+            "Khai báo biến bằng cách gán giá trị (ví dụ: `x1 = 18.54`).",
+            "Sử dụng `print()` để in giá trị của biến.",
+            "Để định dạng số thập phân, sử dụng f-string hoặc phương thức `.format()`. Ví dụ: `print(f\"{bien_float:.2f}\")` để in 2 số thập phân."
+          ]
+        },
+        {
+          "id": 8,
+          "title": "Bài 2.4: Kiểu dữ liệu số",
+          "description": "- Trả lời câu hỏi: Python có các kiểu dữ liệu với kích thước cố định như `int8_t`, `int32_t` trong C (`stdint.h`) không? Python quản lý kích thước số nguyên và số thực như thế nào?\n- Viết chương trình Python để kiểm tra kiểu của `x1 = 10`, `x2 = 3.14`, `x3 = 2 + 3j`.",
+          "status": "✗",
+          "score": 0,
+          "image": [],
+          "guidance": [
+            "Lý thuyết: Python là ngôn ngữ 'dynamic typing' và 'strongly typed'. Nó tự động quản lý kiểu dữ liệu và kích thước bộ nhớ. Python không có kiểu số nguyên cố định kích thước như C.",
+            "Số nguyên (`int`) trong Python có độ chính xác tùy ý. Số thực (`float`) thường là `double-precision floating-point` (64-bit). Python còn có kiểu `complex` cho số phức.",
+            "Sử dụng hàm `type()` để kiểm tra kiểu dữ liệu của một biến (ví dụ: `print(type(x1))`)."
+          ]
+        },
+        {
+          "id": 9,
+          "title": "Bài 2.5: Lưu trữ chuỗi",
+          "description": "Viết chương trình Python thực hiện tác vụ sau:\n- Khai báo biến `s` để lưu chuỗi \"Nguyễn Văn A\".\n- Xuất kết quả biến `s` ra màn hình console.",
+          "status": "✗",
+          "score": 0,
+          "image": [],
+          "guidance": [
+            "Chuỗi trong Python được biểu diễn bởi kiểu `str`.",
+            "Sử dụng công thức: `ten_bien = \"chuỗi_kí_tự\"` (dùng dấu nháy đơn hoặc kép).",
+            "Sử dụng hàm `print()` để in chuỗi ra màn hình."
+          ]
+        },
+        {
+          "id": 10,
+          "title": "Bài 2.6: Phạm vi biến",
+          "description": "Viết chương trình Python thực hiện tác vụ sau:\n- Khai báo biến cục bộ `x` lưu giá trị 80.\n- Khai báo biến toàn cục `y` lưu giá trị 80 (chú ý cách khai báo biến toàn cục trong Python).\n- In giá trị của biến `x` và `y` ra màn hình.",
+          "status": "✗",
+          "score": 0,
+          "image": [],
+          "guidance": [
+            "Biến cục bộ được khai báo bên trong một hàm (ví dụ: `x = 80` trong một hàm).",
+            "Biến toàn cục được khai báo bên ngoài tất cả các hàm.",
+            "Để gán lại giá trị cho một biến toàn cục bên trong một hàm, bạn phải sử dụng từ khóa `global` (ví dụ: `global y; y = 80`). Nếu chỉ đọc, không cần `global`.",
+            "Sử dụng hàm `print()` để in giá trị của biến."
+          ]
+        },
+        {
+          "id": 11,
+          "title": "Bài 2.7: Tương tác với bộ nhớ cấp thấp (Python - Giới hạn)",
+          "description": "- Trả lời câu hỏi: Trong Python, có thể truy cập trực tiếp địa chỉ bộ nhớ để điều khiển phần cứng không? Tại sao?\n- Nêu ví dụ về cách Python tương tác với phần cứng hoặc tài nguyên cấp thấp (nếu có).",
+          "status": "✗",
+          "score": 0,
+          "image": [],
+          "guidance": [
+            "Lý thuyết: Python là một ngôn ngữ bậc cao, được thiết kế để trừu tượng hóa các chi tiết quản lý bộ nhớ. Nó không cho phép truy cập trực tiếp địa chỉ bộ nhớ thông qua con trỏ như C/C++ để đảm bảo an toàn, tính di động và dễ sử dụng.",
+            "Để tương tác với phần cứng hoặc các tài nguyên cấp thấp, Python thường sử dụng:\n  - **Các module chuẩn:** Ví dụ: `ctypes` để gọi các hàm từ thư viện C, `mmap` để ánh xạ file vào bộ nhớ.\n  - **Thư viện bên thứ ba:** Ví dụ: `RPi.GPIO` cho Raspberry Pi, `serial` cho giao tiếp nối tiếp.\n  - **Chạy các lệnh shell:** Gọi các chương trình bên ngoài (ví dụ: thông qua `subprocess` module) để tương tác với hệ điều hành/phần cứng."
+          ]
+        },
+        {
+          "id": 12,
+          "title": "Bài 2.8: Toán tử số học",
+          "description": "Cho `x = 15`, `y = 18`. Viết chương trình Python thực hiện tác vụ sau:\n`r1 = x + y`\n`r2 = x * y`\n`r3 = x / y`\n`r4 = x % y`\nIn kết quả `r1`, `r2`, `r3`, `r4` ra màn hình console.",
+          "status": "✗",
+          "score": 0,
+          "image": [],
+          "guidance": [
+            "Khai báo `x`, `y` là các biến kiểu số nguyên.",
+            "Trong Python:\n  - Phép chia ` / ` luôn trả về số thực.\n  - Phép lấy dư ` % ` hoạt động với cả số nguyên và số thực.",
+            "Sử dụng `print()` để in các kết quả."
+          ]
+        },
+        {
+          "id": 13,
+          "title": "Bài 2.9: Chuyển đổi thời gian",
+          "description": "Cho biến `t` lưu số giây, `t = 7515`. Viết chương trình Python thực hiện tác vụ sau:\n- Tính toán số giờ từ biến `t` và lưu vào biến `hour`.\n- Tính toán số phút từ biến `t` và lưu vào biến `min`.\n- Tính số giây còn lại từ biến `t` và lưu vào biến `sec`.\nIn biến `hour`, `min`, `sec` ra màn hình console.",
+          "status": "✗",
+          "score": 0,
+          "image": [],
+          "guidance": [
+            "Gán biến `t` kiểu số nguyên (`t = 7515`).",
+            "Tính toán giờ: `hour = t // 3600` (sử dụng `//` cho phép chia lấy phần nguyên).",
+            "Tính toán phút: `min = (t % 3600) // 60`.",
+            "Tính toán giây: `sec = t % 60`.",
+            "Sử dụng `print()` để xuất `hour`, `min`, `sec`."
+          ]
+        },
+        {
+          "id": 14,
+          "title": "Bài 2.10: Thư viện `math`",
+          "description": "Cho `a = 5`, `b = 14`, `c = 8`. Viết chương trình Python thực hiện tác vụ sau:\n- Tính `delta = b**2 - 4 * a * c` và xuất `delta` ra màn hình.\n- Tính `x1 = (-b + sqrt(delta)) / (2 * a)`.\n- Tính `x2 = (-b - sqrt(delta)) / (2 * a)`.\n- Xuất `x1`, `x2` ra màn hình console.",
+          "status": "✗",
+          "score": 0,
+          "image": [],
+          "guidance": [
+            "Để sử dụng hàm toán học như căn bậc hai, `import math`.",
+            "Toán tử lũy thừa trong Python là `**` (ví dụ: `b**2`).",
+            "Sử dụng `math.sqrt()` để tính căn bậc hai.",
+            "Các biến `delta`, `x1`, `x2` sẽ tự động là kiểu `float` nếu phép tính có số thực.",
+            "Sử dụng `print()` để xuất kết quả ra màn hình."
+          ]
+        },
+        {
+          "id": 15,
+          "title": "Bài 2.11: Toán tử so sánh",
+          "description": "Viết chương trình Python thực hiện tác vụ sau:\n- Khởi tạo `x1 = 3 > 7`.\n- Khởi tạo `x2 = 8 < 9`.\n- In `x1`, `x2` ra màn hình console.",
+          "status": "✗",
+          "score": 0,
+          "image": [],
+          "guidance": [
+            "Trong Python, kết quả của biểu thức so sánh là một giá trị `boolean` (`True` hoặc `False`).",
+            "Khai báo `x1`, `x2` kiểu `boolean` (thực chất Python tự động gán kiểu `bool`) và gán các biểu thức so sánh.",
+            "Sử dụng `print()` để in `x1`, `x2`."
+          ]
+        },
+        {
+          "id": 16,
+          "title": "Bài 2.12: Kiểu `bool`",
+          "description": "Viết chương trình Python thực hiện tác vụ sau (chú ý sử dụng kiểu `bool` để lưu các biểu thức logic):\n- Khởi tạo `x1 = 3 > 7`.\n- Khởi tạo `x2 = 8 < 9`.\n- In `x1`, `x2` ra màn hình console.\n- In kích thước của `x1`.\n- Nhận xét khi dùng kiểu `bool` trong Python so với `int` trong C.",
+          "status": "✗",
+          "score": 0,
+          "image": [],
+          "guidance": [
+            "Khai báo biến `x1`, `x2` kiểu `bool` (Python tự động gán `bool`) và gán các biểu thức logic.",
+            "Sử dụng `print()` để in `x1`, `x2`.",
+            "Để kiểm tra kích thước bộ nhớ của đối tượng, `import sys` và sử dụng `sys.getsizeof(x1)`.",
+            "Lý thuyết: Trong Python, `bool` là một kiểu con của `int` nhưng là riêng biệt về mặt ngữ nghĩa và tối ưu bộ nhớ. `True` và `False` là các đối tượng."
+          ]
+        },
+        {
+          "id": 17,
+          "title": "Bài 2.13: Toán tử logic",
+          "description": "Cho `x1 = False`, `x2 = True`. Viết chương trình Python thực hiện tác vụ sau (chú ý sử dụng kiểu `bool` để lưu các biểu thức logic):\n- Khởi tạo `z1 = x1 and x2`.\n- Khởi tạo `z2 = x1 or x2`.\n- Khởi tạo `z3 = not x1`.\n- In `z1`, `z2`, `z3` ra màn hình console.",
+          "status": "✗",
+          "score": 0,
+          "image": [],
+          "guidance": [
+            "Khai báo `x1` và `x2` kiểu `bool` (ví dụ: `x1 = False; x2 = True;`).",
+            "Python sử dụng các từ khóa `and` (AND), `or` (OR), `not` (NOT) cho các toán tử logic.",
+            "Khởi tạo `z1`, `z2`, `z3` bằng các toán tử logic tương ứng.",
+            "Sử dụng `print()` để in `z1`, `z2`, `z3`."
+          ]
+        },
+        {
+          "id": 18,
+          "title": "Bài 2.14: Toán tử thao tác bit",
+          "description": "Cho `A = 0b10101001`, `B = 0b11011011`. Viết chương trình Python thực hiện tác vụ sau:\n- Khởi tạo `z1 = A & B`.\n- Khởi tạo `z2 = A | B`.\n- Khởi tạo `z3 = ~A`.\n- Khởi tạo `z4 = A ^ B`.\n- Khởi tạo `z5 = A >> 3`.\n- Khởi tạo `z6 = A << 3`.\n- Xuất `z1`, `z2`, `z3`, `z4`, `z5`, `z6` ra màn hình console.",
+          "status": "✗",
+          "score": 0,
+          "image": [],
+          "guidance": [
+            "Tính toán bằng tay giá trị `z1`, `z2`, `z3`, `z4`, `z5`, `z6` ở dạng nhị phân và thập phân.",
+            "Khai báo biến `A` và `B` kiểu `int` và khởi tạo giá trị nhị phân bằng tiền tố `0b` (ví dụ: `A = 0b10101001`).",
+            "Python sử dụng các toán tử thao tác bit tương tự C: `&` (AND), `|` (OR), `~` (NOT), `^` (XOR), `>>` (Dịch phải), `<<` (Dịch trái).",
+            "Khởi tạo `z1`, `z2`, `z3`, `z4`, `z5`, `z6` bằng các toán tử tương ứng.",
+            "Sử dụng `print()` để in các kết quả. Để in dưới dạng nhị phân, sử dụng `bin(value)` (ví dụ: `print(bin(z1))`)."
+          ]
+        },
+        {
+          "id": 19,
+          "title": "Bài 2.15: Ứng dụng toán tử thao tác bit",
+          "description": "- Câu 1: Tại sao ta cần đến thao tác bit trong Python, khi ta có thể tính toán số học +,-,*,/ hay thư viện `math`?\n- Câu 2: Cho `A = 0b10001000`. Viết chương trình Python thực hiện tác vụ sau:\n - Đọc bit 3, 4, 5 (từ phải sang, bắt đầu từ 0) và xuất ra màn hình.\n- Set bit 4 (cài bit 4 lên 1) và xuất kết quả ra màn hình.\n- Clear bit 3 (cài bit 3 về 0) và xuất kết quả ra màn hình.",
+          "status": "✗",
+          "score": 0,
+          "image": [],
+          "guidance": [
+            "Lý thuyết: Thao tác bit trong Python vẫn quan trọng cho các thuật toán tối ưu, mã hóa, nén dữ liệu hoặc khi làm việc với các định dạng dữ liệu nhị phân cấp thấp. Tuy nhiên, ít dùng để điều khiển phần cứng trực tiếp như trong C.",
+            "Khai báo biến `A = 0b10001000` (kiểu `int`).",
+            "Đọc bit thứ `n` bất kỳ của biến `A` áp dụng công thức: `(A >> n) & 1`.",
+            "Áp dụng công thức đọc bit ở trên, khởi tạo 3 biến `r1`, `r2`, `r3` để lưu trạng thái bit 3, 4, 5 của `A` và xuất `r1`, `r2`, `r3` ra màn hình.",
+            "Set bit thứ `n` (thiết lập lên 1) của biến `A` áp dụng công thức: `A | (1 << n)`.",
+            "Áp dụng công thức set bit ở trên, tạo biến `reg1` để lưu giá trị của `A` sau khi set bit, xuất `reg1` ra màn hình (dưới dạng nhị phân hoặc thập phân).",
+            "Clear bit thứ `n` (thiết lập về 0) của biến `A` áp dụng công thức: `A & (~(1 << n))`.",
+            "Áp dụng công thức clear bit ở trên, tạo biến `reg2` để lưu giá trị của `A` sau khi clear bit, xuất `reg2` ra màn hình."
+          ]
+        },
+        {
+          "id": 20,
+          "title": "Bài 2.16: Độ ưu tiên toán tử",
+          "description": "Viết chương trình Python thực hiện tính toán sau:\n- Khởi tạo biến `X = a | b & c + d * e`.\n- Khởi tạo biến `Y = ((a | b) & c) + (d * e)`.\n- In kết quả biến `X`, `Y` ra màn hình console và kiểm tra kết quả so với chạy tay.",
+          "status": "✗",
+          "score": 0,
+          "image": [],
+          "guidance": [
+            "Trong Python, độ ưu tiên toán tử tương tự C và Java. Bạn có thể tham khảo bảng ưu tiên toán tử Python.",
+            "Khởi tạo các biến `a`, `b`, `c`, `d`, `e` với giá trị bất kỳ (ví dụ: `a = 1, b = 2, c = 3, d = 4, e = 5`).",
+            "Khởi tạo biến `X` và `Y` với các biểu thức đã cho.",
+            "Sử dụng `print()` để in `X`, `Y` ra màn hình."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Buổi 3: Nhập/Xuất Dữ liệu",
+      "exercises": [
+        {
+          "id": 21,
+          "title": "Bài 3.1: Nhập và Xuất cơ bản",
+          "description": "Viết chương trình Python để nhập vào chiều dài và chiều rộng của một hình chữ nhật từ bàn phím, sau đó tính và in ra diện tích của hình đó.",
+          "status": "✗",
+          "score": 0,
+          "image": [],
+          "guidance": [
+            "Sử dụng hàm `input()` để hiển thị lời nhắc và đọc dữ liệu nhập từ người dùng. Hàm `input()` luôn trả về chuỗi.",
+            "Sử dụng `float()` để chuyển đổi chuỗi nhập được sang số thực (nếu cần tính toán thập phân).",
+            "Khai báo các biến `chieu_dai`, `chieu_rong`, `dien_tich`.",
+            "In lời nhắc người dùng nhập chiều dài: `print(\"Nhập chiều dài:\")`.",
+            "Đọc giá trị chiều dài bằng `input()` và chuyển đổi sang số thực, lưu vào biến `chieu_dai`.",
+            "In lời nhắc người dùng nhập chiều rộng.",
+            "Đọc giá trị chiều rộng bằng `input()` và chuyển đổi sang số thực, lưu vào biến `chieu_rong`.",
+            "Thực hiện tính toán `dien_tich = chieu_dai * chieu_rong`.",
+            "In kết quả diện tích ra màn hình: `print(f\"Diện tích = {dien_tich}\")`."
+          ]
+        },
+        {
+          "id": 22,
+          "title": "Bài 3.2: Đọc kí tự và làm sạch bộ đệm",
+          "description": "- Câu 1: Viết chương trình Python thực hiện tác vụ sau: Cho phép người dùng nhập chuỗi 'abc' từ bàn phím, sau đó đọc lần lượt từng kí tự từ chuỗi đó.\n- Câu 2: Giải thích tại sao trong Python, việc 'làm sạch' bộ đệm nhập liệu (`stdin`) không cần thiết như trong C (với `getchar()` hoặc `fflush(stdin)`).",
+          "status": "✗",
+          "score": 0,
+          "image": [],
+          "guidance": [
+            "Lý thuyết: Hàm `input()` trong Python đọc toàn bộ dòng nhập cho đến khi người dùng nhấn Enter. Nó đã tự động xử lý ký tự xuống dòng. Do đó, không có khái niệm 'làm sạch bộ đệm' sau khi đọc số như trong C/Java.",
+            "Python xử lý việc đọc input dựa trên dòng (line-based input), `input()` sẽ đọc cả dòng cho đến khi có ký tự xuống dòng và loại bỏ nó. Vì vậy, không cần `getchar()` hay `fflush(stdin)`.",
+            "Để đọc từng kí tự từ một chuỗi đã nhập, bạn có thể duyệt qua chuỗi đó bằng vòng lặp `for`."
+          ]
+        },
+        {
+          "id": 23,
+          "title": "Bài 3.3: Nhập dữ liệu số",
+          "description": "Viết chương trình Python thực hiện tác vụ sau:\n- Yêu cầu người dùng nhập một số nguyên và lưu vào biến `x1`.\n- Yêu cầu người dùng nhập một số thực và lưu vào biến `x2`.\n- In `x1`, `x2` ra màn hình console.",
+          "status": "✗",
+          "score": 0,
+          "image": [],
+          "guidance": [
+            "Sử dụng `input()` để đọc dữ liệu từ người dùng. Nhớ rằng `input()` luôn trả về chuỗi.",
+            "Sử dụng `int()` để chuyển đổi chuỗi nhập được sang số nguyên cho `x1`.",
+            "Sử dụng `float()` để chuyển đổi chuỗi nhập được sang số thực cho `x2`.",
+            "In `x1`, `x2` ra màn hình bằng `print()`."
+          ]
+        },
+        {
+          "id": 24,
+          "title": "Bài 3.4: Nhập dữ liệu chuỗi",
+          "description": "Viết chương trình Python thực hiện tác vụ sau:\n- Yêu cầu người dùng nhập thông tin tên và lưu vào biến `ten`.\n- Yêu cầu người dùng nhập tuổi và lưu vào biến `tuoi`.\n- In `ten`, `tuoi` ra màn hình console.",
+          "status": "✗",
+          "score": 0,
+          "image": [],
+          "guidance": [
+            "Sử dụng `input()` để đọc tên và tuổi.",
+            "Không cần khai báo kích thước cho chuỗi hay số nguyên trong Python.",
+            "Đối với tuổi, hãy chuyển đổi chuỗi nhập được sang số nguyên bằng `int()`.",
+            "In `ten`, `tuoi` ra màn hình bằng `print()`."
+          ]
+        },
+        {
+          "id": 25,
+          "title": "Bài 3.5: Nhập chuỗi có khoảng trắng",
+          "description": "Viết chương trình Python thực hiện tác vụ sau:\n- Yêu cầu người dùng nhập thông tin họ và tên (chuỗi có khoảng trắng) và lưu vào biến `hoTen`.\n- Yêu cầu người dùng nhập tuổi và lưu vào biến `tuoi`.\n- In `hoTen`, `tuoi` ra màn hình console.",
+          "status": "✗",
+          "score": 0,
+          "image": [],
+          "guidance": [
+            "Sử dụng `input()` để đọc họ và tên. Hàm `input()` trong Python tự động đọc cả dòng, bao gồm cả khoảng trắng, cho đến khi người dùng nhấn Enter.",
+            "Đối với tuổi, hãy chuyển đổi chuỗi nhập được sang số nguyên bằng `int()`.",
+            "In `hoTen`, `tuoi` ra màn hình bằng `print()`."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Buổi 4: Cấu trúc điều kiện",
+      "exercises": [
+        {
+          "id": 26,
+          "title": "Bài 4.1: Kiểm tra số chẵn/lẻ",
+          "description": "Viết chương trình Python thực hiện tác vụ sau:\n- Chờ người dùng nhập một số nguyên bất kỳ và lưu vào biến `n`.\n- Kiểm tra nếu `n` chia hết cho 2 thì xuất ra 'Số chẵn', và ngược lại xuất ra 'Số lẻ'.",
+          "status": "✗",
+          "score": 0,
+          "image": [],
+          "guidance": [
+            "Tìm hiểu cấu trúc câu điều kiện `if-else` trong Python.",
+            "Sử dụng `input()` để đọc dữ liệu nhập từ bàn phím. Nhớ chuyển đổi sang `int()`.",
+            "In lời nhắc người dùng nhập số nguyên: `print(\"Nhập một số nguyên:\")`.",
+            "Đọc số nguyên bằng `input()` và chuyển đổi sang `int`, lưu vào biến `n`.",
+            "Sử dụng cấu trúc `if n % 2 == 0:` để kiểm tra điều kiện. Nếu đúng thì in 'Số chẵn', ngược lại dùng `else:` để in 'Số lẻ'."
+          ]
+        },
+        {
+          "id": 27,
+          "title": "Bài 4.2: Chương trình chọn màu sắc (Python - if-elif-else)",
+          "description": "Quy ước các số đại diện cho các màu: màu đỏ số 1, màu xanh số 2, màu vàng số 3. Viết chương trình Python thực hiện tác vụ sau:\n- Cho phép người dùng nhập vào số đại diện cho màu sắc.\n- Kiểm tra số nhập vào nếu là 1 thì xuất ra 'Màu đỏ', là 2 xuất ra 'Màu xanh', là 3 xuất ra 'Màu vàng', còn lại xuất ra 'Màu không hợp lệ'.",
+          "status": "✗",
+          "score": 0,
+          "image": [],
+          "guidance": [
+            "Bài toán yêu cầu phải xét nhiều điều kiện và thực hiện hành động khi thỏa điều kiện, vì vậy sử dụng cấu trúc `if-elif-else` là phù hợp trong Python.",
+            "Sử dụng `input()` để nhập dữ liệu. Nhớ chuyển đổi sang `int()`.",
+            "In lời nhắc người dùng nhập số đại diện màu (1, 2, 3): `print(\"Nhập số đại diện màu (1: Đỏ, 2: Xanh, 3: Vàng):\")`.",
+            "Đọc số và lưu vào biến `mau`.",
+            "Sử dụng cấu trúc `if mau == 1: ... elif mau == 2: ... elif mau == 3: ... else: ...` để xét điều kiện và xử lý khi thỏa mãn điều kiện."
+          ]
+        },
+        {
+          "id": 28,
+          "title": "Bài 4.3: Cấu trúc `if-elif-else` thay thế `switch-case`",
+          "description": "Quy ước các số đại diện cho các màu: màu đỏ số 1, màu xanh số 2, màu vàng số 3. Viết chương trình Python thực hiện tác vụ sau:\n- Cho phép người dùng nhập vào số đại diện cho màu sắc.\n- Sử dụng cấu trúc `if-elif-else` để kiểm tra số nhập vào nếu là 1 thì xuất ra 'Màu đỏ', là 2 xuất ra 'Màu xanh', là 3 xuất ra 'Màu vàng', còn lại xuất ra 'Màu không hợp lệ'.",
+          "status": "✗",
+          "score": 0,
+          "image": [],
+          "guidance": [
+            "Lý thuyết: Python không có cấu trúc `switch-case` như C/Java. Thay vào đó, bạn thường sử dụng chuỗi `if-elif-else` hoặc dictionary để đạt được chức năng tương tự.",
+            "Sử dụng `input()` để nhập dữ liệu. Chuyển đổi sang `int()`.",
+            "In lời nhắc người dùng nhập số đại diện màu (1, 2, 3).",
+            "Đọc số và lưu vào biến `mau`.",
+            "Sử dụng cấu trúc `if mau == 1: ... elif mau == 2: ... elif mau == 3: ... else: ...` cho các trường hợp giá trị của `mau`. Không có từ khóa `break` trong cấu trúc này như `switch-case`."
+          ]
+        },
+        {
+          "id": 29,
+          "title": "Bài 4.4: Ứng dụng kiểm tra điểm",
+          "description": "Viết chương trình Python thực hiện tác vụ sau:\n- Yêu cầu người dùng nhập điểm.\n- Kiểm tra điểm người dùng với các điều kiện sau:\n  - Nếu điểm > 9 thì xuất ra `\"Giỏi\"`.\n  - Nếu điểm > 7 thì xuất ra `\"Khá\"`.\n  - Nếu điểm > 5 thì xuất ra `\"Trung bình\"`.\n  - Còn lại xuất ra `\"Yếu\"`.",
+          "status": "✗",
+          "score": 0,
+          "image": [],
+          "guidance": [
+            "Phân tích: Vì điểm là số thực và có nhiều trường hợp xét, cấu trúc `if-elif-else` là phù hợp trong Python.",
+            "Khai báo biến `diem` với kiểu số thực. Sử dụng `float()` để chuyển đổi dữ liệu nhập.",
+            "Sử dụng `input()` để đọc điểm người dùng nhập.",
+            "Sử dụng cấu trúc `if diem > 9: ... elif diem > 7: ... elif diem > 5: ... else: ...` để giải quyết các trường hợp khác nhau về `diem` và `print()` để xuất ra kết quả."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Buổi 5: Cấu trúc vòng lặp",
+      "exercises": [
+        {
+          "id": 30,
+          "title": "Bài 5.1: In số nguyên",
+          "description": "Viết chương trình Python để in các số nguyên từ 0 đến 10.",
+          "status": "✗",
+          "score": 0,
+          "image": [],
+          "guidance": [
+            "Xác định thành phần của vòng lặp `for` trong Python: biến đếm, phạm vi lặp (sử dụng `range()`).",
+            "Sử dụng vòng lặp `for` (ví dụ: `for i in range(11):`).",
+            "Sử dụng hàm `print()` để xuất giá trị biến đếm `i` ra màn hình."
+          ]
+        },
+        {
+          "id": 31,
+          "title": "Bài 5.2: In số chẵn",
+          "description": "Viết chương trình Python để in các số chẵn từ 0 đến 10.",
+          "status": "✗",
+          "score": -1,
+          "image": [],
+          "guidance": [
+            "Xác định thành phần của vòng lặp: biến đếm, phạm vi lặp. Bạn có thể sử dụng bước nhảy trong `range()` hoặc điều kiện `if`.",
+            "Sử dụng vòng lặp `for`. Ví dụ: `for i in range(0, 11, 2):` (tăng 2 đơn vị) hoặc `for i in range(11): if i % 2 == 0:`.",
+            "Sử dụng hàm `print()` để xuất giá trị biến đếm `i` ra màn hình."
+          ]
+        },
+        {
+          "id": 32,
+          "title": "Bài 5.3: Từ khóa `break`",
+          "description": "- Trả lời câu hỏi: Từ khóa `break` trong Python dùng để làm gì? Nêu một ví dụ `break` trong thực tế.\n- Nhắc lại bài tập 5.1: Sử dụng vòng lặp in các số nguyên từ 0 đến 10. Bài tập này yêu cầu hãy sử dụng từ khóa `break` để thoát vòng lặp khi biến `i` bằng 5.",
+          "status": "✗",
+          "score": 0,
+          "image": [],
+          "guidance": [
+            "Lý thuyết: Từ khóa `break` trong Python được sử dụng để thoát khỏi vòng lặp (hoặc câu lệnh `while`) ngay lập tức, bất kể điều kiện lặp còn đúng hay không.",
+            "Ứng dụng: Trong thực tế, `break` thường được dùng khi bạn đã tìm thấy kết quả mình cần trong một danh sách và không cần duyệt thêm (ví dụ: tìm kiếm một phần tử trong danh sách).",
+            "Sử dụng vòng lặp `for` với biến đếm `i` chạy từ 0 đến 10.",
+            "Sử dụng hàm `print()` để xuất `i` ra màn hình.",
+            "Sử dụng câu điều kiện `if i == 5:` và lệnh `break` bên trong vòng lặp để thoát khi `i` bằng 5."
+          ]
+        },
+        {
+          "id": 33,
+          "title": "Bài 5.4: Từ khóa `continue`",
+          "description": "- Trả lời câu hỏi: Từ khóa `continue` trong Python dùng để làm gì? Nêu một ví dụ dùng `continue` trong thực tế.\n- Nhắc lại bài tập 5.1: Sử dụng vòng lặp in các số nguyên từ 0 đến 10. Bài tập này yêu cầu hãy sử dụng từ khóa `continue` để bỏ qua thực thi khi biến `i` bằng 5.",
+          "status": "✗",
+          "score": 0,
+          "image": [],
+          "guidance": [
+            "Lý thuyết: Từ khóa `continue` trong Python được sử dụng để bỏ qua phần còn lại của khối lệnh trong vòng lặp hiện tại và chuyển sang bước lặp tiếp theo.",
+            "Ứng dụng: `continue` có thể được dùng khi bạn muốn bỏ qua xử lý một số trường hợp cụ thể trong vòng lặp mà không muốn thoát hoàn toàn vòng lặp (ví dụ: bỏ qua các giá trị âm khi tính trung bình của các số dương).",
+            "Sử dụng vòng lặp `for` với biến đếm `i` chạy từ 0 đến 10.",
+            "Sử dụng hàm `print()` để xuất `i` ra màn hình (đặt sau `if` kiểm tra).",
+            "Sử dụng câu điều kiện `if i == 5:` và lệnh `continue` bên trong vòng lặp. Đặt lệnh `print()` sau `if` để nó bị bỏ qua khi `i` bằng 5."
+          ]
+        },
+        {
+          "id": 34,
+          "title": "Bài 5.5: Vòng lặp vô hạn (Super Loop)",
+          "description": "Viết chương trình Python xuất ra 'Hello World' với chu kỳ 1 giây, sử dụng vòng lặp vô hạn.",
+          "status": "✗",
+          "score": 0,
+          "image": [],
+          "guidance": [
+            "Lý thuyết: Trong Python, vòng lặp vô hạn thường dùng `while True:`. Nó được ứng dụng trong các chương trình chạy liên tục, như server, ứng dụng đa luồng chờ sự kiện. Cần có hàm dừng (ví dụ: `time.sleep()`) để tránh tốn tài nguyên CPU.",
+            "Để chờ một khoảng thời gian, sử dụng `time.sleep(seconds)` trong Python (`import time`). Ví dụ: chờ 1s dùng `time.sleep(1)`.",
+            "Sử dụng vòng lặp `while True:`.",
+            "Sử dụng `print(\"Hello World\")`.",
+            "Sử dụng `time.sleep(1)` để chờ 1 giây."
+          ]
+        },
+        {
+          "id": 35,
+          "title": "Bài 5.6: Thời gian thực thi vòng lặp",
+          "description": "Viết chương trình Python thực hiện tác vụ sau:\n- Xuất 'Hello World' 10 lần, với chu kỳ mỗi lần là 1s.\n- Tính toán thời gian thực thi tổng cộng của vòng lặp bằng cách sử dụng `time.time()` hoặc `time.perf_counter()`.",
+          "status": "✗",
+          "score": 0,
+          "image": [],
+          "guidance": [
+            "Lý thuyết: Việc xác định thời gian thực thi của vòng lặp quan trọng để đánh giá hiệu suất giải thuật. Trong Python, `time.time()` trả về thời gian hiện tại theo giây, và `time.perf_counter()` trả về một giá trị đồng hồ hiệu suất (thường chính xác hơn cho đo lường khoảng thời gian ngắn).",
+            "Sử dụng vòng lặp `for` để lặp 10 lần.",
+            "Sử dụng `print(\"Hello World\")`.",
+            "Sử dụng `time.sleep(1)` để chờ 1 giây trong mỗi lần lặp.",
+            "Gọi `start_time = time.time()` (hoặc `time.perf_counter()`) trước vòng lặp.",
+            "Gọi `end_time = time.time()` (hoặc `time.perf_counter()`) sau vòng lặp.",
+            "Tính toán thời gian thực thi: `elapsed_time = end_time - start_time`.",
+            "Xuất `elapsed_time` ra màn hình (đơn vị giây)."
+          ]
+        },
+        {
+          "id": 36,
+          "title": "Bài 5.7: Tính tổng `S=3+6+9+12`",
+          "description": "Viết chương trình Python sử dụng vòng lặp `for` để tính tổng `S=3+6+9+12`.",
+          "status": "✗",
+          "score": 0,
+          "image": [],
+          "guidance": [
+            "Lý thuyết: Khi muốn sử dụng vòng lặp điều cần làm là phân tích để phát hiện ra mối quan hệ lặp hoặc một hành động lặp đi lặp lại.",
+            "Phân tích: `3=3*1`, `6=3*2`, `9=3*3`, `12=3*4`. Ta cần một biến đếm chạy từ 1 đến 4 và cộng dồn `3*i` vào biến `S`.",
+            "Tạo biến `S` ban đầu gán bằng 0 để thực hiện cộng dồn.",
+            "Sử dụng vòng lặp `for` với biến `i` chạy từ 1 đến 4 (bao gồm cả 4) (ví dụ: `for i in range(1, 5):`).",
+            "Cộng dồn `S` theo công thức `S += 3 * i`.",
+            "Xuất `S` ra màn hình bằng `print(S)`."
+          ]
+        },
+        {
+          "id": 37,
+          "title": "Bài 5.8: In số nguyên tố",
+          "description": "Viết chương trình Python xuất các số nguyên tố nhỏ hơn 100.",
+          "status": "✗",
+          "score": 0,
+          "image": [],
+          "guidance": [
+            "Lý thuyết: Số nguyên tố là số lớn hơn 1 và chỉ chia hết cho 1 và chính nó. Số 0 và 1 không phải là số nguyên tố.",
+            "Sử dụng vòng lặp ngoài (`for` hoặc `while`) với biến đếm `num` chạy từ 2 đến 99.",
+            "Bên trong vòng lặp ngoài, tạo một biến `is_prime = True` để đánh dấu `num` có phải số nguyên tố không.",
+            "Sử dụng vòng lặp trong (`for` hoặc `while`) với biến `j` chạy từ 2 đến `int(num**0.5) + 1` (hoặc `num // 2 + 1`).",
+            "Nếu `num % j == 0`, thì `num` không phải số nguyên tố. Gán `is_prime = False` và dùng `break` để thoát vòng lặp trong.",
+            "Sau vòng lặp trong, nếu `is_prime` vẫn là `True`, xuất `num` ra màn hình bằng `print(num)`."
+          ]
+        },
+        {
+          "id": 38,
+          "title": "Bài 5.9: Vòng lặp `while`",
+          "description": "Viết chương trình Python thực hiện tác vụ sau: in các số từ 0 đến 10 sử dụng vòng lặp `while`.",
+          "status": "✗",
+          "score": 0,
+          "image": [],
+          "guidance": [
+            "Lý thuyết: Vòng lặp `while` trong Python thường dùng để lặp cho đến khi điều kiện sai mới thoát vòng lặp. Được ứng dụng khi muốn chờ một sự kiện hoặc điều kiện nào đó xảy ra.",
+            "Chương trình in ra các số từ 0 đến 10.",
+            "Khai báo biến đếm `i = 0`.",
+            "Sử dụng vòng lặp `while i <= 10:`.",
+            "Trong vòng lặp, xuất `i` ra màn hình bằng `print(i)` và cập nhật `i` bằng `i = i + 1` hoặc `i += 1`."
+          ]
+        },
+        {
+          "id": 39,
+          "title": "Bài 5.10: Lập trình đa nhiệm đơn giản",
+          "description": "Viết chương trình Python thực hiện tác vụ sau:\n- Mỗi 1 giây đọc nhiệt độ ngẫu nhiên (sử dụng module `random`) lưu vào biến `nhiet_do` và xuất ra màn hình.\n- Mỗi 2 giây đọc ngẫu nhiên độ ẩm (sử dụng module `random`) lưu vào biến `do_am` và xuất kết quả ra màn hình.\n**Chú ý:** Hàm `random.randint()` cho ra nhiệt độ nằm trong khoảng 20 đến 50 độ và cho ra độ ẩm nằm trong khoảng 40 đến 95 phần trăm.",
+          "status": "✗",
+          "score": 0,
+          "image": [],
+          "guidance": [
+            "Lý thuyết: Trong Python, để mô phỏng đa nhiệm không chặn trong một luồng đơn, chúng ta có thể sử dụng vòng lặp `while True` kết hợp với kiểm tra thời gian. Module `time` (hàm `time.time()`) dùng để đọc thời gian hiện tại.",
+            "Để sinh ra số ngẫu nhiên trong khoảng `[a,b]`, sử dụng `random.randint(a, b)` (cần `import random`).",
+            "Để tạm dừng chương trình, sử dụng `time.sleep(seconds)` (cần `import time`).",
+            "Khai báo biến `t1_start = time.time()`, `t2_start = time.time()`.",
+            "Sử dụng vòng lặp `while True:`.",
+            "Trong vòng lặp, đọc `t_current = time.time()`.",
+            "Kiểm tra điều kiện `if (t_current - t1_start) >= 1:`: nếu đúng thì tính `nhiet_do` ngẫu nhiên, xuất ra màn hình, và cập nhật `t1_start = t_current`.",
+            "Kiểm tra điều kiện `if (t_current - t2_start) >= 2:`: nếu đúng thì tính `do_am` ngẫu nhiên, xuất ra màn hình, và cập nhật `t2_start = t_current`."
+          ]
+        },
+        {
+          "id": 40,
+          "title": "Bài 5.11: Vòng lặp `while` với kiểm tra điều kiện sau",
+          "description": "Viết chương trình Python thực hiện giải thuật sau: in các số từ 0 đến 10 sử dụng vòng lặp `while` mà kiểm tra điều kiện sau khi thực hiện khối lệnh (tương tự `do...while` trong C/Java).",
+          "status": "✗",
+          "score": 0,
+          "image": [],
+          "guidance": [
+            "Lý thuyết: Python không có cấu trúc `do...while` trực tiếp. Để mô phỏng hành vi 'thực hiện ít nhất một lần', bạn có thể thực hiện khối lệnh một lần trước vòng lặp `while`, hoặc dùng `while True:` kết hợp với `break` bên trong.",
+            "Ứng dụng: Khi bạn muốn đảm bảo một hành động được thực hiện ít nhất một lần trước khi kiểm tra điều kiện.",
+            "Khai báo biến `i = 0`.",
+            "**Cách 1 (phổ biến nhất):**",
+            "  `while True:`",
+            "  `  print(i)`",
+            "  `  i += 1`",
+            "  `  if i > 10:`",
+            "  `    break`",
+            "**Cách 2 (thực hiện trước):**",
+            "  `print(i)`",
+            "  `i += 1`",
+            "  `while i <= 10:`",
+            "  `  print(i)`",
+            "  `  i += 1`"
+          ]
+        },
+        {
+          "id": 41,
+          "title": "Bài 5.12: Điều khiển thiết bị đơn giản",
+          "description": "Viết chương trình Python để mô phỏng điều khiển một thiết bị (ví dụ: động cơ) dựa trên một số trạng thái và biến đếm.",
+          "status": "✓",
+          "score": 7,
+          "image": [],
+          "guidance": [
+            "Cho biết sơ đồ trên làm gì? (Tóm tắt lại chức năng của Flowgorithm: Mô phỏng động cơ chạy 3 lần, mỗi lần 1s, sau đó dừng).",
+            "Khai báo các biến `cong_tac = 0` (kiểu boolean hoặc int) và `bien_dem = 0` (kiểu int).",
+            "Sử dụng vòng lặp `while cong_tac == 0:` (hoặc `while not cong_tac:`) để quét trạng thái.",
+            "Trong vòng lặp, sử dụng câu điều kiện `if bien_dem < 3:` để kiểm tra biến đếm.",
+            "Nếu điều kiện đúng, in `\"...Động cơ chạy...\"` và tăng `bien_dem` lên 1.",
+            "Sử dụng `time.sleep(1)` để chờ 1s.",
+            "Khi `bien_dem` đạt 3 (hoặc lớn hơn), in `\"...Động cơ dừng...\"` và cập nhật `cong_tac = 1` (hoặc `cong_tac = True`) để thoát vòng lặp."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Buổi 6: Xây dựng hàm",
+      "exercises": [
+        {
+          "id": 42,
+          "title": "Bài 6.1: Hàm không trả về giá trị",
+          "description": "- Trả lời câu hỏi: Hàm trong Python hoạt động như thế nào, tại sao phải dùng hàm?\n- Hãy viết chương trình Python thực hiện tác vụ sau: định nghĩa một hàm `tinh_tong` nhận hai số `a` và `b` làm tham số, tính tổng của chúng và in kết quả ra màn hình (hàm này không cần trả về giá trị). Sau đó, gọi hàm này từ chương trình chính với `a=5, b=7`.",
+          "status": "✗",
+          "score": 0,
+          "image": [],
+          "guidance": [
+            "Lý thuyết:\n- Hàm dùng để gom các tác vụ lặp đi lặp lại thành một khối code để tái sử dụng, giúp code gọn gàng, dễ đọc, dễ bảo trì.",
+            "- Nguyên tắc hoạt động: Khi chương trình đến dòng gọi hàm, nó sẽ thực thi các lệnh trong hàm đó. Sau khi hàm thực thi xong, chương trình tiếp tục thực thi các lệnh tiếp theo.",
+            "- Hàm có hai loại: loại có giá trị trả về (sử dụng `return`) và loại không có giá trị trả về (không có `return` hoặc `return None`).",
+            "Khai báo hàm `tinh_tong` bằng từ khóa `def` (ví dụ: `def tinh_tong(a, b):`). Hàm này sẽ không có giá trị trả về.",
+            "Trong hàm `tinh_tong`, tính tổng `c = a + b` và xuất kết quả ra màn hình bằng `print(c)`.",
+            "Trong chương trình chính, thiết lập giá trị các biến `a = 5`, `b = 7`, sau đó gọi hàm `tinh_tong` với tham số là `a` và `b` (ví dụ: `tinh_tong(a, b)`)."
+          ]
+        },
+        {
+          "id": 43,
+          "title": "Bài 6.2: Hàm có giá trị trả về",
+          "description": "- Trả lời câu hỏi: Hàm có giá trị trả về trong Python hoạt động như thế nào?\n- Hãy viết chương trình Python thực hiện tác vụ sau: định nghĩa một hàm `tinh_tong` nhận hai số `a` và `b`, tính tổng của chúng và trả về kết quả. Sau đó, gọi hàm này từ chương trình chính với `a=5, b=7` và in kết quả trả về ra màn hình.",
+          "status": "✗",
+          "score": 0,
+          "image": [],
+          "guidance": [
+            "Lý thuyết: Hàm có giá trị trả về sẽ trả về một giá trị thông qua từ khóa `return`. Khi gọi hàm, giá trị trả về này có thể được lưu vào một biến để sử dụng hoặc xử lý tiếp.",
+            "Khai báo hàm `tinh_tong` nhận hai tham số `a` và `b` và trả về tổng của chúng (ví dụ: `def tinh_tong(a, b): return a + b`).",
+            "Trong chương trình chính, thiết lập giá trị các biến `a = 5`, `b = 7`. Sử dụng một biến `z` để lưu kết quả trả về của hàm `tinh_tong` (ví dụ: `z = tinh_tong(a, b)`), sau đó in kết quả biến `z` ra màn hình."
+          ]
+        },
+        {
+          "id": 44,
+          "title": "Bài 6.3: Truyền tham trị",
+          "description": "Viết chương trình Python thực hiện nhiệm vụ sau:\n- Xây dựng hàm `tinh_bieu_thuc` thực hiện biểu thức `S = a + 4 * b` và xuất giá trị `S` ra màn hình.\n- Khởi tạo biến `x = 5, y = 6` trong chương trình chính.\n- Gọi hàm `tinh_bieu_thuc` với 2 giá trị truyền vào tương ứng `x` và `y`.\n- Trong hàm `tinh_bieu_thuc`, thử thay đổi giá trị của `a` hoặc `b` (ví dụ: `a = 100`). Quan sát xem giá trị gốc của `x` và `y` trong chương trình chính có bị ảnh hưởng không.",
+          "status": "✗",
+          "score": 0,
+          "image": [],
+          "guidance": [
+            "Lý thuyết: Trong Python, mọi tham số truyền vào hàm đều là 'truyền theo tham chiếu đối tượng' (pass by object reference). Đối với các kiểu dữ liệu 'bất biến' (immutable) như số (int, float) và chuỗi (str), việc thay đổi tham số trong hàm sẽ không ảnh hưởng đến biến gốc bên ngoài.",
+            "Viết hàm `tinh_bieu_thuc` với hai tham số `a` và `b`. Trong hàm, triển khai `S = a + 4 * b` và in `S` ra màn hình.",
+            "Trong chương trình chính, khởi tạo `x = 5`, `y = 6`. Sau đó gọi hàm `tinh_bieu_thuc` với `x` và `y` (ví dụ: `tinh_bieu_thuc(x, y)`)."
+          ]
+        },
+        {
+          "id": 45,
+          "title": "Bài 6.4: Truyền tham chiếu đối tượng có thể thay đổi",
+          "description": "Viết chương trình Python thực hiện nhiệm vụ sau:\n- Xây dựng hàm `thay_doi_danh_sach` nhận một danh sách (list) làm tham số.\n- Trong hàm, thêm một phần tử mới vào danh sách đó.\n- Khởi tạo một danh sách trong chương trình chính.\n- Gọi hàm `thay_doi_danh_sach` với danh sách này và quan sát xem danh sách gốc có bị thay đổi không.",
+          "status": "✗",
+          "score": 0,
+          "image": [],
+          "guidance": [
+            "Lý thuyết: Đối với các kiểu dữ liệu 'có thể thay đổi' (mutable) như danh sách (list), từ điển (dict), tập hợp (set), khi bạn truyền chúng vào hàm, bạn vẫn đang truyền tham chiếu đến cùng một đối tượng. Do đó, việc thay đổi nội dung của đối tượng bên trong hàm sẽ ảnh hưởng đến đối tượng gốc bên ngoài.",
+            "Trong chương trình chính, khởi tạo một danh sách: `my_list = [1, 2, 3]`.",
+            "Viết hàm `thay_doi_danh_sach` (ví dụ: `def thay_doi_danh_sach(lst_param):`) nhận một danh sách làm tham số.",
+            "Trong hàm `thay_doi_danh_sach`, thêm một phần tử vào danh sách (ví dụ: `lst_param.append(4)`).",
+            "Trong chương trình chính, in danh sách `my_list` trước và sau khi gọi `thay_doi_danh_sach(my_list)` để thấy sự thay đổi."
+          ]
+        },
+        {
+          "id": 46,
+          "title": "Bài 6.5: Hàm trả về nhiều giá trị",
+          "description": "Viết một hàm `tinh_toan` trong Python nhận 2 tham số `a`, `b` và trả về cả tổng và tích của `a` và `b`.",
+          "status": "✗",
+          "score": 0,
+          "image": [],
+          "guidance": [
+            "Lý thuyết: Python cho phép hàm trả về nhiều giá trị một cách trực tiếp bằng cách liệt kê chúng sau `return`. Các giá trị này sẽ tự động được đóng gói vào một `tuple`.",
+            "Viết hàm `tinh_toan` (ví dụ: `def tinh_toan(a, b):`).",
+            "Trong hàm `tinh_toan`, tính `tong = a + b` và `tich = a * b`. Sau đó, `return tong, tich`.",
+            "Trong chương trình chính, gọi `tong_kq, tich_kq = tinh_toan(5, 6);` để nhận các giá trị trả về và in chúng ra màn hình."
+          ]
+        },
+        {
+          "id": 47,
+          "title": "Bài 6.6: Hàm đệ quy",
+          "description": "- Cho biết thế nào là hàm đệ quy? Hàm đệ quy được dùng mục đích gì? Và cho ví dụ minh họa.\n- Viết chương trình Python sử dụng hàm đệ quy để tính tổng `S = 1 + 2 + ... + n` với `n` là số người dùng nhập vào hoặc có thể gán cứng.",
+          "status": "✗",
+          "score": -5,
+          "image": [],
+          "guidance": [
+            "Lý thuyết về đệ quy:\n- Hàm đệ quy là hàm gọi lại chính nó.",
+            "- Mục đích: Giải quyết bài toán lớn bằng cách chia thành bài toán nhỏ hơn tương tự, cho đến khi đạt được 'điều kiện dừng' (base case).",
+            "- Quan trọng: Phải có điều kiện dừng để tránh vòng lặp vô hạn và lỗi `RecursionError`.",
+            "- Ứng dụng: Thường dùng cho các bài toán có cấu trúc đệ quy tự nhiên như duyệt cây, tính giai thừa, số Fibonacci.",
+            "Viết chương trình:",
+            "Định nghĩa hàm `tinh_tong(n)` nhận một tham số `n`.",
+            "Phân tích đệ quy: `Tong(n) = Tong(n-1) + n`.",
+            "Điều kiện dừng (base case): Nếu `n == 1`, `return 1`.",
+            "Trường hợp đệ quy: Nếu `n > 1`, `return tinh_tong(n-1) + n`.",
+            "Trong chương trình chính, lấy giá trị `n` (ví dụ: `n = int(input(\"Nhập số n:\"))`), gọi `tinh_tong(n)` và in kết quả."
+          ]
+        },
+        {
+          "id": 48,
+          "title": "Bài 6.7: Hàm tính n giai thừa",
+          "description": "Xây dựng hàm `tinh_giai_thua` để tính n giai thừa theo giải thuật đệ quy, biết `n! = 1 * 2 * 3 * ... * n`. Sau khi xây dựng xong, hãy viết chương trình Python nhận dữ liệu `n` là số bất kỳ do người dùng nhập và in kết quả sau khi gọi hàm `tinh_giai_thua` ra màn hình.",
+          "status": "✗",
+          "score": 0,
+          "image": [],
+          "guidance": [
+            "Phân tích đệ quy: `tinh_giai_thua(n) = tinh_giai_thua(n-1) * n`.",
+            "Điều kiện dừng (base case): Nếu `n == 0` hoặc `n == 1`, `return 1` (0! = 1, 1! = 1).",
+            "Viết chương trình:",
+            "Định nghĩa hàm `tinh_giai_thua(n)` nhận một tham số `n`.",
+            "Trong `tinh_giai_thua`, nếu `n` là 0 hoặc 1, `return 1`. Trường hợp còn lại, `return tinh_giai_thua(n-1) * n`.",
+            "Trong chương trình chính, lấy giá trị `n` (nhập từ `input()` và chuyển sang `int()`), gọi `tinh_giai_thua(n)` và in kết quả."
+          ]
+        },
+        {
+          "id": 49,
+          "title": "Bài 6.8: Chia nhỏ chương trình thành các hàm",
+          "description": "Viết chương trình Python để tính điện áp cầu phân áp. Hãy cho biết tại sao chúng ta phải phân chia chương trình thành các hàm con, dựa vào sơ đồ hãy cho biết chương trình được phân chia theo Top-Down các khối như thế nào.\n- Hãy viết chương trình Python thực hiện các tác vụ sau:\n  - Hàm để nhập điện áp đầu vào `Vin`.\n  - Hàm để nhập giá trị điện trở `R`.\n  - Hàm để tính điện áp đầu ra `Vout`.\n  - Chương trình chính sẽ gọi các hàm này và in ra kết quả cuối cùng.",
+          "status": "✗",
+          "score": 0,
+          "image": [],
+          "guidance": [
+            "Lý thuyết: Việc phân chia chương trình thành các hàm con giúp tối ưu code, dễ bảo trì, và tái sử dụng. Thiết kế Top-Down giúp phân rã bài toán lớn thành những bài toán nhỏ hơn, dễ quản lý hơn.",
+            "Viết chương trình:",
+            "Định nghĩa hàm `nhap_dien_ap_vao()` không nhận tham số, sử dụng `input()` để đọc điện áp, chuyển sang `float()` và trả về giá trị đó.",
+            "Định nghĩa hàm `nhap_dien_tro()` không nhận tham số, sử dụng `input()` để đọc điện trở, chuyển sang `float()` và trả về giá trị đó.",
+            "Định nghĩa hàm `tinh_Vout(R1, R2, Vin)` nhận 3 tham số `R1`, `R2`, `Vin`, tính `Vout = (Vin / (R1 + R2)) * R2` và trả về `Vout`.",
+            "Trong chương trình chính, gọi các hàm `nhap_dien_ap_vao()` và `nhap_dien_tro()` để lấy `Vin`, `R1`, `R2`. Sau đó gọi `tinh_Vout` và in kết quả `Vout` ra màn hình."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Buổi 7: Mảng và Từ điển/Lớp",
+      "exercises": [
+        {
+          "id": 56,
+          "title": "Bài 7.1: In danh sách",
+          "description": "Trả lời câu hỏi: Kiểu dữ liệu danh sách (list) trong Python là gì? Tại sao phải dùng danh sách? Nêu vài ứng dụng danh sách trong thực tế.\n\nCho danh sách `A` có 5 phần tử `1, 2, 3, 4, 5`. Viết chương trình Python thực hiện nhiệm vụ sau:\n- Khởi tạo danh sách `A` chứa 5 phần tử 1, 2, 3, 4, 5.\n- In các phần tử của danh sách `A` ra màn hình bằng cách **truy cập từng index, chú ý không sử dụng vòng lặp**.\n- Thay đổi phần tử thứ 0 của danh sách `A` thành 100 và in phần tử thứ 0 của danh sách `A` ra màn hình.\n- Sử dụng vòng lặp để quét các phần tử của danh sách `A` và xuất kết quả các phần tử ra màn hình.",
+          "status": "✗",
+          "score": -6,
+          "image": [],
+          "guidance": [
+            "Lý thuyết: Danh sách (list) trong Python là một kiểu dữ liệu có thể thay đổi (mutable), cho phép lưu trữ nhiều giá trị (có thể khác loại) dưới một biến duy nhất. Các phần tử được truy cập bằng chỉ số (index) bắt đầu từ 0.",
+            "Ưu điểm: Linh hoạt, dễ sử dụng, hỗ trợ nhiều phương thức thao tác.",
+            "Ứng dụng: Bộ đệm, hàng đợi, ngăn xếp, lưu trữ các bộ sưu tập dữ liệu.",
+            "Viết chương trình:",
+            "Khởi tạo danh sách `A` chứa 5 phần tử `1, 2, 3, 4, 5` theo công thức: `ten_danh_sach = [giaTri1, giaTri2, ...];`.",
+            "Truy cập các phần tử của danh sách `A` và in ra màn hình bằng `print(ten_danh_sach[chi_so]);`.",
+            "Thay đổi phần tử thứ 0 của danh sách `A` thành 100 theo công thức: `ten_danh_sach[chi_so] = gia_tri;` và in giá trị phần tử thứ 0 ra màn hình.",
+            "Sử dụng vòng lặp `for` (ví dụ: `for phan_tu in A:` hoặc `for i in range(len(A)):`) để quét các phần tử của danh sách `A` và xuất ra màn hình."
+          ]
+        },
+        {
+          "id": 57,
+          "title": "Bài 7.2: Tìm giá trị lớn nhất, nhỏ nhất trong danh sách",
+          "description": "Cho danh sách `A` có 5 phần tử `1, 5, 7, 9, 3`. Hãy viết chương trình Python thực hiện tác vụ sau:\n- Tìm phần tử có giá trị lớn nhất của danh sách `A` và xuất ra màn hình giá trị tìm được.\n- Tìm phần tử có giá trị nhỏ nhất của danh sách `A` và xuất ra màn hình giá trị tìm được.",
+          "status": "✗",
+          "score": -6,
+          "image": [],
+          "guidance": [
+            "Phân tích: Python có các hàm tích hợp sẵn để tìm giá trị lớn nhất và nhỏ nhất trong danh sách.",
+            "Viết chương trình:",
+            "Khởi tạo danh sách `A` bằng `A = [1, 5, 7, 9, 3]`.",
+            "Sử dụng hàm `max(A)` để tìm giá trị lớn nhất và `min(A)` để tìm giá trị nhỏ nhất.",
+            "Xuất kết quả `max_A`, `min_A` ra màn hình bằng `print()`."
+          ]
+        },
+        {
+          "id": 58,
+          "title": "Bài 7.3: Tìm giá trị trung bình của danh sách",
+          "description": "Cho danh sách `A` chứa kết quả 5 cảm biến nhiệt `20.5, 40.5, 30.0, 50.0, 60.0`. Hãy viết chương trình Python thực hiện tác vụ sau:\n- Tính giá trị nhiệt độ trung bình của danh sách `A` và xuất kết quả ra màn hình.",
+          "status": "✗",
+          "score": -1,
+          "image": [],
+          "guidance": [
+            "Phân tích: Để tính giá trị trung bình, bạn cần tổng các phần tử và số lượng phần tử. Python có các hàm tích hợp sẵn cho cả hai.",
+            "Viết chương trình:",
+            "Khởi tạo danh sách `A` chứa 5 phần tử `20.5, 40.5, 30.0, 50.0, 60.0`.",
+            "Sử dụng hàm `sum(A)` để tính tổng các phần tử.",
+            "Sử dụng hàm `len(A)` để lấy số lượng phần tử.",
+            "Tính giá trị trung bình bằng cách chia tổng cho số lượng phần tử (ví dụ: `average = sum(A) / len(A)`).",
+            "Xuất kết quả `average` ra màn hình."
+          ]
+        },
+        {
+          "id": 59,
+          "title": "Bài 7.4: Tìm kiếm vị trí phần tử trong danh sách",
+          "description": "Cho danh sách `A` chứa kết quả 5 cảm biến nhiệt `20.5, 40.5, 30.0, 50.0, 60.0`. Hãy viết chương trình Python thực hiện tác vụ sau:\n- Tìm kiếm vị trí (index) của danh sách `A` tại đó nhiệt độ đạt cao nhất và giá trị nhiệt độ cao nhất.\n- In vị trí (index) và giá trị nhiệt độ tìm được ra màn hình.",
+          "status": "✗",
+          "score": 0,
+          "image": [],
+          "guidance": [
+            "Phân tích: Bạn có thể tìm giá trị lớn nhất và sau đó tìm chỉ số của giá trị đó, hoặc duyệt qua danh sách để theo dõi cả giá trị lớn nhất và chỉ số của nó.",
+            "Viết chương trình:",
+            "Khởi tạo danh sách `A`.",
+            "Sử dụng hàm `max(A)` để tìm giá trị lớn nhất (`maxValue`).",
+            "Sử dụng phương thức `.index()` của danh sách để tìm vị trí (index) của giá trị lớn nhất (ví dụ: `maxIndex = A.index(maxValue)`).",
+            "Xuất `maxValue` và `maxIndex` ra màn hình."
+          ]
+        },
+        {
+          "id": 60,
+          "title": "Bài 7.5: Tráo đổi vị trí phần tử trong danh sách",
+          "description": "Cho danh sách `A` chứa 5 phần tử `10, 20, 30, 40, 50`. Hãy viết chương trình Python thực hiện tác vụ sau:\n- Thực hiện tráo đổi phần tử ở vị trí 2 và vị trí 3 của danh sách `A` cho nhau (chỉ số 0-based).\n- Xuất ra màn hình danh sách `A` sau khi tráo đổi để kiểm chứng.",
+          "status": "✗",
+          "score": 0,
+          "image": [],
+          "guidance": [
+            "Phân tích: Python cung cấp một cách rất đơn giản để tráo đổi giá trị giữa hai biến hoặc hai vị trí trong danh sách.",
+            "Viết chương trình:",
+            "Khởi tạo danh sách `A` bằng `A = [10, 20, 30, 40, 50]`.",
+            "Thực hiện tráo đổi bằng cú pháp: `A[index1], A[index2] = A[index2], A[index1]` (ví dụ: `A[2], A[3] = A[3], A[2]`).",
+            "Xuất ra màn hình toàn bộ danh sách `A` sau khi tráo đổi bằng `print(A)`."
+          ]
+        },
+        {
+          "id": 61,
+          "title": "Bài 7.6: Hàm in tất cả phần tử của danh sách",
+          "description": "Cho danh sách `A` chứa 5 phần tử `10, 20, 30, 40, 50`. Hãy viết chương trình Python thực hiện tác vụ sau:\n- Xây dựng hàm để in tất cả phần tử của danh sách `A`.\n- Thực hiện gọi hàm để kiểm tra kết quả.",
+          "status": "✗",
+          "score": 0,
+          "image": [],
+          "guidance": [
+            "Lý thuyết: Trong Python, khi truyền một danh sách vào hàm, bạn đang truyền tham chiếu đến đối tượng danh sách đó. Hàm có thể duyệt và thay đổi nội dung của danh sách gốc.",
+            "Viết chương trình:",
+            "Xây dựng hàm `in_danh_sach` (ví dụ: `def in_danh_sach(lst):`) không cần kiểu trả về, nhận một danh sách làm tham số.",
+            "Trong hàm `in_danh_sach`, sử dụng vòng lặp `for` (hoặc `for-each`) để quét các phần tử và dùng `print()` để xuất các phần tử ra màn hình.",
+            "Khai báo danh sách `A = [10, 20, 30, 40, 50]`.",
+            "Gọi hàm `in_danh_sach(A);` để in các phần tử."
+          ]
+        },
+        {
+          "id": 62,
+          "title": "Bài 7.7: Hàm tráo đổi phần tử trong danh sách",
+          "description": "Cho danh sách `A` chứa 5 phần tử `10, 20, 30, 40, 50`. Hãy viết chương trình Python thực hiện tác vụ sau:\n- Thiết kế hàm `swap_elements` để thực hiện tráo đổi 2 phần tử ở vị trí bất kỳ của danh sách `A`.\n- Sử dụng hàm `swap_elements` để thực hiện tráo đổi phần tử ở vị trí 2 và vị trí 3 cho nhau.\n- Xuất ra màn hình danh sách `A` sau khi tráo đổi để kiểm chứng.",
+          "status": "✗",
+          "score": 0,
+          "image": [],
+          "guidance": [
+            "Xây dựng hàm `swap_elements` (ví dụ: `def swap_elements(lst, index1, index2):`) không cần kiểu trả về, nhận 3 tham số: danh sách `lst`, vị trí `index1` và `index2` cần tráo đổi.",
+            "Trong hàm `swap_elements`, thực hiện giải thuật tráo đổi bằng cú pháp Python: `lst[index1], lst[index2] = lst[index2], lst[index1]`.",
+            "Khai báo danh sách `A = [10, 20, 30, 40, 50]`.",
+            "Gọi hàm `swap_elements(A, 2, 3);` để thực hiện tráo đổi.",
+            "Sử dụng `print(A)` để xuất ra màn hình toàn bộ danh sách `A` sau khi tráo đổi."
+          ]
+        },
+        {
+          "id": 63,
+          "title": "Bài 7.8: Kiểu dữ liệu từ điển (Dictionary)",
+          "description": "Trả lời câu hỏi: Kiểu dữ liệu từ điển (Dictionary) trong Python là gì? Tại sao phải dùng từ điển? Nêu vài ứng dụng từ điển trong thực tế.\n\nViết chương trình Python thực hiện tác vụ sau:\n- Khởi tạo một từ điển `sinh_vien` với các thông tin: `\"ten\": \"Nguyen Van A\"`, `\"lop\": \"IT23M\"`, `\"tuoi\": 18`.\n- In ra thông tin của sinh viên bằng cách truy cập các khóa.\n- Thay đổi tuổi của sinh viên thành 19 và in lại thông tin tuổi.",
+          "status": "✗",
+          "score": 0,
+          "image": [],
+          "guidance": [
+            "Lý thuyết: Từ điển (dictionary) trong Python là một tập hợp các cặp khóa-giá trị (key-value pairs) không có thứ tự. Khóa phải là duy nhất và bất biến (immutable) (ví dụ: chuỗi, số, tuple). Từ điển rất linh hoạt và hiệu quả cho việc tra cứu dữ liệu nhanh chóng.",
+            "Ưu điểm: Truy cập dữ liệu bằng khóa, dễ dàng thêm/xóa/sửa đổi phần tử.",
+            "Ứng dụng: Lưu trữ hồ sơ, cấu hình, ánh xạ dữ liệu.",
+            "Viết chương trình:",
+            "Khởi tạo từ điển `sinh_vien` bằng cú pháp: `ten_tu_dien = {\"khoa1\": \"gia_tri1\", \"khoa2\": \"gia_tri2\", ...}`.",
+            "Truy cập giá trị bằng khóa: `sinh_vien[\"ten\"]`.",
+            "Thay đổi giá trị: `sinh_vien[\"tuoi\"] = 19`.",
+            "Sử dụng `print()` để in thông tin."
+          ]
+        },
+        {
+          "id": 64,
+          "title": "Bài 7.9: Duyệt từ điển và các phương thức",
+          "description": "Cho từ điển `sinh_vien` từ bài 7.8. Viết chương trình Python thực hiện tác vụ sau:\n- In ra tất cả các khóa của từ điển.\n- In ra tất cả các giá trị của từ điển.\n- In ra tất cả các cặp khóa-giá trị của từ điển.\n- Kiểm tra xem khóa `\"lop\"` có tồn tại trong từ điển không.",
+          "status": "✗",
+          "score": 0,
+          "image": [],
+          "guidance": [
+            "Sử dụng phương thức `.keys()` để lấy tất cả các khóa (ví dụ: `sinh_vien.keys()`).",
+            "Sử dụng phương thức `.values()` để lấy tất cả các giá trị (ví dụ: `sinh_vien.values()`).",
+            "Sử dụng phương thức `.items()` để lấy tất cả các cặp khóa-giá trị (ví dụ: `sinh_vien.items()`).",
+            "Để kiểm tra sự tồn tại của khóa, sử dụng toán tử `in` (ví dụ: `if \"lop\" in sinh_vien:`)."
+          ]
+        },
+        {
+          "id": 65,
+          "title": "Bài 7.10: Kiểu dữ liệu Tuple",
+          "description": "Trả lời câu hỏi: Kiểu dữ liệu Tuple trong Python là gì? Tại sao phải dùng Tuple? Nêu vài ứng dụng Tuple trong thực tế.\n\nViết chương trình Python thực hiện tác vụ sau:\n- Khởi tạo một Tuple `coordinates` với các giá trị `(10, 20)`.\n- Truy cập và in ra phần tử thứ nhất và thứ hai của Tuple.\n- Thử thay đổi một phần tử trong Tuple (ví dụ: `coordinates[0] = 5`). Quan sát kết quả.",
+          "status": "✗",
+          "score": 0,
+          "image": [],
+          "guidance": [
+            "Lý thuyết: Tuple là một kiểu dữ liệu bất biến (immutable), có thứ tự. Sau khi tạo, bạn không thể thay đổi, thêm, hoặc xóa các phần tử của nó. Tuple được định nghĩa bằng dấu ngoặc đơn `()`.",
+            "Ưu điểm: Bảo vệ dữ liệu không bị thay đổi, có thể dùng làm khóa trong từ điển (không như list).",
+            "Ứng dụng: Trả về nhiều giá trị từ một hàm, lưu trữ tọa độ, dữ liệu cố định.",
+            "Viết chương trình:",
+            "Khởi tạo Tuple `coordinates = (10, 20)`.",
+            "Truy cập phần tử bằng chỉ số (index): `coordinates[0]`.",
+            "Khi thử thay đổi phần tử, bạn sẽ nhận được `TypeError` vì Tuple là bất biến."
+          ]
+        }
+      ]
+    }
+  ]
+}
