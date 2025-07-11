@@ -1,3 +1,4 @@
+
 import docx
 import json
 import os
@@ -18,6 +19,7 @@ def sanitize_filename(name):
 def process_docx_to_json(docx_path, output_folder):
     """
     Đọc một file DOCX có cấu trúc, phân tích và tạo ra một file course_*.json.
+    Gộp tất cả các loại hướng dẫn vào một trường 'guidance'.
     """
     try:
         doc = docx.Document(docx_path)
@@ -32,70 +34,102 @@ def process_docx_to_json(docx_path, output_folder):
         current_session = None
         current_exercise = None
         exercise_id_counter = 1
+        
+        # Cờ để theo dõi loại nội dung đang đọc
+        # 0: Đang đọc nội dung mô tả (description)
+        # 1: Đang đọc nội dung hướng dẫn (guidance - gộp cả chung và làm bài)
+        current_content_type = 0 
 
         for para in doc.paragraphs:
             if not para.text.strip():
                 continue
 
             style_name = para.style.name
+            line_text = para.text.strip() 
 
-            # --- BẮT ĐẦU LOGIC CẬP NHẬT ---
-
-            # Ưu tiên 1: Kiểm tra các dòng thông tin chung
-            if para.text.lower().startswith("tên môn:"):
-                course_data["course_name"] = para.text[len("tên môn:"):].strip()
+            # --- Xử lý thông tin chung của môn học ---
+            if line_text.lower().startswith("tên môn:"):
+                course_data["course_name"] = line_text[len("tên môn:"):].strip()
                 continue
             
-            if para.text.lower().startswith("ngôn ngữ:"):
-                course_data["course_language"] = para.text[len("ngôn ngữ:"):].strip().lower()
+            if line_text.lower().startswith("ngôn ngữ:"):
+                course_data["course_language"] = line_text[len("ngôn ngữ:"):].strip().lower()
                 continue
 
-            # Ưu tiên 2: Kiểm tra các tiêu đề để thay đổi "trạng thái" đọc
-            # Nếu là Buổi học mới
+            # --- Xử lý Heading 1 (Buổi học) ---
             if 'Heading 1' in style_name:
                 current_session = {
-                    "title": para.text.strip(),
+                    "title": line_text,
                     "exercises": []
                 }
                 course_data["sessions"].append(current_session)
-                current_exercise = None # Reset, vì đã sang buổi mới
+                current_exercise = None 
+                current_content_type = 0 
                 continue
 
-            # Nếu là Bài tập mới
+            # --- Xử lý Heading 2 (Bài tập) ---
             if 'Heading 2' in style_name:
                 if current_session is None:
-                    return (False, "Lỗi cấu trúc: Tìm thấy 'Tên bài' (Heading 2) nhưng chưa có 'Buổi học' (Heading 1).")
+                    print(f"Lỗi cấu trúc: Tìm thấy 'Tên bài' (Heading 2) nhưng chưa có 'Buổi học' (Heading 1) ở dòng: {line_text}")
+                    continue 
 
                 current_exercise = {
                     "id": exercise_id_counter,
-                    "title": para.text.strip(),
+                    "title": line_text,
                     "description": "",
                     "status": "✗",
                     "score": 0,
-                    "image": [],
-                    "guidance": []
+                    "image": [], 
+                    "guidance": [] # Chỉ còn một trường guidance duy nhất, là list of strings
                 }
                 current_session["exercises"].append(current_exercise)
                 exercise_id_counter += 1
+                current_content_type = 0 # Khi gặp bài mới, mặc định đọc description
                 continue
             
-            # Ưu tiên 3: Nếu không phải các trường hợp trên, nó là nội dung mô tả
-            # Chỉ thêm vào mô tả nếu chúng ta đang ở trong một bài tập
-            if current_exercise is not None:
-                line_text = para.text.strip()
+            # --- Xử lý Heading 3 (Hướng dẫn làm bài) ---
+            if 'Heading 3' in style_name:
+                if current_exercise is None:
+                    print(f"Cảnh báo: Tìm thấy 'Hướng dẫn làm bài' (Heading 3) nhưng chưa có 'Bài tập' (Heading 2) ở dòng: {line_text}")
+                    continue 
+                current_content_type = 1 # Chuyển sang đọc nội dung hướng dẫn (guidance)
                 
-                # Để giữ định dạng danh sách đẹp hơn, ta có thể thêm dấu "-"
-                if 'List Paragraph' in style_name:
-                    current_exercise["description"] += "- " + line_text + "\n"
-                else:
-                    current_exercise["description"] += line_text + "\n"
-            
-            # --- KẾT THÚC LOGIC CẬP NHẬT ---
+                # Thêm chính nội dung của Heading 3 vào guidance
+                #current_exercise["guidance"].append(line_text) # Thêm như một dòng mới
+                continue 
 
-        # Dọn dẹp description (xóa dấu xuống dòng thừa ở cuối)
+            # --- Xử lý nội dung thông thường (không phải Heading) ---
+            if current_exercise is not None:
+                # Xử lý các tiền tố cũ để phân loại nội dung
+                if line_text.lower().startswith("mô tả bài tập:"):
+                    current_content_type = 0 
+                    current_exercise["description"] += line_text[len("mô tả bài tập:"):].strip() + "\n"
+                    continue
+                elif line_text.lower().startswith("hướng dẫn chung:"):
+                    current_content_type = 1 # Chuyển sang đọc guidance
+                    # Thêm phần còn lại của dòng vào guidance
+                    current_exercise["guidance"].append(line_text[len("hướng dẫn chung:"):].strip()) 
+                    continue
+                
+                # Định dạng dòng văn bản (thêm bullet nếu là list paragraph)
+                formatted_line_content = line_text.strip()
+                # Thêm dấu bullet nếu là List Paragraph style
+                if 'List Paragraph' in style_name:
+                    formatted_line_content = "- " + formatted_line_content
+                
+                # Nối nội dung vào trường tương ứng
+                if current_content_type == 0: # Đang đọc description
+                    current_exercise["description"] += formatted_line_content + "\n"
+                elif current_content_type == 1: # Đang đọc guidance
+                    current_exercise["guidance"].append(formatted_line_content) # Thêm từng dòng vào list
+
+        # Dọn dẹp dấu xuống dòng thừa ở cuối các trường văn bản
         for session in course_data["sessions"]:
             for ex in session["exercises"]:
                 ex["description"] = ex["description"].strip()
+                # guidance đã là list, các phần tử đã strip khi thêm vào
+                # Nếu muốn nối các dòng của guidance thành một chuỗi duy nhất:
+                # ex["guidance"] = "\n".join(ex["guidance"]).strip() 
 
         if course_data["course_name"] == "Chưa xác định":
             return (False, "Không tìm thấy 'Tên môn:' trong file DOCX.")
