@@ -137,6 +137,40 @@ CURRENT_EXERCISE_LANGUAGE = ""
 # Biến toàn cục mới để theo dõi trạng thái đăng nhập
 IS_LOGGED_IN = False
 
+# ... các dòng import khác ...
+from queue import Queue,Empty
+import json
+import pathlib # Đảm bảo đã import
+
+# ...
+model=None
+history=[]
+queue = Queue()
+queue_log=Queue()
+ID_EXERCISE=None
+# ...
+
+def check_browser_queue(browser_window):
+    """Hàm này được pywebview gọi định kỳ để kiểm tra queue và tải URL mới."""
+    try:
+        new_url = browser_queue.get_nowait()
+        if new_url:
+            print(f"DEBUG: Trình duyệt nhận lệnh tải URL: {new_url}")
+            browser_window.load_url(new_url)
+    except Empty:
+        pass
+
+def start_browser_manager(parent_frame):
+    """Khởi tạo trình duyệt trong một luồng riêng và bắt đầu vòng lặp kiểm tra queue."""
+    def worker():
+        browser_window = webview.create_window('Embedded Browser', 'about:blank', native_parent=parent_frame.winfo_id())
+        webview.start(check_browser_queue, browser_window, private_mode=False)
+
+    thread = threading.Thread(target=worker)
+    thread.daemon = True
+    thread.start()
+
+    
 # Thêm class này vào để tạo chú thích cho icon
 class Tooltip:
     def __init__(self, widget, text):
@@ -972,7 +1006,6 @@ def process_markdown_escape_smart(md_text):
     return temp_text
 
 def render_ai_json_markdown(response_text: str) -> str:
-     
     print(response_text)
     match = re.search(r'```json\s*(\{.*?\})\s*```', response_text, flags=re.DOTALL)
     if match:
@@ -983,14 +1016,36 @@ def render_ai_json_markdown(response_text: str) -> str:
     try:
         obj = json.loads(json_str)
         markdown_text = obj["data"]
-        new_text, code_blocks = extract_and_replace_c_blocks(markdown_text)
+
+        # === BẮT ĐẦU KHỐI CODE BẢO VỆ LATEX ===
+        # 1. Tạm thời thay thế các ký hiệu LaTeX bằng các mã giữ chỗ an toàn
+        protected_text = markdown_text.replace('\\(', '@@INLINE_MATH_START@@')
+        protected_text = protected_text.replace('\\)', '@@INLINE_MATH_END@@')
+        protected_text = protected_text.replace('\\[', '@@DISPLAY_MATH_START@@')
+        protected_text = protected_text.replace('\\]', '@@DISPLAY_MATH_END@@')
+        # === KẾT THÚC KHỐI CODE BẢO VỆ LATEX ===
+
+        # Phần xử lý code block của bạn giữ nguyên
+        new_text, code_blocks = extract_and_replace_c_blocks(protected_text)
         new_text=re.sub(r'(?<!\n)\n(?!\n)', '  \n', new_text)
-        new_text=resume_block_code(new_text,code_blocks)        
+        new_text=resume_block_code(new_text,code_blocks)
+
+        # Chuyển đổi markdown sang HTML (với văn bản đã được bảo vệ)
         html = markdown.markdown(new_text, extensions=["fenced_code", "sane_lists"])
-        return html,obj['info'],None
+
+        # === BẮT ĐẦU KHÔI PHỤC LATEX ===
+        # 2. Khôi phục lại các ký hiệu LaTeX ban đầu trong chuỗi HTML
+        html = html.replace('@@INLINE_MATH_START@@', '\\(')
+        html = html.replace('@@INLINE_MATH_END@@', '\\)')
+        html = html.replace('@@DISPLAY_MATH_START@@', '\\[')
+        html = html.replace('@@DISPLAY_MATH_END@@', '\\]')
+        # === KẾT THÚC KHÔI PHỤC LATEX ===
+        
+        return html, obj['info'], None
+        
     except Exception as err:
         print('***************Lỗi phản hồi json*******************')
-        return '',{},err
+        return '', {}, err
     
 #####################################################################################################################
 
@@ -1023,14 +1078,15 @@ def update_response_callback(info):
     print(f"DEBUG: Cập nhật bài tập ID {ID_EXERCISE} với trạng thái '{status.value}' và điểm {score}")
     update_json_course(ID_EXERCISE, status, score)
                 
-def update_response(window,queue):
+# Thay thế toàn bộ hàm cũ bằng hàm này
+def update_response(window, queue, html_label_extended): # Đổi tên tham số cho rõ ràng
     global re_response_prompt
     global MAX_RETRY
     try:
         while True:
-            response, output, fr_info, log, was_retry= queue.get_nowait()
-            html_content,info,err=render_ai_json_markdown(response)
-            
+            response, output, fr_info, log, was_retry = queue.get_nowait()
+            html_content, info, err = render_ai_json_markdown(response)
+
             if html_content == '' and info == {}:
                 print(err)
                 if not was_retry:
@@ -1038,28 +1094,40 @@ def update_response(window,queue):
                     call_gemini_api_thread(re_response_prompt, queue, output, fr_info, was_retry=True)
                 else:
                     print("❌ Phản hồi tiếp tục lỗi sau khi đã retry → bỏ qua")
-                continue  # luôn bỏ qua kết quả lỗi
+                continue
             
-            if html_content!='':
-                if output is not None:
-                    html_content_=f"<div style='font-size:12px; font-family:Verdana'>{html_content}</div>"
-                    output.set_html(html_content_)
-                
+            if html_content != '':
+                    # Cập nhật cho tab "Xem tại đây" (output là HTMLLabel chính)
+                    if output is not None:
+                        # Chỉ cần tạo nội dung HTML đơn giản
+                        html_content_ = f"<div style='font-size:12px; font-family:Verdana'>{html_content}</div>"
+
+                        # Đoạn code cập nhật các widget giữ nguyên như cũ
+                        output.set_html(html_content_)
+                        output.last_html_content = html_content_
+
+                        if html_label_extended:
+                            html_label_extended.set_html(html_content_)
+
+                    # --- KẾT THÚC ---
+
             if fr_info is not None:
-                lbl_level=fr_info['level']
-                lbl_socre=fr_info['score']
+                lbl_level = fr_info['level']
+                lbl_socre = fr_info['score']
                 lbl_level.config(text=info.get('level', '-'))
-                lbl_socre.config(text=info.get('score', '-'))       
-                           
+                lbl_socre.config(text=info.get('score', '-'))
+
             if info:
                 update_response_callback(info)
-            
+
             for msg in log:
                 write_log(msg)
-            
+
     except Empty:
         pass
-    window.after(100, update_response,window,queue)
+
+    # Sửa lời gọi đệ quy ở cuối hàm để truyền đủ tham số
+    window.after(100, update_response, window, queue, html_label_extended)
             
 ##cập nhập log             
 def wait_queue_log(queue,output):
@@ -1419,8 +1487,8 @@ def on_course_select(event, tree_widget, course_var_obj, input_widget=None, fr_l
             print(f"DEBUG: Course language set to: {CURRENT_COURSE_LANGUAGE}")
             print(f"DEBUG: Course name set to: {CURRENT_COURSE_NAME}")
 
-            if input_widget:
-                update_code_editor_language(input_widget, CURRENT_EXERCISE_LANGUAGE)
+            # if input_widget:
+            #     update_code_editor_language(input_widget, CURRENT_EXERCISE_LANGUAGE)
             
             tree_load(tree_widget, json_course)
             print(f"DEBUG: Loaded course: {selected_course_name} from {file_path_to_load}")
@@ -1937,331 +2005,55 @@ def on_custom_language_select(event, lang_variable):
     
     print(f"DEBUG (Custom Tab): Language changed to: {lang_code}")
 
-# def start_main_app(window):
-#     """
-#     Hàm này chứa toàn bộ logic dựng giao diện chính và gán sự kiện,
-#     được gọi sau khi các dữ liệu nền đã được tải xong.
-#     """
-#     # Các biến global cần thiết
-#     global json_course, model, history, queue, event_args, IS_LOGGED_IN, API_KEY_LIST, API_KEY, CURRENT_USER_TOKEN, DICT_USER_INFO
-    
-#     # ========== CÁC HÀM NỘI BỘ (giữ nguyên) ==========
-#     def update_ui_for_login_status():
-#         """Cập nhật toàn bộ giao diện dựa trên trạng thái đăng nhập (đã login hay là khách)."""
-#         # Kích hoạt menu Gemini API cho mọi đối tượng
-#         menubar.entryconfig("Gemini API", state="normal")
-        
-#         if IS_LOGGED_IN and DICT_USER_INFO:
-#             username = DICT_USER_INFO[0].get('username', 'User')
-#             login_logout_button.config(command=logout, text=f"👤 Xin chào, {username}!")
+def open_html_in_browser(html_content):
+    """
+    Tạo file HTML có nhúng MathJax và mở bằng trình duyệt mặc định.
+    """
+    if not html_content:
+        messagebox.showwarning("Không có nội dung", "Chưa có phản hồi từ AI để hiển thị.")
+        return
+
+    # Đoạn mã script của MathJax đã được sửa lỗi escape
+    mathjax_script = """
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\\\(', '\\\\)']],  // <-- SỬA LẠI THÀNH 2 DẤU \
+          displayMath: [['$$', '$$'], ['\\\\[', '\\\\]']] // <-- SỬA LẠI THÀNH 2 DẤU \
+        },
+        svg: {
+          fontCache: 'global'
+        }
+      };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    """
+
+    # Tạo nội dung file HTML hoàn chỉnh
+    full_html = f"""
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="UTF-8">
+      <title>AI Response</title>
+      {mathjax_script}
+    </head>
+    <body>
+      {html_content}
+    </body>
+    </html>
+    """
+
+    try:
+        temp_file_path = os.path.join(PATH_CACHE, 'temp_ai_response.html')
+        with open(temp_file_path, "w", encoding="utf-8") as f:
+            f.write(full_html)
             
-#             # Kích hoạt các tính năng cần đăng nhập
-#             tool_menu.entryconfig("Nộp bài", state="normal")
-#             file_menu.entryconfig("Export Log ra file JSON...", state="normal")
-#         else:
-#             login_logout_button.config(command=open_login_window, text="🚀 Đăng nhập / Đăng ký")
-            
-#             # Vô hiệu hóa các tính năng cần đăng nhập
-#             tool_menu.entryconfig("Nộp bài", state="disabled")
-#             file_menu.entryconfig("Export Log ra file JSON...", state="disabled")
-    
-#     def open_login_window():
-#         """Mở cửa sổ đăng nhập và xử lý kết quả."""
-#         global IS_LOGGED_IN, API_KEY_LIST, API_KEY
+        webbrowser.open(f'file://{os.path.realpath(temp_file_path)}')
         
-#         login_app = LoginApp(window, auth, db, update_user_info, update_api_key, PATH_JSON_CONFIG)
+    except Exception as e:
+        messagebox.showerror("Lỗi", f"Không thể mở trong trình duyệt: {e}")
         
-#         if login_app.result == 'ok':
-#             IS_LOGGED_IN = True
-            
-#             try:
-#                 current_user_uid = DICT_USER_INFO[0]['mssv']
-#                 user_data = db.child("users").child(current_user_uid).get(token=CURRENT_USER_TOKEN)
-                
-#                 user_keys = user_data.val().get('gemini_api_keys') if user_data.val() else None
-
-#                 if user_keys: # Ưu tiên key của người dùng nếu có
-#                     print(f"DEBUG: Tìm thấy {len(user_keys)} API key cá nhân. Đang áp dụng...")
-#                     API_KEY_LIST[:] = user_keys
-#                     # Tìm key hoạt động trong danh sách của người dùng
-#                     working_key = find_working_api_key(API_KEY_LIST)
-#                     if working_key:
-#                         API_KEY = working_key
-#                     else:
-#                         messagebox.showwarning("Cảnh báo API Key", "Không tìm thấy key nào hoạt động trong danh sách API cá nhân của bạn. Tạm thời sử dụng key mặc định.")
-#                         # Nếu key cá nhân không hoạt động, quay lại dùng key mặc định
-#                         load_app_data()
-#                 else:
-#                     # Nếu người dùng không có key, không cần làm gì cả, vì app đang dùng key mặc định rồi
-#                     print("DEBUG: Người dùng chưa có API key cá nhân, tiếp tục dùng key mặc định.")
-
-#             except Exception as e:
-#                 print(f"Lỗi khi tải API key cá nhân: {e}")
-#             finally:
-#                 # Cập nhật lại model với API key mới nhất (của user hoặc mặc định)
-#                 update_model()
-
-#             # Tải danh sách môn học
-#             load_all_course_data(course_combobox)
-#         else:
-#             IS_LOGGED_IN = False
-        
-#         update_ui_for_login_status()
-
-#     def logout():
-#         """Đăng xuất người dùng và reset về trạng thái khách."""
-#         global IS_LOGGED_IN
-#         if messagebox.askyesno("Xác nhận", "Bạn có chắc chắn muốn đăng xuất?"):
-#             IS_LOGGED_IN = False
-#             history.clear()
-#             load_app_data()
-#             update_model()
-#             update_ui_for_login_status()
-
-#     # ========== BẮT ĐẦU DỰNG GIAO DIỆN CHÍNH ==========
-    
-#     # --- Cấu hình layout chính của cửa sổ ---
-#     # Row 0: Header (chứa Toolbar và nút Login)
-#     # Row 1: PanedWindow (chứa 3 cột chính)
-#     window.grid_rowconfigure(1, weight=1) 
-#     window.grid_columnconfigure(0, weight=1) 
-
-#     # --- KHUNG HEADER (Chứa cả Toolbar và Nút Đăng nhập) ---
-#     fr_header = tk.Frame(window)
-#     fr_header.grid(row=0, column=0, sticky='ew', padx=5, pady=(5,0))
-    
-#     toolbar = tk.Frame(fr_header)
-#     toolbar.pack(side=tk.LEFT, padx=5, pady=2)
-
-#     login_logout_button = tk.Button(fr_header, font=("Arial", 10, "bold"), fg="blue", relief="flat", justify="right")
-#     login_logout_button.pack(side=tk.RIGHT, padx=10)
-
-#     # --- MENU BAR (giữ nguyên) ---
-#     menubar = tk.Menu(window)
-#     window.config(menu=menubar)
-#     # (code tạo menubar của bạn giữ nguyên...)
-#     file_menu = tk.Menu(menubar, tearoff=0)
-#     menubar.add_cascade(label="File", menu=file_menu)
-#     file_menu.add_command(label="Export Log ra file JSON...", command=export_log_to_json)
-#     file_menu.add_separator()
-#     file_menu.add_command(label="Exit", command=lambda: window_on_closing(window))
-#     tool_menu = tk.Menu(menubar, tearoff=0)
-#     menubar.add_cascade(label="Function", menu=tool_menu)
-#     menubar.add_command(label="Gemini API", command=lambda: open_gemini_api_window(window))
-#     help_menu = tk.Menu(menubar, tearoff=0)
-#     menubar.add_cascade(label="Trợ giúp", menu=help_menu)
-#     help_menu.add_command(label="Hướng dẫn sử dụng", command=open_help_file)
-#     help_menu.add_command(label="About", command=lambda: show_about_dialog(window))
-
-#     # --- PANED WINDOW (chia 3 cột) ---
-#     paned_window = ttk.PanedWindow(window, orient=tk.HORIZONTAL)
-#     paned_window.grid(row=1, column=0, sticky='nswe', padx=5, pady=5) # Đặt vào row=1
-    
-#     fr_left = tk.Frame(paned_window) 
-#     paned_window.add(fr_left, weight=1) 
-#     fr_center = tk.Frame(paned_window) 
-#     paned_window.add(fr_center, weight=2) 
-#     fr_right = tk.Frame(paned_window) 
-#     paned_window.add(fr_right, weight=1) 
-    
-#     def set_initial_sashes_after_zoom():
-#         # (hàm này giữ nguyên)
-#         window.update_idletasks() 
-#         current_paned_width = paned_window.winfo_width()
-#         min_width_left = 300
-#         min_width_center = 500
-#         min_width_right = 300 
-#         total_desired_width = min_width_left + min_width_center + min_width_right
-#         if current_paned_width >= total_desired_width: 
-#             sash_pos_0 = min_width_left
-#             sash_pos_1 = min_width_left + min_width_center
-#         else:
-#             sash_pos_0 = int(current_paned_width * (min_width_left / total_desired_width))
-#             sash_pos_1 = int(current_paned_width * ((min_width_left + min_width_center) / total_desired_width))
-#         paned_window.sashpos(0, sash_pos_0)
-#         paned_window.sashpos(1, sash_pos_1)
-
-#     # === DÁN LẠI TOÀN BỘ CODE DỰNG NỘI DUNG 3 CỘT VÀ TOOLBAR LOGIC VÀO ĐÂY ===
-
-#     # --- LOGIC CỦA TOOLBAR ---
-#     icon_size = (24, 24)
-#     icons = {} 
-#     def load_icon(name, path):
-#         try:
-#             full_path = os.path.join(PATH_IMG, path)
-#             icons[name] = ImageTk.PhotoImage(Image.open(full_path).resize(icon_size))
-#         except Exception as e:
-#             print(f"Lỗi tải icon '{path}': {e}")
-#             icons[name] = None
-    
-#     load_icon("import_word", "import.png")
-#     load_icon("update_course", "upload.png")
-#     load_icon("submit_exercise", "send.png")
-#     load_icon("gemini_api", "settings.png")
-#     load_icon("help", "help.png")
-    
-#     def create_toolbar_button(parent, icon_name, text_tooltip, command):
-#         btn = tk.Button(parent, image=icons.get(icon_name), command=command, relief=tk.FLAT, width=30, height=30)
-#         btn.pack(side=tk.LEFT, padx=1, pady=1)
-#         Tooltip(btn, text_tooltip)
-#         return btn
-
-#     #     # ========== KHUNG BÊN TRÁI (fr_left) ==========
-#     fr_left.rowconfigure(0, weight=1)
-#     fr_left.columnconfigure(0, weight=1)
-    
-#     notebook_left = ttk.Notebook(fr_left)
-#     notebook_left.grid(row=0, column=0, sticky='nswe', padx=2, pady=2)
-    
-#     # --- Tab 1: Bài tập Tự do ---
-#     fr_tab_custom = tk.Frame(notebook_left)
-#     notebook_left.add(fr_tab_custom, text='Bài tập Tự do')
-#     fr_tab_custom.rowconfigure(2, weight=1) 
-#     fr_tab_custom.columnconfigure(0, weight=1)
-
-#     lang_frame = tk.Frame(fr_tab_custom)
-#     lang_frame.grid(row=0, column=0, sticky='ew', padx=5, pady=(5,0))
-#     tk.Label(lang_frame, text="Chọn ngôn ngữ (tùy chọn):", font=("Arial", 11)).pack(side=tk.LEFT, padx=(0, 5))
-#     lang_var = tk.StringVar()
-#     lang_combobox = ttk.Combobox(lang_frame, textvariable=lang_var, values=["Không", "C", "Java", "Python"], state="readonly", width=15)
-#     lang_combobox.pack(side=tk.LEFT)
-#     lang_combobox.set("Không")
-#     lang_combobox.bind("<<ComboboxSelected>>", lambda event: on_custom_language_select(event, lang_var))
-
-#     tk.Label(fr_tab_custom, text="Nhập đề bài hoặc yêu cầu của bạn:", font=("Arial", 11)).grid(row=1, column=0, sticky='w', padx=5, pady=5)
-#     txt_custom_exercise = scrolledtext.ScrolledText(fr_tab_custom, wrap=tk.WORD, font=("Arial", 11), height=10)
-#     txt_custom_exercise.grid(row=2, column=0, sticky='nswe', padx=5)
-#     btn_start_custom_exercise = tk.Button(fr_tab_custom, text="Bắt đầu & Hướng dẫn", font=("Arial", 11, "bold"))
-#     btn_start_custom_exercise.grid(row=3, column=0, pady=10)
-    
-#     # --- Tab 2: Bài tập theo Môn học ---
-#     fr_tab_course = tk.Frame(notebook_left)
-#     notebook_left.add(fr_tab_course, text='Bài tập theo Môn học')
-#     fr_tab_course.rowconfigure(0, weight=1)
-#     fr_tab_course.columnconfigure(0, weight=1)
-
-#     fr_nav = tk.Frame(fr_tab_course)
-#     fr_nav.grid(row=0, column=0, sticky='nswe')
-#     fr_nav.rowconfigure(2, weight=1)
-#     fr_nav.columnconfigure(0, weight=1)
-
-#     tk.Label(fr_nav, text="Chọn môn học:", font=("Arial", 11)).grid(row=0, column=0, sticky='w', padx=5)
-#     course_var = tk.StringVar()
-#     # course_combobox = ttk.Combobox(fr_nav, textvariable=course_var, font=("Arial", 11), state="readonly")
-#     # course_combobox.grid(row=1, column=0, sticky='ew', padx=5, pady=2) 
-#     # available_course_names = list(COURSE_FILE_MAP.keys())
-#     # course_combobox['values'] = available_course_names
-
-#     course_combobox = ttk.Combobox(fr_nav, textvariable=course_var, font=("Arial", 11), state="readonly")
-#     course_combobox.grid(row=1, column=0, sticky='ew', padx=5, pady=2) 
-#     # Không cần gán 'values' ở đây nữa, hàm load_all_course_data sẽ làm việc này
-#     # ...
-    
-#     fr_lesson_tree = tk.Frame(fr_nav)
-#     fr_lesson_tree.grid(row=2, column=0, sticky='nswe') 
-#     fr_lesson_tree.rowconfigure(0, weight=1)
-#     fr_lesson_tree.columnconfigure(0, weight=1)
-
-#     tree = ttk.Treeview(fr_lesson_tree, columns=("status", "score"), show="tree headings") 
-#     tree.heading("#0", text="Buổi và tên bài", anchor='w')
-#     tree.column("#0", minwidth=200) 
-#     tree.heading("status", text="Trạng thái", anchor='center')
-#     tree.column("status", width=80, stretch=False, anchor='center')
-#     tree.heading("score", text="Điểm", anchor='center')
-#     tree.column("score", width=60, stretch=False, anchor='center')
-#     tree.grid(row=0, column=0, sticky='nswe')
-            
-#     # ========== KHUNG Ở GIỮA (fr_center) ==========
-#     fr_center.rowconfigure(0, weight=1)
-#     fr_center.columnconfigure(0, weight=1)
-    
-#     fr_input = tk.Frame(fr_center)
-#     fr_input.grid(row=0, column=0, sticky="nswe")
-#     fr_input.rowconfigure(1, weight=1)
-#     fr_input.columnconfigure(0, weight=1)
-
-#     tk.Label(fr_input, text='Bài làm', font=("Arial", 12, "bold"), fg="white", bg="green").grid(row=0, column=0, sticky="ew")
-#     txt_input = CodeEditor(fr_input, font=("Consolas", 14), highlighter="monokai", wrap="word")
-#     txt_input.grid(row=1, column=0, sticky='nswe', padx=5, pady=5)
-#     txt_input.configure(background="white", foreground="black", insertbackground="black")
-#     update_code_editor_language(txt_input, CURRENT_COURSE_LANGUAGE)
-    
-#     fr_input_btn = tk.Frame(fr_input)
-#     fr_input_btn.grid(row=2, column=0, sticky='ew', pady=5)
-#     fr_input_btn.columnconfigure([0,1,2], weight=1)
-    
-#     btn_run_code = tk.Button(fr_input_btn, text='▶ Chạy code', font=("Arial", 11))
-#     btn_run_code.grid(row=0, column=0)
-#     btn_send = tk.Button(fr_input_btn, text='💬 Chấm bài & Đánh giá', font=("Arial", 11))
-#     btn_send.grid(row=0, column=1)
-#     btn_help = tk.Button(fr_input_btn, text='💡 AI Giúp đỡ', font=("Arial", 11))
-#     btn_help.grid(row=0, column=2)
-
-#     # ========== KHUNG BÊN PHẢI (fr_right) ==========
-#     fr_right.rowconfigure(0, weight=1)
-#     fr_right.columnconfigure(0, weight=1)
-    
-#     fr_response = tk.Frame(fr_right)
-#     fr_response.grid(row=0, column=0, sticky="nswe")
-#     fr_response.rowconfigure(1, weight=1)
-#     fr_response.columnconfigure(0, weight=1)
-    
-#     tk.Label(fr_response, text='AI phản hồi', font=("Arial", 12, "bold"), fg="white", bg="green").grid(row=0, column=0, sticky='ew')
-#     txt_output = HTMLLabel(fr_response, background="white", wrap="word")
-#     txt_output.grid(row=1, column=0, sticky='nswe', padx=5, pady=(0,5))
-    
-#     tk.Label(fr_response, text='Đánh giá', font=("Arial", 12, "bold"), fg="white", bg="green").grid(row=2, column=0, sticky='ew')
-#     fr_info = tk.Frame(fr_response)
-#     fr_info.grid(row=3, column=0, sticky='ew', padx=5, pady=5)
-#     fr_info.columnconfigure([0,1,2,3], weight=1)
-    
-#     tk.Label(fr_info, text='Level:', font=("Arial", 12)).grid(row=0, column=0, sticky='e')
-#     lbl_level = tk.Label(fr_info, text='-', font=("Arial", 12, "bold"), fg="blue")
-#     lbl_level.grid(row=0, column=1, sticky='w')
-#     tk.Label(fr_info, text='Score:', font=("Arial", 12)).grid(row=0, column=2, sticky='e')
-#     lbl_score = tk.Label(fr_info, text='-', font=("Arial", 12, "bold"), fg="red")
-#     lbl_score.grid(row=0, column=3, sticky='w')   
-    
-#     # ========== LOGIC & SỰ KIỆN ==========
-#     event_args = {
-#         "window": window, "tree": tree, "fr_tree": fr_lesson_tree, 
-#         "queue": queue, "output": txt_output, 
-#         "fr_info": {'level': lbl_level, 'score': lbl_score}, 
-#         "input_widget": txt_input, "custom_input": txt_custom_exercise,
-#         "notebook": notebook_left # <<< THÊM DÒNG NÀY
-#     }
-
-#     def on_select_wrapper(event, args):
-#         if not IS_LOGGED_IN:
-#             open_login_window()
-#             return
-#         on_select(event, args)
-    
-#     btn_run_code.config(command=lambda: btn_run_code_click(event_args))
-#     btn_send.config(command=lambda: btn_send_click(event_args))
-#     btn_help.config(command=lambda: btn_help_click(event_args))
-#     btn_start_custom_exercise.config(command=lambda: start_custom_exercise(event_args))
-
-#     tree.bind("<<TreeviewSelect>>", lambda event: on_select_wrapper(event, event_args))
-#     course_combobox.bind("<<ComboboxSelected>>", lambda event: on_course_select(event, tree, course_var, input_widget=txt_input, fr_lesson_tree_widget=fr_lesson_tree))
-
-#     tool_menu.add_command(label="Import từ Word (.docx)", command=lambda: handle_import_docx(course_combobox, course_var))
-#     tool_menu.add_command(label="Tạo giới thiệu ảnh", command=lambda: btn_create_img_description_click({'model': model, 'frame': fr_center}))
-#     tool_menu.add_command(label="Cập nhật bài tập", command=lambda: btn_upload_course_click({'frame': fr_center}))
-#     tool_menu.add_command(label="Nộp bài", command=lambda: btn_submit_exercise_click({'frame': fr_center}))
-#     tool_menu.add_command(label="Xóa Cache", command=lambda: btn_clear_cache_click(event_args))
-    
-#     # --- KHỞI TẠO TRẠNG THÁI & HIỂN THỊ ---
-#     window.protocol("WM_DELETE_WINDOW", lambda: window_on_closing(window))
-#     window.deiconify()
-#     window.state('zoomed')
-    
-#     window.after(200, set_initial_sashes_after_zoom)
-
-#     update_model()
-#     update_ui_for_login_status()
-#     update_response(window, queue)
-
 def start_main_app(window):
     """
     Hàm này chứa toàn bộ logic dựng giao diện chính và gán sự kiện,
@@ -2521,10 +2313,12 @@ def start_main_app(window):
     fr_input.columnconfigure(0, weight=1)
 
     tk.Label(fr_input, text='Bài làm', font=("Arial", 12, "bold"), fg="white", bg="green").grid(row=0, column=0, sticky="ew")
-    txt_input = CodeEditor(fr_input, font=("Consolas", 14), highlighter="monokai", wrap="word")
+    #txt_input = CodeEditor(fr_input, font=("Consolas", 14), highlighter="monokai", wrap="word")
+    txt_input = scrolledtext.ScrolledText(fr_input, wrap=tk.WORD, font=("Consolas", 12))
+    
     txt_input.grid(row=1, column=0, sticky='nswe', padx=5, pady=5)
-    txt_input.configure(background="white", foreground="black", insertbackground="black")
-    update_code_editor_language(txt_input, CURRENT_COURSE_LANGUAGE)
+    #txt_input.configure(background="white", foreground="black", insertbackground="black")
+    #update_code_editor_language(txt_input, CURRENT_COURSE_LANGUAGE)
     
     fr_input_btn = tk.Frame(fr_input)
     fr_input_btn.grid(row=2, column=0, sticky='ew', pady=5)
@@ -2538,17 +2332,71 @@ def start_main_app(window):
     btn_help.grid(row=0, column=2)
 
     # ========== KHUNG BÊN PHẢI (fr_right) ==========
+    # fr_right.rowconfigure(0, weight=1)
+    # fr_right.columnconfigure(0, weight=1)
+    
+    # fr_response = tk.Frame(fr_right)
+    # fr_response.grid(row=0, column=0, sticky="nswe")
+    # fr_response.rowconfigure(1, weight=1)
+    # fr_response.columnconfigure(0, weight=1)
+    
+    # tk.Label(fr_response, text='AI phản hồi', font=("Arial", 12, "bold"), fg="white", bg="green").grid(row=0, column=0, sticky='ew')
+    # txt_output = HTMLLabel(fr_response, background="white", wrap="word")
+    # txt_output.grid(row=1, column=0, sticky='nswe', padx=5, pady=(0,5))
+    
+    # ========== KHUNG BÊN PHẢI (fr_right) ==========
     fr_right.rowconfigure(0, weight=1)
     fr_right.columnconfigure(0, weight=1)
-    
+
     fr_response = tk.Frame(fr_right)
     fr_response.grid(row=0, column=0, sticky="nswe")
-    fr_response.rowconfigure(1, weight=1)
+    fr_response.rowconfigure(1, weight=1) # Cấu hình cho Notebook
     fr_response.columnconfigure(0, weight=1)
-    
+
     tk.Label(fr_response, text='AI phản hồi', font=("Arial", 12, "bold"), fg="white", bg="green").grid(row=0, column=0, sticky='ew')
-    txt_output = HTMLLabel(fr_response, background="white", wrap="word")
-    txt_output.grid(row=1, column=0, sticky='nswe', padx=5, pady=(0,5))
+
+    # --- BẮT ĐẦU THAY ĐỔI ---
+    # 1. Tạo Notebook
+    notebook_right = ttk.Notebook(fr_response)
+    notebook_right.grid(row=1, column=0, sticky='nswe', padx=5, pady=(0,5))
+
+    # 2. Tạo 2 tab (Frame)
+    tab_html_view = tk.Frame(notebook_right)
+    tab_browser_view = tk.Frame(notebook_right)
+
+    notebook_right.add(tab_html_view, text='Xem tại đây')
+    notebook_right.add(tab_browser_view, text='Mở rộng')
+
+    # 3. Đặt HTMLLabel vào tab đầu tiên
+    tab_html_view.rowconfigure(0, weight=1)
+    tab_html_view.columnconfigure(0, weight=1)
+    txt_output = HTMLLabel(tab_html_view, background="white", wrap="word")
+    txt_output.grid(row=0, column=0, sticky='nswe')
+
+
+    # ==========================================================
+    # BẮT ĐẦU KHỐI CODE MỚI CHO TAB "MỞ RỘNG"
+    # ==========================================================
+    tab_browser_view.columnconfigure(0, weight=1)
+    tab_browser_view.rowconfigure(1, weight=1) # Cấu hình cho HTMLLabel mới
+
+    # 1. Tạo một frame để chứa nút bấm
+    fr_browser_controls = tk.Frame(tab_browser_view)
+    fr_browser_controls.grid(row=0, column=0, sticky='ew', padx=5, pady=5)
+    
+    # 2. Giữ lại nút để mở trong trình duyệt thật, rất hữu ích
+    btn_open_in_real_browser = tk.Button(fr_browser_controls, text="🚀 Mở trong Trình duyệt web", font=("Arial", 10, "bold"))
+    btn_open_in_real_browser.pack(side=tk.LEFT)
+    btn_open_in_real_browser.config(command=lambda: open_html_in_browser(
+        txt_output.last_html_content if hasattr(txt_output, 'last_html_content') else ""
+    ))
+    
+    # 3. THAY THẾ ScrolledText BẰNG HTMLLabel
+    html_view_extended = HTMLLabel(tab_browser_view, background="white", wrap="word")
+    html_view_extended.grid(row=1, column=0, sticky='nswe', padx=5, pady=(0,5))
+    # ==========================================================
+    # KẾT THÚC KHỐI CODE MỚI
+    # ==========================================================
     
     tk.Label(fr_response, text='Đánh giá', font=("Arial", 12, "bold"), fg="white", bg="green").grid(row=2, column=0, sticky='ew')
     fr_info = tk.Frame(fr_response)
@@ -2598,9 +2446,17 @@ def start_main_app(window):
     
     window.after(200, set_initial_sashes_after_zoom)
 
+    # update_model()
+    # update_ui_for_login_status()
+    # update_response(window, queue)
+    # ...
     update_model()
     update_ui_for_login_status()
-    update_response(window, queue)
+    # Thêm txt_html_source vào lời gọi hàm
+    #update_response(window, queue, txt_html_source)
+    # Thay txt_html_source bằng html_view_extended
+    update_response(window, queue, html_view_extended)
+    
 
 def main():
     """Hàm khởi động chính của ứng dụng, chỉ hiển thị splash screen và tải dữ liệu."""

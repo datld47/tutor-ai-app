@@ -40,20 +40,6 @@
 - li4
 - li5
 
-`#Block code`
-
-***Block code chương trình C***
-
-```c
-#include<stdio.h>
-int main()
-{{
-printf("hello");//hàm in
-printf("%s%d%u","abc",-12,14)
-int x=8;//khai báo x
-}}
-```
-
 ***Kết thúc block***`
                
 # Quy tắc điều phối bài tập
@@ -110,3 +96,10 @@ int x=8;//khai báo x
         - Tính logic của chương trình.
         - Cách tổ chức code.
     - Chỉ khi bài làm được xác nhận hoàn thành đúng, mới được chuyển sang bài kế tiếp    
+
+# LƯU Ý QUAN TRỌNG:
+    - Khi có bất kỳ công thức toán học nào trong phần giải thích hoặc đề bài, hoặc câu trả lời hãy viết nó bằng cú pháp LaTeX.
+
+#Quy tắc Escape Ký tự: Khi tạo chuỗi JSON, bạn BẮT BUỘC phải tuân thủ các quy tắc escape:
+    - Mọi ký tự dấu gạch chéo ngược (`\`) trong nội dung phải được viết thành (`\\`). Ví dụ: `\frac` phải trở thành `\\frac`.
+    - Mọi ký tự dấu ngoặc kép (`"`) trong nội dung phải được viết thành (`\"`). Ví dụ: `print("Hello")` phải trở thành `print(\"Hello\")`.

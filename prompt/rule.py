@@ -157,20 +157,37 @@ main_rule_default=f'''
 #     return main_rule+json_course_
 
 # Đổi tên create_main_rule_new thành create_main_rule
+# def create_main_rule(base_rule_content, exercise_content_markdown, course_name="", course_language=""):
+#     """
+#     Tạo prompt chính cho Gemini bao gồm rule cơ bản và nội dung bài tập,
+#     thay thế các placeholder về tên môn học và ngôn ngữ.
+#     """
+#     formatted_rule = base_rule_content.format(
+#         course_name_placeholder=course_name,
+#         course_language_placeholder=course_language
+#     )
+
+#     # Đảm bảo thụt lề cho # Chi tiết danh sách bài tập...
+#     # Sửa đổi chuỗi f-string để không có thụt lề thừa
+#     return f"{formatted_rule}\n# Chi tiết danh sách bài tập của buổi học và bài học\n{exercise_content_markdown}"
+
 def create_main_rule(base_rule_content, exercise_content_markdown, course_name="", course_language=""):
     """
-    Tạo prompt chính cho Gemini bao gồm rule cơ bản và nội dung bài tập,
-    thay thế các placeholder về tên môn học và ngôn ngữ.
+    Tạo prompt chính cho Gemini...
     """
     formatted_rule = base_rule_content.format(
         course_name_placeholder=course_name,
         course_language_placeholder=course_language
     )
 
-    # Đảm bảo thụt lề cho # Chi tiết danh sách bài tập...
-    # Sửa đổi chuỗi f-string để không có thụt lề thừa
-    return f"{formatted_rule}\n# Chi tiết danh sách bài tập của buổi học và bài học\n{exercise_content_markdown}"
-
+    # === BẮT ĐẦU THAY ĐỔI LOGIC ===
+    # Chỉ thêm tiêu đề "Chi tiết danh sách..." nếu không phải là Bài tập tự do
+    if course_name != "Bài tập tự do":
+        # Giữ nguyên tiêu đề cho các bài tập trong khóa học
+        return f"{formatted_rule}\n# Chi tiết danh sách bài tập của buổi học và bài học\n{exercise_content_markdown}"
+    else:
+        # Đối với Bài tập tự do, chỉ cần rule và nội dung bài tập
+        return f"{formatted_rule}\n{exercise_content_markdown}"
 
 continue_conversation_rule='''
 # Vai trò
