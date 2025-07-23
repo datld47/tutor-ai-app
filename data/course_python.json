@@ -31,15 +31,15 @@
         },
         {
           "id": 3,
-          "title": "Bài 1.3: Sử dụng biến và f-string",
-          "description": "Viết chương trình Python để in thông tin sinh viên:\nTên: Nguyễn Văn A\nLớp: IT23M\nTuổi: 18.\nChú ý: Sử dụng biến để lưu trữ Tên, Lớp, Tuổi và dùng f-string (formatted string literals) để in ra màn hình.",
+          "title": "Bài 1.3: Sử dụng biến",
+          "description": "Viết chương trình Python để in thông tin sinh viên:\nTên: Nguyễn Văn A\nLớp: IT23M\nTuổi: 18.\nChú ý: Sử dụng biến để lưu trữ Tên, Lớp, Tuổi.",
           "status": "✗",
           "score": 0,
           "image": [],
           "guidance": [
             "Khai báo biến `ten` kiểu chuỗi (string), `lop` kiểu chuỗi, và `tuoi` kiểu số nguyên (integer).",
             "Gán giá trị cho các biến này.",
-            "Sử dụng f-string để in thông tin ra màn hình. Ví dụ: `print(f\"Tên: {ten_sinh_vien}\")`.",
+            "Sử dụng print để in thông tin ra màn hình.",
             "Mỗi thông tin nên được in trên một dòng riêng biệt."
           ]
         },

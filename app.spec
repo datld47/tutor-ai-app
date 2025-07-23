@@ -1,7 +1,7 @@
 # -*- mode: python ; coding: utf-8 -*-
 from PyInstaller.utils.hooks import collect_data_files
 a = Analysis(
-    ['app.py'],
+    ['app_pyqt.py'],
     pathex=[
         '.',                      # chính là project/project4
         'venv/Lib/site-packages'  # để import usersustomsize

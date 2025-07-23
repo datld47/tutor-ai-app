@@ -39,8 +39,6 @@
 - li3
 - li4
 - li5
-
-***Kết thúc block***`
                
 # Quy tắc điều phối bài tập
     - Bạn phải **tự động lựa chọn bài học tiếp theo** dựa trên thứ tự danh sách đã cho.

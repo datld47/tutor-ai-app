@@ -1,6 +1,6 @@
 {
   "course_name": "Kỹ thuật lập trình (C)",
-  "course_language": "c",
+  "course_language": "C",
   "task_list_title": "Chi tiết danh sách bài tập của từng buổi",
   "sessions": [
     {
@@ -9,7 +9,7 @@
         {
           "id": 1,
           "title": "Bài 1.1: In helloworld",
-          "description": "Viết chương trình tính in chữ  helloworld ra màn hình. Kết quả gióng như `Hình 1`",
+          "description": "Viết chương trình tính in chữ  hello world ra màn hình. Kết quả gióng như `Hình 1`",
           "status": "✗",
           "score": 10,
           "image": [
@@ -39,7 +39,7 @@
           "guidance": [
             "Khai báo thư viện stdio.h",
             "Khai báo hàm chính",
-            "Sử dụng hàm printf để in chữ helloworld"
+            "Sử dụng hàm printf để in chữ hello world"
           ]
         },
         {

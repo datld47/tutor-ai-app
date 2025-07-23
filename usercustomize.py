@@ -41,6 +41,8 @@ PATH_UPLOAD   = os.path.join(WRITABLE_DATA_ROOT, 'upload') # <-- DÒNG ĐƯỢC 
 PATH_COMPILER = os.path.join(READ_ONLY_ASSET_ROOT, 'compiler')
 PATH_IMG      = os.path.join(READ_ONLY_ASSET_ROOT, 'img')
 
+# Khai báo đường dẫn cho thư mục chứa công cụ editor
+PATH_EDIT_TOOLS = os.path.join(READ_ONLY_ASSET_ROOT, "editTools")
 
 def initialize_app_folders():
     """

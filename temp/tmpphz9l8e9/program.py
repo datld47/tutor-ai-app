@@ -1,0 +1,1 @@
+print("Tên: Nguyễn Văn A")

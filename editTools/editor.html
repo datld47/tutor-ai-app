@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>CKEditor</title>
+    <style>
+        /* Toàn bộ CSS giữ nguyên như cũ để đảm bảo editor co dãn đúng */
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden; 
+        }
+        #editor-container {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .ck-editor {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .ck-editor__main {
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+        .ck-content {
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="editor-container">
+        <div id="editor"></div>
+    </div>
+
+    <script src="./ckeditor.js"></script>
+
+    </body>
+</html>
