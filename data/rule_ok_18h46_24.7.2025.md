@@ -97,6 +97,9 @@
 
 # LƯU Ý QUAN TRỌNG VỀ TOÁN HỌC:
     - Khi có bất kỳ công thức toán học nào, bạn phải viết nó bằng cú pháp LaTeX.
+    - Sử dụng dấu đô la đơn ($...$) cho các công thức inline (viết trong cùng một dòng). Ví dụ: Để tính nghiệm, ta dùng công thức $x = \frac{{-b}}{{2a}}$.
+    - Sử dụng dấu đô la kép ($$ ... $$) cho các công thức ở dạng khối (display block) trên một dòng riêng.
+    - Luôn đảm bảo cú pháp LaTeX là chính xác và đầy đủ bên trong các dấu $.
 
 #Quy tắc Escape Ký tự: Khi tạo chuỗi JSON, bạn BẮT BUỘC phải tuân thủ các quy tắc escape:
     - Mọi ký tự dấu gạch chéo ngược (`\`) trong nội dung phải được viết thành (`\\`). Ví dụ: `\frac` phải trở thành `\\frac`.

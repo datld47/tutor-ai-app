@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>CKEditor</title>
-    <link rel="stylesheet" href="ckeditor5.css">
     <style>
         /* Toàn bộ CSS giữ nguyên như cũ để đảm bảo editor co dãn đúng */
         html, body {
@@ -32,21 +31,6 @@
             height: 100%;
         }
     </style>
-
-    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
-
-    <script>
-    MathJax = {
-        tex: {
-        inlineMath: [['\\(', '\\)']], // Dùng \(...\) cho công thức inline
-        displayMath: [['\\[', '\\]']], // Dùng \[...\] cho công thức khối
-        processEscapes: true
-        },
-        options: {
-        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
-        }
-    };
-    </script>
 </head>
 <body>
     <div id="editor-container">

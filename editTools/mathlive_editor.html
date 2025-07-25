@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Công cụ chỉnh sửa MathLive</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Đảm bảo MathLive hiển thị tốt */
+        math-field {
+            display: block;
+            width: 100%;
+            border: 1px solid #d1d5db; /* gray-300 */
+            border-radius: 0.375rem; /* rounded-md */
+            padding: 0.5rem 0.75rem; /* py-2 px-3 */
+            font-size: 1.125rem; /* text-lg */
+            line-height: 1.75rem; /* leading-7 */
+            min-height: 200px; /* Chiều cao tối thiểu */
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); /* shadow-sm */
+            outline: none;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+        math-field:focus-within {
+            border-color: #3b82f6; /* blue-500 */
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5); /* focus:ring-blue-500 */
+        }
+        /* Ẩn các nút sao chép/văn bản thuần túy không cần thiết trong dialog */
+        .hidden-in-dialog {
+            display: none !important;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center justify-center p-4">
+    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-2xl flex flex-col flex-grow">
+        <h1 class="text-2xl font-bold text-center text-gray-800 mb-4 rounded-md p-2 bg-purple-100">
+            Chỉnh sửa Công thức Toán học
+        </h1>
+
+        <div class="mb-4 flex-grow flex flex-col">
+            <label for="math-editor" class="block text-gray-700 text-sm font-semibold mb-2">
+                Nhập biểu thức toán học vào đây:
+            </label>
+            <math-field id="math-editor" class="text-lg flex-grow" virtual-keyboard-mode="manual" placeholder="Nhập biểu thức của bạn..."></math-field>
+        </div>
+
+        <div class="flex flex-wrap gap-3 mb-6 hidden-in-dialog">
+            <button
+                id="copyLatexButton"
+                class="flex-1 bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:shadow-outline transition duration-300 ease-in-out transform hover:scale-105"
+            >
+                Sao chép LaTeX
+            </button>
+            <button
+                id="copyTextButton"
+                class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:shadow-outline transition duration-300 ease-in-out transform hover:scale-105"
+            >
+                Sao chép văn bản
+            </button>
+        </div>
+
+        <div class="mt-6 p-4 bg-gray-50 rounded-md hidden-in-dialog">
+            <h2 class="text-lg font-semibold text-gray-800 mb-2">Đầu ra LaTeX:</h2>
+            <code id="latexOutput" class="block bg-gray-200 p-3 rounded-md text-gray-800 text-sm overflow-x-auto break-words"></code>
+        </div>
+
+        <div class="mt-4 p-4 bg-gray-50 rounded-md hidden-in-dialog">
+            <h2 class="text-lg font-semibold text-gray-800 mb-2">Đầu ra văn bản thuần túy:</h2>
+            <p id="textOutput" class="bg-gray-200 p-3 rounded-md text-gray-800 text-sm break-words"></p>
+        </div>
+
+        <div id="messageBox" class="fixed bottom-4 right-4 bg-green-500 text-white px-4 py-2 rounded-md shadow-lg hidden hidden-in-dialog">
+            Đã sao chép!
+        </div>
+    </div>
+
+    <!-- SCRIPT THÔNG THƯỜNG ĐỂ ĐỊNH NGHĨA HÀM TRƯỚC KHI MODULE TẢI -->
+    <script>
+        // Định nghĩa hàm setInitialLatexAndFocus ngay lập tức trên đối tượng window
+        window.setInitialLatexAndFocus = (latex) => {
+            const checkMathLiveReady = () => {
+                if (window.mathEditorInstance && typeof window.mathEditorInstance.setValue === 'function') {
+                    window.mathEditorInstance.setValue(latex);
+                    window.mathEditorInstance.focus();
+                } else {
+                    setTimeout(checkMathLiveReady, 50); // Thử lại sau 50ms
+                }
+            };
+            checkMathLiveReady();
+        };
+    </script>
+
+    <!-- Tải thư viện MathLive từ CDN (module script) -->
+    <script type="module">
+        import 'https://unpkg.com/mathlive/dist/mathlive.mjs';
+
+        // Gán instance của MathLive Editor vào một biến toàn cục
+        // Đảm bảo nó được gán ngay khi phần tử DOM sẵn sàng
+        const mathEditor = document.getElementById('math-editor');
+        window.mathEditorInstance = mathEditor;
+
+        // Các phần code liên quan đến nút sao chép và hiển thị output trực tiếp
+        const latexOutput = document.getElementById('latexOutput');
+        const textOutput = document.getElementById('textOutput');
+        const messageBox = document.getElementById('messageBox');
+
+        if (latexOutput && textOutput) {
+            mathEditor.addEventListener('input', () => {
+                latexOutput.textContent = mathEditor.value;
+                textOutput.textContent = mathEditor.text;
+            });
+        }
+
+        const copyToClipboard = (text, message) => {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.style.position = 'fixed';
+            document.body.appendChild(textarea);
+            textarea.focus();
+            textarea.select();
+            try {
+                document.execCommand('copy');
+                if (messageBox) {
+                    messageBox.textContent = message;
+                    messageBox.classList.remove('hidden');
+                    setTimeout(() => {
+                        messageBox.classList.add('hidden');
+                    }, 2000);
+                }
+            } catch (err) {
+                console.error('Không thể sao chép: ', err);
+                if (messageBox) {
+                    messageBox.textContent = 'Lỗi khi sao chép!';
+                    messageBox.classList.remove('hidden');
+                    messageBox.classList.add('bg-red-500');
+                    setTimeout(() => {
+                        messageBox.classList.add('hidden');
+                        messageBox.classList.remove('bg-red-500');
+                    }, 2000);
+                }
+            }
+            document.body.removeChild(textarea);
+        };
+
+        const copyLatexButton = document.getElementById('copyLatexButton');
+        const copyTextButton = document.getElementById('copyTextButton');
+        if (copyLatexButton) {
+            copyLatexButton.addEventListener('click', () => {
+                copyToClipboard(mathEditor.value, 'Đã sao chép LaTeX!');
+            });
+        }
+        if (copyTextButton) {
+            copyTextButton.addEventListener('click', () => {
+                copyToClipboard(mathEditor.text, 'Đã sao chép văn bản!');
+            });
+        }
+    </script>
+</body>
+</html>

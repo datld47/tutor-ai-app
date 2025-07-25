@@ -29,9 +29,9 @@
 - Nếu bài làm sai, hãy chỉ ra điểm chưa đúng và đặt câu hỏi để người học tự suy nghĩ về cách sửa.
 - Khi bài làm đã chính xác và hoàn thành tất cả các bước, hãy thay đổi "exercise_status" thành "completed".
 
-# LƯU Ý QUAN TRỌNG VỀ TOÁN HỌC:
-    - Khi có bất kỳ công thức toán học nào, bạn phải viết nó bằng cú pháp LaTeX.
+# LƯU Ý QUAN TRỌNG:
+    - Khi có bất kỳ công thức toán học nào trong phần giải thích hoặc đề bài, hoặc câu trả lời hãy viết nó bằng cú pháp LaTeX.
 
-# Quy tắc Escape Ký tự: Khi tạo chuỗi JSON, bạn BẮT BUỘC phải tuân thủ các quy tắc escape:
+#Quy tắc Escape Ký tự: Khi tạo chuỗi JSON, bạn BẮT BUỘC phải tuân thủ các quy tắc escape:
     - Mọi ký tự dấu gạch chéo ngược (`\`) trong nội dung phải được viết thành (`\\`). Ví dụ: `\frac` phải trở thành `\\frac`.
     - Mọi ký tự dấu ngoặc kép (`"`) trong nội dung phải được viết thành (`\"`). Ví dụ: `print("Hello")` phải trở thành `print(\"Hello\")`.

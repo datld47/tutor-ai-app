@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>AI Tutor Chat</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: Verdana, sans-serif;
+            background-color: #f4f7f9;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        #pinned-step-container {
+            padding: 12px 15px;
+            background-color: #e3f2fd;
+            border-bottom: 1px solid #b3e5fc;
+            flex-shrink: 0; /* Không co lại */
+            font-size: 15px;
+        }
+        #pinned-step-container strong {
+            color: #01579b;
+        }
+        #chat-container {
+            flex-grow: 1; /* Lấp đầy không gian còn lại */
+            overflow-y: auto; /* Thêm thanh cuộn khi cần */
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+        }
+        .ai-bubble {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 12px 18px;
+            margin-bottom: 12px;
+            max-width: 95%;
+            word-wrap: break-word;
+            border: 1px solid #dcdcdc;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            font-size: 16px;
+        }
+        .bubble-header {
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #00796b;
+            font-size: 14px;
+        }
+        /* Style cho code blocks bên trong phản hồi */
+        pre {
+            background-color: #2d2d2d;
+            color: #f8f8f2;
+            padding: 1em;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        code {
+             font-family: 'Courier New', Courier, monospace;
+        }
+    </style>
+    <script>
+        MathJax = { tex: { inlineMath: [['$', '$']], displayMath: [['$$', '$$']] } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body>
+    <div id="pinned-step-container">
+        <strong>Bước hiện tại:</strong> Hãy chọn một bài tập để bắt đầu.
+    </div>
+    <div id="chat-container">
+        </div>
+
+    <script>
+        // Hàm cập nhật nội dung được ghim
+        function updatePinnedStep(htmlContent) {
+            const container = document.getElementById('pinned-step-container');
+            container.innerHTML = htmlContent;
+        }
+
+        // Hàm thêm một tin nhắn mới vào cuộc trò chuyện
+        function addAiMessage(htmlContent, messageType = '') {
+            const chatContainer = document.getElementById('chat-container');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'ai-bubble';
+
+            let finalHtml = '';
+            if (messageType) {
+                finalHtml += `<div class="bubble-header">${messageType}</div>`;
+            }
+            finalHtml += htmlContent;
+            
+            messageDiv.innerHTML = finalHtml;
+            chatContainer.appendChild(messageDiv);
+            
+            // Xử lý lại MathJax cho nội dung mới
+            if (window.MathJax) {
+                window.MathJax.typesetPromise([messageDiv]);
+            }
+
+            // Tự động cuộn xuống dưới cùng
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+    </script>
+</body>
+</html>

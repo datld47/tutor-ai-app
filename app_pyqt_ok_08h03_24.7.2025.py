@@ -265,7 +265,6 @@ class MainWindow(QMainWindow):
         self.current_exercise = None
         self.model = None
         self.history = []
-        self.conversation_display_history = []
         self.main_rule = ""
         self.main_rule_lesson = ""
         self.prompt_template = ""
@@ -1116,13 +1115,11 @@ class MainWindow(QMainWindow):
 
         self.disable_buttons()
         self.get_current_editor_content(process_submission)
-        
     def start_new_ai_conversation(self, is_custom_exercise=False):
         """
         Xóa lịch sử cũ và thiết lập một cuộc hội thoại mới với bộ quy tắc đã được xử lý.
         """
         self.history.clear()
-        self.conversation_display_history.clear() # <<<<<<<<<<< THÊM DÒNG NÀY
         
         initial_prompt = ""
         
@@ -1280,7 +1277,6 @@ class MainWindow(QMainWindow):
         # --- Các biến quản lý trạng thái giao diện ---
         self.is_awaiting_guidance = False
         self.current_exercise_index = -1
-        self.conversation_display_history.clear() # <<<<<<<<<<< THÊM DÒNG NÀY
         self.history.clear() # Xóa lịch sử hội thoại với AI
 
         # 2. Dọn dẹp các ô nhập liệu và hiển thị
@@ -1341,143 +1337,97 @@ class MainWindow(QMainWindow):
         self.disable_buttons()
         self.get_current_editor_content(run_code_process)
 
-    # THAY THẾ TOÀN BỘ HÀM CŨ BẰNG HÀM NÀY
+    # def handle_gemini_response(self, response_text, was_retry):
+    #     # Hàm render bây giờ sẽ nhận được văn bản JSON an toàn
+    #     html_content, info, err = render_ai_json_markdown(response_text)
+    #     #print ("response_text: ", response_text)
+    #     # Nếu vẫn có lỗi (dù rất hiếm), chỉ cần hiển thị nó ra
+    #     if err:
+    #         self.handle_gemini_error(f"Lỗi phân tích JSON: {err}\n\nPhản hồi gốc:\n{response_text}")
+    #         return
+
+    #     # Nếu không có lỗi, tiếp tục cập nhật giao diện như bình thường
+    #     #self.text_browser.setHtml(html_content)
+        
+    #     html_template = """
+    #     <!DOCTYPE html><html><head><meta charset="UTF-8"><title>AI Response</title>
+    #     <script>
+    #         MathJax = {{ tex: {{ inlineMath: [['$', '$'], ['\\\\(', '\\\\)']], displayMath: [['$$', '$$'], ['\\\\[', '\\\\]']] }} }};
+    #     </script>
+    #     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    #     </head>
+    #     <body><div style='font-size:16px; font-family:Verdana'>{content}</div></body></html>
+    #     """
+    #     full_html = html_template.format(content=html_content)
+    #     self.web_view.setHtml(full_html)
+        
+    #     self.lbl_level.setText(str(info.get('level', '-')))
+    #     self.lbl_score.setText(str(info.get('score', '-')))
+        
+    #     if self.current_exercise and self.current_exercise.get('id') != 'custom_exercise':
+    #         status = "✓" if info.get('exercise_status') == 'completed' else "✗"
+    #         score = str(info.get('score', 0))
+    #         self.update_tree_item(self.current_exercise.get('id'), status, score)
+            
+    #     self.btn_submit_code.setEnabled(True)
+    #     self.btn_ai_help.setEnabled(True)
+    
     def handle_gemini_response(self, response_text, was_retry):
         # Bước 1: Phân tích phản hồi từ AI để lấy ra nội dung, thông tin và lỗi (nếu có)
         html_content, info, err = render_ai_json_markdown(response_text)
 
         # Bước 2: Xử lý lỗi JSON với cơ chế tự động sửa lỗi
+        # Nếu có lỗi và đây là lần đầu tiên, yêu cầu AI sửa lại
         if err and not was_retry:
             print("⚠️ Phản hồi JSON lỗi → Yêu cầu AI sửa lại.")
             re_prompt = RE_RESPONSE_PROMPT.format(error_message=str(err))
+            # Gọi lại thread với prompt yêu cầu sửa lỗi và đánh dấu đây là lần thử lại
             self.run_gemini_in_thread(re_prompt, is_retry=True)
-            return
+            return  # Dừng xử lý phản hồi lỗi hiện tại
 
+        # Nếu vẫn có lỗi sau khi đã thử lại, hiển thị thông báo lỗi
         elif err and was_retry:
             print("❌ Phản hồi vẫn lỗi sau khi đã thử lại. Hiển thị lỗi cho người dùng.")
-            # html_content đã chứa thông báo lỗi từ render_ai_json_markdown
+            # Nội dung lỗi đã có sẵn trong biến html_content từ hàm render_ai_json_markdown
 
         # Bước 3: Xử lý logic đặc biệt khi đang chờ AI tạo các bước hướng dẫn
+        # Khối này chỉ chạy khi không có lỗi JSON và cờ is_awaiting_guidance đang bật
         if not err and self.is_awaiting_guidance:
             generated_steps = info.get("generated_steps")
             if generated_steps and isinstance(generated_steps, list):
+                # Lưu các bước hướng dẫn vừa tạo vào context của bài tập hiện tại
                 self.current_exercise['generated_guidance'] = generated_steps
                 print(f"DEBUG: Đã lưu {len(generated_steps)} bước hướng dẫn do AI tạo.")
             else:
                 print("CẢNH BÁO: AI không trả về 'generated_steps' như mong đợi.")
+            
+            # Tắt cờ sau khi đã xử lý xong
             self.is_awaiting_guidance = False
 
-        # === BẮT ĐẦU PHẦN LOGIC HIỂN THỊ ĐÃ ĐƯỢC CẢI TIẾN ===
-
-        # Bước 4: Thêm phản hồi HTML mới vào lịch sử hiển thị
-        self.conversation_display_history.append(html_content)
-
-        # Bước 5: Tạo chuỗi HTML cho tất cả các tin nhắn trong lịch sử
-        all_messages_html = []
-        for message in self.conversation_display_history:
-            # Bọc mỗi tin nhắn trong một khung chat được định dạng bằng CSS
-            formatted_message = f"""
-            <div class="ai-message-container">
-                <div class="ai-message-header">
-                    🤖 Phản hồi từ Tutor AI
-                </div>
-                <div class="ai-message-content">
-                    {message}
-                </div>
-            </div>
-            """
-            all_messages_html.append(formatted_message)
-        
-        # Kết hợp tất cả các khung chat thành một khối HTML duy nhất
-        combined_html_content = "".join(all_messages_html)
-
-        # Bước 6: Đưa nội dung vào mẫu HTML hoàn chỉnh với CSS để định dạng
+        # Bước 4: Hiển thị nội dung phản hồi lên giao diện
         html_template = """
-        <!DOCTYPE html><html><head>
-        <meta charset="UTF-8"><title>AI Response</title>
-        <style>
-            body {{
-                font-family: Verdana, sans-serif;
-                background-color: #ffffff;
-                padding: 10px;
-            }}
-            .ai-message-container {{
-                background-color: #f1f8e9;
-                border-radius: 10px;
-                padding: 15px;
-                margin-bottom: 15px;
-                box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-                border: 1px solid #dcedc8;
-            }}
-            .ai-message-header {{
-                font-weight: bold;
-                color: #33691e;
-                margin-bottom: 10px;
-                font-size: 1.0em;
-            }}
-            .ai-message-content {{
-                font-size: 16px;
-                line-height: 1.6;
-                color: #333;
-            }}
-            /* Định dạng cho khối code (từ Markdown) */
-            .ai-message-content pre {{
-                background-color: #282c34;
-                color: #abb2bf;
-                padding: 1em;
-                border-radius: 5px;
-                overflow-x: auto;
-                font-family: 'Courier New', Courier, monospace;
-                font-size: 14px;
-            }}
-             /* Định dạng cho bảng (từ Markdown) */
-            .ai-message-content table {{
-                border-collapse: collapse;
-                width: 100%;
-                margin: 1em 0;
-            }}
-            .ai-message-content th, .ai-message-content td {{
-                border: 1px solid #ddd;
-                padding: 8px;
-                text-align: left;
-            }}
-            .ai-message-content th {{
-                background-color: #e8f5e9;
-            }}
-        </style>
+        <!DOCTYPE html><html><head><meta charset="UTF-8"><title>AI Response</title>
         <script>
             MathJax = {{ tex: {{ inlineMath: [['$', '$'], ['\\\\(', '\\\\)']], displayMath: [['$$', '$$'], ['\\\\[', '\\\\]']] }} }};
         </script>
         <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
         </head>
-        <body>{content}</body></html>
+        <body><div style='font-size:16px; font-family:Verdana'>{content}</div></body></html>
         """
-        full_html = html_template.format(content=combined_html_content)
-        
-        # Bước 7: Hiển thị và tự động cuộn xuống dưới cùng
-        def scroll_to_bottom(ok):
-            if ok:
-                self.web_view.page().runJavaScript("window.scrollTo(0, document.body.scrollHeight);")
-            try:
-                self.web_view.loadFinished.disconnect(scroll_to_bottom)
-            except TypeError:
-                pass 
-
-        self.web_view.loadFinished.connect(scroll_to_bottom)
+        full_html = html_template.format(content=html_content)
         self.web_view.setHtml(full_html)
         
-        # === KẾT THÚC PHẦN LOGIC HIỂN THỊ ĐÃ CẢI TIẾN ===
-
-        # Bước 8: Cập nhật các thông tin đánh giá (Level, Score)
+        # Bước 5: Cập nhật các thông tin đánh giá (Level, Score)
         self.lbl_level.setText(str(info.get('level', '-')))
         self.lbl_score.setText(str(info.get('score', '-')))
         
+        # Cập nhật trạng thái và điểm trên cây thư mục nếu đây là bài tập của môn học
         if self.current_exercise and self.current_exercise.get('id') != 'custom_exercise':
             status = "✓" if info.get('exercise_status') == 'completed' else "✗"
             score = str(info.get('score', 0))
             self.update_tree_item(self.current_exercise.get('id'), status, score)
         
-        # Bước 9: Kích hoạt lại các nút bấm
+        # Bước 6: Kích hoạt lại các nút bấm
         self.enable_buttons()
         
     def update_tree_item(self, exercise_id, status, score):

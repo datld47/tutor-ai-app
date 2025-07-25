@@ -265,7 +265,6 @@ class MainWindow(QMainWindow):
         self.current_exercise = None
         self.model = None
         self.history = []
-        self.conversation_display_history = []
         self.main_rule = ""
         self.main_rule_lesson = ""
         self.prompt_template = ""
@@ -282,9 +281,14 @@ class MainWindow(QMainWindow):
         self.user_info = {} # Lưu thông tin người dùng (uid, token, username)
         self.is_logged_in = False # Trạng thái đăng nhập
         
+        # >>> THÊM CÁC BIẾN QUẢN LÝ TRẠNG THÁI GIAO DIỆN CHAT
+        self.chat_interface_ready = False
+        self.js_call_queue = [] # Hàng đợi các lệnh JS
+        # <<< KẾT THÚC
+        
         # --- Các biến quản lý trạng thái giao diện ---
-        self.current_session_index = -1
-        self.current_exercise_index = -1
+        self.current_session_index = -1        
+        self.current_step_index = -1 
         self.editor_initialized = False 
         self.highlighter = None
 
@@ -340,7 +344,21 @@ class MainWindow(QMainWindow):
 
         # Hiển thị cửa sổ ở chế độ toàn màn hình
         self.showMaximized()
-
+    
+    def on_chat_view_loaded(self, success):
+        """
+        Được kích hoạt khi QWebEngineView đã tải xong trang HTML.
+        """
+        if success:
+            print("✅ Giao diện chat đã sẵn sàng.")
+            self.chat_interface_ready = True
+            # Thực thi tất cả các lệnh JS đã được xếp hàng trong khi chờ
+            for js_code in self.js_call_queue:
+                self.web_view.page().runJavaScript(js_code)
+            self.js_call_queue.clear() # Dọn dẹp hàng đợi
+        else:
+            print("❌ Lỗi: Không thể tải file chat_view.html.")
+            
     def save_last_working_key(self, key):
         """Lưu API key hoạt động gần nhất vào file config.json."""
         # Logic này cần được cập nhật để làm việc với cấu trúc config của bạn
@@ -852,36 +870,94 @@ class MainWindow(QMainWindow):
         button_layout.addWidget(self.btn_ai_help)
         layout.addWidget(button_widget)
 
-    
-    def build_right_panel(self):
-        # Layout chính cho toàn bộ khung bên phải
-        layout = QVBoxLayout(self.fr_right)
+    # THAY THẾ 3 HÀM CŨ BẰNG 3 HÀM MỚI NÀY
+    def add_message_to_chat(self, html_content, message_type=""):
+        """Gửi một tin nhắn mới vào giao diện chat một cách an toàn."""
+        escaped_html = json.dumps(html_content)
+        escaped_type = json.dumps(message_type)
+        js_code = f"addAiMessage({escaped_html}, {escaped_type});"
         
-        # 1. Tạo tiêu đề "AI Hướng dẫn" với style giống "Bài làm"
+        if self.chat_interface_ready:
+            self.web_view.page().runJavaScript(js_code)
+        else:
+            self.js_call_queue.append(js_code)
+
+    # def update_pinned_step_display(self, step_text="Hãy chọn một bài tập để bắt đầu."):
+    #     """Cập nhật nội dung được ghim một cách an toàn."""
+    #     content = f"<strong>Bước hiện tại:</strong> {html.escape(step_text)}"
+    #     escaped_content = json.dumps(content)
+    #     js_code = f"updatePinnedStep({escaped_content});"
+        
+    #     if self.chat_interface_ready:
+    #         self.web_view.page().runJavaScript(js_code)
+    #     else:
+    #         self.js_call_queue.append(js_code)
+    
+    # THAY THẾ HÀM CŨ BẰNG HÀM NÀY
+
+    def update_pinned_step_display(self, step_text=""): # Đặt giá trị mặc định là chuỗi rỗng
+        """Cập nhật nội dung được ghim một cách an toàn."""
+        # Chỉ hiển thị nếu có nội dung
+        if step_text:
+            content = f"<strong>Bước hiện tại:</strong> {html.escape(step_text)}"
+        else:
+            content = "" # Nếu không có text, nội dung sẽ là rỗng
+        
+        escaped_content = json.dumps(content)
+        js_code = f"updatePinnedStep({escaped_content});"
+        
+        if self.chat_interface_ready:
+            self.web_view.page().runJavaScript(js_code)
+        else:
+            self.js_call_queue.append(js_code)
+
+    def clear_chat_interface(self):
+        """Xóa toàn bộ nội dung chat và reset phần ghim một cách an toàn."""
+        # Luôn xóa hàng đợi cũ trước khi thực hiện hành động mới
+        self.js_call_queue.clear() 
+        
+        js_clear_code = "document.getElementById('chat-container').innerHTML = '';"
+        if self.chat_interface_ready:
+            self.web_view.page().runJavaScript(js_clear_code)
+        else:
+            self.js_call_queue.append(js_clear_code)
+            
+        # Luôn reset phần ghim sau khi xóa
+        self.update_pinned_step_display()
+        
+    def build_right_panel(self):
+        layout = QVBoxLayout(self.fr_right)
+
         title_label = QLabel("AI Hướng dẫn")
         title_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         title_label.setStyleSheet("background-color: green; color: white; font-size: 14px; font-weight: bold; padding: 5px;")
         layout.addWidget(title_label)
 
-        # 2. Thêm trực tiếp web_view vào layout, không cần dùng tab nữa
         self.web_view = QWebEngineView()
+        # >>> THÊM KẾT NỐI TÍN HIỆU
+        self.web_view.loadFinished.connect(self.on_chat_view_loaded)
+        # <<< KẾT THÚC
+        # >>> THAY ĐỔI QUAN TRỌNG: Tải file giao diện chat
+        chat_view_path = os.path.abspath("chat_view.html")
+        self.web_view.setUrl(QUrl.fromLocalFile(chat_view_path))
+        # <<< KẾT THÚC THAY ĐỔI
         layout.addWidget(self.web_view, stretch=1)
-        
-        # 3. Giữ nguyên phần "Đánh giá" ở dưới cùng
+
+        # Phần "Đánh giá" ở dưới cùng giữ nguyên
         eval_title = QLabel("Đánh giá")
         eval_title.setAlignment(Qt.AlignmentFlag.AlignCenter)
         eval_title.setStyleSheet("background-color: green; color: white; font-size: 14px; font-weight: bold; padding: 5px;")
         layout.addWidget(eval_title)
-        
+
         eval_widget = QWidget()
         eval_layout = QGridLayout(eval_widget)
         layout.addWidget(eval_widget)
-        
+
         eval_layout.addWidget(QLabel("Level:"), 0, 0)
         self.lbl_level = QLabel("-")
         self.lbl_level.setStyleSheet("font-weight: bold; color: blue;")
         eval_layout.addWidget(self.lbl_level, 0, 1)
-        
+
         eval_layout.addWidget(QLabel("Score:"), 0, 2)
         self.lbl_score = QLabel("-")
         self.lbl_score.setStyleSheet("font-weight: bold; color: red;")
@@ -1116,13 +1192,11 @@ class MainWindow(QMainWindow):
 
         self.disable_buttons()
         self.get_current_editor_content(process_submission)
-        
     def start_new_ai_conversation(self, is_custom_exercise=False):
         """
         Xóa lịch sử cũ và thiết lập một cuộc hội thoại mới với bộ quy tắc đã được xử lý.
         """
         self.history.clear()
-        self.conversation_display_history.clear() # <<<<<<<<<<< THÊM DÒNG NÀY
         
         initial_prompt = ""
         
@@ -1223,20 +1297,18 @@ class MainWindow(QMainWindow):
         self.disable_buttons()
         self.get_current_editor_content(process_help_request)
     
-        
     def on_editor_load_finished(self, ok):
         """
         Hàm này được gọi khi editor.html đã tải xong trong QWebEngineView.
-        Nó sẽ "tiêm" mã nguồn CKEditor vào trang một cách tuần tự và an toàn.
         Sử dụng cờ self.editor_initialized để đảm bảo chỉ chạy một lần.
         """
-        # --- THÊM LOGIC KIỂM TRA CỜ TẠI ĐÂY ---
+        # >>> THAY ĐỔI: Thêm điều kiện kiểm tra cờ ở ngay đầu
         if not ok or self.editor_initialized:
             return # Thoát ngay nếu trang tải lỗi hoặc editor đã được tạo
-
+        
         # Đặt cờ thành True để ngăn việc chạy lại
         self.editor_initialized = True
-        # --- KẾT THÚC THAY ĐỔI ---
+        # <<< KẾT THÚC THAY ĐỔI
 
         print("DEBUG: editor.html đã tải. Bắt đầu tiêm CKEditor script...")
 
@@ -1245,23 +1317,22 @@ class MainWindow(QMainWindow):
                 ckeditor_script = f.read()
         except FileNotFoundError:
             print("LỖI: Không tìm thấy file 'ckeditor.js' trong thư mục editTools!")
-            # Reset cờ nếu có lỗi để có thể thử lại ở lần tải trang sau (nếu có)
-            self.editor_initialized = False 
+            self.editor_initialized = False # Reset cờ nếu có lỗi để thử lại
             return
 
         init_script = """
-            if (typeof ClassicEditor !== 'undefined') {
+            if (typeof ClassicEditor !== 'undefined' && !window.editorInstance) { // Kiểm tra thêm instance
                 ClassicEditor
                     .create( document.querySelector( '#editor' ), { language: 'vi' } )
                     .then( newEditor => {
-                        window.editor = newEditor;
+                        window.editorInstance = newEditor; // Lưu instance vào biến toàn cục của trang
                         console.log( 'THÀNH CÔNG: CKEditor đã được khởi tạo!' );
                     } )
                     .catch( error => {
                         console.error( 'Lỗi khi khởi tạo editor:', error );
                     } );
             } else {
-                console.error('LỖI KIỂM TRA: ClassicEditor không được định nghĩa.');
+                console.log('CKEditor đã được khởi tạo trước đó hoặc không khả dụng.');
             }
         """
         self.rich_text_editor.page().runJavaScript(ckeditor_script, 
@@ -1269,29 +1340,24 @@ class MainWindow(QMainWindow):
         
     def reset_and_clear_context(self):
         """
-        Reset lại toàn bộ trạng thái và giao diện về mặc định.
-        Được gọi khi chuyển đổi giữa các môn học hoặc chế độ học.
+        Reset lại trạng thái và giao diện về mặc định mà không tải lại trang.
         """
         print("DEBUG: Đang reset và làm mới ngữ cảnh...")
-        
+
         # 1. Reset các biến trạng thái
         self.current_exercise = None
-        
-        # --- Các biến quản lý trạng thái giao diện ---
         self.is_awaiting_guidance = False
+        self.current_session_index = -1
         self.current_exercise_index = -1
-        self.conversation_display_history.clear() # <<<<<<<<<<< THÊM DÒNG NÀY
-        self.history.clear() # Xóa lịch sử hội thoại với AI
+        self.current_step_index = -1 # <<<<<<<<<<<<<<< THÊM DÒNG NÀY
 
         # 2. Dọn dẹp các ô nhập liệu và hiển thị
-        #self.code_editor.clear()
         self.clear_current_editor_content()
-        #self.text_browser.setHtml("<h3>Hãy chọn một bài tập để bắt đầu.</h3>")
-        self.web_view.setHtml("<h3>Hãy chọn một bài tập để bắt đầu.</h3>")
+        self.clear_chat_interface() 
+
         self.lbl_level.setText("-")
         self.lbl_score.setText("-")
 
-        # 3. Đảm bảo panel trái luôn quay về màn hình danh sách (cây thư mục)
         if hasattr(self, 'left_panel_stack'):
             self.left_panel_stack.setCurrentIndex(0)
             
@@ -1334,150 +1400,52 @@ class MainWindow(QMainWindow):
             elif language == "java": result = compile_java(code)
             elif language == "python": result = run_python(code)
             
-            html_result = f"<h3>Kết quả thực thi:</h3><pre>{html.escape(result)}</pre>"
-            self.web_view.setHtml(html_result)
+            # >>> THAY ĐỔI TẠI ĐÂY
+            html_result = f"<pre>{html.escape(result)}</pre>"
+            self.add_message_to_chat(html_result, "⚙️ Kết quả thực thi")
             self.enable_buttons()
+            # <<< KẾT THÚC THAY ĐỔI
+            
+            # html_result = f"<h3>Kết quả thực thi:</h3><pre>{html.escape(result)}</pre>"
+            # self.web_view.setHtml(html_result)
+            # self.enable_buttons()
 
         self.disable_buttons()
         self.get_current_editor_content(run_code_process)
 
     # THAY THẾ TOÀN BỘ HÀM CŨ BẰNG HÀM NÀY
     def handle_gemini_response(self, response_text, was_retry):
-        # Bước 1: Phân tích phản hồi từ AI để lấy ra nội dung, thông tin và lỗi (nếu có)
         html_content, info, err = render_ai_json_markdown(response_text)
 
-        # Bước 2: Xử lý lỗi JSON với cơ chế tự động sửa lỗi
         if err and not was_retry:
             print("⚠️ Phản hồi JSON lỗi → Yêu cầu AI sửa lại.")
             re_prompt = RE_RESPONSE_PROMPT.format(error_message=str(err))
             self.run_gemini_in_thread(re_prompt, is_retry=True)
             return
 
-        elif err and was_retry:
-            print("❌ Phản hồi vẫn lỗi sau khi đã thử lại. Hiển thị lỗi cho người dùng.")
-            # html_content đã chứa thông báo lỗi từ render_ai_json_markdown
+        if err and was_retry:
+            print("❌ Phản hồi vẫn lỗi sau khi đã thử lại.")
 
-        # Bước 3: Xử lý logic đặc biệt khi đang chờ AI tạo các bước hướng dẫn
-        if not err and self.is_awaiting_guidance:
-            generated_steps = info.get("generated_steps")
-            if generated_steps and isinstance(generated_steps, list):
-                self.current_exercise['generated_guidance'] = generated_steps
-                print(f"DEBUG: Đã lưu {len(generated_steps)} bước hướng dẫn do AI tạo.")
-            else:
-                print("CẢNH BÁO: AI không trả về 'generated_steps' như mong đợi.")
-            self.is_awaiting_guidance = False
+        message_type = "⚠️ Lỗi Phân Tích" if err else info.get("message_type", "💬 Phản hồi từ AI")
+        self.add_message_to_chat(html_content, message_type)
 
-        # === BẮT ĐẦU PHẦN LOGIC HIỂN THỊ ĐÃ ĐƯỢC CẢI TIẾN ===
-
-        # Bước 4: Thêm phản hồi HTML mới vào lịch sử hiển thị
-        self.conversation_display_history.append(html_content)
-
-        # Bước 5: Tạo chuỗi HTML cho tất cả các tin nhắn trong lịch sử
-        all_messages_html = []
-        for message in self.conversation_display_history:
-            # Bọc mỗi tin nhắn trong một khung chat được định dạng bằng CSS
-            formatted_message = f"""
-            <div class="ai-message-container">
-                <div class="ai-message-header">
-                    🤖 Phản hồi từ Tutor AI
-                </div>
-                <div class="ai-message-content">
-                    {message}
-                </div>
-            </div>
-            """
-            all_messages_html.append(formatted_message)
-        
-        # Kết hợp tất cả các khung chat thành một khối HTML duy nhất
-        combined_html_content = "".join(all_messages_html)
-
-        # Bước 6: Đưa nội dung vào mẫu HTML hoàn chỉnh với CSS để định dạng
-        html_template = """
-        <!DOCTYPE html><html><head>
-        <meta charset="UTF-8"><title>AI Response</title>
-        <style>
-            body {{
-                font-family: Verdana, sans-serif;
-                background-color: #ffffff;
-                padding: 10px;
-            }}
-            .ai-message-container {{
-                background-color: #f1f8e9;
-                border-radius: 10px;
-                padding: 15px;
-                margin-bottom: 15px;
-                box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-                border: 1px solid #dcedc8;
-            }}
-            .ai-message-header {{
-                font-weight: bold;
-                color: #33691e;
-                margin-bottom: 10px;
-                font-size: 1.0em;
-            }}
-            .ai-message-content {{
-                font-size: 16px;
-                line-height: 1.6;
-                color: #333;
-            }}
-            /* Định dạng cho khối code (từ Markdown) */
-            .ai-message-content pre {{
-                background-color: #282c34;
-                color: #abb2bf;
-                padding: 1em;
-                border-radius: 5px;
-                overflow-x: auto;
-                font-family: 'Courier New', Courier, monospace;
-                font-size: 14px;
-            }}
-             /* Định dạng cho bảng (từ Markdown) */
-            .ai-message-content table {{
-                border-collapse: collapse;
-                width: 100%;
-                margin: 1em 0;
-            }}
-            .ai-message-content th, .ai-message-content td {{
-                border: 1px solid #ddd;
-                padding: 8px;
-                text-align: left;
-            }}
-            .ai-message-content th {{
-                background-color: #e8f5e9;
-            }}
-        </style>
-        <script>
-            MathJax = {{ tex: {{ inlineMath: [['$', '$'], ['\\\\(', '\\\\)']], displayMath: [['$$', '$$'], ['\\\\[', '\\\\]']] }} }};
-        </script>
-        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
-        </head>
-        <body>{content}</body></html>
-        """
-        full_html = html_template.format(content=combined_html_content)
-        
-        # Bước 7: Hiển thị và tự động cuộn xuống dưới cùng
-        def scroll_to_bottom(ok):
-            if ok:
-                self.web_view.page().runJavaScript("window.scrollTo(0, document.body.scrollHeight);")
-            try:
-                self.web_view.loadFinished.disconnect(scroll_to_bottom)
-            except TypeError:
-                pass 
-
-        self.web_view.loadFinished.connect(scroll_to_bottom)
-        self.web_view.setHtml(full_html)
-        
-        # === KẾT THÚC PHẦN LOGIC HIỂN THỊ ĐÃ CẢI TIẾN ===
-
-        # Bước 8: Cập nhật các thông tin đánh giá (Level, Score)
         self.lbl_level.setText(str(info.get('level', '-')))
         self.lbl_score.setText(str(info.get('score', '-')))
-        
+
         if self.current_exercise and self.current_exercise.get('id') != 'custom_exercise':
             status = "✓" if info.get('exercise_status') == 'completed' else "✗"
             score = str(info.get('score', 0))
             self.update_tree_item(self.current_exercise.get('id'), status, score)
-        
-        # Bước 9: Kích hoạt lại các nút bấm
+
+            # --- LOGIC CẬP NHẬT GHIM ĐÃ SỬA LỖI ---
+            if info.get('exercise_status') == 'completed':
+                # Nếu toàn bộ bài tập hoàn thành, ghim thông báo hoàn thành.
+                completion_text = "Chúc mừng bạn đã hoàn thành bài tập! Hãy nhấn 'Bài tiếp theo'."
+                self.update_pinned_step_display(completion_text)
+                self.current_step_index = -1 # Đánh dấu là đã xong
+            # (Trong tương lai, chúng ta sẽ thêm logic xử lý khi một BƯỚC hoàn thành ở đây)
+            # --- KẾT THÚC SỬA LỖI ---
+
         self.enable_buttons()
         
     def update_tree_item(self, exercise_id, status, score):
@@ -1500,91 +1468,67 @@ class MainWindow(QMainWindow):
         self.web_view.setHtml(f"<h1>Lỗi</h1><p>{error_text}</p>")
         self.btn_submit_code.setEnabled(True)
         self.btn_ai_help.setEnabled(True)
-        
-    # THAY THẾ TOÀN BỘ HÀM on_exercise_selected CŨ BẰNG HÀM NÀY
 
     def on_exercise_selected(self, item, column):
         """
         Được gọi khi một mục trên cây thư mục được click.
+        PHIÊN BẢN TỐI ƯU HÓA THỨ TỰ THỰC THI.
         """
         exercise_data = item.data(0, Qt.ItemDataRole.UserRole)
         parent_item = item.parent()
         if not exercise_data or not isinstance(exercise_data, dict) or not parent_item:
             self.current_exercise = None
-            self.current_session_index = -1
-            self.current_exercise_index = -1
             return
 
-        self.current_session_index = self.exercise_tree.indexOfTopLevelItem(parent_item)
-        self.current_exercise_index = parent_item.indexOfChild(item)
-        # self.current_exercise = exercise_data
+        # --- BẮT ĐẦU LUỒNG XỬ LÝ TỐI ƯU ---
+        # BƯỚC 1: Dọn dẹp giao diện cũ một cách triệt để
+        self.clear_chat_interface()
+        self.clear_current_editor_content()
         
-        # # Cập nhật trạng thái nút "Chạy code"
-        # if self.current_course_language.lower() in ["c", "java", "python"]:
-        #     self.btn_run_code.setEnabled(True)
-        # else:
-        #     self.btn_run_code.setEnabled(False)
-        
-        # # Hiển thị chi tiết bài tập bên trái
-        # self.display_exercise_in_left_panel(exercise_data)
-        
-        # # Xóa nội dung editor cũ và bắt đầu hội thoại AI mới
-        # self.clear_current_editor_content()
-        # self.start_new_ai_conversation(is_custom_exercise=False) 
-        
+        # BƯỚC 2: Thiết lập trạng thái cho bài tập mới
         self.current_exercise = exercise_data
+        self.current_step_index = 0
+        self.start_new_ai_conversation(is_custom_exercise=False)
 
+        # BƯỚC 3: Cập nhật giao diện với thông tin của bài tập mới
+        # Cập nhật và Ghim bước đầu tiên LÊN TRƯỚC
+        # guidance = self.current_exercise.get("guidance", [])
+        # first_step = guidance[0] if guidance else "Bắt đầu làm bài."
+        # self.update_pinned_step_display(first_step)
+
+        # Hiển thị đề bài ở khung trái
+        self.display_exercise_in_left_panel(exercise_data)
+        
+        # Hiển thị tin nhắn chào mừng trong chat
+        welcome_message = f"<h3>Bắt đầu: {self.current_exercise.get('title', '')}</h3><p>Đề bài đã được hiển thị ở khung bên trái. Hãy bắt đầu nhé!</p>"
+        self.add_message_to_chat(welcome_message, "👋 Chào mừng")
+        
+        # BƯỚC 4: Cập nhật các thành phần phụ thuộc
         language = self.current_course_language.lower()
         is_programming_lang = language in ["c", "java", "python"]
-
         self.btn_run_code.setEnabled(is_programming_lang)
-        self.display_exercise_in_left_panel(exercise_data)
-        self.clear_current_editor_content()
-        self.start_new_ai_conversation(is_custom_exercise=False) 
-
-        # Hiển thị thông điệp chào mừng
-        welcome_html_content = f"""
-        <h3>Bắt đầu bài tập: {self.current_exercise.get('title', '')}</h3>
-        <p>Đề bài đã được hiển thị ở khung bên trái.</p>
-        <p>Hãy bắt đầu viết code/bài làm của bạn vào khung "Bài làm" ở giữa.</p>
-        """
-        html_template = """
-        <!DOCTYPE html><html><head><meta charset="UTF-8"><title>AI Response</title>
-        </head>
-        <body><div style='font-size:16px; font-family:Verdana'>{content}</div></body></html>
-        """
-        full_html = html_template.format(content=welcome_html_content)
-        # self.web_view.setHtml(full_html)
         
-        # self.lbl_level.setText("-")
-        # self.lbl_score.setText("-")
-        
-        # # --- LOGIC QUAN TRỌNG ĐÃ ĐƯỢC CẬP NHẬT ---
-        # # Quyết định editor nào sẽ hiển thị VÀ TẢI LẠI NẾU CẦN
-        # if self.current_course_language.lower() in ["c", "java", "python"]:
-        #     # Nếu là môn lập trình, hiển thị editor văn bản thuần
-        #     self.editor_stack.setCurrentIndex(self.plain_editor_index)
-        # else:
-        #     # Nếu không phải, hiển thị editor có công cụ (rich text)
-        #     self.editor_stack.setCurrentIndex(self.rich_editor_index)
-        #     # Reset cờ và buộc tải lại trang để đảm bảo CKEditor hiển thị đúng
-        #     self.editor_initialized = False
-        #     self.rich_text_editor.reload()
-        
-        self.web_view.setHtml(full_html)
         self.lbl_level.setText("-")
         self.lbl_score.setText("-")
 
+        # Chuyển đổi editor phù hợp
         if is_programming_lang:
-            # Nếu là môn lập trình, hiển thị editor code và kích hoạt highlighter
             self.editor_stack.setCurrentIndex(self.plain_editor_index)
             self.highlighter = Highlighter(self.plain_code_editor.document(), language)
         else:
-            # Nếu không phải, hiển thị rich text editor
+            if not self.editor_initialized:
+                self.rich_text_editor.reload()
             self.editor_stack.setCurrentIndex(self.rich_editor_index)
-            self.highlighter = None # Đảm bảo không có highlighter
-            self.editor_initialized = False
-            self.rich_text_editor.reload()
+            self.highlighter = None
+
+    def find_next_step_text(self):
+        """
+        Tìm văn bản của bước hướng dẫn tiếp theo dựa trên tiến trình của người dùng.
+        Hàm này cần được tùy chỉnh dựa trên cách bạn lưu tiến trình.
+        Đây là một ví dụ đơn giản.
+        """
+        # Đây là ví dụ, bạn cần logic phức tạp hơn để theo dõi bước hiện tại
+        return "Bạn đã hoàn thành bài! Hãy nhấn 'Bài tiếp theo'."
 
     def get_current_editor_content(self, callback):
         """
@@ -1594,12 +1538,12 @@ class MainWindow(QMainWindow):
         current_index = self.editor_stack.currentIndex()
         
         if current_index == self.plain_editor_index:
-            # Editor là QPlainTextEdit, lấy nội dung trực tiếp và gọi callback
             content = self.plain_code_editor.toPlainText()
             callback(content)
         elif current_index == self.rich_editor_index:
-            # Editor là QWebEngineView, dùng JavaScript bất đồng bộ
-            js_code = "window.editor ? window.editor.getData() : '';"
+            # >>> SỬA TÊN BIẾN TẠI ĐÂY
+            js_code = "window.editorInstance ? window.editorInstance.getData() : '';"
+            # <<< KẾT THÚC
             self.rich_text_editor.page().runJavaScript(js_code, callback)
 
     def clear_current_editor_content(self):
@@ -1609,7 +1553,9 @@ class MainWindow(QMainWindow):
         if current_index == self.plain_editor_index:
             self.plain_code_editor.clear()
         elif current_index == self.rich_editor_index:
-            js_code = "if (window.editor) { window.editor.setData(''); }"
+            # >>> SỬA TÊN BIẾN TẠI ĐÂY
+            js_code = "if (window.editorInstance) { window.editorInstance.setData(''); }"
+            # <<< KẾT THÚC
             self.rich_text_editor.page().runJavaScript(js_code)
             
     def on_custom_language_select(self, text):

@@ -2,17 +2,17 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>CKEditor</title>
+    <title>CKEditor for Custom Exercise</title>
     <link rel="stylesheet" href="ckeditor5.css">
     <style>
-        /* Toàn bộ CSS giữ nguyên như cũ để đảm bảo editor co dãn đúng */
+        /* CSS này đảm bảo editor sẽ lấp đầy toàn bộ không gian được cấp */
         html, body {
             margin: 0;
             padding: 0;
             height: 100%;
             display: flex;
             flex-direction: column;
-            overflow: hidden; 
+            overflow-y: auto; 
         }
         #editor-container {
             flex-grow: 1;
@@ -50,8 +50,7 @@
 </head>
 <body>
     <div id="editor-container">
-        <div id="editor"></div>
+        <div id="custom-editor"></div>
     </div>
-
-    </body>
+</body>
 </html>

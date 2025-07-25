@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>AI Tutor Chat</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: Verdana, sans-serif;
+            background-color: #f4f7f9;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+        #pinned-step-container {
+            padding: 12px 15px;
+            background-color: #e3f2fd;
+            border-bottom: 1px solid #b3e5fc;
+            flex-shrink: 0; 
+            font-size: 15px;
+            display: none; 
+        }
+        #pinned-step-container strong {
+            color: #01579b;
+        }
+        #chat-container {
+            flex-grow: 1;
+            overflow-y: auto; 
+            padding: 15px;
+            display: flex;
+            flex-direction: column-reverse; 
+        }
+        .ai-bubble {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 12px 18px;
+            margin-bottom: 12px;
+            max-width: 95%;
+            word-wrap: break-word;
+            border: 1px solid #dcdcdc;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            font-size: 16px;
+        }
+        .bubble-header {
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #00796b;
+            font-size: 14px;
+        }
+        pre {
+            background-color: #2d2d2d;
+            color: #f8f8f2;
+            padding: 1em;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        code {
+             font-family: 'Courier New', Courier, monospace;
+        }
+    </style>
+
+    <script>
+        // Biến cờ toàn cục để theo dõi trạng thái của MathJax
+        let isMathJaxReady = false;
+
+        // Cung cấp cấu hình cho MathJax
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$']]
+            },
+            startup: {
+                // Hàm này sẽ tự động được gọi khi MathJax đã tải xong và sẵn sàng 100%
+                ready: () => {
+                    console.log('MathJax is fully ready!');
+                    isMathJaxReady = true;
+
+                    // Quét và render tất cả các tin nhắn đã tồn tại trong chat
+                    // để xử lý trường hợp tin nhắn đến trước khi MathJax sẵn sàng.
+                    const container = document.getElementById('chat-container');
+                    if (container) {
+                        MathJax.typeset(container.children);
+                    }
+                }
+            }
+        };
+    </script>
+
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+</head>
+<body>
+    <div id="pinned-step-container">
+        <strong>Bước hiện tại:</strong> Hãy chọn một bài tập để bắt đầu.
+    </div>
+    <div id="chat-container">
+        </div>
+
+    <script>
+        /**
+         * Cập nhật hoặc ẩn thanh ghim thông báo bước làm bài.
+         * @param {string} htmlContent - Nội dung HTML để hiển thị.
+         */
+        function updatePinnedStep(htmlContent) {
+            const container = document.getElementById('pinned-step-container');
+            if (htmlContent && htmlContent.trim() !== "") {
+                container.innerHTML = htmlContent;
+                container.style.display = 'block';
+            } else {
+                container.innerHTML = '';
+                container.style.display = 'none';
+            }
+        }
+
+        /**
+         * Thêm một tin nhắn mới vào khung chat và render công thức toán nếu cần.
+         * @param {string} htmlContent - Nội dung HTML của tin nhắn.
+         * @param {string} messageType - Tiêu đề của tin nhắn (ví dụ: '💬 Tutor AI').
+         */
+        function addAiMessage(htmlContent, messageType = '') {
+            const chatContainer = document.getElementById('chat-container');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'ai-bubble';
+
+            let finalHtml = '';
+            if (messageType) {
+                finalHtml += `<div class="bubble-header">${messageType}</div>`;
+            }
+            finalHtml += htmlContent;
+            
+            messageDiv.innerHTML = finalHtml;
+            chatContainer.prepend(messageDiv);
+
+            // Chỉ gọi typeset nếu MathJax đã thực sự sẵn sàng.
+            // Nếu chưa, hàm 'ready' ở trên sẽ xử lý tin nhắn này sau.
+            if (isMathJaxReady) {
+                MathJax.typeset([messageDiv]);
+            }
+
+            // Cuộn view lên trên cùng để thấy tin nhắn mới nhất
+            // (vì layout dùng flex-direction: column-reverse).
+            chatContainer.scrollTop = 0;
+        }
+    </script>
+</body>
+</html>

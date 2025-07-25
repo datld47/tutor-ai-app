@@ -1367,106 +1367,44 @@ class MainWindow(QMainWindow):
                 print("CẢNH BÁO: AI không trả về 'generated_steps' như mong đợi.")
             self.is_awaiting_guidance = False
 
-        # === BẮT ĐẦU PHẦN LOGIC HIỂN THỊ ĐÃ ĐƯỢC CẢI TIẾN ===
+        # === BẮT ĐẦU PHẦN LOGIC HIỂN THỊ MỚI ===
 
-        # Bước 4: Thêm phản hồi HTML mới vào lịch sử hiển thị
+        # Bước 4: Thêm phản hồi mới vào lịch sử hiển thị
         self.conversation_display_history.append(html_content)
 
-        # Bước 5: Tạo chuỗi HTML cho tất cả các tin nhắn trong lịch sử
-        all_messages_html = []
-        for message in self.conversation_display_history:
-            # Bọc mỗi tin nhắn trong một khung chat được định dạng bằng CSS
-            formatted_message = f"""
-            <div class="ai-message-container">
-                <div class="ai-message-header">
-                    🤖 Phản hồi từ Tutor AI
-                </div>
-                <div class="ai-message-content">
-                    {message}
-                </div>
-            </div>
-            """
-            all_messages_html.append(formatted_message)
-        
-        # Kết hợp tất cả các khung chat thành một khối HTML duy nhất
-        combined_html_content = "".join(all_messages_html)
+        # Bước 5: Kết hợp tất cả các phản hồi trong lịch sử thành một chuỗi HTML duy nhất
+        # Sử dụng thẻ <hr> để tạo đường kẻ ngang phân cách giữa các lần phản hồi
+        separator = "<hr style='border: 0; height: 1px; background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0)); margin-top: 20px; margin-bottom: 20px;'>"
+        combined_html_content = separator.join(self.conversation_display_history)
 
-        # Bước 6: Đưa nội dung vào mẫu HTML hoàn chỉnh với CSS để định dạng
+        # Bước 6: Đưa nội dung đã kết hợp vào mẫu HTML hoàn chỉnh
         html_template = """
-        <!DOCTYPE html><html><head>
-        <meta charset="UTF-8"><title>AI Response</title>
-        <style>
-            body {{
-                font-family: Verdana, sans-serif;
-                background-color: #ffffff;
-                padding: 10px;
-            }}
-            .ai-message-container {{
-                background-color: #f1f8e9;
-                border-radius: 10px;
-                padding: 15px;
-                margin-bottom: 15px;
-                box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-                border: 1px solid #dcedc8;
-            }}
-            .ai-message-header {{
-                font-weight: bold;
-                color: #33691e;
-                margin-bottom: 10px;
-                font-size: 1.0em;
-            }}
-            .ai-message-content {{
-                font-size: 16px;
-                line-height: 1.6;
-                color: #333;
-            }}
-            /* Định dạng cho khối code (từ Markdown) */
-            .ai-message-content pre {{
-                background-color: #282c34;
-                color: #abb2bf;
-                padding: 1em;
-                border-radius: 5px;
-                overflow-x: auto;
-                font-family: 'Courier New', Courier, monospace;
-                font-size: 14px;
-            }}
-             /* Định dạng cho bảng (từ Markdown) */
-            .ai-message-content table {{
-                border-collapse: collapse;
-                width: 100%;
-                margin: 1em 0;
-            }}
-            .ai-message-content th, .ai-message-content td {{
-                border: 1px solid #ddd;
-                padding: 8px;
-                text-align: left;
-            }}
-            .ai-message-content th {{
-                background-color: #e8f5e9;
-            }}
-        </style>
+        <!DOCTYPE html><html><head><meta charset="UTF-8"><title>AI Response</title>
         <script>
             MathJax = {{ tex: {{ inlineMath: [['$', '$'], ['\\\\(', '\\\\)']], displayMath: [['$$', '$$'], ['\\\\[', '\\\\]']] }} }};
         </script>
         <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
         </head>
-        <body>{content}</body></html>
+        <body><div style='font-size:16px; font-family:Verdana'>{content}</div></body></html>
         """
         full_html = html_template.format(content=combined_html_content)
         
         # Bước 7: Hiển thị và tự động cuộn xuống dưới cùng
+        # Tạo một hàm callback để chạy script sau khi trang đã tải xong
         def scroll_to_bottom(ok):
             if ok:
                 self.web_view.page().runJavaScript("window.scrollTo(0, document.body.scrollHeight);")
+            # Ngắt kết nối để không ảnh hưởng đến lần tải trang sau
             try:
                 self.web_view.loadFinished.disconnect(scroll_to_bottom)
             except TypeError:
-                pass 
+                pass # Bỏ qua nếu đã được ngắt kết nối
 
+        # Kết nối tín hiệu loadFinished tới hàm callback và sau đó setHtml
         self.web_view.loadFinished.connect(scroll_to_bottom)
         self.web_view.setHtml(full_html)
         
-        # === KẾT THÚC PHẦN LOGIC HIỂN THỊ ĐÃ CẢI TIẾN ===
+        # === KẾT THÚC PHẦN LOGIC HIỂN THỊ MỚI ===
 
         # Bước 8: Cập nhật các thông tin đánh giá (Level, Score)
         self.lbl_level.setText(str(info.get('level', '-')))

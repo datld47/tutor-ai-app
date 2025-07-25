@@ -95,8 +95,8 @@
         - Cách tổ chức code.
     - Chỉ khi bài làm được xác nhận hoàn thành đúng, mới được chuyển sang bài kế tiếp    
 
-# LƯU Ý QUAN TRỌNG VỀ TOÁN HỌC:
-    - Khi có bất kỳ công thức toán học nào, bạn phải viết nó bằng cú pháp LaTeX.
+# LƯU Ý QUAN TRỌNG:
+    - Khi có bất kỳ công thức toán học nào trong phần giải thích hoặc đề bài, hoặc câu trả lời hãy viết nó bằng cú pháp LaTeX.
 
 #Quy tắc Escape Ký tự: Khi tạo chuỗi JSON, bạn BẮT BUỘC phải tuân thủ các quy tắc escape:
     - Mọi ký tự dấu gạch chéo ngược (`\`) trong nội dung phải được viết thành (`\\`). Ví dụ: `\frac` phải trở thành `\\frac`.
