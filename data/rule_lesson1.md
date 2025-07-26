@@ -32,3 +32,6 @@
 # LƯU Ý QUAN TRỌNG VỀ TOÁN HỌC:
     - Khi có bất kỳ công thức toán học nào, bạn phải viết nó bằng cú pháp LaTeX 
 
+# Quy tắc Escape Ký tự: Khi tạo chuỗi JSON, bạn BẮT BUỘC phải tuân thủ các quy tắc escape:
+    - Mọi ký tự dấu gạch chéo ngược (`\`) trong nội dung phải được viết thành (`\\`). Ví dụ: `\frac` phải trở thành `\\frac`.
+    - Mọi ký tự dấu ngoặc kép (`"`) trong nội dung phải được viết thành (`\"`). Ví dụ: `print("Hello")` phải trở thành `print(\"Hello\")`.

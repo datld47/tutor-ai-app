@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Tutor Chat</title>
+    
+     <link rel="stylesheet" type="text/css" href="style.css">
+
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <script src="js/marked.min.js"></script>
+
+    <script>
+    MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']] 
+            }
+        };
+    </script>
+    <script src="js/tex-mml-chtml.js"></script>
+
+
+</head>
+<body>
+    
+    <div id="pinned-step-container">
+        <strong>Bước hiện tại:</strong> Hãy chọn một bài tập để bắt đầu.
+    </div>
+    
+    <div id="chat-container">Chat container</div>
+
+   <script src="chat_view.js"></script>
+</body>
+</html>
