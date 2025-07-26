@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Kekule.js Chemical Editor</title>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/kekule.js/0.9.3/themes/default/kekule.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/kekule.js/0.9.3/kekule.min.js"></script>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 10px;
+            height: calc(100% - 20px);
+            overflow: hidden;
+        }
+    </style>
+    <link rel="stylesheet" type="text/css" href="./kekule/kekule.css" />
+    <script src="./kekule/kekule.min.js"></script>
+</head>
+<body>
+    <div id="composer" style="width:100%;height:100%;border:1px solid #ccc"></div>
+
+    <script>
+        // Khởi tạo trình soạn thảo hóa học
+        var chemComposer;
+        function initEditor() {
+            chemComposer = new Kekule.Editor.Composer(document.getElementById('composer'));
+        }
+
+        // Hàm để lấy cấu trúc dưới dạng SVG
+        function getStructureAsSvg() {
+            // Sử dụng Kekule.IO.saveFormatData để chuyển đổi đối tượng hóa học sang SVG
+            var molecule = chemComposer.getChemObj();
+            if (molecule) {
+                // Thêm tiền tố và hậu tố XML cần thiết cho SVG
+                var svgData = Kekule.IO.saveFormatData(molecule, 'svg');
+                return '<?xml version="1.0"?>' + svgData;
+            }
+            return '';
+        }
+
+        // Tự động khởi tạo khi trang tải xong
+        window.onload = initEditor;
+    </script>
+</body>
+</html>

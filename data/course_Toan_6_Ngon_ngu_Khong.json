@@ -1,0 +1,83 @@
+{
+  "course_name": "Toán 6",
+  "course_language": "Không",
+  "task_list_title": "Chi tiết danh sách bài tập của từng buổi",
+  "sessions": [
+    {
+      "title": "Buổi 1: Tập hợp và các phép toán với số tự nhiên",
+      "exercises": [
+        {
+          "id": 1,
+          "title": "Bài 1.1: Tập hợp và phần tử",
+          "description": "Cho tập hợp . Chọn khẳng định sai trong các câu sau:\nA. 2 ∈ A\nB. 4 ∈ A\nC. 5 ∈ A\nD. 6 ∈ A",
+          "status": "✗",
+          "score": 0,
+          "image": [],
+          "guidance": [
+            "Quan sát các phần tử trong tập hợp .",
+            "Kiểm tra từng đáp án xem phần tử có thuộc tập hợp hay không.",
+            "Đánh dấu khẳng định sai là đáp án đúng."
+          ]
+        },
+        {
+          "id": 2,
+          "title": "Bài 1.2: Lũy thừa và thứ tự thực hiện phép tính",
+          "description": "Tính giá trị của các biểu thức sau và trình bày rõ các bước thực hiện:\na) \nb)",
+          "status": "✗",
+          "score": 0,
+          "image": [],
+          "guidance": [
+            "Tính lũy thừa trước: .",
+            "Thực hiện phép tính trong ngoặc, sau đó nhân chia, rồi cộng trừ.",
+            "Ghi lại từng bước trung gian rõ ràng."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Buổi 2: Tính chia hết trong tập hợp số tự nhiên",
+      "exercises": [
+        {
+          "id": 3,
+          "title": "Bài 2.1: Dấu hiệu chia hết",
+          "description": "Trong các số sau, số nào chia hết cho cả 3 và 5?\nA. 123\nB. 245\nC. 345\nD. 452",
+          "status": "✗",
+          "score": 0,
+          "image": [],
+          "guidance": []
+        },
+        {
+          "id": 4,
+          "title": "Bài 2.2: Bài tập thực hành - Số nguyên tố",
+          "description": "Phân biệt số nguyên tố và hợp số.\nViết ra các số nguyên tố nhỏ hơn 20.\nPhân tích số 90 ra thừa số nguyên tố.",
+          "status": "✗",
+          "score": 0,
+          "image": [],
+          "guidance": [
+            "Số nguyên tố là số chỉ có hai ước là 1 và chính nó.",
+            "Hợp số là số có hơn hai ước.",
+            "Dùng phương pháp chia thử để liệt kê và phân tích số."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Buổi 3: Hình học trực quan",
+      "exercises": [
+        {
+          "id": 5,
+          "title": "Bài 3.1: Điểm, đường thẳng, tia, đoạn thẳng",
+          "description": "Cho ba điểm A, B, C thẳng hàng. Khẳng định nào sau đây đúng nhất?\nA. Có một điểm nằm giữa hai điểm còn lại.\nB. Ba điểm tạo thành một tam giác.\nC. Không thể vẽ đường thẳng đi qua cả ba điểm.\nD. Điểm A luôn nằm giữa B và C.",
+          "status": "✗",
+          "score": 0,
+          "image": [],
+          "guidance": [
+            "Xem lại định nghĩa ba điểm thẳng hàng.",
+            "Loại bỏ các khẳng định sai dựa trên kiến thức đã học.",
+            "Chọn đáp án phù hợp nhất với mô tả hình học."
+          ]
+        }
+      ]
+    }
+  ]
+}

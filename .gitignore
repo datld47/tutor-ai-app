@@ -1,0 +1,15 @@
+# Virtual environments
+venv/
+compiler_/*
+compiler/*
+!compiler/UnRAR.exe
+cache/
+build/
+dist/
+data/token.json
+data/credentials.json
+
+# Large files to ignore
+*.rar
+TutorAI_v1.0B.rar
+TutorAI_v1A.rar

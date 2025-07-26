@@ -1,0 +1,21 @@
+{
+  "course_name": "Toán (Test CT toán)",
+  "course_language": "Không",
+  "task_list_title": "Chi tiết danh sách bài tập của từng buổi",
+  "sessions": [
+    {
+      "title": "Buổi 1: Tập hợp và các phép toán với số tự nhiên",
+      "exercises": [
+        {
+          "id": 1,
+          "title": "Bài 1.1: Tập hợp và phần tử",
+          "description": "Giải phương trình x^2 – 5x + 6 = 0",
+          "status": "✗",
+          "score": 0,
+          "image": [],
+          "guidance": []
+        }
+      ]
+    }
+  ]
+}

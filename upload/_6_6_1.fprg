@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="2.11">
+    <attributes>
+        <attribute name="name" value=""/>
+        <attribute name="authors" value="dat"/>
+        <attribute name="about" value=""/>
+        <attribute name="saved" value="2025-05-31 12:18:17 AM"/>
+        <attribute name="created" value="ZGF0O0RFU0tUT1AtN0hBR1RITDsyMDI1LTA1LTMxOzEyOjEzOjAyIEFNOzI2NDc="/>
+        <attribute name="edited" value="ZGF0O0RFU0tUT1AtN0hBR1RITDsyMDI1LTA1LTMxOzEyOjE4OjE3IEFNOzE7Mjc2Ng=="/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="a, b" type="Real" array="False" size=""/>
+            <assign variable="a" expression="5"/>
+            <assign variable="b" expression="7"/>
+            <call expression="tinhTong(a,b)"/>
+        </body>
+    </function>
+    <function name="tinhTong" type="None" variable="">
+        <parameters>
+            <parameter name="a" type="Real" array="False"/>
+            <parameter name="b" type="Real" array="False"/>
+        </parameters>
+        <body>
+            <declare name="c" type="Real" array="False" size=""/>
+            <assign variable="c" expression="a+b"/>
+            <output expression="c" newline="True"/>
+        </body>
+    </function>
+</flowgorithm>

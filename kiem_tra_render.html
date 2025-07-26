@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Kiểm Tra Render Công Thức Toán</title>
+    <style>
+        /* CSS tối giản để mô phỏng lại giao diện chat */
+        body {
+            font-family: Verdana, sans-serif;
+            background-color: #f0f2f5;
+            padding: 20px;
+        }
+        .message-bubble {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 15px 20px;
+            margin: 20px auto; /* Căn giữa và tạo khoảng cách */
+            max-width: 800px; /* Giới hạn chiều rộng */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        .bubble-header {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #00796b;
+            font-size: 14px;
+            border-bottom: 1px solid #eeeeee;
+            padding-bottom: 8px;
+        }
+        ol {
+            padding-left: 20px;
+        }
+    </style>
+
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$']]
+            },
+            startup: {
+                // MathJax sẽ tự động chạy khi trang được tải xong
+            }
+        };
+    </script>
+    
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+</head>
+<body>
+
+    <h1>Trang kiểm tra render công thức</h1>
+    <p>Nội dung dưới đây được trích xuất từ tin nhắn AI cuối cùng trong nhật ký của bạn.</p>
+
+    <div class="message-bubble">
+        <div class="bubble-header">💬 Tutor AI</div>
+        <p><strong>Hướng dẫn:</strong></p>
+        <ol>
+            <li>Phân tích phương trình bậc hai đã cho và xác định các hệ số $a$, $b$, và $c$.</li>
+            <li>Áp dụng công thức nghiệm của phương trình bậc hai để tìm nghiệm $x_1$ và $x_2$.</li>
+            <li>Kiểm tra lại các nghiệm tìm được bằng cách thay chúng vào phương trình ban đầu.</li>
+            <li>Viết kết quả cuối cùng dưới dạng tập hợp nghiệm.</li>
+        </ol>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,9 @@
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyAgTDYs03DJ8FOHjL0v_EfD4R3TQoPUheM",
+  authDomain: "tutoraiexercisesteps.firebaseapp.com",
+  projectId: "tutoraiexercisesteps",
+  storageBucket: "tutoraiexercisesteps.firebasestorage.app",
+  messagingSenderId: "396805630899",
+  appId: "1:396805630899:web:7ca9be22701f35589b79c6"
+};

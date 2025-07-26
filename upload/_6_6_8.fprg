@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="2.11">
+    <attributes>
+        <attribute name="name" value=""/>
+        <attribute name="authors" value="dat"/>
+        <attribute name="about" value=""/>
+        <attribute name="saved" value="2025-06-03 01:59:26 PM"/>
+        <attribute name="created" value="ZGF0O0RFU0tUT1AtN0hBR1RITDsyMDI1LTA2LTAzOzAxOjQwOjI1IFBNOzI2NjU="/>
+        <attribute name="edited" value="ZGF0O0RFU0tUT1AtN0hBR1RITDsyMDI1LTA2LTAzOzAxOjU5OjI2IFBNOzE7Mjc4NA=="/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="R1, R2, Vin" type="Real" array="False" size=""/>
+            <output expression="&quot;Nhap dien ap Vin&quot;" newline="True"/>
+            <assign variable="Vin" expression="nhapDienApVao()"/>
+            <output expression="&quot;Nhap dien tro R1&quot;" newline="True"/>
+            <assign variable="R1" expression="nhapDienTro()"/>
+            <output expression="&quot;Nhap dien tro R2&quot;" newline="True"/>
+            <assign variable="R2" expression="nhapDienTro()"/>
+            <output expression="&quot;Vin=&quot;&amp;Vin" newline="True"/>
+            <output expression="&quot;R1=&quot;&amp;R1" newline="True"/>
+            <output expression="&quot;R2=&quot;&amp;R2" newline="True"/>
+            <declare name="Vout" type="Real" array="False" size=""/>
+            <assign variable="Vout" expression="tinhVout(R1,R2,Vin)"/>
+            <output expression="&quot;Vout=&quot;&amp;Vout" newline="True"/>
+        </body>
+    </function>
+    <function name="nhapDienApVao" type="Real" variable="Vin">
+        <parameters/>
+        <body>
+            <declare name="Vin" type="Real" array="False" size=""/>
+            <input variable="Vin"/>
+        </body>
+    </function>
+    <function name="nhapDienTro" type="Real" variable="R">
+        <parameters/>
+        <body>
+            <declare name="R" type="Real" array="False" size=""/>
+            <input variable="R"/>
+        </body>
+    </function>
+    <function name="tinhVout" type="Real" variable="V2">
+        <parameters>
+            <parameter name="R1" type="Real" array="False"/>
+            <parameter name="R2" type="Real" array="False"/>
+            <parameter name="Vin" type="Real" array="False"/>
+        </parameters>
+        <body>
+            <declare name="V2" type="Real" array="False" size=""/>
+            <assign variable="V2" expression="(Vin/(R1+R2))*R2"/>
+        </body>
+    </function>
+</flowgorithm>

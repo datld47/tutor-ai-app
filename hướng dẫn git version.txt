@@ -1,0 +1,194 @@
+0. Kích hoạt môi trường ảo
+.\venv\Scripts\activate
+
+# 1. (Đảm bảo .gitignore của bạn đã đúng)
+
+# 2. Xóa repository Git cục bộ hiện có để làm lại từ đầu
+# Trên Windows CMD:
+rmdir /s /q .git
+# Hoặc trên Git Bash/PowerShell:
+# rm -rf .git
+
+2B. Bổ xung thêm requirements.txt nữa!!!
+pip freeze > requirements.txt
+
+# 3. Khởi tạo Git repository mới
+git init
+
+# 4. Cấu hình thông tin người dùng (Nếu cần)
+git config user.name "thangtt"
+git config user.email "thangtt@donga.edu.vn"
+
+# 5. Thêm tất cả các file vào staging area (các file trong .gitignore sẽ bị bỏ qua)
+git add .
+
+# 6. Tạo commit đầu tiên
+git commit -m "Update function: 1) Save history chat"
+
+# 7. Đổi tên nhánh hiện tại thành main_v1
+git branch -M main_v1C
+
+# 8. Thêm remote repository
+git remote add origin https://github.com/datld47/tutor-ai-app.git
+
+# 9. Push nhánh main_v1 lên GitHub
+git push -u origin main_v1C
+#==================================================================
+=======================================================
+✅ Các bước tạo version tag trong Git và đẩy lên GitHub
+1. Đảm bảo bạn đang ở đúng nhánh
+git checkout main_v1C
+
+2. Kéo các thay đổi mới nhất từ GitHub (đảm bảo đồng bộ)
+git pull origin main_v1C
+
+3. Tạo một tag với tên phiên bản
+Bạn nên dùng quy ước version, ví dụ v1.0.0, v1C-release, v.v.
+git tag v1C.0.4 -m "vừa mới sửa xong JSON 23H56_26/7/2025"
+v1C.0.0 là tên tag (bạn có thể đặt theo ý muốn)
+-m là mô tả ngắn cho tag
+
+4. Đẩy tag lên GitHub
+git push origin v1C.0.4
+✅ (Tuỳ chọn) Đẩy tất cả tag lên GitHub
+git push origin --tags
+
+✅ Sau này muốn quay lại phiên bản này?
+Dễ dàng dùng lệnh sau:
+git checkout v1C.0.1
+
+Lưu ý: bạn sẽ ở trạng thái "detached HEAD" – bạn có thể tạo nhánh mới từ đó nếu muốn tiếp tục phát triển từ tag này.
+
+git checkout -b hotfix-from-v1C
+Nếu bạn cần tạo annotated tag (dùng khi release chính thức, có chữ ký...), bạn có thể làm:
+git tag -a v1C.0.1 -m "Annotated tag cho phiên bản ổn định"
+
+📌 Kết luận
+Tag giúp bạn lưu lại một mốc trạng thái ổn định.
+
+Đẩy tag lên GitHub để không bị mất.
+
+Có thể quay lại hoặc tạo nhánh mới từ tag bất kỳ lúc nào.
+
+Nếu bạn cần tôi viết README hướng dẫn nhóm sử dụng version tag hay release, tôi có thể giúp luôn.
+
++++++++++++++++++++++++++++
+Để phục hồi lại mã nguồn tại phiên bản v1C.0.4 trong dự án Python trên VS Code từ GitHub, bạn có thể làm theo các bước đơn giản sau:
+
+✅ 1. Mở VS Code và Terminal
+Đảm bảo bạn đang ở thư mục dự án có kết nối Git (nếu chưa clone thì xem bước 0 bên dưới).
+
+✅ 2. Kiểm tra các tag hiện có
+git fetch --tags
+git tag
+Lệnh này giúp bạn chắc chắn là tag v1C.0.4 đã có trong local. Nếu chưa có thì fetch sẽ kéo từ GitHub về.
+
+✅ 3. Checkout về tag v1C.0.4
+git checkout v1C.0.4
+Sau lệnh này bạn sẽ thấy thông báo tương tự:
+Note: switching to 'v1C.0.4'.
+
+You are in 'detached HEAD' state...
+Bạn đang ở chế độ “detached HEAD”, tức là không gắn với nhánh cụ thể nào. Đừng lo, vẫn có thể chạy hoặc tạo nhánh mới từ đây.
+
+✅ 4. (Tuỳ chọn) Tạo nhánh mới để chỉnh sửa từ tag này
+Nếu bạn muốn tiếp tục phát triển từ bản này, hãy tạo một nhánh mới:
+
+git checkout -b fix-from-v1C.0.4
+Giờ bạn có thể chỉnh sửa, commit và push như bình thường trên nhánh mới.
+
+🔁 (Nếu chưa clone repo)
+Nếu bạn chưa có dự án trong máy, hãy clone trước:
+
+bash
+Copy
+Edit
+git clone https://github.com/datld47/tutor-ai-app.git
+cd tutor-ai-app
+git fetch --tags
+git checkout v1C.0.4
+📝 Gợi ý thêm: Ghi chú vào README
+Nếu bạn muốn tôi viết file README.md hướng dẫn nhóm về cách tạo version tag, release, và cách phục hồi, tôi có thể giúp ngay.
+
+Bạn có muốn tôi tạo nội dung README.md mẫu cho nhóm bạn?
+
+
+
+
+
+
+
+
+You said:
+nó báo là "(venv) D:\Dat_Code\project4_06_06_25\project4>git tag
+tag_26_07_25_08_30
+v1C.0.0
+v1C.0.1
+v1C.0.2
+v1C.0.3
+v1C.0.4
+v1C.0.5
+
+(venv) D:\Dat_Code\project4_06_06_25\project4>git checkout v1C.0.4
+M       __pycache__/login_gui_pyqt.cpython-310.pyc
+D       app_pyqt.py
+M       chat_view.html
+M       data/course_Thuong_mai_dien_tu.json
+D       data/course_c.json
+M       data/prompt.md
+M       data/rule.md
+M       data/rule_lesson.md
+M       login_gui_pyqt.py
+D       syntax_highlighter.py
+HEAD is now at c78308e Update function: 1) Save history chat    
+
+
+ChatGPT said:
+Rất tốt — bạn đã checkout thành công về tag v1C.0.4 rồi! 🎉
+
+Tuy nhiên, Git có báo một số điều quan trọng:
+
+⚠️ Giải thích các dòng Git báo sau lệnh checkout v1C.0.4
+bash
+Copy
+Edit
+M       __pycache__/login_gui_pyqt.cpython-310.pyc  (M = Modified)
+D       app_pyqt.py                                (D = Deleted)
+M       data/course_Thuong_mai_dien_tu.json
+...
+Điều này có nghĩa:
+
+M: Các file đã bị thay đổi so với trạng thái của tag v1C.0.4.
+
+D: Các file đã bị xoá so với trạng thái của tag.
+
+Như vậy, working directory của bạn đang chứa thay đổi so với đúng nội dung của tag v1C.0.4.
+
+✅ Cách phục hồi chính xác toàn bộ mã nguồn về tag v1C.0.4
+Nếu bạn muốn xóa sạch mọi thay đổi hiện tại để khôi phục đúng như lúc bạn tạo tag v1C.0.4, thì dùng:
+
+bash
+Copy
+Edit
+git reset --hard v1C.0.4
+⚠️ Cảnh báo: Lệnh này xoá vĩnh viễn mọi thay đổi chưa commit, bao gồm cả những file bạn đang chỉnh sửa.
+
+✅ Sau đó bạn nên tạo nhánh mới từ bản này để tiếp tục phát triển:
+bash
+Copy
+Edit
+git checkout -b fix-from-v1C.0.4
+Giờ bạn đã có một nhánh mới tên fix-from-v1C.0.4 với mã nguồn đúng bản v1C.0.4.
+
+🔄 Tóm tắt thao tác đầy đủ:
+bash
+Copy
+Edit
+# 1. Trở về tag
+git checkout v1C.0.4
+
+# 2. Reset về đúng trạng thái tag, xóa mọi thay đổi local
+git reset --hard v1C.0.4
+
+# 3. Tạo nhánh mới từ đây (nếu cần phát triển tiếp)
+git checkout -b fix-from-v1C.0.4

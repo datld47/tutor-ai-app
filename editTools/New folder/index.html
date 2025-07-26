@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MathLive Toolbox</title>
+    <!-- Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- MathLive CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/mathlive/dist/mathlive.css">
+    <!-- Font Awesome for Icons (for toolbar buttons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+   
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        .math-editor-container {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            max-width: 800px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        /* Toolbar styling */
+        .math-toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 15px;
+            background-color: #f0f4f8;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .toolbar-group-title {
+            width: 100%;
+            font-size: 0.9em;
+            font-weight: 600;
+            color: #4a5568;
+            margin-bottom: 5px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #cbd5e0;
+            margin-top: 10px;
+        }
+        .toolbar-group-title:first-child {
+            margin-top: 0;
+        }
+
+
+        .toolbar-button {
+            background-color: #e2e8f0;
+            border: 1px solid #cbd5e0;
+            border-radius: 6px;
+            padding: 8px 12px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.2s ease, border-color 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 40px; /* Ensure buttons have a minimum size */
+        }
+
+        .toolbar-button:hover {
+            background-color: #cbd5e0;
+            border-color: #a0aec0;
+        }
+
+        .toolbar-button:active {
+            background-color: #a0aec0;
+            border-color: #718096;
+        }
+
+        .toolbar-button .fa-solid, .toolbar-button .math-symbol {
+            font-size: 1.1em;
+            color: #4a5568;
+        }
+        .toolbar-button .math-symbol {
+            font-family: 'Times New Roman', serif; /* For math symbols */
+            font-weight: bold;
+        }
+
+        /* MathLive specific styling adjustments */
+        math-field {
+            display: block;
+            width: 100%;
+            min-height: 100px; /* Ensure enough space for input */
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            padding: 15px;
+            font-size: 1.25rem;
+            line-height: 1.5;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        math-field:focus-within {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+            outline: none;
+        }
+
+        .output-section {
+            margin-top: 30px;
+            border-top: 1px solid #e0e0e0;
+            padding-top: 20px;
+        }
+
+        .output-section h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 15px;
+        }
+
+        .output-box {
+            background-color: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 15px;
+            min-height: 50px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1rem;
+            color: #4b5563;
+            word-wrap: break-word; /* Ensure long LaTeX strings wrap */
+        }
+
+        .copy-button {
+            background-color: #2563eb;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            margin-top: 15px;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+        }
+
+        .copy-button:hover {
+            background-color: #1d4ed8;
+            transform: translateY(-1px);
+        }
+
+        .copy-button:active {
+            transform: translateY(0);
+        }
+
+        .message-box {
+            background-color: #d1fae5; /* Green light */
+            color: #065f46; /* Green dark */
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-size: 0.9rem;
+            display: none; /* Hidden by default */
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .message-box.show {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .math-editor-container {
+                padding: 20px;
+            }
+            h1 {
+                font-size: 1.75rem;
+            }
+            math-field {
+                font-size: 1rem;
+                min-height: 80px;
+            }
+            .output-section h2 {
+                font-size: 1.1rem;
+            }
+            .math-toolbar {
+                gap: 5px;
+                padding: 10px;
+            }
+            .toolbar-button {
+                padding: 6px 8px;
+                font-size: 0.9rem;
+                min-width: 35px;
+            }
+            .toolbar-group-title {
+                font-size: 0.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="math-editor-container">
+        <h1>MathLive Interactive Editor</h1>
+
+        <p style="text-align: center; color: #6b7280; margin-bottom: 20px;">
+            Nhập biểu thức toán học của bạn vào ô bên dưới hoặc sử dụng thanh công cụ.
+        </p>
+
+        <div class="math-toolbar">
+            <div class="toolbar-group-title">Cấu trúc cơ bản</div>
+            <button class="toolbar-button" data-latex="\frac{}{}">
+                <span class="math-symbol"><sup>&#9633;</sup>/<sub>&#9633;</sub></span>
+            </button>
+            <button class="toolbar-button" data-latex="^{\placeholder{}}">
+                <span class="math-symbol">x<sup>&#9633;</sup></span>
+            </button>
+            <button class="toolbar-button" data-latex="_{}">
+                <span class="math-symbol">x<sub>&#9633;</sub></span>
+            </button>
+            <button class="toolbar-button" data-latex="\sqrt{\placeholder{}}">
+                <span class="math-symbol">&radic;<span style="text-decoration:overline;">&#9633;</span></span>
+            </button>
+            <button class="toolbar-button" data-latex="\sqrt[]{}">
+                <span class="math-symbol"><sup>&#9633;</sup>&radic;<span style="text-decoration:overline;">&#9633;</span></span>
+            </button>
+            <button class="toolbar-button" data-latex="\left( \right)">
+                <span class="math-symbol">( &#9633; )</span>
+            </button>
+            <button class="toolbar-button" data-latex="\left[ \right]">
+                <span class="math-symbol">[ &#9633; ]</span>
+            </button>
+            <button class="toolbar-button" data-latex="\left\{ \right\}">
+                <span class="math-symbol">{ &#9633; }</span>
+            </button>
+
+            <div class="toolbar-group-title">Phép toán & Ký hiệu</div>
+            <button class="toolbar-button" data-latex="\times">
+                <span class="math-symbol">&times;</span>
+            </button>
+            <button class="toolbar-button" data-latex="\div">
+                <span class="math-symbol">&divide;</span>
+            </button>
+            <button class="toolbar-button" data-latex="\cdot">
+                <span class="math-symbol">&middot;</span>
+            </button>
+            <button class="toolbar-button" data-latex="\pm">
+                <span class="math-symbol">&plusmn;</span>
+            </button>
+            <button class="toolbar-button" data-latex="\infty">
+                <span class="math-symbol">&infin;</span>
+            </button>
+            <button class="toolbar-button" data-latex="\ldots">
+                <span class="math-symbol">...</span>
+            </button>
+            <button class="toolbar-button" data-latex="\circ">
+                <span class="math-symbol">&deg;</span>
+            </button>
+
+            <div class="toolbar-group-title">Quan hệ</div>
+            <button class="toolbar-button" data-latex="\ne">
+                <span class="math-symbol">&ne;</span>
+            </button>
+            <button class="toolbar-button" data-latex="\le">
+                <span class="math-symbol">&le;</span>
+            </button>
+            <button class="toolbar-button" data-latex="\ge">
+                <span class="math-symbol">&ge;</span>
+            </button>
+            <button class="toolbar-button" data-latex="\approx">
+                <span class="math-symbol">&asymp;</span>
+            </button>
+            <button class="toolbar-button" data-latex="\equiv">
+                <span class="math-symbol">&equiv;</span>
+            </button>
+
+            <div class="toolbar-group-title">Mũi tên</div>
+            <button class="toolbar-button" data-latex="\to">
+                <span class="math-symbol">&rarr;</span>
+            </button>
+            <button class="toolbar-button" data-latex="\gets">
+                <span class="math-symbol">&larr;</span>
+            </button>
+            <button class="toolbar-button" data-latex="\leftrightarrow">
+                <span class="math-symbol">&harr;</span>
+            </button>
+            <button class="toolbar-button" data-latex="\implies">
+                <span class="math-symbol">&implies;</span>
+            </button>
+            <button class="toolbar-button" data-latex="\iff">
+                <span class="math-symbol">&hArr;</span>
+            </button>
+
+            <div class="toolbar-group-title">Tập hợp</div>
+            <button class="toolbar-button" data-latex="\in">
+                <span class="math-symbol">&isin;</span>
+            </button>
+            <button class="toolbar-button" data-latex="\notin">
+                <span class="math-symbol">&notin;</span>
+            </button>
+            <button class="toolbar-button" data-latex="\subset">
+                <span class="math-symbol">&subset;</span>
+            </button>
+            <button class="toolbar-button" data-latex="\subseteq">
+                <span class="math-symbol">&subseteq;</span>
+            </button>
+            <button class="toolbar-button" data-latex="\cup">
+                <span class="math-symbol">&cup;</span>
+            </button>
+            <button class="toolbar-button" data-latex="\cap">
+                <span class="math-symbol">&cap;</span>
+            </button>
+            <button class="toolbar-button" data-latex="\emptyset">
+                <span class="math-symbol">&empty;</span>
+            </button>
+
+            <div class="toolbar-group-title">Giải tích & Hàm</div>
+            <button class="toolbar-button" data-latex="\sum_{}^{}">
+                <span class="math-symbol">&sum;<sub>&#9633;</sub><sup>&#9633;</sup></span>
+            </button>
+            <button class="toolbar-button" data-latex="\int_{}^{}">
+                <span class="math-symbol">&int;<sub>&#9633;</sub><sup>&#9633;</sup></span>
+            </button>
+            <button class="toolbar-button" data-latex="\lim_{ \to }">
+                <span class="math-symbol">lim</span>
+            </button>
+            <button class="toolbar-button" data-latex="\log">
+                <span class="math-symbol">log</span>
+            </button>
+            <button class="toolbar-button" data-latex="\ln">
+                <span class="math-symbol">ln</span>
+            </button>
+            <button class="toolbar-button" data-latex="\sin">
+                <span class="math-symbol">sin</span>
+            </button>
+            <button class="toolbar-button" data-latex="\cos">
+                <span class="math-symbol">cos</span>
+            </button>
+            <button class="toolbar-button" data-latex="\tan">
+                <span class="math-symbol">tan</span>
+            </button>
+
+            <div class="toolbar-group-title">Chữ cái Hy Lạp</div>
+            <button class="toolbar-button" data-latex="\alpha"><span class="math-symbol">&alpha;</span></button>
+            <button class="toolbar-button" data-latex="\beta"><span class="math-symbol">&beta;</span></button>
+            <button class="toolbar-button" data-latex="\gamma"><span class="math-symbol">&gamma;</span></button>
+            <button class="toolbar-button" data-latex="\delta"><span class="math-symbol">&delta;</span></button>
+            <button class="toolbar-button" data-latex="\epsilon"><span class="math-symbol">&epsilon;</span></button>
+            <button class="toolbar-button" data-latex="\zeta"><span class="math-symbol">&zeta;</span></button>
+            <button class="toolbar-button" data-latex="\eta"><span class="math-symbol">&eta;</span></button>
+            <button class="toolbar-button" data-latex="\theta"><span class="math-symbol">&theta;</span></button>
+            <button class="toolbar-button" data-latex="\lambda"><span class="math-symbol">&lambda;</span></button>
+            <button class="toolbar-button" data-latex="\mu"><span class="math-symbol">&mu;</span></button>
+            <button class="toolbar-button" data-latex="\nu"><span class="math-symbol">&nu;</span></button>
+            <button class="toolbar-button" data-latex="\pi"><span class="math-symbol">&pi;</span></button>
+            <button class="toolbar-button" data-latex="\rho"><span class="math-symbol">&rho;</span></button>
+            <button class="toolbar-button" data-latex="\sigma"><span class="math-symbol">&sigma;</span></button>
+            <button class="toolbar-button" data-latex="\tau"><span class="math-symbol">&tau;</span></button>
+            <button class="toolbar-button" data-latex="\phi"><span class="math-symbol">&phi;</span></button>
+            <button class="toolbar-button" data-latex="\chi"><span class="math-symbol">&chi;</span></button>
+            <button class="toolbar-button" data-latex="\psi"><span class="math-symbol">&psi;</span></button>
+            <button class="toolbar-button" data-latex="\omega"><span class="math-symbol">&omega;</span></button>
+            <button class="toolbar-button" data-latex="\Gamma"><span class="math-symbol">&Gamma;</span></button>
+            <button class="toolbar-button" data-latex="\Delta"><span class="math-symbol">&Delta;</span></button>
+            <button class="toolbar-button" data-latex="\Lambda"><span class="math-symbol">&Lambda;</span></button>
+            <button class="toolbar-button" data-latex="\Pi"><span class="math-symbol">&Pi;</span></button>
+            <button class="toolbar-button" data-latex="\Sigma"><span class="math-symbol">&Sigma;</span></button>
+            <button class="toolbar-button" data-latex="\Phi"><span class="math-symbol">&Phi;</span></button>
+            <button class="toolbar-button" data-latex="\Psi"><span class="math-symbol">&Psi;</span></button>
+            <button class="toolbar-button" data-latex="\Omega"><span class="math-symbol">&Omega;</span></button>
+            
+            <div class="toolbar-group-title">Ma trận</div>
+            <button class="toolbar-button" data-latex="\begin{pmatrix} \placeholder & \placeholder \\ \placeholder & \placeholder \end{pmatrix}">
+                <span class="math-symbol">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-matrix">
+                        <path d="M4 6V4a2 2 0 0 1 2-2h2"></path>
+                        <path d="M18 6V4a2 2 0 0 0-2-2h-2"></path>
+                        <path d="M4 18v2a2 2 0 0 0 2 2h2"></path>
+                        <path d="M18 18v2a2 2 0 0 1-2 2h-2"></path>
+                        <path d="M8 2h8"></path>
+                        <path d="M8 22h8"></path>
+                        <path d="M2 8v8"></path>
+                        <path d="M22 8v8"></path>
+                    </svg>
+                </span>
+            </button>
+        </div>
+
+        <math-field id="math-input">x = \frac{-b \pm \sqrt{b^2-4ac}}{2a}</math-field>
+
+        <div class="output-section">
+            <h2>Mã LaTeX:</h2>
+            <div id="latex-output" class="output-box"></div>
+            <button id="copy-latex-button" class="copy-button">Sao chép LaTeX</button>
+            <div id="message-box" class="message-box"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/mathlive"></script>
+    <script src="my_latex.js"></script>
+</body>
+</html>
