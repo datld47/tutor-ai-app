@@ -13,3 +13,19 @@ data/credentials.json
 *.rar
 TutorAI_v1.0B.rar
 TutorAI_v1A.rar
+
+# Ignore virtual environments & heavy dependency folders
+myenv/
+node_modules/
+__pycache__/
+.vscode/
+
+# Ignore temporary and run-time folders
+temp/
+log/
+download/
+upload/
+
+# OS files
+.DS_Store
+Thumbs.db

@@ -1,0 +1,358 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script>function neighbourhoodHighlight(params) {
+  // console.log("in nieghbourhoodhighlight");
+  allNodes = nodes.get({ returnType: "Object" });
+  // originalNodes = JSON.parse(JSON.stringify(allNodes));
+  // if something is selected:
+  if (params.nodes.length > 0) {
+    highlightActive = true;
+    var i, j;
+    var selectedNode = params.nodes[0];
+    var degrees = 2;
+
+    // mark all nodes as hard to read.
+    for (let nodeId in allNodes) {
+      // nodeColors[nodeId] = allNodes[nodeId].color;
+      allNodes[nodeId].color = "rgba(200,200,200,0.5)";
+      if (allNodes[nodeId].hiddenLabel === undefined) {
+        allNodes[nodeId].hiddenLabel = allNodes[nodeId].label;
+        allNodes[nodeId].label = undefined;
+      }
+    }
+    var connectedNodes = network.getConnectedNodes(selectedNode);
+    var allConnectedNodes = [];
+
+    // get the second degree nodes
+    for (i = 1; i < degrees; i++) {
+      for (j = 0; j < connectedNodes.length; j++) {
+        allConnectedNodes = allConnectedNodes.concat(
+          network.getConnectedNodes(connectedNodes[j])
+        );
+      }
+    }
+
+    // all second degree nodes get a different color and their label back
+    for (i = 0; i < allConnectedNodes.length; i++) {
+      // allNodes[allConnectedNodes[i]].color = "pink";
+      allNodes[allConnectedNodes[i]].color = "rgba(150,150,150,0.75)";
+      if (allNodes[allConnectedNodes[i]].hiddenLabel !== undefined) {
+        allNodes[allConnectedNodes[i]].label =
+          allNodes[allConnectedNodes[i]].hiddenLabel;
+        allNodes[allConnectedNodes[i]].hiddenLabel = undefined;
+      }
+    }
+
+    // all first degree nodes get their own color and their label back
+    for (i = 0; i < connectedNodes.length; i++) {
+      // allNodes[connectedNodes[i]].color = undefined;
+      allNodes[connectedNodes[i]].color = nodeColors[connectedNodes[i]];
+      if (allNodes[connectedNodes[i]].hiddenLabel !== undefined) {
+        allNodes[connectedNodes[i]].label =
+          allNodes[connectedNodes[i]].hiddenLabel;
+        allNodes[connectedNodes[i]].hiddenLabel = undefined;
+      }
+    }
+
+    // the main node gets its own color and its label back.
+    // allNodes[selectedNode].color = undefined;
+    allNodes[selectedNode].color = nodeColors[selectedNode];
+    if (allNodes[selectedNode].hiddenLabel !== undefined) {
+      allNodes[selectedNode].label = allNodes[selectedNode].hiddenLabel;
+      allNodes[selectedNode].hiddenLabel = undefined;
+    }
+  } else if (highlightActive === true) {
+    // console.log("highlightActive was true");
+    // reset all nodes
+    for (let nodeId in allNodes) {
+      // allNodes[nodeId].color = "purple";
+      allNodes[nodeId].color = nodeColors[nodeId];
+      // delete allNodes[nodeId].color;
+      if (allNodes[nodeId].hiddenLabel !== undefined) {
+        allNodes[nodeId].label = allNodes[nodeId].hiddenLabel;
+        allNodes[nodeId].hiddenLabel = undefined;
+      }
+    }
+    highlightActive = false;
+  }
+
+  // transform the object into an array
+  var updateArray = [];
+  if (params.nodes.length > 0) {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        // console.log(allNodes[nodeId]);
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  } else {
+    // console.log("Nothing was selected");
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        // console.log(allNodes[nodeId]);
+        // allNodes[nodeId].color = {};
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  }
+}
+
+function filterHighlight(params) {
+  allNodes = nodes.get({ returnType: "Object" });
+  // if something is selected:
+  if (params.nodes.length > 0) {
+    filterActive = true;
+    let selectedNodes = params.nodes;
+
+    // hiding all nodes and saving the label
+    for (let nodeId in allNodes) {
+      allNodes[nodeId].hidden = true;
+      if (allNodes[nodeId].savedLabel === undefined) {
+        allNodes[nodeId].savedLabel = allNodes[nodeId].label;
+        allNodes[nodeId].label = undefined;
+      }
+    }
+
+    for (let i=0; i < selectedNodes.length; i++) {
+      allNodes[selectedNodes[i]].hidden = false;
+      if (allNodes[selectedNodes[i]].savedLabel !== undefined) {
+        allNodes[selectedNodes[i]].label = allNodes[selectedNodes[i]].savedLabel;
+        allNodes[selectedNodes[i]].savedLabel = undefined;
+      }
+    }
+
+  } else if (filterActive === true) {
+    // reset all nodes
+    for (let nodeId in allNodes) {
+      allNodes[nodeId].hidden = false;
+      if (allNodes[nodeId].savedLabel !== undefined) {
+        allNodes[nodeId].label = allNodes[nodeId].savedLabel;
+        allNodes[nodeId].savedLabel = undefined;
+      }
+    }
+    filterActive = false;
+  }
+
+  // transform the object into an array
+  var updateArray = [];
+  if (params.nodes.length > 0) {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  } else {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  }
+}
+
+function selectNode(nodes) {
+  network.selectNodes(nodes);
+  neighbourhoodHighlight({ nodes: nodes });
+  return nodes;
+}
+
+function selectNodes(nodes) {
+  network.selectNodes(nodes);
+  filterHighlight({nodes: nodes});
+  return nodes;
+}
+
+function highlightFilter(filter) {
+  let selectedNodes = []
+  let selectedProp = filter['property']
+  if (filter['item'] === 'node') {
+    let allNodes = nodes.get({ returnType: "Object" });
+    for (let nodeId in allNodes) {
+      if (allNodes[nodeId][selectedProp] && filter['value'].includes((allNodes[nodeId][selectedProp]).toString())) {
+        selectedNodes.push(nodeId)
+      }
+    }
+  }
+  else if (filter['item'] === 'edge'){
+    let allEdges = edges.get({returnType: 'object'});
+    // check if the selected property exists for selected edge and select the nodes connected to the edge
+    for (let edge in allEdges) {
+      if (allEdges[edge][selectedProp] && filter['value'].includes((allEdges[edge][selectedProp]).toString())) {
+        selectedNodes.push(allEdges[edge]['from'])
+        selectedNodes.push(allEdges[edge]['to'])
+      }
+    }
+  }
+  selectNodes(selectedNodes)
+}</script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+            
+            
+            
+            
+            
+
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 1200px;
+                 background-color: #1e1e1e;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#E3A869", "font": {"color": "white"}, "id": "m1", "label": "T\u1ed4NG QUAN V\u1ec0 TH\u01af\u01a0NG M\u1ea0I \u0110I\u1ec6N T\u1eec", "shape": "box", "size": 30}, {"color": "#E3A869", "font": {"color": "white"}, "id": "m2", "label": "GIAO D\u1ecaCH \u0110I\u1ec6N T\u1eec", "shape": "box", "size": 30}, {"color": "#E3A869", "font": {"color": "white"}, "id": "m3", "label": "MARKETING \u0110I\u1ec6N T\u1eec", "shape": "box", "size": 30}, {"color": "#E3A869", "font": {"color": "white"}, "id": "m4", "label": "AN TO\u00c0N TH\u00d4NG TIN TRONG TH\u01af\u01a0NG M\u1ea0I \u0110I\u1ec6N T\u1eec", "shape": "box", "size": 30}, {"color": "#E3A869", "font": {"color": "white"}, "id": "m5", "label": "\u1ee8NG D\u1ee4NG TH\u01af\u01a0NG M\u1ea0I \u0110I\u1ec6N T\u1eec TRONG DOANH NGHI\u1ec6P", "shape": "box", "size": 30}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "c1.1", "label": "Kh\u00e1i ni\u1ec7m chung v\u1ec1 TM\u0110T", "shape": "dot", "size": 15, "title": "N\u1ed9i dung: B\u00e0i h\u1ecdc n\u00e0y gi\u1edbi thi\u1ec7u \u0111\u1ecbnh ngh\u0129a, b\u1ea3n ch\u1ea5t v\u00e0 t\u1ea7m quan tr\u1ecdng c\u1ee7a th\u01b0\u01a1ng m\u1ea1i \u0111i\u1ec7n t\u1eed trong kinh doanh hi\u1ec7n \u0111\u1ea1i. Sinh vi\u00ean s\u1ebd hi\u1ec3u \u0111\u01b0\u1ee3c s\u1ef1 kh\u00e1c bi\u1ec7t c\u01a1 b\u1ea3n gi\u1eefa th\u01b0\u01a1ng m\u1ea1i truy\u1ec1n th\u1ed1ng v\u00e0 th\u01b0\u01a1ng m\u1ea1i \u0111i\u1ec7n t\u1eed. \u0110\u00e2y l\u00e0 n\u1ec1n t\u1ea3ng \u0111\u1ec3 ti\u1ebfp c\u1eadn c\u00e1c n\u1ed9i dung s\u00e2u h\u01a1n v\u1ec1 l\u0129nh v\u1ef1c n\u00e0y.\n\u0110\u1ed9 kh\u00f3 (Alpha): 10"}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "c1.2", "label": "\u0110\u1eb7c \u0111i\u1ec3m v\u00e0 ph\u00e2n lo\u1ea1i TM\u0110T", "shape": "dot", "size": 15, "title": "N\u1ed9i dung: N\u1ed9i dung n\u00e0y tr\u00ecnh b\u00e0y c\u00e1c \u0111\u1eb7c \u0111i\u1ec3m n\u1ed5i b\u1eadt c\u1ee7a th\u01b0\u01a1ng m\u1ea1i \u0111i\u1ec7n t\u1eed nh\u01b0 t\u00ednh to\u00e0n c\u1ea7u, t\u01b0\u01a1ng t\u00e1c, phi v\u1eadt l\u00fd. \u0110\u1ed3ng th\u1eddi, b\u00e0i h\u1ecdc c\u0169ng ph\u00e2n lo\u1ea1i TM\u0110T theo \u0111\u1ed1i t\u01b0\u1ee3ng giao d\u1ecbch (B2B, B2C, C2C) v\u00e0 m\u1ee9c \u0111\u1ed9 s\u1ed1 h\u00f3a c\u1ee7a c\u00e1c quy tr\u00ecnh. Gi\u00fap sinh vi\u00ean c\u00f3 c\u00e1i nh\u00ecn t\u1ed5ng quan v\u1ec1 c\u1ea5u tr\u00fac TM\u0110T.\n\u0110\u1ed9 kh\u00f3 (Alpha): 12"}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "c1.3", "label": "L\u1ee3i \u00edch v\u00e0 h\u1ea1n ch\u1ebf c\u1ee7a TM\u0110T", "shape": "dot", "size": 15, "title": "N\u1ed9i dung: B\u00e0i h\u1ecdc ph\u00e2n t\u00edch c\u00e1c l\u1ee3i \u00edch m\u00e0 th\u01b0\u01a1ng m\u1ea1i \u0111i\u1ec7n t\u1eed mang l\u1ea1i cho doanh nghi\u1ec7p v\u00e0 ng\u01b0\u1eddi ti\u00eau d\u00f9ng, bao g\u1ed3m ti\u1ebfp c\u1eadn th\u1ecb tr\u01b0\u1eddng r\u1ed9ng h\u01a1n v\u00e0 gi\u1ea3m chi ph\u00ed. Sinh vi\u00ean c\u0169ng s\u1ebd nh\u1eadn di\u1ec7n c\u00e1c h\u1ea1n ch\u1ebf v\u00e0 th\u00e1ch th\u1ee9c nh\u01b0 v\u1ea5n \u0111\u1ec1 b\u1ea3o m\u1eadt hay l\u00f2ng tin. M\u1ee5c ti\u00eau l\u00e0 gi\u00fap \u0111\u00e1nh gi\u00e1 kh\u00e1ch quan v\u1ec1 TM\u0110T.\n\u0110\u1ed9 kh\u00f3 (Alpha): 14"}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "c1.4", "label": "S\u1ef1 ph\u00e1t tri\u1ec3n c\u1ee7a TM\u0110T v\u00e0 \u1ea3nh h\u01b0\u1edfng c\u1ee7a TM\u0110T \u0111\u1ebfn c\u00e1c l\u0129nh v\u1ef1c kh\u00e1c", "shape": "dot", "size": 15, "title": "N\u1ed9i dung: N\u1ed9i dung n\u00e0y t\u1ed5ng quan v\u1ec1 l\u1ecbch s\u1eed ph\u00e1t tri\u1ec3n c\u1ee7a TM\u0110T, c\u00e1c xu h\u01b0\u1edbng ch\u00ednh v\u00e0 nh\u1eefng c\u00f4ng ngh\u1ec7 m\u1edbi n\u1ed5i. Sinh vi\u00ean s\u1ebd \u0111\u00e1nh gi\u00e1 t\u00e1c \u0111\u1ed9ng c\u1ee7a TM\u0110T \u0111\u1ebfn kinh t\u1ebf, x\u00e3 h\u1ed9i, v\u0103n h\u00f3a v\u00e0 c\u00e1c ng\u00e0nh c\u00f4ng nghi\u1ec7p kh\u00e1c. B\u00e0i h\u1ecdc cung c\u1ea5p b\u1ed1i c\u1ea3nh to\u00e0n di\u1ec7n v\u1ec1 s\u1ef1 thay \u0111\u1ed5i do TM\u0110T mang l\u1ea1i.\n\u0110\u1ed9 kh\u00f3 (Alpha): 15"}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "c1.5", "label": "C\u01a1 s\u1edf h\u1ea1 t\u1ea7ng cho Th\u01b0\u01a1ng m\u1ea1i \u0111i\u1ec7n t\u1eed", "shape": "dot", "size": 15, "title": "N\u1ed9i dung: B\u00e0i h\u1ecdc m\u00f4 t\u1ea3 c\u00e1c th\u00e0nh ph\u1ea7n thi\u1ebft y\u1ebfu t\u1ea1o n\u00ean h\u1ea1 t\u1ea7ng TM\u0110T, bao g\u1ed3m h\u1ea1 t\u1ea7ng ph\u00e1p l\u00fd, c\u00f4ng ngh\u1ec7 th\u00f4ng tin, thanh to\u00e1n \u0111i\u1ec7n t\u1eed, an to\u00e0n th\u00f4ng tin, nh\u00e2n l\u1ef1c v\u00e0 d\u1ecbch v\u1ee5 ph\u00e2n ph\u1ed1i. Sinh vi\u00ean s\u1ebd hi\u1ec3u r\u00f5 vai tr\u00f2 c\u1ee7a t\u1eebng th\u00e0nh ph\u1ea7n trong vi\u1ec7c h\u1ed7 tr\u1ee3 ho\u1ea1t \u0111\u1ed9ng TM\u0110T. Ki\u1ebfn th\u1ee9c n\u00e0y r\u1ea5t quan tr\u1ecdng \u0111\u1ec3 x\u00e2y d\u1ef1ng v\u00e0 v\u1eadn h\u00e0nh h\u1ec7 th\u1ed1ng TM\u0110T hi\u1ec7u qu\u1ea3.\n\u0110\u1ed9 kh\u00f3 (Alpha): 15"}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "c1.6", "label": "C\u00e1c m\u00f4 h\u00ecnh kinh doanh TM\u0110T", "shape": "dot", "size": 15, "title": "N\u1ed9i dung: N\u1ed9i dung n\u00e0y nghi\u00ean c\u1ee9u s\u00e2u c\u00e1c m\u00f4 h\u00ecnh kinh doanh TM\u0110T ph\u1ed5 bi\u1ebfn nh\u01b0 B2C (doanh nghi\u1ec7p-ng\u01b0\u1eddi ti\u00eau d\u00f9ng), B2B (doanh nghi\u1ec7p-doanh nghi\u1ec7p), C2C (c\u00e1 nh\u00e2n-c\u00e1 nh\u00e2n) v\u00e0 C2B (c\u00e1 nh\u00e2n-doanh nghi\u1ec7p). B\u00e0i h\u1ecdc ph\u00e2n t\u00edch \u0111\u1eb7c tr\u01b0ng, \u01b0u nh\u01b0\u1ee3c \u0111i\u1ec3m v\u00e0 v\u00ed d\u1ee5 th\u1ef1c t\u1ebf c\u1ee7a t\u1eebng m\u00f4 h\u00ecnh. Gi\u00fap sinh vi\u00ean \u00e1p d\u1ee5ng v\u00e0o th\u1ef1c ti\u1ec5n kinh doanh.\n\u0110\u1ed9 kh\u00f3 (Alpha): 18"}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "c1.7", "label": "S\u00e0n giao d\u1ecbch TM\u0110T", "shape": "dot", "size": 15, "title": "N\u1ed9i dung: B\u00e0i h\u1ecdc gi\u1edbi thi\u1ec7u kh\u00e1i ni\u1ec7m, \u0111\u1eb7c tr\u01b0ng v\u00e0 c\u00e1c lo\u1ea1i s\u00e0n giao d\u1ecbch \u0111i\u1ec7n t\u1eed ph\u1ed5 bi\u1ebfn hi\u1ec7n nay. Sinh vi\u00ean s\u1ebd ph\u00e2n t\u00edch l\u1ee3i \u00edch khi tham gia s\u00e0n TM\u0110T v\u00e0 c\u00e1c ph\u01b0\u01a1ng th\u1ee9c giao d\u1ecbch ch\u00ednh tr\u00ean s\u00e0n. N\u1eafm v\u1eefng ki\u1ebfn th\u1ee9c n\u00e0y gi\u00fap t\u1eadn d\u1ee5ng hi\u1ec7u qu\u1ea3 c\u00e1c n\u1ec1n t\u1ea3ng TM\u0110T.\n\u0110\u1ed9 kh\u00f3 (Alpha): 17"}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "c2.1", "label": "H\u1ee3p \u0111\u1ed3ng \u0111i\u1ec7n t\u1eed", "shape": "dot", "size": 15, "title": "N\u1ed9i dung: B\u00e0i h\u1ecdc n\u00e0y \u0111\u1ecbnh ngh\u0129a v\u00e0 tr\u00ecnh b\u00e0y c\u00e1c \u0111\u1eb7c \u0111i\u1ec3m ph\u00e1p l\u00fd c\u1ee7a h\u1ee3p \u0111\u1ed3ng \u0111i\u1ec7n t\u1eed. Sinh vi\u00ean s\u1ebd ph\u00e2n t\u00edch quy tr\u00ecnh giao k\u1ebft v\u00e0 th\u1ef1c hi\u1ec7n h\u1ee3p \u0111\u1ed3ng \u0111i\u1ec7n t\u1eed. \u0110\u1ed3ng th\u1eddi, nh\u1eefng \u0111i\u1ec3m c\u1ea7n l\u01b0u \u00fd \u0111\u1ec3 \u0111\u1ea3m b\u1ea3o t\u00ednh ph\u00e1p l\u00fd v\u00e0 an to\u00e0n khi s\u1eed d\u1ee5ng h\u1ee3p \u0111\u1ed3ng \u0111i\u1ec7n t\u1eed c\u0169ng \u0111\u01b0\u1ee3c nh\u1ea5n m\u1ea1nh.\n\u0110\u1ed9 kh\u00f3 (Alpha): 20"}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "c2.2", "label": "Thanh to\u00e1n \u0111i\u1ec7n t\u1eed", "shape": "dot", "size": 15, "title": "N\u1ed9i dung: N\u1ed9i dung n\u00e0y bao g\u1ed3m kh\u00e1i ni\u1ec7m, y\u00eau c\u1ea7u c\u1ee7a h\u1ec7 th\u1ed1ng thanh to\u00e1n \u0111i\u1ec7n t\u1eed v\u00e0 ph\u00e2n bi\u1ec7t v\u1edbi thanh to\u00e1n trong TM\u0110T truy\u1ec1n th\u1ed1ng. B\u00e0i h\u1ecdc m\u00f4 t\u1ea3 c\u00e1c ph\u01b0\u01a1ng th\u1ee9c thanh to\u00e1n \u0111i\u1ec7n t\u1eed ph\u1ed5 bi\u1ebfn nh\u01b0 th\u1ebb t\u00edn d\u1ee5ng, v\u00ed \u0111i\u1ec7n t\u1eed v\u00e0 chuy\u1ec3n kho\u1ea3n ng\u00e2n h\u00e0ng tr\u1ef1c tuy\u1ebfn. Sinh vi\u00ean s\u1ebd hi\u1ec3u c\u00e1ch th\u1ee9c ho\u1ea1t \u0111\u1ed9ng c\u1ee7a c\u00e1c h\u1ec7 th\u1ed1ng thanh to\u00e1n n\u00e0y.\n\u0110\u1ed9 kh\u00f3 (Alpha): 22"}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "c2.3", "label": "Ch\u1eef k\u00fd s\u1ed1 v\u00e0 ch\u1ee9ng th\u1ef1c ch\u1eef k\u00fd s\u1ed1", "shape": "dot", "size": 15, "title": "N\u1ed9i dung: B\u00e0i h\u1ecdc gi\u1ea3i th\u00edch kh\u00e1i ni\u1ec7m, nguy\u00ean l\u00fd ho\u1ea1t \u0111\u1ed9ng v\u00e0 t\u1ea7m quan tr\u1ecdng c\u1ee7a ch\u1eef k\u00fd s\u1ed1 trong giao d\u1ecbch \u0111i\u1ec7n t\u1eed. Sinh vi\u00ean s\u1ebd t\u00ecm hi\u1ec3u v\u1ec1 d\u1ecbch v\u1ee5 ch\u1ee9ng th\u1ef1c ch\u1eef k\u00fd s\u1ed1 v\u00e0 vai tr\u00f2 c\u1ee7a n\u00f3 trong vi\u1ec7c \u0111\u1ea3m b\u1ea3o t\u00ednh to\u00e0n v\u1eb9n, x\u00e1c th\u1ef1c c\u1ee7a v\u0103n b\u1ea3n \u0111i\u1ec7n t\u1eed. Ki\u1ebfn th\u1ee9c n\u00e0y l\u00e0 c\u1ea7n thi\u1ebft cho s\u1ef1 tin c\u1eady trong TM\u0110T.\n\u0110\u1ed9 kh\u00f3 (Alpha): 25"}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "c3.1", "label": "C\u00e1c kh\u00e1i ni\u1ec7m c\u01a1 b\u1ea3n v\u1ec1 marketing \u0111i\u1ec7n t\u1eed", "shape": "dot", "size": 15, "title": "N\u1ed9i dung: B\u00e0i h\u1ecdc gi\u1edbi thi\u1ec7u \u0111\u1ecbnh ngh\u0129a, m\u1ee5c ti\u00eau v\u00e0 c\u00e1c th\u00e0nh ph\u1ea7n c\u1ed1t l\u00f5i c\u1ee7a marketing \u0111i\u1ec7n t\u1eed. Sinh vi\u00ean s\u1ebd \u0111\u01b0\u1ee3c so s\u00e1nh marketing \u0111i\u1ec7n t\u1eed v\u1edbi marketing truy\u1ec1n th\u1ed1ng \u0111\u1ec3 th\u1ea5y r\u00f5 s\u1ef1 kh\u00e1c bi\u1ec7t v\u00e0 l\u1ee3i th\u1ebf. \u0110\u00e2y l\u00e0 b\u01b0\u1edbc \u0111\u1ea7u \u0111\u1ec3 hi\u1ec3u v\u1ec1 chi\u1ebfn l\u01b0\u1ee3c ti\u1ebfp th\u1ecb trong m\u00f4i tr\u01b0\u1eddng s\u1ed1.\n\u0110\u1ed9 kh\u00f3 (Alpha): 15"}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "c3.2", "label": "Ng\u01b0\u1eddi ti\u00eau d\u00f9ng trong m\u00f4i tr\u01b0\u1eddng \u0111i\u1ec7n t\u1eed", "shape": "dot", "size": 15, "title": "N\u1ed9i dung: N\u1ed9i dung n\u00e0y ph\u00e2n t\u00edch h\u00e0nh vi, t\u00e2m l\u00fd v\u00e0 c\u00e1c y\u1ebfu t\u1ed1 \u1ea3nh h\u01b0\u1edfng \u0111\u1ebfn quy\u1ebft \u0111\u1ecbnh mua s\u1eafm c\u1ee7a ng\u01b0\u1eddi ti\u00eau d\u00f9ng tr\u1ef1c tuy\u1ebfn. Sinh vi\u00ean s\u1ebd n\u1eafm b\u1eaft xu h\u01b0\u1edbng v\u00e0 \u0111\u1eb7c \u0111i\u1ec3m c\u1ee7a kh\u00e1ch h\u00e0ng s\u1ed1. Hi\u1ec3u r\u00f5 kh\u00e1ch h\u00e0ng l\u00e0 ch\u00eca kh\u00f3a \u0111\u1ec3 x\u00e2y d\u1ef1ng chi\u1ebfn l\u01b0\u1ee3c marketing hi\u1ec7u qu\u1ea3.\n\u0110\u1ed9 kh\u00f3 (Alpha): 18"}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "c3.3", "label": "Nghi\u00ean c\u1ee9u th\u1ecb tr\u01b0\u1eddng \u0111i\u1ec7n t\u1eed", "shape": "dot", "size": 15, "title": "N\u1ed9i dung: B\u00e0i h\u1ecdc tr\u00ecnh b\u00e0y c\u00e1c ph\u01b0\u01a1ng ph\u00e1p v\u00e0 c\u00f4ng c\u1ee5 nghi\u00ean c\u1ee9u th\u1ecb tr\u01b0\u1eddng trong m\u00f4i tr\u01b0\u1eddng s\u1ed1. Sinh vi\u00ean s\u1ebd \u0111\u01b0\u1ee3c h\u01b0\u1edbng d\u1eabn thu th\u1eadp, ph\u00e2n t\u00edch d\u1eef li\u1ec7u \u0111\u1ec3 hi\u1ec3u r\u00f5 h\u01a1n v\u1ec1 \u0111\u1ed1i th\u1ee7, kh\u00e1ch h\u00e0ng v\u00e0 xu h\u01b0\u1edbng th\u1ecb tr\u01b0\u1eddng. K\u1ef9 n\u0103ng n\u00e0y gi\u00fap \u0111\u01b0a ra quy\u1ebft \u0111\u1ecbnh kinh doanh d\u1ef1a tr\u00ean d\u1eef li\u1ec7u.\n\u0110\u1ed9 kh\u00f3 (Alpha): 22"}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "c3.4", "label": "C\u00e1c c\u00f4ng c\u1ee5 marketing \u0111i\u1ec7n t\u1eed", "shape": "dot", "size": 15, "title": "N\u1ed9i dung: N\u1ed9i dung n\u00e0y kh\u00e1m ph\u00e1 c\u00e1c c\u00f4ng c\u1ee5 marketing \u0111i\u1ec7n t\u1eed ph\u1ed5 bi\u1ebfn nh\u01b0 SEO, SEM, marketing truy\u1ec1n th\u00f4ng x\u00e3 h\u1ed9i, email marketing, mobile marketing, affiliate marketing v\u00e0 content marketing. Sinh vi\u00ean s\u1ebd ph\u00e2n t\u00edch c\u00e1ch th\u1ee9c v\u1eadn d\u1ee5ng t\u1eebng c\u00f4ng c\u1ee5 \u0111\u1ec3 \u0111\u1ea1t \u0111\u01b0\u1ee3c m\u1ee5c ti\u00eau kinh doanh. \u0110\u00e2y l\u00e0 ki\u1ebfn th\u1ee9c th\u1ef1c h\u00e0nh quan tr\u1ecdng trong l\u0129nh v\u1ef1c marketing s\u1ed1.\n\u0110\u1ed9 kh\u00f3 (Alpha): 28"}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "c3.5", "label": "C\u00e1c v\u1ea5n \u0111\u1ec1 \u0111o l\u01b0\u1eddng trong Marketing \u0111i\u1ec7n t\u1eed", "shape": "dot", "size": 15, "title": "N\u1ed9i dung: B\u00e0i h\u1ecdc gi\u1edbi thi\u1ec7u c\u00e1c ch\u1ec9 s\u1ed1 hi\u1ec7u su\u1ea5t ch\u00ednh (KPIs) v\u00e0 ph\u01b0\u01a1ng ph\u00e1p \u0111o l\u01b0\u1eddng hi\u1ec7u qu\u1ea3 c\u00e1c chi\u1ebfn d\u1ecbch marketing \u0111i\u1ec7n t\u1eed. Sinh vi\u00ean s\u1ebd \u0111\u01b0\u1ee3c h\u01b0\u1edbng d\u1eabn s\u1eed d\u1ee5ng c\u00f4ng c\u1ee5 ph\u00e2n t\u00edch \u0111\u1ec3 \u0111\u00e1nh gi\u00e1, t\u1ed1i \u01b0u h\u00f3a ho\u1ea1t \u0111\u1ed9ng marketing. K\u1ef9 n\u0103ng \u0111o l\u01b0\u1eddng gi\u00fap c\u1ea3i thi\u1ec7n li\u00ean t\u1ee5c hi\u1ec7u qu\u1ea3 chi\u1ebfn d\u1ecbch.\n\u0110\u1ed9 kh\u00f3 (Alpha): 30"}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "c4.1", "label": "V\u1ea5n \u0111\u1ec1 an ninh trong TM\u0110T", "shape": "dot", "size": 15, "title": "N\u1ed9i dung: B\u00e0i h\u1ecdc x\u00e1c \u0111\u1ecbnh c\u00e1c m\u1ed1i \u0111e d\u1ecda an ninh ch\u00ednh trong m\u00f4i tr\u01b0\u1eddng TM\u0110T nh\u01b0 t\u1ea5n c\u00f4ng m\u1ea1ng, l\u1eeba \u0111\u1ea3o, virus. Sinh vi\u00ean s\u1ebd hi\u1ec3u r\u00f5 t\u1ea7m quan tr\u1ecdng c\u1ee7a an ninh th\u00f4ng tin trong vi\u1ec7c b\u1ea3o v\u1ec7 d\u1eef li\u1ec7u v\u00e0 l\u00f2ng tin kh\u00e1ch h\u00e0ng. \u0110\u00e2y l\u00e0 n\u1ec1n t\u1ea3ng \u0111\u1ec3 x\u00e2y d\u1ef1ng h\u1ec7 th\u1ed1ng TM\u0110T an to\u00e0n.\n\u0110\u1ed9 kh\u00f3 (Alpha): 20"}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "c4.2", "label": "R\u1ee7i ro trong TM\u0110T", "shape": "dot", "size": 15, "title": "N\u1ed9i dung: N\u1ed9i dung n\u00e0y ph\u00e2n lo\u1ea1i v\u00e0 ph\u00e2n t\u00edch c\u00e1c lo\u1ea1i r\u1ee7i ro ti\u1ec1m \u1ea9n trong TM\u0110T, bao g\u1ed3m r\u1ee7i ro t\u00e0i ch\u00ednh, r\u1ee7i ro ho\u1ea1t \u0111\u1ed9ng, r\u1ee7i ro danh ti\u1ebfng v\u00e0 r\u1ee7i ro ph\u00e1p l\u00fd. Sinh vi\u00ean s\u1ebd \u0111\u00e1nh gi\u00e1 m\u1ee9c \u0111\u1ed9 \u1ea3nh h\u01b0\u1edfng c\u1ee7a ch\u00fang \u0111\u1ebfn doanh nghi\u1ec7p v\u00e0 ng\u01b0\u1eddi ti\u00eau d\u00f9ng. Ki\u1ebfn th\u1ee9c n\u00e0y gi\u00fap qu\u1ea3n l\u00fd r\u1ee7i ro hi\u1ec7u qu\u1ea3.\n\u0110\u1ed9 kh\u00f3 (Alpha): 22"}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "c4.3", "label": "\u1ea2nh h\u01b0\u1edfng c\u1ee7a r\u1ee7i ro trong TM\u0110T", "shape": "dot", "size": 15, "title": "N\u1ed9i dung: B\u00e0i h\u1ecdc nghi\u00ean c\u1ee9u s\u00e2u v\u1ec1 h\u1eadu qu\u1ea3 c\u1ee7a c\u00e1c r\u1ee7i ro an ninh \u0111\u1ed1i v\u1edbi ho\u1ea1t \u0111\u1ed9ng kinh doanh v\u00e0 ni\u1ec1m tin c\u1ee7a kh\u00e1ch h\u00e0ng. Sinh vi\u00ean s\u1ebd ph\u00e2n t\u00edch c\u00e1c tr\u01b0\u1eddng h\u1ee3p th\u1ef1c t\u1ebf v\u1ec1 m\u1ea5t m\u00e1t d\u1eef li\u1ec7u, gian l\u1eadn v\u00e0 t\u00e1c \u0111\u1ed9ng c\u1ee7a ch\u00fang. Hi\u1ec3u r\u00f5 \u1ea3nh h\u01b0\u1edfng gi\u00fap ph\u00f2ng ng\u1eeba v\u00e0 \u1ee9ng ph\u00f3 t\u1ed1t h\u01a1n.\n\u0110\u1ed9 kh\u00f3 (Alpha): 25"}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "c4.4", "label": "M\u1ed9t s\u1ed1 gi\u1ea3i ph\u00e1p an to\u00e0n tr\u00ean m\u1ea1ng", "shape": "dot", "size": 15, "title": "N\u1ed9i dung: N\u1ed9i dung n\u00e0y gi\u1edbi thi\u1ec7u c\u00e1c bi\u1ec7n ph\u00e1p k\u1ef9 thu\u1eadt v\u00e0 phi k\u1ef9 thu\u1eadt \u0111\u1ec3 \u0111\u1ea3m b\u1ea3o an to\u00e0n th\u00f4ng tin trong TM\u0110T. Bao g\u1ed3m m\u00e3 h\u00f3a d\u1eef li\u1ec7u, x\u00e1c th\u1ef1c \u0111a y\u1ebfu t\u1ed1, t\u01b0\u1eddng l\u1eeda, ch\u00ednh s\u00e1ch b\u1ea3o m\u1eadt v\u00e0 \u0111\u00e0o t\u1ea1o ng\u01b0\u1eddi d\u00f9ng. Sinh vi\u00ean s\u1ebd h\u1ecdc c\u00e1ch tri\u1ec3n khai c\u00e1c gi\u1ea3i ph\u00e1p \u0111\u1ec3 b\u1ea3o v\u1ec7 h\u1ec7 th\u1ed1ng v\u00e0 ng\u01b0\u1eddi d\u00f9ng.\n\u0110\u1ed9 kh\u00f3 (Alpha): 28"}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "c5.1", "label": "Kh\u00e1i ni\u1ec7m h\u1ec7 th\u1ed1ng TM\u0110T v\u00e0 ph\u00e1t tri\u1ec3n h\u1ec7 th\u1ed1ng TM\u0110T Doanh nghi\u1ec7p", "shape": "dot", "size": 15, "title": "N\u1ed9i dung: B\u00e0i h\u1ecdc \u0111\u1ecbnh ngh\u0129a h\u1ec7 th\u1ed1ng TM\u0110T v\u00e0 c\u00e1c y\u1ebfu t\u1ed1 c\u1ea7n thi\u1ebft \u0111\u1ec3 ph\u00e1t tri\u1ec3n m\u1ed9t h\u1ec7 th\u1ed1ng hi\u1ec7u qu\u1ea3. Sinh vi\u00ean s\u1ebd ph\u00e2n t\u00edch c\u00e1c giai \u0111o\u1ea1n trong chu tr\u00ecnh ph\u00e1t tri\u1ec3n h\u1ec7 th\u1ed1ng TM\u0110T cho doanh nghi\u1ec7p. Ki\u1ebfn th\u1ee9c n\u00e0y l\u00e0 n\u1ec1n t\u1ea3ng \u0111\u1ec3 x\u00e2y d\u1ef1ng v\u00e0 qu\u1ea3n l\u00fd c\u00e1c d\u1ef1 \u00e1n TM\u0110T.\n\u0110\u1ed9 kh\u00f3 (Alpha): 20"}, {"color": "#4CAF50", "font": {"color": "white"}, "id": "c5.2", "label": "L\u1eadp k\u1ebf ho\u1ea1ch kinh doanh \u0111i\u1ec7n t\u1eed", "shape": "dot", "size": 15, "title": "N\u1ed9i dung: B\u00e0i h\u1ecdc h\u01b0\u1edbng d\u1eabn chi ti\u1ebft c\u00e1ch x\u00e2y d\u1ef1ng m\u1ed9t k\u1ebf ho\u1ea1ch kinh doanh \u0111i\u1ec7n t\u1eed to\u00e0n di\u1ec7n. Bao g\u1ed3m ph\u00e2n t\u00edch m\u00f4i tr\u01b0\u1eddng, x\u00e1c \u0111\u1ecbnh chi\u1ebfn l\u01b0\u1ee3c, l\u1eadp k\u1ebf ho\u1ea1ch marketing, t\u00e0i ch\u00ednh v\u00e0 qu\u1ea3n l\u00fd r\u1ee7i ro tr\u00ean n\u1ec1n t\u1ea3ng s\u1ed1. \u0110\u00e2y l\u00e0 k\u1ef9 n\u0103ng t\u1ed5ng h\u1ee3p quan tr\u1ecdng \u0111\u1ec3 kh\u1edfi nghi\u1ec7p v\u00e0 ph\u00e1t tri\u1ec3n kinh doanh tr\u1ef1c tuy\u1ebfn.\n\u0110\u1ed9 kh\u00f3 (Alpha): 30"}]);
+                  edges = new vis.DataSet([{"arrows": "to", "color": "#555555", "dashes": true, "from": "m1", "to": "c1.1"}, {"arrows": "to", "color": "#555555", "dashes": true, "from": "m1", "to": "c1.2"}, {"arrows": "to", "color": "#555555", "dashes": true, "from": "m1", "to": "c1.3"}, {"arrows": "to", "color": "#555555", "dashes": true, "from": "m1", "to": "c1.4"}, {"arrows": "to", "color": "#555555", "dashes": true, "from": "m1", "to": "c1.5"}, {"arrows": "to", "color": "#555555", "dashes": true, "from": "m1", "to": "c1.6"}, {"arrows": "to", "color": "#555555", "dashes": true, "from": "m1", "to": "c1.7"}, {"arrows": "to", "color": "#555555", "dashes": true, "from": "m2", "to": "c2.1"}, {"arrows": "to", "color": "#555555", "dashes": true, "from": "m2", "to": "c2.2"}, {"arrows": "to", "color": "#555555", "dashes": true, "from": "m2", "to": "c2.3"}, {"arrows": "to", "color": "#555555", "dashes": true, "from": "m3", "to": "c3.1"}, {"arrows": "to", "color": "#555555", "dashes": true, "from": "m3", "to": "c3.2"}, {"arrows": "to", "color": "#555555", "dashes": true, "from": "m3", "to": "c3.3"}, {"arrows": "to", "color": "#555555", "dashes": true, "from": "m3", "to": "c3.4"}, {"arrows": "to", "color": "#555555", "dashes": true, "from": "m3", "to": "c3.5"}, {"arrows": "to", "color": "#555555", "dashes": true, "from": "m4", "to": "c4.1"}, {"arrows": "to", "color": "#555555", "dashes": true, "from": "m4", "to": "c4.2"}, {"arrows": "to", "color": "#555555", "dashes": true, "from": "m4", "to": "c4.3"}, {"arrows": "to", "color": "#555555", "dashes": true, "from": "m4", "to": "c4.4"}, {"arrows": "to", "color": "#555555", "dashes": true, "from": "m5", "to": "c5.1"}, {"arrows": "to", "color": "#555555", "dashes": true, "from": "m5", "to": "c5.2"}, {"arrows": "to", "color": "#FF5722", "from": "c1.1", "title": "\u0110\u1ec3 hi\u1ec3u v\u1ec1 \u0111\u1eb7c \u0111i\u1ec3m v\u00e0 ph\u00e2n lo\u1ea1i TM\u0110T, c\u1ea7n n\u1eafm v\u1eefng kh\u00e1i ni\u1ec7m chung v\u1ec1 TM\u0110T.", "to": "c1.2", "width": 2}, {"arrows": "to", "color": "#FF5722", "from": "c1.1", "title": "\u0110\u1ec3 \u0111\u00e1nh gi\u00e1 l\u1ee3i \u00edch v\u00e0 h\u1ea1n ch\u1ebf c\u1ee7a TM\u0110T, c\u1ea7n hi\u1ec3u r\u00f5 kh\u00e1i ni\u1ec7m TM\u0110T.", "to": "c1.3", "width": 2}, {"arrows": "to", "color": "#FF5722", "from": "c1.1", "title": "\u0110\u1ec3 hi\u1ec3u v\u1ec1 s\u1ef1 ph\u00e1t tri\u1ec3n v\u00e0 \u1ea3nh h\u01b0\u1edfng c\u1ee7a TM\u0110T, c\u1ea7n c\u00f3 ki\u1ebfn th\u1ee9c c\u01a1 b\u1ea3n v\u1ec1 TM\u0110T.", "to": "c1.4", "width": 2}, {"arrows": "to", "color": "#FF5722", "from": "c1.1", "title": "\u0110\u1ec3 t\u00ecm hi\u1ec3u v\u1ec1 c\u01a1 s\u1edf h\u1ea1 t\u1ea7ng cho TM\u0110T, c\u1ea7n hi\u1ec3u TM\u0110T l\u00e0 g\u00ec.", "to": "c1.5", "width": 2}, {"arrows": "to", "color": "#FF5722", "from": "c1.1", "title": "\u0110\u1ec3 hi\u1ec3u c\u00e1c m\u00f4 h\u00ecnh kinh doanh TM\u0110T, c\u1ea7n n\u1eafm v\u1eefng kh\u00e1i ni\u1ec7m chung v\u1ec1 TM\u0110T.", "to": "c1.6", "width": 2}, {"arrows": "to", "color": "#FF5722", "from": "c1.2", "title": "\u0110\u1ec3 hi\u1ec3u s\u00e2u h\u01a1n v\u1ec1 c\u00e1c m\u00f4 h\u00ecnh kinh doanh TM\u0110T, c\u1ea7n n\u1eafm v\u1eefng \u0111\u1eb7c \u0111i\u1ec3m v\u00e0 ph\u00e2n lo\u1ea1i c\u1ee7a TM\u0110T.", "to": "c1.6", "width": 2}, {"arrows": "to", "color": "#FF5722", "from": "c1.6", "title": "S\u00e0n giao d\u1ecbch TM\u0110T l\u00e0 m\u1ed9t d\u1ea1ng c\u1ee5 th\u1ec3 c\u1ee7a m\u00f4 h\u00ecnh kinh doanh TM\u0110T.", "to": "c1.7", "width": 2}, {"arrows": "to", "color": "#FF5722", "from": "c1.1", "title": "C\u1ea7n hi\u1ec3u kh\u00e1i ni\u1ec7m TM\u0110T \u0111\u1ec3 hi\u1ec3u v\u1ec1 h\u1ee3p \u0111\u1ed3ng \u0111i\u1ec7n t\u1eed trong b\u1ed1i c\u1ea3nh n\u00e0y.", "to": "c2.1", "width": 2}, {"arrows": "to", "color": "#FF5722", "from": "c1.1", "title": "C\u1ea7n hi\u1ec3u kh\u00e1i ni\u1ec7m TM\u0110T \u0111\u1ec3 hi\u1ec3u v\u1ec1 thanh to\u00e1n \u0111i\u1ec7n t\u1eed trong b\u1ed1i c\u1ea3nh n\u00e0y.", "to": "c2.2", "width": 2}, {"arrows": "to", "color": "#FF5722", "from": "c2.1", "title": "Ch\u1eef k\u00fd s\u1ed1 v\u00e0 ch\u1ee9ng th\u1ef1c l\u00e0 y\u1ebfu t\u1ed1 quan tr\u1ecdng trong vi\u1ec7c \u0111\u1ea3m b\u1ea3o t\u00ednh ph\u00e1p l\u00fd c\u1ee7a h\u1ee3p \u0111\u1ed3ng \u0111i\u1ec7n t\u1eed.", "to": "c2.3", "width": 2}, {"arrows": "to", "color": "#FF5722", "from": "c1.1", "title": "Marketing \u0111i\u1ec7n t\u1eed l\u00e0 m\u1ed9t ph\u1ea7n c\u1ee7a TM\u0110T, c\u1ea7n n\u1eafm kh\u00e1i ni\u1ec7m TM\u0110T tr\u01b0\u1edbc.", "to": "c3.1", "width": 2}, {"arrows": "to", "color": "#FF5722", "from": "c3.1", "title": "C\u1ea7n n\u1eafm c\u00e1c kh\u00e1i ni\u1ec7m c\u01a1 b\u1ea3n v\u1ec1 marketing \u0111i\u1ec7n t\u1eed tr\u01b0\u1edbc khi t\u00ecm hi\u1ec3u v\u1ec1 ng\u01b0\u1eddi ti\u00eau d\u00f9ng trong m\u00f4i tr\u01b0\u1eddng n\u00e0y.", "to": "c3.2", "width": 2}, {"arrows": "to", "color": "#FF5722", "from": "c3.1", "title": "Nghi\u00ean c\u1ee9u th\u1ecb tr\u01b0\u1eddng \u0111i\u1ec7n t\u1eed \u0111\u00f2i h\u1ecfi hi\u1ec3u bi\u1ebft v\u1ec1 nguy\u00ean l\u00fd marketing \u0111i\u1ec7n t\u1eed.", "to": "c3.3", "width": 2}, {"arrows": "to", "color": "#FF5722", "from": "c3.2", "title": "Nghi\u00ean c\u1ee9u th\u1ecb tr\u01b0\u1eddng \u0111i\u1ec7n t\u1eed c\u1ea7n hi\u1ec3u v\u1ec1 h\u00e0nh vi c\u1ee7a ng\u01b0\u1eddi ti\u00eau d\u00f9ng trong m\u00f4i tr\u01b0\u1eddng s\u1ed1.", "to": "c3.3", "width": 2}, {"arrows": "to", "color": "#FF5722", "from": "c3.3", "title": "Vi\u1ec7c l\u1ef1a ch\u1ecdn v\u00e0 s\u1eed d\u1ee5ng c\u00f4ng c\u1ee5 marketing hi\u1ec7u qu\u1ea3 \u0111\u00f2i h\u1ecfi hi\u1ec3u bi\u1ebft v\u1ec1 k\u1ebft qu\u1ea3 nghi\u00ean c\u1ee9u th\u1ecb tr\u01b0\u1eddng \u0111i\u1ec7n t\u1eed.", "to": "c3.4", "width": 2}, {"arrows": "to", "color": "#FF5722", "from": "c3.4", "title": "Vi\u1ec7c \u0111o l\u01b0\u1eddng hi\u1ec7u qu\u1ea3 marketing \u0111i\u1ec7n t\u1eed li\u00ean quan tr\u1ef1c ti\u1ebfp \u0111\u1ebfn c\u00e1c c\u00f4ng c\u1ee5 \u0111\u00e3 h\u1ecdc.", "to": "c3.5", "width": 2}, {"arrows": "to", "color": "#FF5722", "from": "c1.1", "title": "\u0110\u1ec3 hi\u1ec3u c\u00e1c v\u1ea5n \u0111\u1ec1 an ninh trong TM\u0110T, c\u1ea7n n\u1eafm v\u1eefng kh\u00e1i ni\u1ec7m v\u00e0 ph\u1ea1m vi c\u1ee7a TM\u0110T.", "to": "c4.1", "width": 2}, {"arrows": "to", "color": "#FF5722", "from": "c4.1", "title": "R\u1ee7i ro trong TM\u0110T l\u00e0 h\u1ec7 qu\u1ea3 ho\u1eb7c kh\u00eda c\u1ea1nh s\u00e2u h\u01a1n c\u1ee7a c\u00e1c v\u1ea5n \u0111\u1ec1 an ninh.", "to": "c4.2", "width": 2}, {"arrows": "to", "color": "#FF5722", "from": "c4.2", "title": "\u0110\u1ec3 hi\u1ec3u \u1ea3nh h\u01b0\u1edfng c\u1ee7a r\u1ee7i ro trong TM\u0110T, c\u1ea7n n\u1eafm v\u1eefng c\u00e1c lo\u1ea1i r\u1ee7i ro.", "to": "c4.3", "width": 2}, {"arrows": "to", "color": "#FF5722", "from": "c4.1", "title": "C\u00e1c gi\u1ea3i ph\u00e1p an to\u00e0n \u0111\u01b0\u1ee3c \u0111\u01b0a ra \u0111\u1ec3 \u0111\u1ed1i ph\u00f3 v\u1edbi c\u00e1c v\u1ea5n \u0111\u1ec1 an ninh \u0111\u00e3 x\u00e1c \u0111\u1ecbnh.", "to": "c4.4", "width": 2}, {"arrows": "to", "color": "#FF5722", "from": "c4.2", "title": "C\u00e1c gi\u1ea3i ph\u00e1p an to\u00e0n \u0111\u01b0\u1ee3c \u0111\u01b0a ra \u0111\u1ec3 \u0111\u1ed1i ph\u00f3 v\u1edbi c\u00e1c r\u1ee7i ro trong TM\u0110T.", "to": "c4.4", "width": 2}, {"arrows": "to", "color": "#FF5722", "from": "c1.1", "title": "Ph\u00e1t tri\u1ec3n h\u1ec7 th\u1ed1ng TM\u0110T doanh nghi\u1ec7p \u0111\u00f2i h\u1ecfi hi\u1ec3u bi\u1ebft v\u1ec1 kh\u00e1i ni\u1ec7m TM\u0110T t\u1ed5ng th\u1ec3.", "to": "c5.1", "width": 2}, {"arrows": "to", "color": "#FF5722", "from": "c1.6", "title": "Ph\u00e1t tri\u1ec3n h\u1ec7 th\u1ed1ng TM\u0110T doanh nghi\u1ec7p c\u1ea7n d\u1ef1a tr\u00ean hi\u1ec3u bi\u1ebft v\u1ec1 c\u00e1c m\u00f4 h\u00ecnh kinh doanh TM\u0110T.", "to": "c5.1", "width": 2}, {"arrows": "to", "color": "#FF5722", "from": "c1.6", "title": "L\u1eadp k\u1ebf ho\u1ea1ch kinh doanh \u0111i\u1ec7n t\u1eed c\u1ea7n d\u1ef1a tr\u00ean c\u00e1c m\u00f4 h\u00ecnh kinh doanh TM\u0110T.", "to": "c5.2", "width": 2}, {"arrows": "to", "color": "#FF5722", "from": "c3.1", "title": "L\u1eadp k\u1ebf ho\u1ea1ch kinh doanh \u0111i\u1ec7n t\u1eed c\u1ea7n k\u1ebft h\u1ee3p c\u00e1c ki\u1ebfn th\u1ee9c v\u1ec1 marketing \u0111i\u1ec7n t\u1eed.", "to": "c5.2", "width": 2}, {"arrows": "to", "color": "#FF5722", "from": "c5.1", "title": "L\u1eadp k\u1ebf ho\u1ea1ch kinh doanh \u0111i\u1ec7n t\u1eed c\u1ea7n d\u1ef1a tr\u00ean hi\u1ec3u bi\u1ebft v\u1ec1 ph\u00e1t tri\u1ec3n h\u1ec7 th\u1ed1ng TM\u0110T.", "to": "c5.2", "width": 2}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "forceAtlas2Based": {
+            "avoidOverlap": 0,
+            "centralGravity": 0.01,
+            "damping": 0.4,
+            "gravitationalConstant": -50,
+            "springConstant": 0.08,
+            "springLength": 100
+        },
+        "solver": "forceAtlas2Based",
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>

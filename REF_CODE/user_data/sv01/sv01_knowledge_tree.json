@@ -1,0 +1,471 @@
+{
+    "course_name": "Thương mại điện tử",
+    "macro_nodes": [
+        {
+            "id": "m1",
+            "title": "TỔNG QUAN VỀ THƯƠNG MẠI ĐIỆN TỬ"
+        },
+        {
+            "id": "m2",
+            "title": "GIAO DỊCH ĐIỆN TỬ"
+        },
+        {
+            "id": "m3",
+            "title": "MARKETING ĐIỆN TỬ"
+        },
+        {
+            "id": "m4",
+            "title": "AN TOÀN THÔNG TIN TRONG THƯƠNG MẠI ĐIỆN TỬ"
+        },
+        {
+            "id": "m5",
+            "title": "ỨNG DỤNG THƯƠNG MẠI ĐIỆN TỬ TRONG DOANH NGHIỆP"
+        }
+    ],
+    "micro_nodes": [
+        {
+            "id": "c1.1",
+            "parent_macro": "m1",
+            "title": "Khái niệm chung về TMĐT",
+            "content": "Bài học này giới thiệu định nghĩa, bản chất và tầm quan trọng của thương mại điện tử trong kinh doanh hiện đại. Sinh viên sẽ hiểu được sự khác biệt cơ bản giữa thương mại truyền thống và thương mại điện tử. Đây là nền tảng để tiếp cận các nội dung sâu hơn về lĩnh vực này.",
+            "alpha_base": 10
+        },
+        {
+            "id": "c1.2",
+            "parent_macro": "m1",
+            "title": "Đặc điểm và phân loại TMĐT",
+            "content": "Nội dung này trình bày các đặc điểm nổi bật của thương mại điện tử như tính toàn cầu, tương tác, phi vật lý. Đồng thời, bài học cũng phân loại TMĐT theo đối tượng giao dịch (B2B, B2C, C2C) và mức độ số hóa của các quy trình. Giúp sinh viên có cái nhìn tổng quan về cấu trúc TMĐT.",
+            "alpha_base": 12
+        },
+        {
+            "id": "c1.3",
+            "parent_macro": "m1",
+            "title": "Lợi ích và hạn chế của TMĐT",
+            "content": "Bài học phân tích các lợi ích mà thương mại điện tử mang lại cho doanh nghiệp và người tiêu dùng, bao gồm tiếp cận thị trường rộng hơn và giảm chi phí. Sinh viên cũng sẽ nhận diện các hạn chế và thách thức như vấn đề bảo mật hay lòng tin. Mục tiêu là giúp đánh giá khách quan về TMĐT.",
+            "alpha_base": 14
+        },
+        {
+            "id": "c1.4",
+            "parent_macro": "m1",
+            "title": "Sự phát triển của TMĐT và ảnh hưởng của TMĐT đến các lĩnh vực khác",
+            "content": "Nội dung này tổng quan về lịch sử phát triển của TMĐT, các xu hướng chính và những công nghệ mới nổi. Sinh viên sẽ đánh giá tác động của TMĐT đến kinh tế, xã hội, văn hóa và các ngành công nghiệp khác. Bài học cung cấp bối cảnh toàn diện về sự thay đổi do TMĐT mang lại.",
+            "alpha_base": 15
+        },
+        {
+            "id": "c1.5",
+            "parent_macro": "m1",
+            "title": "Cơ sở hạ tầng cho Thương mại điện tử",
+            "content": "Bài học mô tả các thành phần thiết yếu tạo nên hạ tầng TMĐT, bao gồm hạ tầng pháp lý, công nghệ thông tin, thanh toán điện tử, an toàn thông tin, nhân lực và dịch vụ phân phối. Sinh viên sẽ hiểu rõ vai trò của từng thành phần trong việc hỗ trợ hoạt động TMĐT. Kiến thức này rất quan trọng để xây dựng và vận hành hệ thống TMĐT hiệu quả.",
+            "alpha_base": 15
+        },
+        {
+            "id": "c1.6",
+            "parent_macro": "m1",
+            "title": "Các mô hình kinh doanh TMĐT",
+            "content": "Nội dung này nghiên cứu sâu các mô hình kinh doanh TMĐT phổ biến như B2C (doanh nghiệp-người tiêu dùng), B2B (doanh nghiệp-doanh nghiệp), C2C (cá nhân-cá nhân) và C2B (cá nhân-doanh nghiệp). Bài học phân tích đặc trưng, ưu nhược điểm và ví dụ thực tế của từng mô hình. Giúp sinh viên áp dụng vào thực tiễn kinh doanh.",
+            "alpha_base": 18
+        },
+        {
+            "id": "c1.7",
+            "parent_macro": "m1",
+            "title": "Sàn giao dịch TMĐT",
+            "content": "Bài học giới thiệu khái niệm, đặc trưng và các loại sàn giao dịch điện tử phổ biến hiện nay. Sinh viên sẽ phân tích lợi ích khi tham gia sàn TMĐT và các phương thức giao dịch chính trên sàn. Nắm vững kiến thức này giúp tận dụng hiệu quả các nền tảng TMĐT.",
+            "alpha_base": 17
+        },
+        {
+            "id": "c2.1",
+            "parent_macro": "m2",
+            "title": "Hợp đồng điện tử",
+            "content": "Bài học này định nghĩa và trình bày các đặc điểm pháp lý của hợp đồng điện tử. Sinh viên sẽ phân tích quy trình giao kết và thực hiện hợp đồng điện tử. Đồng thời, những điểm cần lưu ý để đảm bảo tính pháp lý và an toàn khi sử dụng hợp đồng điện tử cũng được nhấn mạnh.",
+            "alpha_base": 20
+        },
+        {
+            "id": "c2.2",
+            "parent_macro": "m2",
+            "title": "Thanh toán điện tử",
+            "content": "Nội dung này bao gồm khái niệm, yêu cầu của hệ thống thanh toán điện tử và phân biệt với thanh toán trong TMĐT truyền thống. Bài học mô tả các phương thức thanh toán điện tử phổ biến như thẻ tín dụng, ví điện tử và chuyển khoản ngân hàng trực tuyến. Sinh viên sẽ hiểu cách thức hoạt động của các hệ thống thanh toán này.",
+            "alpha_base": 22
+        },
+        {
+            "id": "c2.3",
+            "parent_macro": "m2",
+            "title": "Chữ ký số và chứng thực chữ ký số",
+            "content": "Bài học giải thích khái niệm, nguyên lý hoạt động và tầm quan trọng của chữ ký số trong giao dịch điện tử. Sinh viên sẽ tìm hiểu về dịch vụ chứng thực chữ ký số và vai trò của nó trong việc đảm bảo tính toàn vẹn, xác thực của văn bản điện tử. Kiến thức này là cần thiết cho sự tin cậy trong TMĐT.",
+            "alpha_base": 25
+        },
+        {
+            "id": "c3.1",
+            "parent_macro": "m3",
+            "title": "Các khái niệm cơ bản về marketing điện tử",
+            "content": "Bài học giới thiệu định nghĩa, mục tiêu và các thành phần cốt lõi của marketing điện tử. Sinh viên sẽ được so sánh marketing điện tử với marketing truyền thống để thấy rõ sự khác biệt và lợi thế. Đây là bước đầu để hiểu về chiến lược tiếp thị trong môi trường số.",
+            "alpha_base": 15
+        },
+        {
+            "id": "c3.2",
+            "parent_macro": "m3",
+            "title": "Người tiêu dùng trong môi trường điện tử",
+            "content": "Nội dung này phân tích hành vi, tâm lý và các yếu tố ảnh hưởng đến quyết định mua sắm của người tiêu dùng trực tuyến. Sinh viên sẽ nắm bắt xu hướng và đặc điểm của khách hàng số. Hiểu rõ khách hàng là chìa khóa để xây dựng chiến lược marketing hiệu quả.",
+            "alpha_base": 18
+        },
+        {
+            "id": "c3.3",
+            "parent_macro": "m3",
+            "title": "Nghiên cứu thị trường điện tử",
+            "content": "Bài học trình bày các phương pháp và công cụ nghiên cứu thị trường trong môi trường số. Sinh viên sẽ được hướng dẫn thu thập, phân tích dữ liệu để hiểu rõ hơn về đối thủ, khách hàng và xu hướng thị trường. Kỹ năng này giúp đưa ra quyết định kinh doanh dựa trên dữ liệu.",
+            "alpha_base": 22
+        },
+        {
+            "id": "c3.4",
+            "parent_macro": "m3",
+            "title": "Các công cụ marketing điện tử",
+            "content": "Nội dung này khám phá các công cụ marketing điện tử phổ biến như SEO, SEM, marketing truyền thông xã hội, email marketing, mobile marketing, affiliate marketing và content marketing. Sinh viên sẽ phân tích cách thức vận dụng từng công cụ để đạt được mục tiêu kinh doanh. Đây là kiến thức thực hành quan trọng trong lĩnh vực marketing số.",
+            "alpha_base": 28
+        },
+        {
+            "id": "c3.5",
+            "parent_macro": "m3",
+            "title": "Các vấn đề đo lường trong Marketing điện tử",
+            "content": "Bài học giới thiệu các chỉ số hiệu suất chính (KPIs) và phương pháp đo lường hiệu quả các chiến dịch marketing điện tử. Sinh viên sẽ được hướng dẫn sử dụng công cụ phân tích để đánh giá, tối ưu hóa hoạt động marketing. Kỹ năng đo lường giúp cải thiện liên tục hiệu quả chiến dịch.",
+            "alpha_base": 30
+        },
+        {
+            "id": "c4.1",
+            "parent_macro": "m4",
+            "title": "Vấn đề an ninh trong TMĐT",
+            "content": "Bài học xác định các mối đe dọa an ninh chính trong môi trường TMĐT như tấn công mạng, lừa đảo, virus. Sinh viên sẽ hiểu rõ tầm quan trọng của an ninh thông tin trong việc bảo vệ dữ liệu và lòng tin khách hàng. Đây là nền tảng để xây dựng hệ thống TMĐT an toàn.",
+            "alpha_base": 20
+        },
+        {
+            "id": "c4.2",
+            "parent_macro": "m4",
+            "title": "Rủi ro trong TMĐT",
+            "content": "Nội dung này phân loại và phân tích các loại rủi ro tiềm ẩn trong TMĐT, bao gồm rủi ro tài chính, rủi ro hoạt động, rủi ro danh tiếng và rủi ro pháp lý. Sinh viên sẽ đánh giá mức độ ảnh hưởng của chúng đến doanh nghiệp và người tiêu dùng. Kiến thức này giúp quản lý rủi ro hiệu quả.",
+            "alpha_base": 22
+        },
+        {
+            "id": "c4.3",
+            "parent_macro": "m4",
+            "title": "Ảnh hưởng của rủi ro trong TMĐT",
+            "content": "Bài học nghiên cứu sâu về hậu quả của các rủi ro an ninh đối với hoạt động kinh doanh và niềm tin của khách hàng. Sinh viên sẽ phân tích các trường hợp thực tế về mất mát dữ liệu, gian lận và tác động của chúng. Hiểu rõ ảnh hưởng giúp phòng ngừa và ứng phó tốt hơn.",
+            "alpha_base": 25
+        },
+        {
+            "id": "c4.4",
+            "parent_macro": "m4",
+            "title": "Một số giải pháp an toàn trên mạng",
+            "content": "Nội dung này giới thiệu các biện pháp kỹ thuật và phi kỹ thuật để đảm bảo an toàn thông tin trong TMĐT. Bao gồm mã hóa dữ liệu, xác thực đa yếu tố, tường lửa, chính sách bảo mật và đào tạo người dùng. Sinh viên sẽ học cách triển khai các giải pháp để bảo vệ hệ thống và người dùng.",
+            "alpha_base": 28
+        },
+        {
+            "id": "c5.1",
+            "parent_macro": "m5",
+            "title": "Khái niệm hệ thống TMĐT và phát triển hệ thống TMĐT Doanh nghiệp",
+            "content": "Bài học định nghĩa hệ thống TMĐT và các yếu tố cần thiết để phát triển một hệ thống hiệu quả. Sinh viên sẽ phân tích các giai đoạn trong chu trình phát triển hệ thống TMĐT cho doanh nghiệp. Kiến thức này là nền tảng để xây dựng và quản lý các dự án TMĐT.",
+            "alpha_base": 20
+        },
+        {
+            "id": "c5.2",
+            "parent_macro": "m5",
+            "title": "Lập kế hoạch kinh doanh điện tử",
+            "content": "Bài học hướng dẫn chi tiết cách xây dựng một kế hoạch kinh doanh điện tử toàn diện. Bao gồm phân tích môi trường, xác định chiến lược, lập kế hoạch marketing, tài chính và quản lý rủi ro trên nền tảng số. Đây là kỹ năng tổng hợp quan trọng để khởi nghiệp và phát triển kinh doanh trực tuyến.",
+            "alpha_base": 30
+        }
+    ],
+    "assess_nodes": [
+        {
+            "id": "a_quiz_c1_2",
+            "target_micro": "c1.2",
+            "theta_pass": 0.6,
+            "questions": [
+                {
+                    "question": "Đặc điểm nào sau đây KHÔNG phải là đặc điểm cơ bản của Thương mại điện tử?",
+                    "options": [
+                        "A. Tính toàn cầu",
+                        "B. Tính tương tác",
+                        "C. Tính phi vật lý",
+                        "D. Tính tập trung theo khu vực địa lý"
+                    ],
+                    "answer": "D"
+                },
+                {
+                    "question": "Mô hình TMĐT nào mô tả giao dịch giữa một doanh nghiệp bán hàng cho một doanh nghiệp khác?",
+                    "options": [
+                        "A. B2C",
+                        "B. C2C",
+                        "C. B2B",
+                        "D. C2B"
+                    ],
+                    "answer": "C"
+                }
+            ]
+        },
+        {
+            "id": "a_quiz_c1_6",
+            "target_micro": "c1.6",
+            "theta_pass": 0.6,
+            "questions": [
+                {
+                    "question": "Mô hình B2C trong thương mại điện tử là viết tắt của:",
+                    "options": [
+                        "A. Business to Business",
+                        "B. Business to Consumer",
+                        "C. Consumer to Consumer",
+                        "D. Consumer to Business"
+                    ],
+                    "answer": "B"
+                },
+                {
+                    "question": "eBay là một ví dụ điển hình cho mô hình kinh doanh TMĐT nào?",
+                    "options": [
+                        "A. B2C",
+                        "B. B2B",
+                        "C. C2C",
+                        "D. C2B"
+                    ],
+                    "answer": "C"
+                }
+            ]
+        },
+        {
+            "id": "a_individual_c1_5",
+            "target_micro": "c1.5",
+            "theta_pass": 0.6,
+            "questions": [
+                {
+                    "question": "Yếu tố nào sau đây là thành phần quan trọng nhất trong hạ tầng pháp lý của Thương mại điện tử?",
+                    "options": [
+                        "A. Hệ thống giao thông vận tải",
+                        "B. Các quy định về bảo vệ dữ liệu và giao dịch điện tử",
+                        "C. Cơ sở hạ tầng mạng viễn thông",
+                        "D. Nguồn nhân lực IT"
+                    ],
+                    "answer": "B"
+                },
+                {
+                    "question": "Trong các thành phần của cơ sở hạ tầng TMĐT, 'điện toán đám mây' thuộc về loại hạ tầng nào?",
+                    "options": [
+                        "A. Hạ tầng pháp lý",
+                        "B. Hạ tầng công nghệ thông tin và truyền thông",
+                        "C. Hạ tầng thanh toán điện tử",
+                        "D. Hạ tầng dịch vụ phân phối"
+                    ],
+                    "answer": "B"
+                }
+            ]
+        },
+        {
+            "id": "a_midterm_c2_2",
+            "target_micro": "c2.2",
+            "theta_pass": 0.6,
+            "questions": [
+                {
+                    "question": "Phương thức thanh toán điện tử nào cho phép người mua trả tiền trực tiếp từ tài khoản ngân hàng của mình mà không cần thẻ vật lý?",
+                    "options": [
+                        "A. Thẻ tín dụng",
+                        "B. Tiền mặt khi nhận hàng (COD)",
+                        "C. Chuyển khoản ngân hàng trực tuyến",
+                        "D. Thanh toán bằng séc"
+                    ],
+                    "answer": "C"
+                },
+                {
+                    "question": "Để đảm bảo tính an toàn cho hệ thống thanh toán điện tử, yếu tố nào sau đây là quan trọng nhất?",
+                    "options": [
+                        "A. Tốc độ xử lý giao dịch",
+                        "B. Mã hóa dữ liệu và xác thực người dùng",
+                        "C. Đa dạng các loại tiền tệ",
+                        "D. Giao diện người dùng thân thiện"
+                    ],
+                    "answer": "B"
+                }
+            ]
+        },
+        {
+            "id": "a_group_proj_c3_4",
+            "target_micro": "c3.4",
+            "theta_pass": 0.6,
+            "questions": [
+                {
+                    "question": "Chiến lược Marketing điện tử nào tập trung vào việc tối ưu hóa nội dung trang web để xuất hiện cao hơn trên kết quả tìm kiếm tự nhiên của Google?",
+                    "options": [
+                        "A. Social Media Marketing",
+                        "B. Email Marketing",
+                        "C. Search Engine Optimization (SEO)",
+                        "D. Mobile Marketing"
+                    ],
+                    "answer": "C"
+                },
+                {
+                    "question": "Khi một doanh nghiệp sử dụng quảng cáo trên Facebook hoặc Instagram để tiếp cận khách hàng tiềm năng, họ đang sử dụng công cụ marketing điện tử nào?",
+                    "options": [
+                        "A. Marketing qua thư điện tử",
+                        "B. Marketing qua công cụ tìm kiếm",
+                        "C. Marketing qua phương tiện truyền thông xã hội",
+                        "D. Marketing liên kết"
+                    ],
+                    "answer": "C"
+                }
+            ]
+        },
+        {
+            "id": "a_final_proj_c5_2",
+            "target_micro": "c5.2",
+            "theta_pass": 0.6,
+            "questions": [
+                {
+                    "question": "Khi lập kế hoạch kinh doanh điện tử, bước nào sau đây giúp doanh nghiệp hiểu rõ điểm mạnh, điểm yếu, cơ hội và thách thức của mình trên thị trường số?",
+                    "options": [
+                        "A. Lập kế hoạch tài chính",
+                        "B. Phân tích SWOT",
+                        "C. Xây dựng cấu trúc tổ chức",
+                        "D. Xác định mục tiêu sản xuất"
+                    ],
+                    "answer": "B"
+                },
+                {
+                    "question": "Một kế hoạch kinh doanh điện tử thành công cần phải bao gồm yếu tố nào để đảm bảo thu hút và giữ chân khách hàng trên nền tảng số?",
+                    "options": [
+                        "A. Chiến lược sản xuất hàng loạt",
+                        "B. Chiến lược marketing điện tử toàn diện",
+                        "C. Kế hoạch thuê mặt bằng vật lý",
+                        "D. Giảm giá sản phẩm liên tục"
+                    ],
+                    "answer": "B"
+                }
+            ]
+        }
+    ],
+    "user_id": "sv01",
+    "edges": [
+        {
+            "source": "c1.1",
+            "target": "c1.2",
+            "reason": "Để hiểu về đặc điểm và phân loại TMĐT, cần nắm vững khái niệm chung về TMĐT."
+        },
+        {
+            "source": "c1.1",
+            "target": "c1.3",
+            "reason": "Để đánh giá lợi ích và hạn chế của TMĐT, cần hiểu rõ khái niệm TMĐT."
+        },
+        {
+            "source": "c1.1",
+            "target": "c1.4",
+            "reason": "Để hiểu về sự phát triển và ảnh hưởng của TMĐT, cần có kiến thức cơ bản về TMĐT."
+        },
+        {
+            "source": "c1.1",
+            "target": "c1.5",
+            "reason": "Để tìm hiểu về cơ sở hạ tầng cho TMĐT, cần hiểu TMĐT là gì."
+        },
+        {
+            "source": "c1.1",
+            "target": "c1.6",
+            "reason": "Để hiểu các mô hình kinh doanh TMĐT, cần nắm vững khái niệm chung về TMĐT."
+        },
+        {
+            "source": "c1.2",
+            "target": "c1.6",
+            "reason": "Để hiểu sâu hơn về các mô hình kinh doanh TMĐT, cần nắm vững đặc điểm và phân loại của TMĐT."
+        },
+        {
+            "source": "c1.6",
+            "target": "c1.7",
+            "reason": "Sàn giao dịch TMĐT là một dạng cụ thể của mô hình kinh doanh TMĐT."
+        },
+        {
+            "source": "c1.1",
+            "target": "c2.1",
+            "reason": "Cần hiểu khái niệm TMĐT để hiểu về hợp đồng điện tử trong bối cảnh này."
+        },
+        {
+            "source": "c1.1",
+            "target": "c2.2",
+            "reason": "Cần hiểu khái niệm TMĐT để hiểu về thanh toán điện tử trong bối cảnh này."
+        },
+        {
+            "source": "c2.1",
+            "target": "c2.3",
+            "reason": "Chữ ký số và chứng thực là yếu tố quan trọng trong việc đảm bảo tính pháp lý của hợp đồng điện tử."
+        },
+        {
+            "source": "c1.1",
+            "target": "c3.1",
+            "reason": "Marketing điện tử là một phần của TMĐT, cần nắm khái niệm TMĐT trước."
+        },
+        {
+            "source": "c3.1",
+            "target": "c3.2",
+            "reason": "Cần nắm các khái niệm cơ bản về marketing điện tử trước khi tìm hiểu về người tiêu dùng trong môi trường này."
+        },
+        {
+            "source": "c3.1",
+            "target": "c3.3",
+            "reason": "Nghiên cứu thị trường điện tử đòi hỏi hiểu biết về nguyên lý marketing điện tử."
+        },
+        {
+            "source": "c3.2",
+            "target": "c3.3",
+            "reason": "Nghiên cứu thị trường điện tử cần hiểu về hành vi của người tiêu dùng trong môi trường số."
+        },
+        {
+            "source": "c3.3",
+            "target": "c3.4",
+            "reason": "Việc lựa chọn và sử dụng công cụ marketing hiệu quả đòi hỏi hiểu biết về kết quả nghiên cứu thị trường điện tử."
+        },
+        {
+            "source": "c3.4",
+            "target": "c3.5",
+            "reason": "Việc đo lường hiệu quả marketing điện tử liên quan trực tiếp đến các công cụ đã học."
+        },
+        {
+            "source": "c1.1",
+            "target": "c4.1",
+            "reason": "Để hiểu các vấn đề an ninh trong TMĐT, cần nắm vững khái niệm và phạm vi của TMĐT."
+        },
+        {
+            "source": "c4.1",
+            "target": "c4.2",
+            "reason": "Rủi ro trong TMĐT là hệ quả hoặc khía cạnh sâu hơn của các vấn đề an ninh."
+        },
+        {
+            "source": "c4.2",
+            "target": "c4.3",
+            "reason": "Để hiểu ảnh hưởng của rủi ro trong TMĐT, cần nắm vững các loại rủi ro."
+        },
+        {
+            "source": "c4.1",
+            "target": "c4.4",
+            "reason": "Các giải pháp an toàn được đưa ra để đối phó với các vấn đề an ninh đã xác định."
+        },
+        {
+            "source": "c4.2",
+            "target": "c4.4",
+            "reason": "Các giải pháp an toàn được đưa ra để đối phó với các rủi ro trong TMĐT."
+        },
+        {
+            "source": "c1.1",
+            "target": "c5.1",
+            "reason": "Phát triển hệ thống TMĐT doanh nghiệp đòi hỏi hiểu biết về khái niệm TMĐT tổng thể."
+        },
+        {
+            "source": "c1.6",
+            "target": "c5.1",
+            "reason": "Phát triển hệ thống TMĐT doanh nghiệp cần dựa trên hiểu biết về các mô hình kinh doanh TMĐT."
+        },
+        {
+            "source": "c1.6",
+            "target": "c5.2",
+            "reason": "Lập kế hoạch kinh doanh điện tử cần dựa trên các mô hình kinh doanh TMĐT."
+        },
+        {
+            "source": "c3.1",
+            "target": "c5.2",
+            "reason": "Lập kế hoạch kinh doanh điện tử cần kết hợp các kiến thức về marketing điện tử."
+        },
+        {
+            "source": "c5.1",
+            "target": "c5.2",
+            "reason": "Lập kế hoạch kinh doanh điện tử cần dựa trên hiểu biết về phát triển hệ thống TMĐT."
+        }
+    ]
+}

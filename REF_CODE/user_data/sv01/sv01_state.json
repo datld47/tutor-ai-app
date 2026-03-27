@@ -1,0 +1,14 @@
+{
+    "user_id": "sv01",
+    "current_energy": 100.0,
+    "knowledge_states": {
+        "c0.1": {
+            "k_score": 0.0,
+            "last_updated": "2026-03-15T10:00:00"
+        },
+        "c1.1": {
+            "k_score": 0.0,
+            "last_updated": null
+        }
+    }
+}

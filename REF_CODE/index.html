@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hệ Thống Trắc Nghiệm Sinh Viên</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- PapaParse -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+
+    <!-- Custom Config for Tailwind -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#4F46E5',
+                        secondary: '#10B981',
+                        accent: '#F59E0B',
+                        danger: '#EF4444',
+                        dark: '#1F2937',
+                        light: '#F3F4F6'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="bg-gray-50 text-gray-800 font-sans min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="app.goHome()">
+                <div class="bg-primary text-white p-2 rounded-lg">
+                    <i class="fa-solid fa-graduation-cap text-xl"></i>
+                </div>
+                <h1 class="text-xl font-bold text-gray-800 hidden sm:block">Quiz Master</h1>
+            </div>
+            <div id="header-title"
+                class="text-sm sm:text-lg font-medium text-gray-600 truncate max-w-[200px] sm:max-w-md">
+                Trang chủ
+            </div>
+            <button onclick="app.goHome()" class="text-gray-500 hover:text-primary transition-colors">
+                <i class="fa-solid fa-house text-xl"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow container mx-auto px-4 py-8">
+
+        <!-- Loading Spinner -->
+        <div id="loading" class="hidden fixed inset-0 bg-white bg-opacity-80 z-50 flex justify-center items-center">
+            <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-primary"></div>
+        </div>
+
+        <!-- View: Module Selection -->
+        <div id="view-modules" class="view-section fade-in">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Chọn Học Phần</h2>
+                <p class="text-gray-600 mb-6">Lựa chọn module kiến thức bạn muốn ôn luyện hôm nay</p>
+
+                <button onclick="app.showTestSetup()"
+                    class="bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-8 py-3 rounded-full font-bold shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all">
+                    <i class="fa-solid fa-pen-to-square mr-2"></i> Tạo Đề Kiểm Tra
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="module-list">
+                <!-- Modules will be injected here -->
+            </div>
+        </div>
+
+        <!-- View: Test Setup -->
+        <div id="view-test-setup" class="view-section hidden fade-in max-w-2xl mx-auto">
+            <div class="mb-6 flex items-center">
+                <button onclick="app.goHome()" class="mr-4 text-gray-500 hover:text-primary">
+                    <i class="fa-solid fa-arrow-left text-xl"></i>
+                </button>
+                <h2 class="text-2xl font-bold text-gray-900">Cấu Hình Bài Kiểm Tra</h2>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-3">Chọn các Module:</label>
+                    <div class="space-y-3" id="test-module-list">
+                        <!-- Checkboxes will be injected here -->
+                    </div>
+                </div>
+
+                <div class="mb-8">
+                    <label for="question-count" class="block text-sm font-medium text-gray-700 mb-2">Số lượng câu
+                        hỏi:</label>
+                    <div class="flex items-center">
+                        <input type="number" id="question-count" min="10" max="200" value="30"
+                            class="w-full border-gray-300 rounded-lg shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 p-2 border">
+                        <span class="ml-3 text-gray-500 text-sm">(Tối đa: <span id="max-questions">...</span>)</span>
+                    </div>
+                </div>
+
+                <button onclick="app.startCustomTest()"
+                    class="w-full bg-primary text-white py-3 rounded-lg font-bold hover:bg-blue-700 transition-colors shadow-md">
+                    Bắt đầu làm bài
+                </button>
+            </div>
+        </div>
+
+        <!-- View: Section Dashboard (Video & Practice) -->
+        <div id="view-dashboard"
+            class="view-section hidden fade-in h-[calc(100vh-80px)] -mt-8 -mx-4 pb-0 flex flex-col">
+            <!-- Header for Dashboard (Back button & Title) -->
+            <div
+                class="bg-white shadow p-3 md:p-4 flex flex-col md:flex-row items-center justify-between z-10 gap-3 sticky top-0">
+                <div class="flex items-center w-full md:w-auto">
+                    <button onclick="app.backToModules()" class="mr-4 text-gray-500 hover:text-primary">
+                        <i class="fa-solid fa-arrow-left text-xl"></i>
+                    </button>
+                    <h2 class="text-lg md:text-xl font-bold text-gray-900 truncate" id="dashboard-title">Module Name
+                    </h2>
+                </div>
+                <!-- Tabs -->
+                <div class="flex space-x-1 md:space-x-2 bg-gray-100 p-1 rounded-lg w-full md:w-auto">
+                    <button onclick="app.switchTab('mindmap')" id="tab-mindmap"
+                        class="flex-1 md:flex-none px-4 py-2 rounded-md text-sm font-semibold transition-colors bg-white text-primary shadow-sm">
+                        <i class="fa-solid fa-sitemap mr-2"></i> Sơ đồ tư duy
+                    </button>
+                    <button onclick="app.switchTab('slide')" id="tab-slide"
+                        class="flex-1 md:flex-none px-4 py-2 rounded-md text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">
+                        <i class="fa-solid fa-file-pdf mr-2"></i> Slide Bài Giảng
+                    </button>
+                    <button onclick="app.switchTab('video')" id="tab-video"
+                        class="flex-1 md:flex-none px-4 py-2 rounded-md text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">
+                        <i class="fa-solid fa-play-circle mr-2"></i> Bài Giảng
+                    </button>
+                    <button onclick="app.switchTab('practice')" id="tab-practice"
+                        class="flex-1 md:flex-none px-4 py-2 rounded-md text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">
+                        <i class="fa-solid fa-pen-nib mr-2"></i> Luyện Tập
+                    </button>
+                </div>
+            </div>
+
+            <!-- Content Area -->
+            <div class="flex-grow relative bg-black">
+                <!-- Mindmap Tab -->
+                <div id="content-mindmap"
+                    class="absolute inset-0 w-full h-full bg-gray-50 overflow-auto flex justify-center items-center">
+                    <img id="mindmap-image" src="" alt="Sơ đồ tư duy"
+                        class="max-w-full max-h-full object-contain p-2 cursor-zoom-in hover:opacity-95 transition-opacity"
+                        onclick="app.openMindmapModal()">
+                    <div id="mindmap-placeholder" class="hidden text-gray-500 text-lg">Chưa có sơ đồ tư duy cho tiết này
+                    </div>
+                </div>
+
+                <!-- Slide Tab -->
+                <div id="content-slide" class="absolute inset-0 w-full h-full bg-gray-100 hidden flex flex-col">
+                    <iframe id="slide-frame" src="" class="flex-grow w-full h-full border-0"></iframe>
+                    <div class="bg-white p-2 flex justify-end items-center border-t shadow-sm">
+                        <button onclick="app.openSlideFullscreen()"
+                            class="text-gray-600 hover:text-primary font-medium px-3 py-1 bg-gray-100 rounded hover:bg-gray-200 transition-colors">
+                            <i class="fa-solid fa-expand mr-1"></i> Toàn màn hình
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Video Tab -->
+                <div id="content-video" class="absolute inset-0 w-full h-full hidden">
+                    <iframe id="video-frame" src="" class="w-full h-full border-0" allowfullscreen></iframe>
+                </div>
+
+                <!-- Practice Tab -->
+                <div id="content-practice"
+                    class="absolute inset-0 w-full h-full bg-gray-50 overflow-auto hidden p-4 md:p-6">
+                    <!-- Quiz View will be injected here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- View: Part Selection -->
+        <div id="view-parts" class="view-section hidden fade-in">
+            <div class="mb-6 flex items-center">
+                <button onclick="app.goHome()" class="mr-4 text-gray-500 hover:text-primary">
+                    <i class="fa-solid fa-arrow-left text-xl"></i>
+                </button>
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-900" id="module-name-display">Module Name</h2>
+                    <p class="text-gray-500 text-sm">Chọn phần bài tập để bắt đầu</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" id="part-list">
+                <!-- Parts will be injected here -->
+            </div>
+        </div>
+
+        <!-- View: Quiz Interface -->
+        <div id="view-quiz" class="view-section hidden fade-in">
+            <div class="flex flex-col lg:flex-row gap-6">
+
+                <!-- Left Column: Question Area -->
+                <div class="lg:w-3/4 flex flex-col">
+                    <!-- Progress Bar -->
+                    <div class="w-full bg-gray-200 rounded-full h-2.5 mb-6">
+                        <div id="progress-bar" class="bg-primary h-2.5 rounded-full transition-all duration-300"
+                            style="width: 0%"></div>
+                    </div>
+
+                    <!-- Question Card -->
+                    <div class="bg-white rounded-2xl shadow-lg p-6 sm:p-8 flex-grow relative">
+                        <div class="flex justify-between items-start mb-6">
+                            <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded">Câu
+                                <span id="current-question-number">1</span></span>
+                            <span id="question-status" class="text-sm font-medium text-gray-500">Chưa trả lời</span>
+                        </div>
+
+                        <h3 id="question-text"
+                            class="text-xl sm:text-2xl font-semibold text-gray-800 mb-8 leading-relaxed">
+                            Nội dung câu hỏi sẽ hiển thị ở đây?
+                        </h3>
+
+                        <div class="space-y-4" id="options-container">
+                            <!-- Options will be injected here -->
+                        </div>
+
+                        <!-- Feedback Area -->
+                        <div id="feedback-area" class="mt-6 hidden p-4 rounded-lg border-l-4">
+                            <p id="feedback-text" class="font-medium"></p>
+                        </div>
+
+                        <!-- Navigation Buttons (Mobile mostly, but useful for all) -->
+                        <div class="mt-8 flex justify-between">
+                            <button onclick="app.prevQuestion()"
+                                class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors disabled:opacity-50"
+                                id="btn-prev">
+                                <i class="fa-solid fa-chevron-left mr-2"></i> Trước
+                            </button>
+                            <button onclick="app.nextQuestion()"
+                                class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-blue-700 transition-colors shadow-md disabled:opacity-50"
+                                id="btn-next">
+                                Tiếp <i class="fa-solid fa-chevron-right ml-2"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Question Palette (Calendar Style) -->
+                <div class="lg:w-1/4">
+                    <div class="bg-white rounded-2xl shadow-lg p-6 sticky top-24">
+                        <h4 class="text-lg font-bold text-gray-800 mb-4 border-b pb-2">Danh sách câu hỏi</h4>
+                        <div class="grid grid-cols-5 gap-2" id="question-palette">
+                            <!-- Question numbers will be injected here -->
+                        </div>
+
+                        <div class="mt-6 space-y-2 text-sm text-gray-600">
+                            <div class="flex items-center">
+                                <div class="w-3 h-3 rounded-full bg-gray-200 mr-2"></div> Chưa làm
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-3 h-3 rounded-full bg-green-500 mr-2"></div> Đúng
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-3 h-3 rounded-full bg-red-500 mr-2"></div> Sai
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-3 h-3 rounded-full bg-blue-500 mr-2"></div> Đang chọn
+                            </div>
+                        </div>
+
+                        <button onclick="app.backToParts()"
+                            class="w-full mt-6 py-2 border border-gray-300 text-gray-600 rounded-lg hover:bg-gray-50 transition-colors">
+                            <i class="fa-solid fa-list mr-2"></i> Chọn phần khác
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="bg-white border-t py-6 mt-auto">
+        <div class="container mx-auto px-4 text-center text-gray-500 text-sm">
+            <p>&copy; 2025 Quiz Master. Designed for Students.</p>
+        </div>
+    </footer>
+
+    <!-- Mindmap Fullscreen Modal -->
+    <div id="mindmap-modal"
+        class="hidden fixed inset-0 z-[60] bg-black bg-opacity-90 flex justify-center items-center p-4 fade-in"
+        onclick="app.closeMindmapModal()">
+        <button class="absolute top-4 right-4 text-white hover:text-gray-300 z-50 focus:outline-none">
+            <i class="fa-solid fa-xmark text-4xl"></i>
+        </button>
+        <img id="mindmap-modal-img" src="" class="max-w-full max-h-full object-contain rounded-md shadow-2xl"
+            alt="Full Mindmap">
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

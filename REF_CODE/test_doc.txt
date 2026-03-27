@@ -1,0 +1,13 @@
+MÔN HỌC: THƯƠNG MẠI ĐIỆN TỬ
+Chương 1: Tổng quan về Thương mại điện tử
+Bài học 1.1: Khái niệm Thương mại điện tử. Thương mại điện tử là việc tiến hành các giao dịch kinh doanh thông qua mạng Internet. Nó bao gồm B2B, B2C, C2C.
+Bài học 1.2: Lợi ích của Thương mại điện tử. Lợi ích cho doanh nghiệp (tiết kiệm chi phí, mở rộng thị trường), cho người tiêu dùng (mua sắm mọi lúc mọi nơi).
+
+Chương 2: Mô hình kinh doanh Thương mại điện tử
+Bài học 2.1: Mô hình B2B. Doanh nghiệp với doanh nghiệp. Thường có giá trị giao dịch cao.
+Bài học 2.2: Mô hình B2C. Doanh nghiệp với người tiêu dùng. Ví dụ như Amazon, Shopee.
+
+Đánh giá quá trình:
+Bài kiểm tra 1: Khái niệm cơ bản. (Kiểm tra Bài 1.1)
+Câu hỏi 1: B2C viết tắt của từ gì? A. Business to Consumer B. Business to Business C. Consumer to Consumer D. Consumer to Business. Đáp án: A
+Câu hỏi 2: TMĐT là gì? A. Bán hàng B. Mua hàng C. Giao dịch qua Internet D. Quản lý kho. Đáp án: C

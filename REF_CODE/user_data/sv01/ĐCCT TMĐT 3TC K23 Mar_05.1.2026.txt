@@ -1,0 +1,288 @@
+﻿	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+BỘ GIÁO DỤC VÀ ĐÀO TẠO
+TRƯỜNG ĐẠI HỌC ĐÔNG Á
+CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM
+Độc lập - Tự do - Hạnh phúc
+ĐỀ CƯƠNG CHI TIẾT HỌC PHẦN
+< THƯƠNG MẠI ĐIỆN TỬ >
+< E-COMMERCE >
+Mã số HP/Course Code:< MARK3029.>
+1. Thông tin chung về học phần
+
+Tên học phần: Thương mại điện tử - E-commerce1. Số tín chỉ: 032. Số giờ:  1503. Phân bố thời lượng và nhóm nội dunga. Lý thuyết Số giờ: 15a1. Chuyên đề:Số giờ:2a2.Lý thuyết: Số giờ: 13b. Thực hành Số giờ: 30  b1.Bài tập/thảo luận/thực hành tại lớpSố giờ: 15  b2. Bài tập lớn/đồ, đề ánSố giờ: 15  b3. Thực hành, thí nghiệm:Số giờ:  b4. Kiến tập:Số giờ:c. Hoạt động tự học của sinh viên:Số giờ: 105  c1. Làm Ngân hàng câu hỏi tự học: Số giờ: 20  c2.Làm nhóm về giải quyết bài tập lớn/đồ đề ánSố giờ: 75  c3. Đọc sách/Nghiên cứu tài liệu:Số giờ: 104. Học phần được tổ chức đào tạo ở các ngành khác: không5. Chân dung của giảng viên tham gia giảng dạy: • Nói chuyện chuyên đề: Giảng huấn từ doanh nghiệp, tốt nghiệp đại học ngành Marketing, giữ chức vụ quản lý Trưởng phòng marketing
+• GV giảng dạy lý thuyết:Giảng viên có trình độ ThS trở lên ngành Marketing/Quản trị kinh doanh
+• GV hướng dẫn thực hành, thí nghiệm: 6. Học phần học trước: 7. Học phần tiên quyết: Không
+2. Mục tiêu HP :
+  2.1 Mô tả học phần
+  Học phần Thương mại điện tử trang bị cho sinh viên kiến thức và kỹ năng cần thiết để tham gia vào lĩnh vực Thương mại điện tử: Cở sở lý thuyết và khái niệm cơ bản của TMĐT, các mô hình kinh doanh trực tuyến, phương thức thanh toán trực tuyến, quảng cáo trực tuyến, dịch vụ khách hàng trực tuyến, các nền tảng thương mại điện tử phổ biến, các vấn đề pháp lý và an ninh liên quan đến lĩnh vực TMĐT.
+  2.2 Mục tiêu học phần
+  Học phần Thương mại điện tử nhằm trang bị cho sinh viên:
+  - Kiến thức nền tảng về lý thuyết và các khái niệm cơ bản trong lĩnh vực thương mại điện tử, bao gồm các mô hình kinh doanh trực tuyến, phương thức thanh toán điện tử, quảng cáo số, dịch vụ khách hàng trực tuyến và các nền tảng thương mại điện tử phổ biến.
+  - Khả năng phân tích các vấn đề pháp lý và an ninh thông tin trong hoạt động thương mại điện tử.
+  - Năng lực áp dụng các chiến lược e-marketing vào thực tế kinh doanh nhằm nâng cao hiệu quả tiếp cận và phục vụ khách hàng trên môi trường số.
+  - Kỹ năng xây dựng và triển khai các dự án kinh doanh phù hợp với xu hướng và đặc điểm của nền tảng thương mại điện tử.
+  - Phát triển kỹ năng làm việc nhóm, tư duy phản biện, viết báo cáo và thuyết trình hiệu quả trong quá trình thực hiện các hoạt động học tập và dự án thực tế.
+  
+3. Chuẩn đầu ra của HP 
+Bảng 3.1. Chuẩn đầu ra (CĐR) của HP
+Là năng lực SV đạt được sau khi kết thúc HP, được xác định như sau:
+
+Mã CĐR  Chuẩn đầu ra HP (CLO)(1)(2)CLO1Trình bày được tổng quan về Thương mại điện tửCLO2Phân tích được các quy định pháp lý liên quan đến lĩnh vực Thương mại điện tử CLO3Triển khai được các chiến lược e-marketing vào thực tế kinh doanhCLO4Xây dựng các dự án kinh doanh hiệu quả trên nền tảng thương mại điện tửCLO5Thực hiện tốt kỹ năng làm việc nhóm, viết báo cáo, thuyết trình    
+4.Mối liên hệ ở chuẩn đầu ra học phần đến chuẩn đầu ra chương trình đào tạo (PLO)
+Mức độ đóng góp của CLO vào PLO được xác định cụ thể: 
+I: Introduce: HP có hỗ trợ đạt PLO ở mức giới thiệu, bắt đầu; 
+R: Reinforced/ Opportunity to practice: Là các học phần có hỗ trợ đạt được PLO ở mức nâng cao. Người học có nhiều cơ hội được thực hành, thí nghiệm, …;
+M: Mastery of exit level: Là các học phần hỗ trợ người học đạt được PLO ở mức thành thạo
+ A: Assessment: Là các học phần lấy dữ liệu để đánh giá chuẩn đầu ra
+     
+ Bảng 4 Mối liên hệ của chuẩn đầu ra học phần (CLO) đến chuẩn đầu ra của chương trình đào tạo (PLO)
+
+Mã CĐR  Chuẩn đầu ra HP (CLO)PLO(1)(2)(3)(4)(5)(6)(7)(8)(9)(10)(11)(12)CLO1Trình bày được tổng quan về Thương mại điện tửRCLO2Phân tích được các quy định pháp lý liên quan đến lĩnh vực Thương mại điện tử RCLO3Triển khai được các chiến lược e-marketing vào thực tế kinh doanhRCLO4Xây dựng các dự án kinh doanh hiệu quả trên nền tảng thương mại điện tửM,ACLO5Thực hiện tốt kỹ năng làm việc nhóm, viết báo cáo, thuyết trìnhRTổng hợp học phầnRRM,A       
+5. Đánh giá HP
+5.1 Phương pháp, hình thức kiểm tra - đánh giá kết quả học tập của HP
+Bảng 5 Phương pháp, hình thức kiểm tra - đánh giá kết quả học tập của SV ở HP
+
+Th/phần
+đánh giáTrọng sốHình thức kiểm tra - đánh giáTrọng số con (%)RubricCĐR được đánh giá (bảng 4.1)HD PP đánh giá(1)(2)(3)(4)(5)(6)(7)A1 Chuyên cần10%A1.1. Đi học đầy đủ100%CLO5-Đánh giá sự tham gia trên lớp 
+-Hoàn thành các bài tập trên lớpA1.2. Tham gia các hoạt động trên lớp / xung phong phát biểu trong mỗi buổi họcA2. Kiểm tra thường xuyên25%A2.1. Kiểm tra thường xuyên (KTTX)60%CLO 1,2,3Điểm bài tập Quiz trên canvas mỗi buổi họcA2.2. Bài tập cá nhân20%CLO 1,2GV chấm điểmA2.3. Bài tập nhóm20%CLO 3,4Đánh giá làm việc nhómA3. Đánh giá giữa kỳ15%Kiểm tra giữa kỳ
+(Trắc nghiệm/ Tự luận)50%CLO 2Theo ngân hàng câu hỏi50%CLO4A4. Đánh giá cuối kỳ50%Báo cáo kết quả nghiên cứu 100%CLO 2,3,4,5Đánh giá làm việc nhóm
+a. Chính sách đối với HP
+SV tham dự >=75% số buổi của HP. Nếu nghỉ >25% số buổi sẽ không được dự thi kết thúc HP.
+
+6. Kế hoạch và nội dung giảng dạy HP
+
+Bảng 6.1. Kế hoạch và nội dung giảng dạy của HP theo tuần (phân bổ 3 tiết/buổi)
+
+Tuần/
+Buổi 
+(3 tiết/b)Các nội dung cơ bản của bài học (chương) (đến 3 số)Số giờ CĐR của bài học (chương)/ chủ đềLquan đến CĐR nào của HPPP giảng dạy đạt CĐRHoạt động học của SVTên bài
+ đánh giá
+(ở cột 3 bảng 5(1)(2)(3)(4)(5)(6)(7)(8)Tuần 1Doanh nghiệp nói chuyện chuyên đề
+2CLO1,2 Giới thiệu: mục tiêu học phần, Chuẩn đầu ra học phần, đề cương môn học, lịch trình học tập
+Hướng dẫn các vấn đề trong học tập, hướng dẫn sinh viên lập Kế hoạch
+Sinh viên bốc thăm để chọn vấn đề
+Sinh viên xác nhận nhóm học tập và câu hỏi vấn đề1SV biết được phương pháp học trên Canvas
+- Hiểu mục tiêu, Chuẩn đầu ra học phần, lịch trình học tập
+Hiểu các vấn đề trong học phầnCLO1,5Thuyết giảngThành lập nhóm, xác định tên công ty làm dự ánTuần 2CHƯƠNG I
+TỔNG QUAN VỀ THƯƠNG MẠI ĐIỆN TỬ
+1.1. Khái niệm chung về TMĐT
+1.2. Đặc điểm và phân loại TMĐT
+1.3. Lợi ích và hạn chế của TMĐT
+1.4. Sự phát triển của TMĐT và ảnh hưởng của TMĐT đến các lĩnh vực khác3- Trình được tổng quan về thị trường TMĐT. Phân tích được những nhân tố góp phần vào thành công của giao dịch TMĐTCLO1Game
+PP đặt và giải quyết vấn đề 
+Case study
+Đọc bài chương 2A2.1Tuần 3CHƯƠNG I
+TỔNG QUAN VỀ THƯƠNG MẠI ĐIỆN TỬ (tt)
+1.5 Cơ sở hạ tầng cho Thương mại điện tử 
+- Hạ tầng pháp lý 
+- Hạ tầng công nghệ thông tin và truyền thông 
+- Hạ tầng thanh toán điện tử
+- Hạ tầng an toàn thông tin cho TMĐT
+- Hạ tầng nhân lực cho TMĐT
+- Hạ tầng dịch vụ phân phối3Trình bày được các thành phần của cơ sở hạ tầng TMĐT
+CLO1, CLO5Thuyết giảng, thảo luận
+ Case Study
+Học nhómĐọc bài chương 3 và soạn bài trước khi đến lớpA2.2
+Tuần 4CHƯƠNG I
+TỔNG QUAN VỀ THƯƠNG MẠI ĐIỆN TỬ (tt)
+1.6 Các mô hình kinh doanh TMĐT
+- Mô hình TMĐT giữa doanh nghiệp – người tiêu dùng (B2C)
+- Mô hình TMĐT giữa doanh nghiệp – doanh nghiệp (B2B)
+- Mô hình TMĐT giữa cá nhân và cá nhân (C2C) và mô hình TMĐT giữa cá nhân và doanh nghiệp (C2B)3Xác định được các mô hình hoạt động TMĐTCLO1,4Thuyết giảng
+ Case Study
+Học nhómĐọc bài chương 4 và soạn bài trước khi đến lớpA2.1
+Tuần 5CHƯƠNG I
+TỔNG QUAN VỀ THƯƠNG MẠI ĐIỆN TỬ (tt)
+1.7. Sàn giao dịch TMĐT 
+- Khái quát về giao dịch điện tử
+- Sàn giao dịch TMĐT (Khái niệm, đặc trưng, Phân loại, Lợi ích và các phương thức giao dịch trên Sàn TMĐT)
+3Trình bày được tổng quan về sàn GD TMĐT. Các thủ tục đăng ký sàn GD TMĐTCLO1,4,5Thuyết giảng
+ Case Study
+Học nhómĐọc bài chương 3 và soạn bài trước khi đến lớpA2.2
+A2.3
+Tuần 6CHƯƠNG II
+GIAO DỊCH ĐIỆN TỬ
+2.1 Hợp đồng điện tử
+- Khái niệm và đặc điểm
+- Giao kết HĐ điện tử
+- Quy trình thực hiện HĐ điện tử
+Những điểm cần lưu ý khi sử dụng HĐ Điện tử
+3- Trình bày được các khái niệm liên quan đến Hợp đồng điện tử.
+- Xác định được các loại hợp đồng điện tử. Những điểm cần lưu ý khi sử dụng HĐ điện tử
+- CLO2Thuyết giảng
+ Case Study
+Học nhómĐọc bài chương 5 và soạn bài trước khi đến lớpA2.3
+Tuần 7CHƯƠNG II
+GIAO DỊCH ĐIỆN TỬ
+2.2 Thanh toán điện tử
+- Khái niệm thanh toán điện tử
+- Yêu cầu của hệ thống thanh toán điện tử
+- Phân biệt TTĐT và thanh toán trong TMĐT
+- Các phương thức TTĐT phổ biến
+2.3 Chữ ký số và chứng thực chữ ký số2- Thực hiện được các hình thức thanh toán trực tuyến phổ biến
+- Trình bày được đặc điểm, ưu điểm, quy trình sử dụng chữ ký sốCLO 4Thuyết giảng
+ Case Study
+Học nhómĐọc bài chương 5 và soạn bài trước khi đến lớpA2.3
+Tuần 8Kiểm tra giữa kỳ
+TH/BTL: Thuyết trình đề cương dự án3Trình bày đúng bố cục đề cương dự ánCLO1,2,3 4Thuyết trình bài tập nhómChuẩn bị báo cáo bằng word và slideA3Tuần 9CHƯƠNG III. MARKETING ĐIỆN TỬ 
+3.1 Các khái niệm cơ bản về marketing điện tử
+3.1 Người tiêu dùng trong môi trường điện tử
+3.3 Nghiên cứu thị trường điện tử
+3Giải thích được các khái niệm cơ bản về marketing điện tử
+Phân tích hành vi khách hàng trực tuyến
+Xác định được các bước triển khai Marketing điện tửCLO3,5Thuyết giảng
+ Case Study
+Học nhómĐọc bài chương 6 và soạn bài trước khi đến lớpA1.2
+A2.3
+Tuần 10CHƯƠNG III. MARKETING ĐIỆN TỬ (tt)
+3.4 Các công cụ marketing điện tử
+- Marketing qua công cụ tìm kiếm
+- Marketing qua phương tiện truyền thông xã hội
+- Marketing qua thư điện tử
+- Marketing qua thiết bị di động
+- Marketing liên kết
+- Marketing nội dung
+3.5 Các vấn đề đo lường trong Marketing điện tử
+2- Trình bày được các công cụ marketing điện tử
+- Vận dụng được các công cụ Marketing điện tử trong việc thực hiện dự án kinh doanh
+CLO3,5Thuyết giảng
+ Case Study
+Học nhómĐọc bài chương 6 và soạn bài trước khi đến lớpA1.2
+A2.3
+Tuần 11CHƯƠNG IV
+AN TOÀN THÔNG TIN TRONG THƯƠNG MẠI ĐIỆN TỬ
+4.1 Vấn đề an ninh trong TMĐT
+4.2 Rủi ro trong TMĐT
+4.3 Ảnh hưởng của rủi ro trong TMĐT
+4.4 Một số giải pháp an toàn trên mạng3- Nhận biết được các vấn đề an ninh trong TMĐT và ảnh hưởng của rủi ro trong TMĐT
+- Phân tích được những nguy cơ đe dọa an toàn thương mại điện tửCLO2Thuyết giảng
+ Case Study
+Học nhómĐọc bài hướng dẫn về lập KH KD điện tử và chuẩn bị nội dung bài báo cáo dự ánA2.3Tuần 12CHƯƠNG V
+ỨNG DỤNG THƯƠNG MẠI ĐIỆN TỬ TRONG DOANH NGHIỆP
+5.1 Khái niệm hệ thống TMĐT và phát triển hệ thống TMĐT Doanh nghiệp
+5.2 Lập kế hoạch kinh doanh điện tử
+- Một số khái niệm về kế hoạch kinh doanh điện tử
+- Các nội dung của kế hoạch kinh doanh điện tử3- Tóm tắt được những vấn đề liên quan đến phát triển hệ thống TMĐT
+- Phân tích môi trường thương mại điện tử
+- Trình bày được chiến lược kinh doanh TMĐT cho doanh nghiệpCLO 1,4Thuyết giảng
+ Case Study
+Học nhómĐọc bài hướng dẫn về lập KH KD điện tử và chuẩn bị nội dung bài báo cáo dự ánA2.3Tuần 13
+Báo cáo dự án3CLO2, CLO3, CLO4,
+   CLO5,Thuyết trình bài tập nhómChuẩn bị báo cáo bằng word và slideA4Tuần 14
+Báo cáo dự án3CLO2, CLO3, CLO4,
+   CLO5,Thuyết trình bài tập nhómChuẩn bị báo cáo bằng word và slideA4Tuần 15
+Báo cáo dự án3CLO2, CLO3, CLO4,
+   CLO5,Thuyết trình bài tập nhómChuẩn bị báo cáo bằng word và slideA4
+7. Học liệu: (Mỗi HP có ≥ 1 giáo trình chính đáp ứng ≥ 70% nội dung kiến thức của HP và có sách giáo trình tham khảo, xuất bản trong 5 năm trở lại)
+
+Bảng 7.1. Sách, giáo trình, tài liệu tham khảo
+
+TTTên tác giảNăm XBTên sách, giáo trình,
+tên bài báo, văn bảnNXB, tên tạp chí/
+nơi ban hành VB(1)(2)(3)(4)(5)Giáo trình chính1TS. Trần Thị Thập – TS. Nguyễn Trần Hưng 2020Thương mại điện tử căn bản Nhà xuất bản thông tin và truyền thông Sách, giáo trình tham khảo2Lưu Đan Thọ, Tôn Thất Hoàng Hải2015Thương mại điện tử hiện đạiNhà xuất bản Tài chính3TS. Nguyễn Văn Hùng2013Cẩm nang Thương mại điện tửNhà xuất bản Kinh tế TP HCM4Gary P. Schneider2007Electronic commerceNhà xuất bản Thomson Course Technology5Kenneth C.Laudon, Guercio TraverE-commerce business, technology, societyNhà xuất bản PearsonBảng 7.2. Danh mục địa chỉ web hữu ích cho HP
+
+TTNội dung tham khảoLink trang webNgày cập nhật1Tổng quan về Thương mại điện tửThương mại điện tử là gì? Tổng quan về TMĐT tại Việt Nam (magenest.com)10/1/20232Hạ tầng pháp lý cho mô hình kinh doanh TMĐTChi tiết tin (mof.gov.vn)10/1/20233Các mô hình giao dịch TMĐTGiao dịch điện tử là gì? Mô hình giao dịch điện tử phổ biến (sapo.vn)10/1/20234Thanh toán trong TMĐTCác hình thức thanh toán điện tử phổ biến hiện nay - GoSELL10/1/2023
+8.Cơ sở vật chất GD: 
+Bảng 8.1 Cơ sở vật chất giảng dạy của HP
+
+
+TTTên giảng đường, PTN, xưởng, cơ sở THDanh mục trang thiết bị, phần mềm chính
+phục vụ TN,THPhục vụ cho Bài học/
+Chương Tên thiết bị, dụng cụ, phần mềm,…Số lượng(1)(2)(3)(4)(5)- Phòng học sức chứa ≤ 50 SV
+- Phòng điều hòa vào mùa nóng
+- Phòng cách âm tốt- Loa
+- Micro không dây
+- Màn chiếu
+- Máy chiếu
+- Bảng
+- Phấn(trắng và màu)
+- Khăn bảng1
+1
+1
+1
+1
+1(hộp)
+2
+
+
+
+Phục vụ cho cả môn họcNgày ký duyệt: …/05/2022 Ngày cập nhật: …/5/2022
+Nội dung cập nhật: Cập nhật nội dung học phần theo PLO mới, kế hoạch và nội dung giảng dạy
+
+Người ký duyệt:
+Trưởng khoa 
+
+
+ 
+
+
+TS. Lê Bách Giang PT Bộ môn
+
+
+
+
+
+TS. Thái Thanh NguyênGV biên soạn
+
+
+
+
+
+Ths. Trần Phương Anh
+
+PHỤ LỤC. RUBRIC ĐÁNH GIÁ
+1. Rubric đánh giá bài tiểu luận nhóm
+GR.03. RUBRIC ĐÁNH GIÁ TIỂU LUẬN NHÓM
+
+TTTiêu chí chungTiêu chí cụ thểThang điểmTỷ trọngA (8,5-10)B (7,0-8,4)C (5,5-6,9)D (4,0-5,4)F (<4,0)1Hình thức
+Bố cục
+Bố cục đầy đủ các phần và độ dài theo quy định của Khoa; các chương mục rõ ràng và lô-gic.Bố cục tương đối đầy đủ và độ dài chênh lệch không quá 20% so với quy định của Khoa; các chương mục tương đối rõ ràng và lô-gic.Bố cục tương đối đầy đủ và độ dài chênh lệch không quá 30% so với quy định của Khoa; các chương mục chưa rõ ràng và lô-gic.Bố cục chưa đầy đủ và độ dài chênh lệch không quá 40% so với quy định của Khoa; các chương mục chưa rõ ràng và lô-gic.Bố cục chưa đầy đủ và độ dài chênh lệch từ 50% trở lên so với quy định của Khoa; các chương mục không rõ ràng và lô-gic.30% (3 điểm)Tài liệu tham khảoNguồn TLTK phong phú, chính thống; danh mục TLTK được sắp xếp hợp lý và đúng yêu cầu, các chú dẫn được trích dẫn đúng thể thức quy định.Nguồn TLTK khá phong phú, chính thống; ⅓ TLTK chưa được sắp xếp đúng quy định và một số trích dẫn chưa đúng thể thức quy định.Nguồn TLTK chưa phong phú, một số tài liệu thiếu tính chính thống; khoảng ½ TLTK bị sắp xếp lộn xộn và thiếu các chú dẫn theo thể thức quy định.Nguồn TLTK nghèo nàn, đa số không chính thống; khoảng 2/3 mục trích dẫn TLTK và các chú dẫn chưa đúng thể thức quy định.Nguồn TLTK nghèo nàn, không chính thống; sắp xếp TLTK và các chú dẫn không đúng thể thức quy định.Lỗi chính tả, ngữ pháp, diễn đạt, hình thức trình bàyKhông có lỗi về ngữ pháp và chính tả; câu văn diễn đạt súc tích, mạch lạc; hình vẽ, bảng biểu, sơ đồ rõ ràng, đúng quy định.Còn một số ít lỗi ngữ pháp và chính tả; câu văn diễn đạt mạch lạc; hình vẽ, bảng biểu, sơ đồ rõ ràng, đúng quy định.Khá nhiều lỗi ngữ pháp và chính tả; câu văn diễn đạt thiếu mạch lạc; hình vẽ, bảng biểu, sơ đồ tương đối rõ ràng, đúng quy định.Nhiều lỗi ngữ pháp và chính tả; câu văn diễn đạt lủng củng, tối nghĩa; hình vẽ, bảng biểu, sơ đồ chưa rõ ràng, chưa đúng quy định.Còn rất nhiều lỗi ngữ pháp và chính tả; văn phong không phù hợp, câu văn lủng củng, tối nghĩa; hình vẽ, bảng biểu, sơ đồ không rõ ràng, không đúng quy định.2Nội dung
+Luận điểmCó đưa ra quan điểm cá nhân có tính khoa học và sáng tạo; nêu và phân tích luận điểm rõ ràng và toàn diện.Có đưa ra quan điểm cá nhân có tính khoa học; nêu và phân tích luận điểm rõ ràng.Có đưa ra quan điểm cá nhân nhưng tính khoa học không cao;
+nêu luận điểm tương đối rõ ràng, phân tích chưa toàn diện.Chưa đưa ra được quan điểm cá nhân; nêu luận điểm nhưng không phân tích.Không đưa ra được quan điểm cá nhân và luận điểm mà chỉ tổng hợp từ các nguồn TLTK.50%
+(5 điểm)Dẫn chứngNêu và phân tích dẫn chứng một cách logic, khoa học, bảo vệ được luận điểm.Có nêu nhưng chưa phân tích chi tiết các dẫn chứng dù có thể phần nào đó bảo vệ được luận điểm.Chỉ nêu và không phân tích dẫn chứng, không có sự kết nối tương quan giữa luận điểm và dẫn chứng.Có rất ít dẫn chứng, hoàn toàn không có sự kết nối tương quan giữa luận điểm và dẫn chứng.Không có dẫn chứng minh họa.3Kỹ năng nhómHiệu quả làm việc nhómCác thành viên hoàn tốt nhiệm vụ của mình. Tất cả thành viên hiểu rõ đề tài trình bày của nhóm; nhóm trả lời tốt các câu hỏi của đề tài.Các thành viên hoàn thành tương đối công việc, có sự khác biệt trong chất lượng công việc của các thành viên; 80% thành viên hiểu rõ đề tài trình bày của nhóm; Nhóm trả lời tốt 80% câu hỏi của đề tài.Các thành viên hoàn thành tương đối công việc, có sự khác biệt rõ ràng trong chất lượng công việc của các thành viên; 60% thành viên hiểu rõ đề tài trình bày của nhóm; Nhóm trả lời tốt 60% câu hỏi của đề tài.Một số thành viên không tham gia làm việc nhóm; dưới 50% thành viên hiểu rõ đề tài trình bày của nhóm; Nhóm trả lời được dưới 50% câu hỏi của đề tài.Các thành viên không hoàn thành công việc đúng khối lượng và thời gian quy định; dưới 50% các thành viên hiểu rõ đề tài trình bày của nhóm; Nhóm không trả lời được các câu hỏi của đề tài.15%
+(1,5 điểm)Khả năng lãnh đạo
+Phân chia công việc hợp lý; có kỹ năng giải quyết vấn đề hiệu quảPhân chia công việc tương đối hợp lý; một số vấn đề của nhóm chưa được giải quyết hiệu quảPhân chia công việc tương đối hợp lýPhân chia công việc chưa hợp lý Phân chia công việc không hợp lý5%
+(0,5 điểm)* Lưu ý: Bài tiểu luận có tỷ lệ sao chép nguyên văn, không trích dẫn nguồn từ 30% trở lên sẽ bị đánh giá là đạo văn và nhận điểm 0.
+2. Rubric đánh giá bài thuyết trình nhóm
+GR.04. RUBRIC ĐÁNH GIÁ BÀI THUYẾT TRÌNH NHÓM
+
+TTTiêu chí chungTiêu chí cụ thểThang điểmTỷ trọngA (8,5-10)B (7,0-8,4)C (5,5-6,9)D (4,0-5,4)F (<4,0)1
+Nội dungNội dungTrình bày đầy đủ các nội dung của đề tài; các nội dung được nêu ra một cách logic; tất cả các nội dung đều có phân tích rõ ràng, có luận điểm hoặc ví dụ minh họaTrình bày đầy đủ các nội dung của đề tài; các nội dung được nêu ra một cách logic; một số nội dung chưa có phân tích rõ ràng, chưa có luận điểm hoặc ví dụ minh họaTrình bày đầy đủ các nội dung của đề tài; các nội dung được nêu ra một cách logic; khoảng 1/2 nội dung chưa có phân tích rõ ràng, chưa có luận điểm hoặc ví dụ minh họaTrình bày không đầy đủ các nội dung của đề tài; các nội dung chưa được nêu ra một cách logic; khoảng 2/3 nội dung chưa có phân tích rõ ràng, chưa có luận điểm hoặc ví dụ minh họaTrình bày không đúng nội dung của đề tài40%
+(4 điểm)2Thuyết trìnhBố cụcBố cục đầy đủ các mục so với quy định.Bố cục thiếu tối đa 2 mục so với quy định.Bố cục còn thiếu tối đa 3 mục so với quy định.Bố cục còn thiếu tối đa 4 mục so với quy định
+Bố cục lủng củng, các mục sắp xếp lộn xộn, thiếu nội dung so với quy định40%
+(4 điểm)
+Phong cách thuyết trìnhPhong cách trình bày tự tin; Diễn đạt gãy gọn, súc tích, giọng nói rõ ràng, dễ nghe; Không phụ thuộc vào slides; Sử dụng tốt ngôn ngữ hình thể và tương tác tốt với người nghePhong cách trình bày tự tin; Diễn đạt tương đối gãy gọn, súc tích, giọng nói khá rõ ràng, dễ nghe; Đôi chỗ còn phụ thuộc vào slides; Sử dụng tương đối tốt ngôn ngữ hình thể và có tương tác với người nghePhong cách trình bày chưa thật tự tin; Diễn đạt một số chỗ chưa gãy gọn, súc tích, giọng nói rõ ràng, dễ nghe; Còn phụ thuộc vào slides; Chưa sử dụng tốt ngôn ngữ hình thể và chưa tương tác với người nghePhong cách trình bày chưa tự tin; Diễn đạt còn lúng túng, giọng nói không rõ ràng, dễ nghe; Còn phụ thuộc nhiều vào slides; Chưa sử dụng tốt ngôn ngữ hình thể và chưa tương tác với người ngheKhông tự tin khi trình bày; diễn đạt lủng củng, khó hiểu; Giọng nói nhỏ, khó nghe; Phụ thuộc hoàn toàn vào slides; Không tương tác với người ngheHình thức slidesFont chữ to, rõ, màu chữ hợp lý, có thể đọc được từ cuối lớp; Hình ảnh minh họa chất lượng tốt, phù hợp với nội dung; Các hiệu ứng được sử dụng hợp lý; Phối màu đẹp, rõ ràng, nổi bật nội dungFont chữ to, rõ, màu chữ hợp lý, có thể đọc được từ cuối lớp; Hình ảnh minh họa phù hợp với nội dung; Các hiệu ứng được sử dụng tương đối hợp lý; Phối màu rõ ràngFont chữ to, rõ, màu chữ hợp lý, có thể đọc được từ cuối lớp; Có hình ảnh minh họa nhưng một số chỗ chưa phù hợp với nội dung; Không sử dụng hiệu ứng; Phối màu chưa nổi bật nội dungFont chữ, màu chữ chưa hợp lý, có khó khăn khi đọc từ cuối lớp; Hình ảnh minh họa sơ sài, chưa phù hợp với nội dung; Không sử dụng hiệu ứng; Phối màu chưa nổi bật nội dungFont chữ, màu chữ chưa hợp lý, có khó khăn khi đọc từ giữa lớp; Không có hình ảnh minh họa; Không sử dụng hiệu ứng; Phối màu không hợp lýThời gian trình bàyĐúng thời gian quy định Quá thời gian quy định < 2 phútQuá thời gian quy định từ 2 đến < 4 phútQuá thời gian quy định từ 4 đến < 5 phútQuá thời gian quy định >5 phút3Kỹ năng nhómHiệu quả làm việc nhómCác thành viên hoàn tốt nhiệm vụ của mình. Tất cả thành viên hiểu rõ đề tài trình bày của nhóm; nhóm trả lời tốt các câu hỏi của đề tài.Các thành viên hoàn thành tương đối công việc, có sự khác biệt trong chất lượng công việc của các thành viên; 80% thành viên hiểu rõ đề tài trình bày của nhóm; Nhóm trả lời tốt 80% câu hỏi của đề tài.Các thành viên hoàn thành tương đối công việc, có sự khác biệt rõ ràng trong chất lượng công việc của các thành viên; 60% thành viên hiểu rõ đề tài trình bày của nhóm; Nhóm trả lời tốt 60% câu hỏi của đề tài.Một số thành viên không tham gia làm việc nhóm; dưới 50% thành viên hiểu rõ đề tài trình bày của nhóm; Nhóm trả lời được dưới 50% câu hỏi của đề tài.Các thành viên không hoàn thành công việc đúng khối lượng và thời gian quy định; dưới 50% các thành viên hiểu rõ đề tài trình bày của nhóm; Nhóm không trả lời được các câu hỏi của đề tài.15%
+(1,5 điểm)Khả năng lãnh đạoPhân chia công việc hợp lý; có kỹ năng giải quyết vấn đề hiệu quảPhân chia công việc tương đối hợp lý; một số vấn đề của nhóm chưa được giải quyết hiệu quảPhân chia công việc tương đối hợp lýPhân chia công việc chưa hợp lýPhân chia công việc không hợp lý5%
+(0,5 điểm)
+
+03
+
+

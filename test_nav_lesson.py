@@ -98,7 +98,7 @@ def on_select(event):
         label_tittle.bind("<Configure>", lambda e: label_tittle.config(wraplength=e.width))
         
         
-        label_description=tk.Label(frame_content, text=exercise["description"], font=("Arial", 12), bg="white", wraplength=700, justify="left").pack(anchor="w", padx=10, pady=5)
+        label_description=tk.Label(frame_content, text=exercise["description"], font=("Arial", 12), bg="white", wraplength=700, justify="left")
         label_description.pack(anchor="w", padx=10, pady=5)
         label_description.bind("<Configure>", lambda e: label_description.config(wraplength=e.width))
         

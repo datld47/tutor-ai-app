@@ -1,0 +1,53 @@
+Found 13 CSV files.
+Processing Chương_1_Tiết 10 Tổng quan về Sàn Giao dịch.csv...
+  Matches encoding: utf-8-sig
+  Headers: ['id', 'coursecontentid', 'idcontent', 'questiontype', 'questioncontent', 'aanswer', 'banswer', 'canswer', 'danswer', 'answer', 'resultanswer', 'explanation']
+  ✅ Saved 20 questions
+Processing Chương_1_Tiết 11 Lợi ích và Phương thức giao dịch.csv...
+  Matches encoding: utf-8-sig
+  Headers: ['id', 'coursecontentid', 'idcontent', 'questiontype', 'questioncontent', 'aanswer', 'banswer', 'canswer', 'danswer', 'answer', 'resultanswer', 'explanation']
+  ✅ Saved 20 questions
+Processing Chương_1_Tiết 12 Thực hành và Làm việc nhóm.csv...
+  Matches encoding: utf-8-sig
+  Headers: ['id', 'coursecontentid', 'idcontent', 'questiontype', 'questioncontent', 'aanswer', 'banswer', 'canswer', 'danswer', 'answer', 'resultanswer', 'explanation']
+  ✅ Saved 20 questions
+Processing Chương_1_Tiết 1_Intro.csv...
+  Matches encoding: utf-8-sig
+  Headers: ['question', 'a', 'b', 'c', 'd', 'answer', 'explain']
+  ✅ Saved 3 questions
+Processing Chương_1_Tiết 1_Khái niệm và Tiếp cận.csv...
+  Matches encoding: utf-8-sig
+  Headers: ['id', 'coursecontentid', 'idcontent', 'questiontype', 'questioncontent', 'aanswer', 'banswer', 'canswer', 'danswer', 'answer', 'resultanswer', 'explanation']
+  ✅ Saved 20 questions
+Processing Chương_1_Tiết 2 Phân loại, Lợi ích và Hạn chế.csv...
+  Matches encoding: utf-8-sig
+  Headers: ['id', 'coursecontentid', 'idcontent', 'questiontype', 'questioncontent', 'aanswer', 'banswer', 'canswer', 'danswer', 'answer', 'resultanswer', 'explanation']
+  ✅ Saved 20 questions
+Processing Chương_1_Tiết 3 Sự phát triển và Đánh giá.csv...
+  Matches encoding: utf-8-sig
+  Headers: ['id', 'coursecontentid', 'idcontent', 'questiontype', 'questioncontent', 'aanswer', 'banswer', 'canswer', 'danswer', 'answer', 'resultanswer', 'explanation']
+  ✅ Saved 20 questions
+Processing Chương_1_Tiết 4 Hạ tầng Pháp lý và Công nghệ.csv...
+  Matches encoding: utf-8-sig
+  Headers: ['id', 'coursecontentid', 'idcontent', 'questiontype', 'questioncontent', 'aanswer', 'banswer', 'canswer', 'danswer', 'answer', 'resultanswer', 'explanation']
+  ✅ Saved 20 questions
+Processing Chương_1_Tiết 5 Hạ tầng Thanh toán và An toàn thông tin.csv...
+  Matches encoding: utf-8-sig
+  Headers: ['id', 'coursecontentid', 'idcontent', 'questiontype', 'questioncontent', 'aanswer', 'banswer', 'canswer', 'danswer', 'answer', 'resultanswer', 'explanation']
+  ✅ Saved 20 questions
+Processing Chương_1_Tiết 6 Hạ tầng Nhân lực, Phân phối & Bài tập.csv...
+  Matches encoding: utf-8-sig
+  Headers: ['id', 'coursecontentid', 'idcontent', 'questiontype', 'questioncontent', 'aanswer', 'banswer', 'canswer', 'danswer', 'answer', 'resultanswer', 'explanation']
+  ✅ Saved 20 questions
+Processing Chương_1_Tiết 7 Mô hình B2C và B2B.csv...
+  Matches encoding: utf-8-sig
+  Headers: ['id', 'coursecontentid', 'idcontent', 'questiontype', 'questioncontent', 'aanswer', 'banswer', 'canswer', 'danswer', 'answer', 'resultanswer', 'explanation']
+  ✅ Saved 20 questions
+Processing Chương_1_Tiết 8 Mô hình C2C và C2B.csv...
+  Matches encoding: utf-8-sig
+  Headers: ['id', 'coursecontentid', 'idcontent', 'questiontype', 'questioncontent', 'aanswer', 'banswer', 'canswer', 'danswer', 'answer', 'resultanswer', 'explanation']
+  ✅ Saved 20 questions
+Processing Chương_1_Tiết 9 Phân tích Mô hình & Đánh giá.csv...
+  Matches encoding: utf-8-sig
+  Headers: ['id', 'coursecontentid', 'idcontent', 'questiontype', 'questioncontent', 'aanswer', 'banswer', 'canswer', 'danswer', 'answer', 'resultanswer', 'explanation']
+  ✅ Saved 20 questions

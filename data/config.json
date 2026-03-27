@@ -2,9 +2,9 @@
   "api": [
     {
       "gemini_key": [
-        "AIzaSyDLBPmqFncpruW52U5jQvWsLbkeMsf6c0g"
+        "AIzaSyBU5I_s2K-5ThLaFFiHIr76HTAiqMza_oI"
       ],
-      "last_working_key": "AIzaSyDLBPmqFncpruW52U5jQvWsLbkeMsf6c0g"
+      "last_working_key": "AIzaSyBU5I_s2K-5ThLaFFiHIr76HTAiqMza_oI"
     },
     {
       "model": "gemini-2.0-flash"

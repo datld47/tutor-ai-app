@@ -356,7 +356,7 @@ class MainWindow(QMainWindow):
             try:
                 genai.configure(api_key=key)
                 # Thử tạo một model đơn giản để xác thực key
-                genai.GenerativeModel('gemini-1.5-flash')
+                genai.GenerativeModel('gemini-2.5-flash')
                 print(f"DEBUG: Tìm thấy key hoạt động: ...{key[-4:]}")
                 self.save_last_working_key(key) # Gọi phương thức của class
                 return key
@@ -374,7 +374,7 @@ class MainWindow(QMainWindow):
         if working_key:
             self.API_KEY = working_key
             genai.configure(api_key=self.API_KEY)
-            self.model = genai.GenerativeModel('gemini-1.5-flash')
+            self.model = genai.GenerativeModel('gemini-2.5-flash')
             # CẬP NHẬT QUAN TRỌNG: Phải cập nhật model cho worker đang chạy
             if hasattr(self, 'worker'):
                 self.worker.model = self.model
